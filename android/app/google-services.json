@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "974511991341",
+    "project_id": "hr-allowance-a41a5",
+    "storage_bucket": "hr-allowance-a41a5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:974511991341:android:0185ee247d0447b17b66a4",
+        "android_client_info": {
+          "package_name": "com.ssp.bd.uis"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQ_9FTG4h1GRCiplX4boLZEvlie0RCEv0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
