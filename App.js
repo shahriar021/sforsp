@@ -70,13 +70,14 @@ import consultTwo from './screens/consult/consultTwo';
 import consultThree from './screens/consult/consultThree';
 import database_update from './screens/database_update/database_update';
 import TabViewExample from './screens/tabview_dashboard/tabview_dash';
+import beatDashboard from './screens/beat/beatDashboard';
 
 LogBox.ignoreAllLogs();
 
 const Stack = createStackNavigator();
 
 const App = () => {
-  RemoteNotification();
+  // RemoteNotification();
   useEffect(() => {
     // Request permission to receive notifications
     messaging()
@@ -340,6 +341,12 @@ const App = () => {
           name="tabview_dashboard"
           component={TabViewExample}
           options={{title: 'Database Update'}}
+        />
+
+        <Stack.Screen
+          name="beat_dashboard"
+          component={beatDashboard}
+          options={{title: 'Beat Dashboard'}}
         />
       </Stack.Navigator>
     </NavigationContainer>

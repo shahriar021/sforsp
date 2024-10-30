@@ -58,6 +58,6 @@ const requestLocationPermission = async () => {
   return true;
 };
 
-requestLocationPermission();
+// requestLocationPermission();
 
 AppRegistry.registerComponent(appName, () => App);

@@ -388,7 +388,7 @@ const ProfileScreen = () => {
         <View style={styles.buttonBox}>
           <TouchableOpacity
             style={styles.buttonCardList}
-            onPress={() => navigation.push('beatOne')}>
+            onPress={() => navigation.push('beat_dashboard')}>
             <Image
               source={require('../../assets/images/one.jpg')}
               style={styles.tinyLogo}
