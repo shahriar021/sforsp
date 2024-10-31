@@ -72,6 +72,7 @@ import database_update from './screens/database_update/database_update';
 import TabViewExample from './screens/tabview_dashboard/tabview_dash';
 import beatDashboard from './screens/beat/beatDashboard';
 import InterventionDashboar from './screens/intervention/interventionDashboar';
+import consult from './screens/consult/consultDashboard';
 
 LogBox.ignoreAllLogs();
 
@@ -354,6 +355,12 @@ const App = () => {
           name="InterventionDashboar"
           component={InterventionDashboar}
           options={{title: 'Intervention Dashboard'}}
+        />
+
+        <Stack.Screen
+          name="consultDashboard"
+          component={consult}
+          options={{title: 'Consult Dashboard'}}
         />
       </Stack.Navigator>
     </NavigationContainer>

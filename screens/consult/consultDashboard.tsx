@@ -75,169 +75,14 @@ const data = [
     range: 'Fulchari',
     division: 'Cox’s Bazar North Forest Division',
     circle: 'Chattogram Circle',
-    year: '2020-2021',
-    type: 'Assisted Natural Regeneration (ANR) with Enrichment',
-    area: '15.00',
-  },
-  {
-    id: '2',
-    date: '22 May 2021',
-    beat: 'Khutakhali',
-    range: 'Fulchari',
-    division: 'Cox’s Bazar North Forest Division',
-    circle: 'Chattogram Circle',
-    year: '2021-2022',
-    type: 'Mixed Plantation with Slow Growing and Indigenous Species',
-    area: '10.00',
-  },
-  {
-    id: '3',
-    date: '22 May 2021',
-    beat: 'Khutakhali',
-    range: 'Fulchari',
-    division: 'Cox’s Bazar North Forest Division',
-    circle: 'Chattogram Circle',
-    year: '2021-2022',
-    type: 'Mixed Plantation with Slow Growing and Indigenous Species',
-    area: '10.00',
-  },
-  {
-    id: '4',
-    date: '22 May 2021',
-    beat: 'Khutakhali',
-    range: 'Fulchari',
-    division: 'Cox’s Bazar North Forest Division',
-    circle: 'Chattogram Circle',
-    year: '2021-2022',
-    type: 'Mixed Plantation with Slow Growing and Indigenous Species',
-    area: '10.00',
-  },
-  {
-    id: '5',
-    date: '22 May 2021',
-    beat: 'Khutakhali',
-    range: 'Fulchari',
-    division: 'Cox’s Bazar North Forest Division',
-    circle: 'Chattogram Circle',
-    year: '2021-2022',
-    type: 'Mixed Plantation with Slow Growing and Indigenous Species',
-    area: '10.00',
-  },
-  {
-    id: '6',
-    date: '22 May 2021',
-    beat: 'Khutakhali',
-    range: 'Fulchari',
-    division: 'Cox’s Bazar North Forest Division',
-    circle: 'Chattogram Circle',
-    year: '2021-2022',
-    type: 'Mixed Plantation with Slow Growing and Indigenous Species',
-    area: '10.00',
-  },
-  {
-    id: '7',
-    date: '22 May 2021',
-    beat: 'Khutakhali',
-    range: 'Fulchari',
-    division: 'Cox’s Bazar North Forest Division',
-    circle: 'Chattogram Circle',
-    year: '2021-2022',
-    type: 'Mixed Plantation with Slow Growing and Indigenous Species',
-    area: '10.00',
-  },
-  {
-    id: '8',
-    date: '22 May 2021',
-    beat: 'Khutakhali',
-    range: 'Fulchari',
-    division: 'Cox’s Bazar North Forest Division',
-    circle: 'Chattogram Circle',
-    year: '2021-2022',
-    type: 'Mixed Plantation with Slow Growing and Indigenous Species',
-    area: '10.00',
-  },
-  {
-    id: '9',
-    date: '22 May 2021',
-    beat: 'Khutakhali',
-    range: 'Fulchari',
-    division: 'Cox’s Bazar North Forest Division',
-    circle: 'Chattogram Circle',
-    year: '2021-2022',
-    type: 'Mixed Plantation with Slow Growing and Indigenous Species',
-    area: '10.00',
-  },
-  {
-    id: '10',
-    date: '22 May 2021',
-    beat: 'Khutakhali',
-    range: 'Fulchari',
-    division: 'Cox’s Bazar North Forest Division',
-    circle: 'Chattogram Circle',
-    year: '2021-2022',
-    type: 'Mixed Plantation with Slow Growing and Indigenous Species',
-    area: '10.00',
-  },
-  {
-    id: '11',
-    date: '22 May 2021',
-    beat: 'Khutakhali',
-    range: 'Fulchari',
-    division: 'Cox’s Bazar North Forest Division',
-    circle: 'Chattogram Circle',
-    year: '2021-2022',
-    type: 'Mixed Plantation with Slow Growing and Indigenous Species',
-    area: '10.00',
-  },
-  {
-    id: '12',
-    date: '22 May 2021',
-    beat: 'Khutakhali',
-    range: 'Fulchari',
-    division: 'Cox’s Bazar North Forest Division',
-    circle: 'Chattogram Circle',
-    year: '2021-2022',
-    type: 'Mixed Plantation with Slow Growing and Indigenous Species',
-    area: '10.00',
-  },
-  {
-    id: '13',
-    date: '22 May 2021',
-    beat: 'Khutakhali',
-    range: 'Fulchari',
-    division: 'Cox’s Bazar North Forest Division',
-    circle: 'Chattogram Circle',
-    year: '2021-2022',
-    type: 'Mixed Plantation with Slow Growing and Indigenous Species',
-    area: '10.00',
-  },
-  {
-    id: '14',
-    date: '22 May 2021',
-    beat: 'Khutakhali',
-    range: 'Fulchari',
-    division: 'Cox’s Bazar North Forest Division',
-    circle: 'Chattogram Circle',
-    year: '2021-2022',
-    type: 'Mixed Plantation with Slow Growing and Indigenous Species',
-    area: '10.00',
-  },
-  {
-    id: '15',
-    date: '22 May 2021',
-    beat: 'Khutakhali',
-    range: 'Fulchari',
-    division: 'Cox’s Bazar North Forest Division',
-    circle: 'Chattogram Circle',
-    year: '2021-2022',
-    type: 'Mixed Plantation with Slow Growing and Indigenous Species',
-    area: '10.00',
+    eco: 'hill',
+    meet: 'Khutakhali',
   },
 
   // Add remaining data as needed
 ];
 
-const Table = () => {
+const consult = () => {
   const navigation = useNavigation();
   return (
     <>
@@ -245,9 +90,9 @@ const Table = () => {
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Icon name="arrow-back" size={24} color="black" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Intervention Information</Text>
+        <Text style={styles.headerTitle}>Community Consult</Text>
         <TouchableOpacity
-          onPress={() => navigation.push('interventionOne')}
+          onPress={() => navigation.push('communityconsultOne')}
           style={styles.editButton}>
           <Feather name="edit-2" size={24} color="black" />
         </TouchableOpacity>
@@ -259,14 +104,13 @@ const Table = () => {
             <Text style={styles.headerText}>Sl.No.</Text>
             <Text style={styles.headerText}>Details</Text>
             <Text style={styles.headerText}>Actions</Text>
-            <Text style={styles.headerText}>Data Collection Date</Text>
+
             <Text style={styles.headerText}>Beat Name</Text>
             <Text style={styles.headerText}>Range Name</Text>
             <Text style={styles.headerText}>Division Name</Text>
             <Text style={styles.headerText}>Circle Name</Text>
-            <Text style={styles.headerText}>Plantation Year</Text>
-            <Text style={styles.headerText}>Plantation Type</Text>
-            <Text style={styles.headerText}>Plantation Area (ha)</Text>
+            <Text style={styles.headerText}>Ecozone Name</Text>
+            <Text style={styles.headerText}>Meeting Place</Text>
           </View>
 
           {/* Data Rows */}
@@ -282,9 +126,6 @@ const Table = () => {
                   <TouchableOpacity style={styles.button1}>
                     <Text style={styles.buttonText}>Details</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity style={styles.button2}>
-                    <Text style={styles.buttonText}>GPX VIEW</Text>
-                  </TouchableOpacity>
                 </View>
 
                 <TouchableOpacity style={styles.button3}>
@@ -296,9 +137,8 @@ const Table = () => {
                 <Text style={styles.cell}>{item.range}</Text>
                 <Text style={styles.cell}>{item.division}</Text>
                 <Text style={styles.cell}>{item.circle}</Text>
-                <Text style={styles.cell}>{item.year}</Text>
-                <Text style={styles.cell}>{item.type}</Text>
-                <Text style={styles.cell}>{item.area}</Text>
+                <Text style={styles.cell}>{item.eco}</Text>
+                <Text style={styles.cell}>{item.meet}</Text>
               </View>
             )}
           />
@@ -361,7 +201,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 10,
     borderRadius: 5,
-    height: '50%',
+    height: '100%',
   },
   buttonText: {
     color: '#fff',
@@ -395,4 +235,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Table;
+export default consult;

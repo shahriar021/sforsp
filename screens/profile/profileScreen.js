@@ -412,7 +412,7 @@ const ProfileScreen = () => {
 
           <TouchableOpacity
             style={styles.buttonCardList}
-            onPress={() => navigation.push('communityconsultOne')}>
+            onPress={() => navigation.push('consultDashboard')}>
             <Image
               source={require('../../assets/images/three.png')}
               style={styles.tinyLogo}
