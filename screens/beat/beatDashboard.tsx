@@ -7,12 +7,15 @@ import {
   StyleSheet,
   ScrollView,
   Button,
+  FlatList,
+  SafeAreaView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
 import Collapsible from 'react-native-collapsible';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import DocumentPicker from 'react-native-document-picker';
+import Table from './Table';
 
 const beatDashboard = () => {
   const navigation = useNavigation();
@@ -81,6 +84,35 @@ const beatDashboard = () => {
       console.log('No file selected');
     }
   };
+
+  const data = [
+    {
+      id: '1',
+      upzilla: 'CHAKARIA',
+      union: 'Kuthakhali',
+      village: 'Shegun bagica',
+      latitude: 'Latitude: 92.0458400000',
+      longitude: 'Longitude: 21.3725900000',
+      distance: '2.00',
+      totalHouseholds: '4.00',
+      forestVillagers: '90',
+      socialForestryParticipants: '25',
+      conservationParticipants: '0',
+    },
+    {
+      id: '2',
+      upzilla: 'CHAKARIA',
+      union: 'Khutakhali',
+      village: 'Bagainna para',
+      latitude: 'Latitude: 92.0507400000',
+      longitude: 'Longitude: 21.3718500000',
+      distance: '9.00',
+      totalHouseholds: '10.00',
+      forestVillagers: '4',
+      socialForestryParticipants: '0',
+      conservationParticipants: '0',
+    },
+  ];
 
   return (
     <>
@@ -532,7 +564,8 @@ const beatDashboard = () => {
         <Collapsible collapsed={isCollapsed6}>
           <ScrollView
             style={[styles.content, {maxHeight: 300}]}
-            nestedScrollEnabled={true}>
+            nestedScrollEnabled={true}
+            contentContainerStyle={styles.scrollContent}>
             <View style={styles.box}>
               <Text style={styles.sectionHeader}>
                 6.1. Existing Manpower (বিদ্যমান জনবল)
@@ -622,9 +655,90 @@ const beatDashboard = () => {
                 <Text style={styles.cellText}>6.2.1.a. Motorbike:</Text>
                 <Text style={styles.cellText}>1</Text>
                 <Text style={styles.cellText}>None</Text>
-                <Text style={styles.cellText}>01874432837</Text>
-                <Text style={styles.cellText}>324456552</Text>
+              </View>
+
+              <View style={styles.tableRow}>
+                <Text style={styles.cellText}>6.2.1.b. Bi-Cycle:</Text>
+                <Text style={styles.cellText}>1</Text>
+                <Text style={styles.cellText}>None</Text>
+              </View>
+
+              <View style={styles.tableRow}>
+                <Text style={styles.cellText}>
+                  6.2.1.c. Other (Please specify):
+                </Text>
                 <Text style={styles.cellText}></Text>
+                <Text style={styles.cellText}>None</Text>
+              </View>
+
+              <View style={styles.tableHeader}>
+                <Text style={styles.headerText}>6.2.2. Water transports</Text>
+                <Text style={styles.headerText}>Available quantity</Text>
+                <Text style={styles.headerText}>
+                  Condition of the logistics
+                </Text>
+              </View>
+
+              {/* Table Cells */}
+              <View style={styles.tableRow}>
+                <Text style={styles.cellText}>6.2.2.a. Speed Boat:</Text>
+                <Text style={styles.cellText}>1</Text>
+                <Text style={styles.cellText}>None</Text>
+              </View>
+
+              <View style={styles.tableRow}>
+                <Text style={styles.cellText}>6.2.2.b. Engine Trawler:</Text>
+                <Text style={styles.cellText}>1</Text>
+                <Text style={styles.cellText}>None</Text>
+              </View>
+
+              <View style={styles.tableRow}>
+                <Text style={styles.cellText}>6.2.2.c. Country Boat:</Text>
+                <Text style={styles.cellText}>1</Text>
+                <Text style={styles.cellText}>None</Text>
+              </View>
+
+              <View style={styles.tableRow}>
+                <Text style={styles.cellText}>
+                  6.2.2.d. Other (Please specify):
+                </Text>
+                <Text style={styles.cellText}>1</Text>
+                <Text style={styles.cellText}>None</Text>
+              </View>
+
+              <View style={styles.tableHeader}>
+                <Text style={styles.headerText}>6.2.3. Fire Arms</Text>
+                <Text style={styles.headerText}>Available quantity</Text>
+                <Text style={styles.headerText}>
+                  Condition of the logistics
+                </Text>
+              </View>
+
+              {/* Table Cells */}
+              <View style={styles.tableRow}>
+                <Text style={styles.cellText}>6.2.3.a. 303 Rifle:</Text>
+                <Text style={styles.cellText}>1</Text>
+                <Text style={styles.cellText}>None</Text>
+              </View>
+
+              <View style={styles.tableRow}>
+                <Text style={styles.cellText}>
+                  6.2.3.b. Self-Loading Rifle (SLR):
+                </Text>
+                <Text style={styles.cellText}>1</Text>
+                <Text style={styles.cellText}>None</Text>
+              </View>
+
+              <View style={styles.tableRow}>
+                <Text style={styles.cellText}>6.2.3.c. Short gun:</Text>
+                <Text style={styles.cellText}>1</Text>
+                <Text style={styles.cellText}>None</Text>
+              </View>
+
+              <View style={styles.tableRow}>
+                <Text style={styles.cellText}>6.2.3.d. Chinese Rifle:</Text>
+                <Text style={styles.cellText}>1</Text>
+                <Text style={styles.cellText}>None</Text>
               </View>
             </View>
           </ScrollView>
@@ -649,81 +763,16 @@ const beatDashboard = () => {
         </TouchableOpacity>
 
         <Collapsible collapsed={isCollapsed7}>
-          <ScrollView style={[styles.content, {maxHeight: 300}]}>
-            <Text style={styles.sectionHeader}>
-              Forest Landscape (বনের ধরণ):
-            </Text>
-            <Text style={styles.detailText}>Hill</Text>
-            <View style={styles.box}>
-              <Text style={styles.sectionHeader}>
-                2.1. Forest Administration Information (বন প্রশাসনিক তথ্য)
-              </Text>
-              <Text style={styles.detailText}>
-                2.1.a. Forest Circle (বন অঞ্চল): Chattogram Circle
-              </Text>
-              <Text style={styles.detailText}>
-                2.1.b. Forest Division (বন বিভাগ): Cox’s Bazar North Forest
-                Division
-              </Text>
-              <Text style={styles.detailText}>
-                2.1.c. Range/SFNTC (রেঞ্জ/এফইএনটিসি): Fulchari
-              </Text>
-              <Text style={styles.detailText}>
-                2.1.d. Beat/Camp/SFPC (বিট/ক্যাম্প/এসএফপিসি): Khutakhali
-              </Text>
-              <Text style={styles.detailText}>
-                2.1.d.1. Block (ব্লক): Not Available
-              </Text>
-              <Text style={styles.detailText}>
-                2.1.d.2. Char (চর): Not Available
-              </Text>
-
-              <Text style={styles.sectionHeader}>
-                2.2. Civil Administrative Information (নাগরিক প্রশাসনিক তথ্য)
-              </Text>
-              <Text style={styles.detailText}>
-                2.2.a. Division (বিভাগ): Chattagram Division
-              </Text>
-              <Text style={styles.detailText}>
-                2.2.b. District (জেলা): COX'S BAZAR
-              </Text>
-              <Text style={styles.detailText}>
-                2.2.c. Upazila (উপজেলা): CHAKARIA
-              </Text>
-              <Text style={styles.detailText}>
-                2.2.d. Union (ইউনিয়ন): Kuthakhali
-              </Text>
-
-              <Text style={styles.sectionHeader}>
-                2.3. Mouza Information (মৌজার তথ্যাদি)
-              </Text>
-              <Text style={styles.detailText}>
-                2.3.a. Name of Mouza (মৌজার নাম): Jongol koutakhali
-              </Text>
-              <Text style={styles.detailText}>
-                2.3.b. Survey Types (সার্ভের ধরণ): rs
-              </Text>
-              <Text style={styles.detailText}>
-                2.3.c. Sheet Number (সিট নম্বর): Dite pare nai
-              </Text>
+          <ScrollView
+            style={[styles.content, {maxHeight: 300}]}
+            horizontal={true}>
+            <View style={styles.box7}>
+              <SafeAreaView style={{flex: 1}}>
+                <Table />
+              </SafeAreaView>
             </View>
           </ScrollView>
         </Collapsible>
-
-        {/* <TouchableOpacity onPress={toggleExpanded6} style={styles.headerb}>
-          <Text
-            style={styles.headerText}
-            numberOfLines={2}
-            ellipsizeMode="tail">
-            8. Additional Notes with Image (সার্বিক অবস্থার তথ্যাদির বিস্তারিত
-            খাতায় লিখে ছবি তুলে আপলোড করুন)
-          </Text>
-          {isCollapsed3 ? (
-            <AntDesign name="plus" size={24} color="black" />
-          ) : (
-            <AntDesign name="minus" size={24} color="black" />
-          )}
-        </TouchableOpacity> */}
 
         <TouchableOpacity
           onPress={toggleExpanded8}
@@ -753,62 +802,40 @@ const beatDashboard = () => {
 
         <Collapsible collapsed={isCollapsed8}>
           <ScrollView style={[styles.content, {maxHeight: 300}]}>
-            <Text style={styles.sectionHeader}>
-              Forest Landscape (বনের ধরণ):
-            </Text>
-            <Text style={styles.detailText}>Hill</Text>
             <View style={styles.box}>
-              <Text style={styles.sectionHeader}>
-                2.1. Forest Administration Information (বন প্রশাসনিক তথ্য)
-              </Text>
-              <Text style={styles.detailText}>
-                2.1.a. Forest Circle (বন অঞ্চল): Chattogram Circle
-              </Text>
-              <Text style={styles.detailText}>
-                2.1.b. Forest Division (বন বিভাগ): Cox’s Bazar North Forest
-                Division
-              </Text>
-              <Text style={styles.detailText}>
-                2.1.c. Range/SFNTC (রেঞ্জ/এফইএনটিসি): Fulchari
-              </Text>
-              <Text style={styles.detailText}>
-                2.1.d. Beat/Camp/SFPC (বিট/ক্যাম্প/এসএফপিসি): Khutakhali
-              </Text>
-              <Text style={styles.detailText}>
-                2.1.d.1. Block (ব্লক): Not Available
-              </Text>
-              <Text style={styles.detailText}>
-                2.1.d.2. Char (চর): Not Available
-              </Text>
+              <View style={styles.row}>
+                <Text style={styles.label}>Select Image</Text>
+                <TouchableOpacity
+                  style={styles.fileButton}
+                  onPress={handleFileSelect}>
+                  <Text>{fileName || 'Choose File'}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.uploadButton}
+                  onPress={handleUpload}>
+                  <Text style={styles.uploadButtonText}>Upload</Text>
+                </TouchableOpacity>
+              </View>
+             
 
-              <Text style={styles.sectionHeader}>
-                2.2. Civil Administrative Information (নাগরিক প্রশাসনিক তথ্য)
-              </Text>
-              <Text style={styles.detailText}>
-                2.2.a. Division (বিভাগ): Chattagram Division
-              </Text>
-              <Text style={styles.detailText}>
-                2.2.b. District (জেলা): COX'S BAZAR
-              </Text>
-              <Text style={styles.detailText}>
-                2.2.c. Upazila (উপজেলা): CHAKARIA
-              </Text>
-              <Text style={styles.detailText}>
-                2.2.d. Union (ইউনিয়ন): Kuthakhali
-              </Text>
+              <View style={styles.tableContainer}>
+                {/* Header Row */}
+                <View style={styles.tableRow}>
+                  <Text style={[styles.tableHeader, styles.tableCell]}>
+                    Sl. No.
+                  </Text>
 
-              <Text style={styles.sectionHeader}>
-                2.3. Mouza Information (মৌজার তথ্যাদি)
-              </Text>
-              <Text style={styles.detailText}>
-                2.3.a. Name of Mouza (মৌজার নাম): Jongol koutakhali
-              </Text>
-              <Text style={styles.detailText}>
-                2.3.b. Survey Types (সার্ভের ধরণ): rs
-              </Text>
-              <Text style={styles.detailText}>
-                2.3.c. Sheet Number (সিট নম্বর): Dite pare nai
-              </Text>
+                  <Text style={[styles.tableHeader, styles.tableCell]}>
+                    Image
+                  </Text>
+                </View>
+
+                {/* Data Row */}
+                <View style={styles.tableRow}>
+                  <Text style={styles.tableCell}>1</Text>
+                  <Text style={styles.tableCell}>image</Text>
+                </View>
+              </View>
             </View>
           </ScrollView>
         </Collapsible>
@@ -923,6 +950,12 @@ const styles = StyleSheet.create({
   box: {
     borderWidth: 2,
     borderColor: '#D3D3D3',
+    
+  },
+  box7: {
+    borderWidth: 2,
+    borderColor: '#D3D3D3',
+    height: 300,
   },
 
   scrollContent: {
@@ -989,6 +1022,16 @@ const styles = StyleSheet.create({
   cellText: {
     flex: 1,
     textAlign: 'center',
+  },
+  cell: {
+    flex: 1,
+  },
+  header: {
+    flexDirection: 'row',
+    backgroundColor: '#f8f8f8',
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
   },
 });
 

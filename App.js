@@ -71,6 +71,7 @@ import consultThree from './screens/consult/consultThree';
 import database_update from './screens/database_update/database_update';
 import TabViewExample from './screens/tabview_dashboard/tabview_dash';
 import beatDashboard from './screens/beat/beatDashboard';
+import InterventionDashboar from './screens/intervention/interventionDashboar';
 
 LogBox.ignoreAllLogs();
 
@@ -347,6 +348,12 @@ const App = () => {
           name="beat_dashboard"
           component={beatDashboard}
           options={{title: 'Beat Dashboard'}}
+        />
+
+        <Stack.Screen
+          name="InterventionDashboar"
+          component={InterventionDashboar}
+          options={{title: 'Intervention Dashboard'}}
         />
       </Stack.Navigator>
     </NavigationContainer>

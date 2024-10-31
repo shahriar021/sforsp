@@ -400,7 +400,7 @@ const ProfileScreen = () => {
 
           <TouchableOpacity
             style={styles.buttonCardList}
-            onPress={() => navigation.push('interventionOne')}>
+            onPress={() => navigation.push('InterventionDashboar')}>
             <Image
               source={require('../../assets/images/two.png')}
               style={styles.tinyLogo}
