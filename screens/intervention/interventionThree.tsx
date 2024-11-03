@@ -20,13 +20,14 @@ import Icon from 'react-native-vector-icons/Ionicons';
 const interventionThree = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible1, setModalVisible1] = useState(false);
-  const [inputValue1, setInputValue1] = useState('');
+  const [inputValue1, setInputValue1] = useState(null);
   const [inputValue2, setInputValue2] = useState('');
   const [inputValue3, setInputValue3] = useState('');
   const [inputValue4, setInputValue4] = useState('');
   const [inputValue5, setInputValue5] = useState('');
   const [inputValue6, setInputValue6] = useState('');
   const [inputValue7, setInputValue7] = useState('');
+  const [inputValue8, setInputValue8] = useState('');
   const [showPicker, setShowPicker] = useState(false);
   const [date, setDate] = useState(new Date());
   const [selectedForest, setSelectedForest] = useState(null);
@@ -58,6 +59,20 @@ const interventionThree = () => {
     {label: 'Coniferous Forest', value: 'coniferous'},
     {label: 'Bamboo Forest', value: 'bamboo'},
   ];
+
+  const interventionThree = () => {
+    console.log(
+      console.log('inputValue1:', inputValue1),
+      console.log('inputValue2:', inputValue2),
+      console.log('inputValue3:', inputValue3),
+      console.log('inputValue4:', inputValue4),
+      console.log('inputValue5:', inputValue5),
+      console.log('inputValue6:', inputValue6),
+      console.log('inputValue7:', inputValue7),
+      console.log('inputValue8:', inputValue8),
+    );
+    navigation.navigate('interventionFour');
+  };
 
   return (
     <>
@@ -164,9 +179,9 @@ const interventionThree = () => {
                     </Text>
                     <TextInput
                       style={styles.input}
-                      value={inputValue1}
+                      value={inputValue2}
                       placeholder="Enter Geographic Location 1"
-                      onChangeText={text => setInputValue1(text)}
+                      onChangeText={text => setInputValue2(text)}
                       placeholderTextColor="black"
                     />
 
@@ -175,9 +190,9 @@ const interventionThree = () => {
                     </Text>
                     <TextInput
                       style={styles.input}
-                      value={inputValue1}
+                      value={inputValue3}
                       placeholder="Enter Geographic Location 2"
-                      onChangeText={text => setInputValue1(text)}
+                      onChangeText={text => setInputValue3(text)}
                       placeholderTextColor="black"
                     />
 
@@ -187,9 +202,9 @@ const interventionThree = () => {
                     </Text>
                     <TextInput
                       style={styles.input}
-                      value={inputValue1}
+                      value={inputValue4}
                       placeholder="Enter Crown Closure (%)"
-                      onChangeText={text => setInputValue1(text)}
+                      onChangeText={text => setInputValue4(text)}
                       placeholderTextColor="black"
                     />
 
@@ -209,8 +224,8 @@ const interventionThree = () => {
 
         <TextInput
           style={styles.input}
-          value={inputValue1}
-          onChange={text => setInputValue1(text)}
+          value={inputValue5}
+          onChange={text => setInputValue5(text)}
           placeholderTextColor="black"
           placeholder="select  From Plot center to North"
         />
@@ -219,8 +234,8 @@ const interventionThree = () => {
 
         <TextInput
           style={styles.input}
-          value={inputValue1}
-          onChange={text => setInputValue1(text)}
+          value={inputValue6}
+          onChange={text => setInputValue6(text)}
           placeholderTextColor="black"
           placeholder="select From Plot center to East"
         />
@@ -229,8 +244,8 @@ const interventionThree = () => {
 
         <TextInput
           style={styles.input}
-          value={inputValue1}
-          onChange={text => setInputValue1(text)}
+          value={inputValue7}
+          onChange={text => setInputValue7(text)}
           placeholderTextColor="black"
           placeholder="select From Plot center to South"
         />
@@ -239,8 +254,8 @@ const interventionThree = () => {
 
         <TextInput
           style={styles.input}
-          value={inputValue1}
-          onChange={text => setInputValue1(text)}
+          value={inputValue8}
+          onChange={text => setInputValue8(text)}
           placeholderTextColor="black"
           placeholder="select From Plot center to West"
         />
@@ -248,7 +263,7 @@ const interventionThree = () => {
         <View style={styles.button}>
           <TouchableOpacity
             style={styles.addButton}
-            onPress={() => navigation.navigate('interventionFour' as never)}>
+            onPress={() => interventionThree()}>
             <Text style={styles.buttonText}>Next</Text>
           </TouchableOpacity>
         </View>

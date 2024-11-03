@@ -43,6 +43,10 @@ const interventionFour = () => {
   const [inputValue5, setInputValue5] = useState('');
   const [inputValue6, setInputValue6] = useState('');
   const [inputValue7, setInputValue7] = useState('');
+  const [inputValue8, setInputValue8] = useState('');
+  const [inputValue9, setInputValue9] = useState('');
+  const [inputValue10, setInputValue10] = useState('');
+  const [inputValue11, setInputValue11] = useState('');
   const [showPicker, setShowPicker] = useState(false);
   const [date, setDate] = useState(new Date());
   const [selectedForest, setSelectedForest] = useState(null);
@@ -125,6 +129,23 @@ const interventionFour = () => {
 
     intervention_list();
   }, []);
+
+  const interventionFourSubmit = () => {
+    console.log(
+      inputValue1,
+      inputValue7,
+      inputValue8,
+      inputValue9,
+      inputValue10,
+      inputValue11,
+      selectedYears,
+
+      seedlingsPerPlot,
+      seedlingsPerHector,
+      treesPerPlot,
+      treesPerHector,
+    );
+  };
 
   return (
     <>
@@ -223,9 +244,9 @@ const interventionFour = () => {
                     </Text>
                     <TextInput
                       style={styles.input}
-                      value={inputValue1}
+                      value={inputValue2}
                       placeholder="Enter Species Name"
-                      onChangeText={text => setInputValue1(text)}
+                      onChangeText={text => setInputValue2(text)}
                       placeholderTextColor="black"
                     />
 
@@ -234,18 +255,18 @@ const interventionFour = () => {
                     </Text>
                     <TextInput
                       style={styles.input}
-                      value={inputValue1}
+                      value={inputValue3}
                       placeholder="Enter Number of Seedlings"
-                      onChangeText={text => setInputValue1(text)}
+                      onChangeText={text => setInputValue3(text)}
                       placeholderTextColor="black"
                     />
 
                     <Text style={styles.label}>Number of Trees</Text>
                     <TextInput
                       style={styles.input}
-                      value={inputValue1}
+                      value={inputValue4}
                       placeholder="Enter Number of Trees"
-                      onChangeText={text => setInputValue1(text)}
+                      onChangeText={text => setInputValue4(text)}
                       placeholderTextColor="black"
                     />
 
@@ -404,8 +425,8 @@ const interventionFour = () => {
 
         <TextInput
           style={styles.input}
-          value={inputValue1}
-          onChange={text => setInputValue1(text)}
+          value={inputValue5}
+          onChange={text => setInputValue5(text)}
           placeholderTextColor="black"
           placeholder="select Regeneration Plots"
         />
@@ -414,8 +435,8 @@ const interventionFour = () => {
 
         <TextInput
           style={styles.input}
-          value={inputValue1}
-          onChange={text => setInputValue1(text)}
+          value={inputValue6}
+          onChange={text => setInputValue6(text)}
           placeholderTextColor="black"
           placeholder="select Avg Seedling/Sapling per plot"
         />
@@ -424,8 +445,8 @@ const interventionFour = () => {
 
         <TextInput
           style={styles.input}
-          value={inputValue1}
-          onChange={text => setInputValue1(text)}
+          value={inputValue7}
+          onChange={text => setInputValue7(text)}
           placeholderTextColor="black"
           placeholder="select Avg. Trees per plot"
         />
@@ -434,8 +455,8 @@ const interventionFour = () => {
 
         <TextInput
           style={styles.input}
-          value={inputValue1}
-          onChange={text => setInputValue1(text)}
+          value={inputValue8}
+          onChange={text => setInputValue8(text)}
           placeholderTextColor="black"
           placeholder="select Trees Per hectare"
         />
@@ -472,8 +493,8 @@ const interventionFour = () => {
 
         <TextInput
           style={styles.input}
-          value={inputValue1}
-          onChange={text => setInputValue1(text)}
+          value={inputValue9}
+          onChange={text => setInputValue9(text)}
           placeholderTextColor="black"
           placeholder="select Proposed Plantation Area"
         />
@@ -507,8 +528,8 @@ const interventionFour = () => {
 
         <TextInput
           style={styles.input}
-          value={inputValue1}
-          onChange={text => setInputValue1(text)}
+          value={inputValue10}
+          onChange={text => setInputValue10(text)}
           placeholderTextColor="black"
           placeholder="select Patches"
         />
@@ -517,8 +538,8 @@ const interventionFour = () => {
 
         <TextInput
           style={styles.input}
-          value={inputValue1}
-          onChange={text => setInputValue1(text)}
+          value={inputValue11}
+          onChange={text => setInputValue11(text)}
           placeholderTextColor="black"
           placeholder="select Seeding/ha"
         />
@@ -526,7 +547,7 @@ const interventionFour = () => {
         <View style={styles.button}>
           <TouchableOpacity
             style={styles.addButton}
-            onPress={() => navigation.navigate('interventionFive' as never)}>
+            onPress={() => interventionFourSubmit()}>
             <Text style={styles.buttonText}>Next</Text>
           </TouchableOpacity>
         </View>

@@ -75,6 +75,21 @@ const beatFour = () => {
     setInputValues(prevValues => ({...prevValues, [name]: value}));
   };
 
+  const beatFour = () => {
+    console.log(
+      inputValues.upzilla,
+      inputValues.union,
+      inputValues.villages,
+      inputValues.location1,
+      inputValues.location2,
+      inputValues.distance,
+      inputValues.households,
+      inputValues.forestVillagers,
+      inputValues.forestryParticipants,
+      inputValues.conservationParticipants,
+    );
+  };
+
   return (
     <>
       <View style={styles.header}>
@@ -329,7 +344,7 @@ const beatFour = () => {
         </View>
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.addButton}>
+          <TouchableOpacity style={styles.addButton} onPress={()=>beatFour()}>
             <Text style={styles.buttonText}>Submit</Text>
           </TouchableOpacity>
 

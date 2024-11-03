@@ -39,6 +39,19 @@ const beatThree = () => {
   const [inputValue5, setInputValue5] = useState('');
   const [inputValue6, setInputValue6] = useState('');
   const [inputValue7, setInputValue7] = useState('');
+  const [inputValue8, setInputValue8] = useState('');
+  const [inputValue9, setInputValue9] = useState('');
+  const [inputValue10, setInputValue10] = useState('');
+  const [inputValue11, setInputValue11] = useState('');
+  const [inputValue12, setInputValue12] = useState('');
+  const [inputValue13, setInputValue13] = useState('');
+  const [inputValue14, setInputValue14] = useState('');
+  const [inputValue15, setInputValue15] = useState('');
+  const [inputValue16, setInputValue16] = useState('');
+  const [inputValue17, setInputValue17] = useState('');
+  const [inputValue18, setInputValue18] = useState('');
+  const [inputValue19, setInputValue19] = useState('');
+
   const [showPicker, setShowPicker] = useState(false);
   const [date, setDate] = useState(new Date());
   const [selectedForest, setSelectedForest] = useState(null);
@@ -84,6 +97,38 @@ const beatThree = () => {
 
   const handleInputChange = (field, value) => {
     setInputValue(prevValue => ({...prevValue, [field]: value}));
+  };
+
+  const submitBeatThree = () => {
+    console.log(
+      inputValue7,
+      inputValue8,
+      inputValue9,
+      inputValue10,
+      inputValue11,
+      inputValue12,
+      inputValue13,
+      inputValue14,
+      inputValue15,
+      inputValue16,
+      inputValue17,
+      inputValue18,
+      inputValue19,
+
+      selectedLogistic1,
+      selectedLogistic2,
+      selectedLogistic3,
+      selectedLogistic4,
+      selectedLogistic5,
+      selectedLogistic6,
+      selectedLogistic7,
+      selectedLogistic8,
+      selectedLogistic9,
+      selectedLogistic10,
+      selectedLogistic11,
+      selectedLogistic12,
+    );
+    navigation.navigate('beatFour');
   };
 
   return (
@@ -466,9 +511,9 @@ const beatThree = () => {
         <TextInput
           style={styles.input}
           placeholder="Type here Cycle"
-          value={inputValue7}
+          value={inputValue8}
           keyboardType="numeric"
-          onChangeText={text => setInputValue7(text)}
+          onChangeText={text => setInputValue8(text)}
           placeholderTextColor="black"
         />
         <Dropdown
@@ -495,9 +540,9 @@ const beatThree = () => {
         <TextInput
           style={styles.input}
           placeholder="Type here Other"
-          value={inputValue7}
+          value={inputValue9}
           keyboardType="numeric"
-          onChangeText={text => setInputValue7(text)}
+          onChangeText={text => setInputValue9(text)}
           placeholderTextColor="black"
         />
         <Dropdown
@@ -526,9 +571,9 @@ const beatThree = () => {
         <TextInput
           style={styles.input}
           placeholder="Type here Speed Boat"
-          value={inputValue7}
+          value={inputValue10}
           keyboardType="numeric"
-          onChangeText={text => setInputValue7(text)}
+          onChangeText={text => setInputValue10(text)}
           placeholderTextColor="black"
         />
         <Dropdown
@@ -555,9 +600,9 @@ const beatThree = () => {
         <TextInput
           style={styles.input}
           placeholder="Type here Engine Trawler"
-          value={inputValue7}
+          value={inputValue11}
           keyboardType="numeric"
-          onChangeText={text => setInputValue7(text)}
+          onChangeText={text => setInputValue11(text)}
           placeholderTextColor="black"
         />
         <Dropdown
@@ -584,9 +629,9 @@ const beatThree = () => {
         <TextInput
           style={styles.input}
           placeholder="Type here Country Boat"
-          value={inputValue7}
+          value={inputValue12}
           keyboardType="numeric"
-          onChangeText={text => setInputValue7(text)}
+          onChangeText={text => setInputValue12(text)}
           placeholderTextColor="black"
         />
         <Dropdown
@@ -613,9 +658,9 @@ const beatThree = () => {
         <TextInput
           style={styles.input}
           placeholder="Type here Other"
-          value={inputValue7}
+          value={inputValue13}
           keyboardType="numeric"
-          onChangeText={text => setInputValue7(text)}
+          onChangeText={text => setInputValue13(text)}
           placeholderTextColor="black"
         />
         <Dropdown
@@ -644,9 +689,9 @@ const beatThree = () => {
         <TextInput
           style={styles.input}
           placeholder="Type here 303 Rifle"
-          value={inputValue7}
+          value={inputValue14}
           keyboardType="numeric"
-          onChangeText={text => setInputValue7(text)}
+          onChangeText={text => setInputValue14(text)}
           placeholderTextColor="black"
         />
         <Dropdown
@@ -673,9 +718,9 @@ const beatThree = () => {
         <TextInput
           style={styles.input}
           placeholder="Type here Self-Loading Rifle"
-          value={inputValue7}
+          value={inputValue15}
           keyboardType="numeric"
-          onChangeText={text => setInputValue7(text)}
+          onChangeText={text => setInputValue15(text)}
           placeholderTextColor="black"
         />
         <Dropdown
@@ -702,9 +747,9 @@ const beatThree = () => {
         <TextInput
           style={styles.input}
           placeholder="Type here Short Gun"
-          value={inputValue7}
+          value={inputValue16}
           keyboardType="numeric"
-          onChangeText={text => setInputValue7(text)}
+          onChangeText={text => setInputValue17(text)}
           placeholderTextColor="black"
         />
         <Dropdown
@@ -731,9 +776,9 @@ const beatThree = () => {
         <TextInput
           style={styles.input}
           placeholder="Type here Chinese Rifle"
-          value={inputValue7}
+          value={inputValue18}
           keyboardType="numeric"
-          onChangeText={text => setInputValue7(text)}
+          onChangeText={text => setInputValue18(text)}
           placeholderTextColor="black"
         />
         <Dropdown
@@ -759,9 +804,9 @@ const beatThree = () => {
         <TextInput
           style={styles.input}
           placeholder="Type here Other"
-          value={inputValue7}
+          value={inputValue19}
           keyboardType="numeric"
-          onChangeText={text => setInputValue7(text)}
+          onChangeText={text => setInputValue19(text)}
           placeholderTextColor="black"
         />
         <Dropdown
@@ -787,7 +832,7 @@ const beatThree = () => {
         <View style={styles.button}>
           <TouchableOpacity
             style={styles.addButton}
-            onPress={() => navigation.navigate('beatFour' as never)}>
+            onPress={() => submitBeatThree()}>
             <Text style={styles.buttonText}>Next</Text>
           </TouchableOpacity>
         </View>

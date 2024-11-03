@@ -25,11 +25,18 @@ const interventionTwo = () => {
   const [modalVisible2, setModalVisible2] = useState(false);
   const [history, setHistory] = useState([]);
   const [inputValue1, setInputValue1] = useState('');
+  const [inputValue2, setInputValue2] = useState('');
   const [inputValue3, setInputValue3] = useState('');
   const [inputValue4, setInputValue4] = useState('');
   const [inputValue5, setInputValue5] = useState('');
   const [inputValue6, setInputValue6] = useState('');
   const [inputValue7, setInputValue7] = useState('');
+  const [inputValue8, setInputValue8] = useState('');
+  const [inputValue9, setInputValue9] = useState('');
+  const [inputValue10, setInputValue10] = useState('');
+  const [inputValue11, setInputValue11] = useState('');
+  const [inputValue12, setInputValue12] = useState('');
+  const [inputValue100, setInputValue100] = useState('');
   const [showPicker, setShowPicker] = useState(false);
   const [date, setDate] = useState(new Date());
 
@@ -52,7 +59,7 @@ const interventionTwo = () => {
     setShowPicker(Platform.OS === 'ios'); // Hide the picker after selection (Android closes automatically)
     setDate(currentDate);
     const formattedDate = `${currentDate.toLocaleDateString()} ${currentDate.toLocaleTimeString()}`;
-    setInputValue1(formattedDate); // Update TextInput with selected date and time
+    setInputValue100(formattedDate); // Update TextInput with selected date and time
   };
 
   const showDatePicker = () => {
@@ -88,6 +95,19 @@ const interventionTwo = () => {
 
     history();
   }, []);
+
+  const interventionTwo = () => {
+    console.log(
+      inputValue2,
+      inputValue3,
+      inputValue4,
+      inputValue5,
+      inputValue6,
+      'intervention two',
+    );
+
+    navigation.navigate('interventionThree');
+  };
 
   return (
     <>
@@ -245,10 +265,10 @@ const interventionTwo = () => {
                     </Text>
                     <TextInput
                       style={styles.input}
-                      value={inputValue1}
+                      value={inputValue2}
                       placeholder="Enter Total Area (ha)"
                       keyboardType="numeric"
-                      onChangeText={text => setInputValue1(text)}
+                      onChangeText={text => setInputValue2(text)}
                       placeholderTextColor="black"
                     />
 
@@ -258,29 +278,29 @@ const interventionTwo = () => {
                     </Text>
                     <TextInput
                       style={styles.input}
-                      value={inputValue1}
+                      value={inputValue3}
                       placeholder="Enter GPX Track Name"
-                      onChangeText={text => setInputValue1(text)}
+                      onChangeText={text => setInputValue3(text)}
                       placeholderTextColor="black"
                     />
 
                     <Text style={styles.label}>Total Area (ha)</Text>
                     <TextInput
                       style={styles.input}
-                      value={inputValue1}
+                      value={inputValue4}
                       placeholder="Enter Total Area (ha)"
                       keyboardType="numeric"
-                      onChangeText={text => setInputValue1(text)}
+                      onChangeText={text => setInputValue4(text)}
                       placeholderTextColor="black"
                     />
 
                     <Text style={styles.label}>Total Area (ac)</Text>
                     <TextInput
                       style={styles.input}
-                      value={inputValue1}
+                      value={inputValue5}
                       placeholder="Enter Total Area (ac)"
                       keyboardType="numeric"
-                      onChangeText={text => setInputValue1(text)}
+                      onChangeText={text => setInputValue5(text)}
                       placeholderTextColor="black"
                     />
 
@@ -318,9 +338,9 @@ const interventionTwo = () => {
 
         <TextInput
           style={styles.input}
-          value={inputValue1}
+          value={inputValue6}
           keyboardType="numeric"
-          onChange={text => setInputValue1(text)}
+          onChange={text => setInputValue6(text)}
           placeholderTextColor="black"
           placeholder="select Measured area"
         />
@@ -401,45 +421,45 @@ const interventionTwo = () => {
                     <Text style={styles.label}>3.e.2. Latitude</Text>
                     <TextInput
                       style={styles.input}
-                      value={inputValue1}
+                      value={inputValue7}
                       placeholder="Enter Latitude"
-                      onChangeText={text => setInputValue1(text)}
+                      onChangeText={text => setInputValue7(text)}
                       placeholderTextColor="black"
                     />
 
                     <Text style={styles.label}>3.e.2. Longitude</Text>
                     <TextInput
                       style={styles.input}
-                      value={inputValue1}
+                      value={inputValue8}
                       placeholder="Enter Longitude"
-                      onChangeText={text => setInputValue1(text)}
+                      onChangeText={text => setInputValue8(text)}
                       placeholderTextColor="black"
                     />
 
                     <Text style={styles.label}>3.e.3. Bearing (degree)</Text>
                     <TextInput
                       style={styles.input}
-                      value={inputValue1}
+                      value={inputValue9}
                       placeholder="Enter Bearing"
-                      onChangeText={text => setInputValue1(text)}
+                      onChangeText={text => setInputValue9(text)}
                       placeholderTextColor="black"
                     />
 
                     <Text style={styles.label}>3.e.4. PPIC Location</Text>
                     <TextInput
                       style={styles.input}
-                      value={inputValue1}
+                      value={inputValue10}
                       placeholder="Enter PPIC Location"
-                      onChangeText={text => setInputValue1(text)}
+                      onChangeText={text => setInputValue10(text)}
                       placeholderTextColor="black"
                     />
 
                     <Text style={styles.label}>3.e.5. PPIC Location ACC</Text>
                     <TextInput
                       style={styles.input}
-                      value={inputValue1}
+                      value={inputValue11}
                       placeholder="Enter PPIC Location ACC"
-                      onChangeText={text => setInputValue1(text)}
+                      onChangeText={text => setInputValue11(text)}
                       placeholderTextColor="black"
                     />
 
@@ -468,8 +488,8 @@ const interventionTwo = () => {
 
         <TextInput
           style={styles.input}
-          value={inputValue1}
-          onChange={text => setInputValue1(text)}
+          value={inputValue12}
+          onChange={text => setInputValue12(text)}
           placeholderTextColor="black"
           placeholder="select Plantation site"
         />
@@ -501,7 +521,7 @@ const interventionTwo = () => {
         <View style={styles.button}>
           <TouchableOpacity
             style={styles.addButton}
-            onPress={() => navigation.navigate('interventionThree' as never)}>
+            onPress={() => interventionTwo()}>
             <Text style={styles.buttonText}>Next</Text>
           </TouchableOpacity>
         </View>

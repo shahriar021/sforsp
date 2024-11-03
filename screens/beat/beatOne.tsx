@@ -17,6 +17,7 @@ import {useNavigation} from '@react-navigation/native';
 import {Colors, CommonStyles, Fonts, Sizes} from '../../constants/styles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {baseApi, token} from '../../constants/base_api';
+import MonthPicker from 'react-native-month-year-picker';
 import {
   jur_ad_districts_api,
   jur_ad_districts_list,
@@ -60,6 +61,9 @@ const beatOne = () => {
   const [inputValue5, setInputValue5] = useState('');
   const [inputValue6, setInputValue6] = useState('');
   const [inputValue7, setInputValue7] = useState('');
+  const [inputValue8, setInputValue8] = useState('');
+  const [inputValue9, setInputValue9] = useState('');
+  const [inputValue10, setInputValue10] = useState('');
   const [showPicker, setShowPicker] = useState(false);
   const [date, setDate] = useState(new Date());
 
@@ -102,7 +106,7 @@ const beatOne = () => {
     const currentDate = selectedDate || date;
     setShowPicker(Platform.OS === 'ios'); // Hide the picker after selection (Android closes automatically)
     setDate(currentDate);
-    const formattedDate = `${currentDate.toLocaleDateString()} ${currentDate.toLocaleTimeString()}`;
+    const formattedDate = `${currentDate.toLocaleDateString()} `;
     setInputValue1(formattedDate); // Update TextInput with selected date and time
   };
 
@@ -188,7 +192,7 @@ const beatOne = () => {
     };
 
     forest_division();
-  }, [selectedForestCircle]);
+  }, []);
 
   useEffect(() => {
     const forest_range = async () => {
@@ -212,7 +216,7 @@ const beatOne = () => {
     };
 
     forest_range();
-  }, [selectedForestDivision]);
+  }, []);
 
   useEffect(() => {
     const forest_beat = async () => {
@@ -237,7 +241,7 @@ const beatOne = () => {
     };
 
     forest_beat();
-  }, [selectedForestrange]);
+  }, []);
 
   useEffect(() => {
     const division = async () => {
@@ -287,7 +291,7 @@ const beatOne = () => {
     };
 
     district();
-  }, [selectedDivision]);
+  }, []);
 
   useEffect(() => {
     const upazila = async () => {
@@ -311,7 +315,7 @@ const beatOne = () => {
     };
 
     upazila();
-  }, [selectedDistrict]);
+  }, []);
 
   useEffect(() => {
     const survey = async () => {
@@ -335,8 +339,34 @@ const beatOne = () => {
     survey();
   }, []);
 
-  console.log('fstDivison:', survey);
-  console.log('Selected Forest division:', selectedDistrict);
+  const beat_one_submit = () => {
+    console.log(
+      inputValue1,
+      inputValue2,
+      inputValue3,
+      inputValue4,
+      inputValue5,
+      inputValue6,
+      inputValue7,
+      inputValue9,
+      inputValue10,
+
+      selectedForest,
+      selectedForestCircle,
+      selectedForestDivision,
+      selectedForestrange,
+      selectedForestbeat,
+      selectedDistrict,
+      selectedUpazila,
+      selectedSurvey,
+
+    );
+
+    navigation.navigate('beatTwo');
+  };
+
+  // console.log('fstDivison:', survey);
+  // console.log('Selected Forest division:', selectedDistrict);
 
   return (
     <>
@@ -366,11 +396,12 @@ const beatOne = () => {
         </TouchableOpacity>
 
         {showPicker && (
-          <DateTimePicker
-            value={date}
-            mode="datetime"
-            display="default"
+          <MonthPicker
             onChange={onChange}
+            value={date}
+            minimumDate={new Date()}
+            maximumDate={new Date(2025, 5)}
+            locale="en"
           />
         )}
 
@@ -625,8 +656,8 @@ const beatOne = () => {
         <TextInput
           style={styles.input}
           placeholder="Type here Union"
-          value={inputValue7}
-          onChangeText={text => setInputValue7(text)}
+          value={inputValue8}
+          onChangeText={text => setInputValue8(text)}
           placeholderTextColor="black"
         />
         {/* <View style={styles.txtNbutton}>
@@ -706,8 +737,8 @@ const beatOne = () => {
                   <TextInput
                     style={styles.minput}
                     placeholder="Type here Mouza"
-                    value={inputValue7}
-                    onChangeText={text => setInputValue7(text)}
+                    value={inputValue9}
+                    onChangeText={text => setInputValue9(text)}
                     placeholderTextColor="black"
                   />
 
@@ -740,8 +771,8 @@ const beatOne = () => {
                   <TextInput
                     style={styles.input}
                     placeholder="Type here Sheet Number"
-                    value={inputValue7}
-                    onChangeText={text => setInputValue7(text)}
+                    value={inputValue10}
+                    onChangeText={text => setInputValue10(text)}
                     placeholderTextColor="black"
                   />
 
@@ -759,7 +790,7 @@ const beatOne = () => {
         <View style={styles.button}>
           <TouchableOpacity
             style={styles.addButton}
-            onPress={() => navigation.navigate('beatTwo' as never)}>
+            onPress={() => beat_one_submit()}>
             <Text style={styles.buttonText}>Next</Text>
           </TouchableOpacity>
         </View>

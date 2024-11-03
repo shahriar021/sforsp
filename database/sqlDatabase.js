@@ -16,7 +16,7 @@ export const aspects_api = async () => {
   try {
     const response = await fetch(`${baseApi}/aspects?token=${token}`);
     const data = await response.json();
-    console.log('Total aspects items from API:', data.length);
+    //console.log('Total aspects items from API:', data.length);
 
     await new Promise((resolve, reject) => {
       database.transaction(tx => {
@@ -24,7 +24,7 @@ export const aspects_api = async () => {
           'DROP TABLE IF EXISTS aspects',
           [],
           () => {
-            console.log('aspects table dropped successfully');
+           // console.log('aspects table dropped successfully');
           },
           reject,
         );
@@ -33,7 +33,7 @@ export const aspects_api = async () => {
           'CREATE TABLE IF NOT EXISTS aspects (id TEXT, name TEXT, name_bn TEXT, name_short TEXT, code TEXT)',
           [],
           () => {
-            console.log('aspects table created successfully');
+            //console.log('aspects table created successfully');
           },
           reject,
         );
@@ -49,9 +49,9 @@ export const aspects_api = async () => {
               aspects.code || null,
             ],
             (_, resultSet) =>
-              console.log('aspects data inserted successfully', resultSet),
+              //console.log('aspects data inserted successfully', resultSet),
             (_, error) => {
-              console.error('Error inserting aspects data', error, aspects);
+              //console.error('Error inserting aspects data', error, aspects);
             },
           );
         });
@@ -73,7 +73,7 @@ export const aspects_list = async () => {
         `SELECT * FROM aspects`, // Query the aspects table
         [],
         (_, resultSet) => {
-          console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          //console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
@@ -100,7 +100,7 @@ export const aspects_delete = async () => {
         `DELETE FROM aspects`, // Correct SQL to delete all rows
         [],
         async (_, resultSet) => {
-          console.log('All data deleted from aspects:', resultSet);
+          //console.log('All data deleted from aspects:', resultSet);
 
           try {
             await aspects_api();
@@ -390,10 +390,10 @@ export const jur_fd_ecozones_api = async () => {
               jur_fd_ecozones.raw_code || null,
             ],
             (_, resultSet) =>
-              console.log(
-                'jur_fd_ecozones data inserted successfully',
-                resultSet,
-              ),
+              // console.log(
+              //   'jur_fd_ecozones data inserted successfully',
+              //   resultSet,
+              // ),
             (_, error) => {
               console.error(
                 'Error inserting jur_fd_ecozones data',
@@ -421,7 +421,7 @@ export const jur_fd_ecozones_list = async () => {
         `SELECT * FROM jur_fd_ecozones`, // Query the jur_fd_ecozones table
         [],
         (_, resultSet) => {
-          console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          //console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
@@ -507,10 +507,10 @@ export const spatial_ref_sys_api = async () => {
               spatial_ref_sys.proj4text || null,
             ],
             (_, resultSet) =>
-              console.log(
-                'spatial_ref_sys data inserted successfully',
-                resultSet,
-              ),
+              // console.log(
+              //   'spatial_ref_sys data inserted successfully',
+              //   resultSet,
+              // ),
             (_, error) => {
               console.error(
                 'Error inserting spatial_ref_sys data',
@@ -538,7 +538,7 @@ export const spatial_ref_sys_list = async () => {
         `SELECT * FROM spatial_ref_sys`, // Query the spatial_ref_sys table
         [],
         (_, resultSet) => {
-          console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          //console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
@@ -622,10 +622,10 @@ export const age_plantations_api = async () => {
               age_plantations.code || null,
             ],
             (_, resultSet) =>
-              console.log(
-                'age_plantations data inserted successfully',
-                resultSet,
-              ),
+              // console.log(
+              //   'age_plantations data inserted successfully',
+              //   resultSet,
+              // ),
             (_, error) => {
               console.error(
                 'Error inserting age_plantations data',
@@ -653,7 +653,7 @@ export const age_plantations_list = async () => {
         `SELECT * FROM age_plantations`, // Query the age_plantations table
         [],
         (_, resultSet) => {
-          console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          //console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
@@ -849,10 +849,10 @@ export const canopycover_lists_api = async () => {
               canopycover_lists.code || null,
             ],
             (_, resultSet) =>
-              console.log(
-                'canopycover_lists data inserted successfully',
-                resultSet,
-              ),
+              // console.log(
+              //   'canopycover_lists data inserted successfully',
+              //   resultSet,
+              // ),
             (_, error) => {
               console.error(
                 'Error inserting canopycover_lists data',
@@ -880,7 +880,7 @@ export const canopycover_lists_list = async () => {
         `SELECT * FROM canopycover_lists`, // Query the canopycover_lists table
         [],
         (_, resultSet) => {
-          console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          //console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
@@ -1074,10 +1074,10 @@ export const spacing_lists_api = async () => {
               spacing_lists.code || null,
             ],
             (_, resultSet) =>
-              console.log(
-                'spacing_lists data inserted successfully',
-                resultSet,
-              ),
+              // console.log(
+              //   'spacing_lists data inserted successfully',
+              //   resultSet,
+              // ),
             (_, error) => {
               console.error(
                 'Error inserting spacing_lists data',
@@ -1105,7 +1105,7 @@ export const spacing_lists_list = async () => {
         `SELECT * FROM spacing_lists`, // Query the spacing_lists table
         [],
         (_, resultSet) => {
-          console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          // console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
@@ -1218,7 +1218,7 @@ export const cardpoints_list = async () => {
         `SELECT * FROM cardpoints`, // Query the cardpoints table
         [],
         (_, resultSet) => {
-          console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          // console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
@@ -1304,7 +1304,7 @@ export const teams_api = async () => {
               teams.updated_at || null,
             ],
             (_, resultSet) =>
-              console.log('teams data inserted successfully', resultSet),
+              // console.log('teams data inserted successfully', resultSet),
             (_, error) => {
               console.error('Error inserting teams data', error, teams);
             },
@@ -1328,7 +1328,7 @@ export const teams_list = async () => {
         `SELECT * FROM teams`, // Query the teams table
         [],
         (_, resultSet) => {
-          console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          // console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
@@ -1444,7 +1444,7 @@ export const polytypetrt_lists_list = async () => {
         `SELECT * FROM polytypetrt_lists`, // Query the polytypetrt_lists table
         [],
         (_, resultSet) => {
-          console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          // console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
@@ -1532,10 +1532,10 @@ export const project_lists_audit_api = async () => {
               project_lists_audit.PLAdditionTime || null,
             ],
             (_, resultSet) =>
-              console.log(
-                'project_lists_audit data inserted successfully',
-                resultSet,
-              ),
+              // console.log(
+              //   'project_lists_audit data inserted successfully',
+              //   resultSet,
+              // ),
             (_, error) => {
               console.error(
                 'Error inserting project_lists_audit data',
@@ -1563,7 +1563,7 @@ export const project_lists_audit_list = async () => {
         `SELECT * FROM project_lists_audit`, // Query the project_lists_audit table
         [],
         (_, resultSet) => {
-          console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          // console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
@@ -1672,7 +1672,7 @@ export const qtr_lists_list = async () => {
         `SELECT * FROM qtr_lists`, // Query the qtr_lists table
         [],
         (_, resultSet) => {
-          console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          // console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
@@ -1781,7 +1781,7 @@ export const receptors_list = async () => {
         `SELECT * FROM receptors`, // Query the receptors table
         [],
         (_, resultSet) => {
-          console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          // console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
@@ -1897,7 +1897,7 @@ export const record_points_list = async () => {
         `SELECT * FROM record_points`, // Query the record_points table
         [],
         (_, resultSet) => {
-          console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          // console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
@@ -2015,7 +2015,7 @@ export const regeneration_photo_list = async () => {
         `SELECT * FROM regeneration_photo`, // Query the regeneration_photo table
         [],
         (_, resultSet) => {
-          console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          // console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
@@ -2128,7 +2128,7 @@ export const directions_list = async () => {
         `SELECT * FROM directions`, // Query the directions table
         [],
         (_, resultSet) => {
-          console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          // console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
@@ -2356,7 +2356,7 @@ export const division_test_list = async () => {
         `SELECT * FROM division_test`, // Query the division_test table
         [],
         (_, resultSet) => {
-          console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          // console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
@@ -2469,7 +2469,7 @@ export const elevations_list = async () => {
         `SELECT * FROM elevations`, // Query the elevations table
         [],
         (_, resultSet) => {
-          console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          // console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
@@ -2599,7 +2599,7 @@ export const email_notifications_list = async () => {
         `SELECT * FROM email_notifications`, // Query the email_notifications table
         [],
         (_, resultSet) => {
-          console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          // console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
@@ -3213,7 +3213,7 @@ export const forward_beat_history_list = async () => {
         `SELECT * FROM forward_beat_history`, // Query the forward_beat_history table
         [],
         (_, resultSet) => {
-          console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          // console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
@@ -3327,7 +3327,7 @@ export const forward_status_list = async () => {
         `SELECT * FROM forward_status`, // Query the forward_status table
         [],
         (_, resultSet) => {
-          console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          // console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
@@ -3448,7 +3448,7 @@ export const geo_beats_list = async () => {
         `SELECT * FROM geo_beats`, // Query the geo_beats table
         [],
         (_, resultSet) => {
-          console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          // console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
@@ -3567,7 +3567,7 @@ export const geo_district_boundary_list = async () => {
         `SELECT * FROM geo_district_boundary`, // Query the geo_district_boundary table
         [],
         (_, resultSet) => {
-          console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          // console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
@@ -3692,7 +3692,7 @@ export const geo_district_pts_list = async () => {
         `SELECT * FROM geo_district_pts`, // Query the geo_district_pts table
         [],
         (_, resultSet) => {
-          console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          // console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
@@ -3810,7 +3810,7 @@ export const geo_division_boundary_list = async () => {
         `SELECT * FROM geo_division_boundary`, // Query the geo_division_boundary table
         [],
         (_, resultSet) => {
-          console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          // console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
@@ -5145,7 +5145,7 @@ export const historys_list = async () => {
         `SELECT * FROM historys`, // Query the historys table
         [],
         (_, resultSet) => {
-          console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          // console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
@@ -5257,7 +5257,7 @@ export const human_issues_list = async () => {
         `SELECT * FROM human_issues`, // Query the human_issues table
         [],
         (_, resultSet) => {
-          console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          // console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
@@ -5492,7 +5492,7 @@ export const intervention_lists_list = async () => {
         `SELECT * FROM intervention_lists`, // Query the intervention_lists table
         [],
         (_, resultSet) => {
-          console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          // console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
@@ -5619,7 +5619,7 @@ export const intervention_sites_list = async () => {
         `SELECT * FROM intervention_sites`, // Query the intervention_sites table
         [],
         (_, resultSet) => {
-          console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          // console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
@@ -6125,7 +6125,7 @@ export const inundations_list = async () => {
         `SELECT * FROM inundations`, // Query the inundations table
         [],
         (_, resultSet) => {
-          console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          // console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
@@ -6241,7 +6241,7 @@ export const jur_ad_districts_list = async () => {
         `SELECT * FROM jur_ad_districts`, // Query the jur_ad_districts table
         [],
         (_, resultSet) => {
-          console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          // console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
@@ -6356,7 +6356,7 @@ export const jur_ad_divisions_list = async () => {
         `SELECT * FROM jur_ad_divisions`, // Query the jur_ad_divisions table
         [],
         (_, resultSet) => {
-          console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          // console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
@@ -6472,7 +6472,7 @@ export const jur_ad_upazillas_list = async () => {
         `SELECT * FROM jur_ad_upazillas`, // Query the jur_ad_upazillas table
         [],
         (_, resultSet) => {
-          console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          // console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
@@ -6585,7 +6585,7 @@ export const jur_fd_beats_list = async () => {
         `SELECT * FROM jur_fd_beats`, // Query the jur_fd_beats table
         [],
         (_, resultSet) => {
-          console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          // console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
@@ -6700,7 +6700,7 @@ export const jur_fd_circles_list = async () => {
         `SELECT * FROM jur_fd_circles`, // Query the jur_fd_circles table
         [],
         (_, resultSet) => {
-          console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          // console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
@@ -6816,7 +6816,7 @@ export const jur_fd_divisions_list = async () => {
         `SELECT * FROM jur_fd_divisions`, // Query the jur_fd_divisions table
         [],
         (_, resultSet) => {
-          console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          // console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
@@ -7037,7 +7037,7 @@ export const jur_fd_levels_list = async () => {
         `SELECT * FROM jur_fd_levels`, // Query the jur_fd_levels table
         [],
         (_, resultSet) => {
-          console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          // console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
@@ -7153,7 +7153,7 @@ export const jur_fd_ranges_list = async () => {
         `SELECT * FROM jur_fd_ranges`, // Query the jur_fd_ranges table
         [],
         (_, resultSet) => {
-          console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          // console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
@@ -7270,7 +7270,7 @@ export const landcover_class_lists_list = async () => {
         `SELECT * FROM landcover_class_lists`, // Query the landcover_class_lists table
         [],
         (_, resultSet) => {
-          console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          // console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
@@ -7388,7 +7388,7 @@ export const lmvh_lists_list = async () => {
         `SELECT * FROM lmvh_lists`, // Query the lmvh_lists table
         [],
         (_, resultSet) => {
-          console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          // console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);

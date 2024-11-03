@@ -61,6 +61,8 @@ const interventionOne = () => {
   const [inputValue5, setInputValue5] = useState('');
   const [inputValue6, setInputValue6] = useState('');
   const [inputValue7, setInputValue7] = useState('');
+  const [inputValue8, setInputValue8] = useState('');
+  const [inputValue9, setInputValue9] = useState('');
   const [showPicker, setShowPicker] = useState(false);
   const [date, setDate] = useState(new Date());
 
@@ -322,6 +324,33 @@ const interventionOne = () => {
     {label: 'Bamboo Forest', value: 'bamboo'},
   ];
 
+
+  const interventionOneSubmit=()=>{
+      console.log('Input Values:');
+      console.log('inputValue1:', inputValue1);
+      console.log('inputValue2:', inputValue2);
+      console.log('inputValue3:', inputValue3);
+      console.log('inputValue4:', inputValue4);
+      console.log('inputValue5:', inputValue5);
+      console.log('inputValue6:', inputValue6);
+      console.log('inputValue7:', inputValue7);
+      console.log('inputValue8:', inputValue8);
+      console.log('inputValue9:', inputValue9);
+
+      console.log('\nSelected Values:');
+      console.log('selectedForest:', selectedForest);
+      console.log('selectedForestCircle:', selectedForestCircle);
+      console.log('selectedForestDivision:', selectedForestDivision);
+      console.log('selectedForestRange:', selectedForestrange);
+      console.log('selectedForestBeat:', selectedForestbeat);
+      console.log('selectedSurvey:', selectedSurvey);
+      console.log('selectedDivision:', selectedDivision);
+      console.log('selectedDistrict:', selectedDistrict);
+      console.log('selectedUpazila:', selectedUpazila);
+
+      navigation.navigate("interventionTwo")
+  }
+
   return (
     <>
       <View style={styles.header}>
@@ -359,8 +388,8 @@ const interventionOne = () => {
 
         <TextInput
           style={styles.input}
-          value={inputValue1}
-          onChange={text => setInputValue1(text)}
+          value={inputValue2}
+          onChange={text => setInputValue2(text)}
           placeholderTextColor="black"
           placeholder="select  Beat/Camp/SFPC Officer"
         />
@@ -372,8 +401,8 @@ const interventionOne = () => {
 
         <TextInput
           style={styles.input}
-          value={inputValue1}
-          onChange={text => setInputValue1(text)}
+          value={inputValue3}
+          onChange={text => setInputValue3(text)}
           placeholderTextColor="black"
           placeholder="select Mobile number Beat"
         />
@@ -502,8 +531,8 @@ const interventionOne = () => {
 
         <TextInput
           style={styles.input}
-          value={inputValue1}
-          onChange={text => setInputValue1(text)}
+          value={inputValue3}
+          onChange={text => setInputValue3(text)}
           placeholderTextColor="black"
           placeholder="select Block"
         />
@@ -512,8 +541,8 @@ const interventionOne = () => {
 
         <TextInput
           style={styles.input}
-          value={inputValue1}
-          onChange={text => setInputValue1(text)}
+          value={inputValue4}
+          onChange={text => setInputValue4(text)}
           placeholderTextColor="black"
           placeholder="select Char"
         />
@@ -591,8 +620,8 @@ const interventionOne = () => {
 
         <TextInput
           style={styles.input}
-          value={inputValue1}
-          onChange={text => setInputValue1(text)}
+          value={inputValue5}
+          onChange={text => setInputValue5(text)}
           placeholderTextColor="black"
           placeholder="Union"
         />
@@ -601,8 +630,8 @@ const interventionOne = () => {
 
         <TextInput
           style={styles.input}
-          value={inputValue1}
-          onChange={text => setInputValue1(text)}
+          value={inputValue6}
+          onChange={text => setInputValue6(text)}
           placeholderTextColor="black"
           placeholder="select"
         />
@@ -635,9 +664,9 @@ const interventionOne = () => {
                   </Text>
                   <TextInput
                     style={styles.input}
-                    value={inputValue1}
+                    value={inputValue7}
                     placeholder="Enter Mouza Name"
-                    onChangeText={text => setInputValue1(text)}
+                    onChangeText={text => setInputValue7(text)}
                   />
 
                   <Text style={styles.label}>
@@ -668,9 +697,9 @@ const interventionOne = () => {
                   </Text>
                   <TextInput
                     style={styles.input}
-                    value={inputValue1}
+                    value={inputValue8}
                     placeholder="Enter Sheet Number"
-                    onChangeText={text => setInputValue1(text)}
+                    onChangeText={text => setInputValue8(text)}
                     placeholderTextColor="black"
                     placeholder="select"
                   />
@@ -680,9 +709,9 @@ const interventionOne = () => {
                   </Text>
                   <TextInput
                     style={styles.input}
-                    value={inputValue1}
+                    value={inputValue9}
                     placeholder="Enter Plot Number"
-                    onChangeText={text => setInputValue1(text)}
+                    onChangeText={text => setInputValue9(text)}
                   />
 
                   {/* Close modal button */}
@@ -699,7 +728,7 @@ const interventionOne = () => {
         <View style={styles.button}>
           <TouchableOpacity
             style={styles.addButton}
-            onPress={() => navigation.navigate('interventionTwo' as never)}>
+            onPress={() => interventionOneSubmit()}>
             <Text style={styles.buttonText}>Next</Text>
           </TouchableOpacity>
         </View>

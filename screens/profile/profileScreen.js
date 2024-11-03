@@ -50,6 +50,7 @@ import {
   spatial_ref_sys_list,
 } from '../../database/sqlDatabase';
 import {useNavigation} from '@react-navigation/native';
+import useUUID from '../../hooks/useUUID';
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
@@ -164,6 +165,11 @@ const ProfileScreen = () => {
       console.error('Error removing user ID from AsyncStorage:', error);
     }
   };
+
+  const {md5} = useUUID();
+  console.log(md5, 'uuid-md5');
+  // const microseconds = (performance.now() * 1000).toString().slice(0, 10); // Convert milliseconds to microseconds
+  // console.log(microseconds, 'micorosecond');
 
   return (
     <View style={{flex: 1, backgroundColor: Colors.bodyBackColor}}>

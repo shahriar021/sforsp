@@ -38,6 +38,22 @@ const beatTwo = () => {
   const [inputValue5, setInputValue5] = useState('');
   const [inputValue6, setInputValue6] = useState('');
   const [inputValue7, setInputValue7] = useState('');
+  const [inputValue8, setInputValue8] = useState('');
+  const [inputValue9, setInputValue9] = useState('');
+  const [inputValue10, setInputValue10] = useState('');
+  const [inputValue11, setInputValue11] = useState('');
+  const [inputValue12, setInputValue12] = useState('');
+  const [inputValue13, setInputValue13] = useState('');
+  const [inputValue14, setInputValue14] = useState('');
+  const [inputValue15, setInputValue15] = useState('');
+  const [inputValue16, setInputValue16] = useState('');
+  const [inputValue17, setInputValue17] = useState('');
+  const [inputValue18, setInputValue18] = useState('');
+  const [inputValue19, setInputValue19] = useState('');
+  const [inputValue20, setInputValue20] = useState('');
+  const [inputValue21, setInputValue21] = useState('');
+  const [inputValue22, setInputValue22] = useState('');
+  const [inputValue23, setInputValue23] = useState('');
   const [showPicker, setShowPicker] = useState(false);
   const [date, setDate] = useState(new Date());
   const [selectedForest, setSelectedForest] = useState(null);
@@ -126,7 +142,42 @@ const beatTwo = () => {
     human();
   }, []);
 
-  console.log(humanIssue, 'humanIssue issue..');
+  // console.log(humanIssue, 'humanIssue issue..');
+
+  const beatTwosubmit = () => {
+    // Log input values from inputValue1 to inputValue23
+    console.log(
+      inputValue1,
+      inputValue2,
+      inputValue3,
+      inputValue4,
+      inputValue5,
+      inputValue6,
+      inputValue7,
+      inputValue8,
+      inputValue9,
+      inputValue10,
+      inputValue11,
+      inputValue12,
+      inputValue13,
+      inputValue14,
+      inputValue15,
+      inputValue16,
+      inputValue17,
+      inputValue18,
+      inputValue19,
+      inputValue20,
+      inputValue21,
+      inputValue22,
+      inputValue23,
+      selectedHumanIssue,
+      selectedNaturalIssue,
+      selectedRank,
+    );
+
+    // Navigate to the next screen
+    navigation.navigate('beatThree');
+  };
 
   return (
     <>
@@ -163,9 +214,9 @@ const beatTwo = () => {
         <TextInput
           style={styles.input}
           placeholder="Type here Reserved Forests"
-          value={inputValue7}
+          value={inputValue2}
           keyboardType="numeric"
-          onChangeText={text => setInputValue7(text)}
+          onChangeText={text => setInputValue2(text)}
           placeholderTextColor="black"
         />
 
@@ -175,9 +226,9 @@ const beatTwo = () => {
         <TextInput
           style={styles.input}
           placeholder="Type here Forest land "
-          value={inputValue7}
+          value={inputValue3}
           keyboardType="numeric"
-          onChangeText={text => setInputValue7(text)}
+          onChangeText={text => setInputValue3(text)}
           placeholderTextColor="black"
         />
 
@@ -188,9 +239,9 @@ const beatTwo = () => {
         <TextInput
           style={styles.input}
           placeholder="Type here Forest Land, Declared under Section"
-          value={inputValue7}
+          value={inputValue4}
           keyboardType="numeric"
-          onChangeText={text => setInputValue7(text)}
+          onChangeText={text => setInputValue4(text)}
           placeholderTextColor="black"
         />
 
@@ -200,9 +251,9 @@ const beatTwo = () => {
         <TextInput
           style={styles.input}
           placeholder="Type here Protected Forests"
-          value={inputValue7}
+          value={inputValue5}
           keyboardType="numeric"
-          onChangeText={text => setInputValue7(text)}
+          onChangeText={text => setInputValue5(text)}
           placeholderTextColor="black"
         />
 
@@ -212,9 +263,9 @@ const beatTwo = () => {
         <TextInput
           style={styles.input}
           placeholder="Type here Vested Forests"
-          value={inputValue7}
+          value={inputValue6}
           keyboardType="numeric"
-          onChangeText={text => setInputValue7(text)}
+          onChangeText={text => setInputValue6(text)}
           placeholderTextColor="black"
         />
 
@@ -236,8 +287,8 @@ const beatTwo = () => {
         <TextInput
           style={styles.input}
           placeholder="Type here Forest Land (Others)"
-          value={inputValue7}
-          onChangeText={text => setInputValue7(text)}
+          value={inputValue8}
+          onChangeText={text => setInputValue8(text)}
           placeholderTextColor="black"
           keyboardType="numeric"
         />
@@ -248,8 +299,8 @@ const beatTwo = () => {
         <TextInput
           style={styles.input}
           placeholder="Type here Total Beat/Camp/SFPC area"
-          value={inputValue7}
-          onChangeText={text => setInputValue7(text)}
+          value={inputValue9}
+          onChangeText={text => setInputValue9(text)}
           placeholderTextColor="black"
           keyboardType="numeric"
         />
@@ -264,8 +315,8 @@ const beatTwo = () => {
         <TextInput
           style={styles.input}
           placeholder="Type here Wildlife Sanctuaries"
-          value={inputValue7}
-          onChangeText={text => setInputValue7(text)}
+          value={inputValue10}
+          onChangeText={text => setInputValue10(text)}
           placeholderTextColor="black"
           keyboardType="numeric"
         />
@@ -276,8 +327,8 @@ const beatTwo = () => {
         <TextInput
           style={styles.input}
           placeholder="Type here  National Park"
-          value={inputValue7}
-          onChangeText={text => setInputValue7(text)}
+          value={inputValue11}
+          onChangeText={text => setInputValue11(text)}
           placeholderTextColor="black"
           keyboardType="numeric"
         />
@@ -288,8 +339,8 @@ const beatTwo = () => {
         <TextInput
           style={styles.input}
           placeholder="Type here Eco-Park"
-          value={inputValue7}
-          onChangeText={text => setInputValue7(text)}
+          value={inputValue12}
+          onChangeText={text => setInputValue12(text)}
           placeholderTextColor="black"
           keyboardType="numeric"
         />
@@ -300,8 +351,8 @@ const beatTwo = () => {
         <TextInput
           style={styles.input}
           placeholder="Type here Safari Park"
-          value={inputValue7}
-          onChangeText={text => setInputValue7(text)}
+          value={inputValue13}
+          onChangeText={text => setInputValue13(text)}
           placeholderTextColor="black"
           keyboardType="numeric"
         />
@@ -313,8 +364,8 @@ const beatTwo = () => {
         <TextInput
           style={styles.input}
           placeholder="Type here  Special Biodiversity Conservation Area"
-          value={inputValue7}
-          onChangeText={text => setInputValue7(text)}
+          value={inputValue14}
+          onChangeText={text => setInputValue14(text)}
           placeholderTextColor="black"
           keyboardType="numeric"
         />
@@ -325,8 +376,8 @@ const beatTwo = () => {
         <TextInput
           style={styles.input}
           placeholder="Type here Protected Area"
-          value={inputValue7}
-          onChangeText={text => setInputValue7(text)}
+          value={inputValue15}
+          onChangeText={text => setInputValue15(text)}
           placeholderTextColor="black"
           keyboardType="numeric"
         />
@@ -340,8 +391,8 @@ const beatTwo = () => {
         <TextInput
           style={styles.input}
           placeholder="Type here Natural Forests"
-          value={inputValue7}
-          onChangeText={text => setInputValue7(text)}
+          value={inputValue16}
+          onChangeText={text => setInputValue16(text)}
           placeholderTextColor="black"
           keyboardType="numeric"
         />
@@ -353,8 +404,8 @@ const beatTwo = () => {
         <TextInput
           style={styles.input}
           placeholder="Type here Social Forestry/Participatory Plantations"
-          value={inputValue7}
-          onChangeText={text => setInputValue7(text)}
+          value={inputValue17}
+          onChangeText={text => setInputValue17(text)}
           placeholderTextColor="black"
           keyboardType="numeric"
         />
@@ -366,8 +417,8 @@ const beatTwo = () => {
         <TextInput
           style={styles.input}
           placeholder="Type here Social Forestry/Participatory Plantations"
-          value={inputValue7}
-          onChangeText={text => setInputValue7(text)}
+          value={inputValue18}
+          onChangeText={text => setInputValue18(text)}
           keyboardType="numeric"
           placeholderTextColor="black"
         />
@@ -379,8 +430,8 @@ const beatTwo = () => {
         <TextInput
           style={styles.input}
           placeholder="Type here Non Participatory Plantations"
-          value={inputValue7}
-          onChangeText={text => setInputValue7(text)}
+          value={inputValue19}
+          onChangeText={text => setInputValue19(text)}
           keyboardType="numeric"
           placeholderTextColor="black"
         />
@@ -392,8 +443,8 @@ const beatTwo = () => {
         <TextInput
           style={styles.input}
           placeholder="Type here Non Participatory Plantations"
-          value={inputValue7}
-          onChangeText={text => setInputValue7(text)}
+          value={inputValue20}
+          onChangeText={text => setInputValue20(text)}
           keyboardType="numeric"
           placeholderTextColor="black"
         />
@@ -404,8 +455,8 @@ const beatTwo = () => {
         <TextInput
           style={styles.input}
           placeholder="Type here Forest Cover Area"
-          value={inputValue7}
-          onChangeText={text => setInputValue7(text)}
+          value={inputValue21}
+          onChangeText={text => setInputValue21(text)}
           keyboardType="numeric"
           placeholderTextColor="black"
         />
@@ -416,8 +467,8 @@ const beatTwo = () => {
         <TextInput
           style={styles.input}
           placeholder="Type here Forest Cover Area"
-          value={inputValue7}
-          onChangeText={text => setInputValue7(text)}
+          value={inputValue22}
+          onChangeText={text => setInputValue22(text)}
           keyboardType="numeric"
           placeholderTextColor="black"
         />
@@ -703,8 +754,8 @@ const beatTwo = () => {
                   <TextInput
                     style={styles.input}
                     placeholder="Type your notes here"
-                    value={inputValue1}
-                    onChangeText={text => setInputValue1(text)}
+                    value={inputValue23}
+                    onChangeText={text => setInputValue23(text)}
                     placeholderTextColor="black"
                   />
 
@@ -727,7 +778,7 @@ const beatTwo = () => {
         <View style={styles.button}>
           <TouchableOpacity
             style={styles.addButton}
-            onPress={() => navigation.navigate('beatThree' as never)}>
+            onPress={() => beatTwosubmit()}>
             <Text style={styles.buttonText}>Next</Text>
           </TouchableOpacity>
         </View>
