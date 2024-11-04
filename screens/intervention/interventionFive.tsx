@@ -286,6 +286,32 @@ const interventionFive = () => {
     sources();
   }, []);
 
+  const interventionFiveSubmit = () => {
+    console.log(
+      // inputValue1,
+      // inputValue2,
+      // inputValue3,
+      // inputValue4,
+      // inputValue5,
+
+      selectedRepro,
+      selectedInundation,
+      selectedInundationMonth,
+      selectedAgePlantation,
+      selectedYesNo,
+      selectedDerectins,
+      selectedDerectinsWind,
+      selectedDerectinsAllDirect,
+    );
+
+    navigation.navigate('interventionSix' as never);
+  };
+
+
+
+
+  const tableData = [];
+
   return (
     <>
       <View style={styles.header}>
@@ -307,7 +333,7 @@ const interventionFive = () => {
         <TextInput
           style={styles.input}
           value={inputValue1}
-          onChange={text => setInputValue1(text)}
+          onChangeText={text => setInputValue1(text)}
           placeholderTextColor="black"
           placeholder="select Depth of Clay Layer"
         />
@@ -319,8 +345,8 @@ const interventionFive = () => {
 
         <TextInput
           style={styles.input}
-          value={inputValue1}
-          onChange={text => setInputValue1(text)}
+          value={inputValue2}
+          onChangeText={text => setInputValue2(text)}
           placeholderTextColor="black"
           placeholder="select Existence of indicator species, Uri grass"
         />
@@ -338,7 +364,7 @@ const interventionFive = () => {
           placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
           selectedTextStyle={{color: 'black', fontSize: 16}}
           value={selectedInundation}
-          onChange={item => setSelectedInundation(item.value)} // Update the selected value based on 'id'
+          onChange={item => setSelectedInundation(item.code)} // Update the selected value based on 'id'
           dropdownStyle={{
             backgroundColor: 'white', // Ensure dropdown has a visible background
             borderRadius: 8, // Rounded corners for consistency
@@ -365,7 +391,7 @@ const interventionFive = () => {
           placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
           selectedTextStyle={{color: 'black', fontSize: 16}}
           value={selectedInundationMonth}
-          onChange={item => setSelectedInundationMonth(item.value)} // Update the selected value based on 'id'
+          onChange={item => setSelectedInundationMonth(item.code)} // Update the selected value based on 'id'
           dropdownStyle={{
             backgroundColor: 'white', // Ensure dropdown has a visible background
             borderRadius: 8, // Rounded corners for consistency
@@ -390,7 +416,7 @@ const interventionFive = () => {
           placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
           selectedTextStyle={{color: 'black', fontSize: 16}}
           value={selectedAgePlantation}
-          onChange={item => setSelectedAgePlantation(item.value)} // Update the selected value based on 'id'
+          onChange={item => setSelectedAgePlantation(item.code)} // Update the selected value based on 'id'
           dropdownStyle={{
             backgroundColor: 'white', // Ensure dropdown has a visible background
             borderRadius: 8, // Rounded corners for consistency
@@ -417,7 +443,7 @@ const interventionFive = () => {
           placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
           selectedTextStyle={{color: 'black', fontSize: 16}}
           value={selectedYesNo}
-          onChange={item => setSelectedYesNo(item.value)} // Update the selected value based on 'id'
+          onChange={item => setSelectedYesNo(item.code)} // Update the selected value based on 'id'
           dropdownStyle={{
             backgroundColor: 'white', // Ensure dropdown has a visible background
             borderRadius: 8, // Rounded corners for consistency
@@ -441,7 +467,7 @@ const interventionFive = () => {
           placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
           selectedTextStyle={{color: 'black', fontSize: 16}}
           value={selectedDerectins}
-          onChange={item => setSelectedDerections(item.value)} // Update the selected value based on 'id'
+          onChange={item => setSelectedDerections(item.code)} // Update the selected value based on 'id'
           dropdownStyle={{
             backgroundColor: 'white', // Ensure dropdown has a visible background
             borderRadius: 8, // Rounded corners for consistency
@@ -465,7 +491,7 @@ const interventionFive = () => {
           placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
           selectedTextStyle={{color: 'black', fontSize: 16}}
           value={selectedDerectinsWind}
-          onChange={item => setSelectedDerectionsWind(item.value)} // Update the selected value based on 'id'
+          onChange={item => setSelectedDerectionsWind(item.code)} // Update the selected value based on 'id'
           dropdownStyle={{
             backgroundColor: 'white', // Ensure dropdown has a visible background
             borderRadius: 8, // Rounded corners for consistency
@@ -482,8 +508,8 @@ const interventionFive = () => {
 
         <TextInput
           style={styles.input}
-          value={inputValue1}
-          onChange={text => setInputValue1(text)}
+          value={inputValue3}
+          onChangeText={text => setInputValue3(text)}
           placeholderTextColor="black"
           placeholder="Facing of the Island"
         />
@@ -502,7 +528,7 @@ const interventionFive = () => {
           placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
           selectedTextStyle={{color: 'black', fontSize: 16}}
           value={selectedDerectinsAllDirect}
-          onChange={item => setSelectedDerectionsAllDirect(item.value)} // Update the selected value based on 'id'
+          onChange={item => setSelectedDerectionsAllDirect(item.code)} // Update the selected value based on 'id'
           dropdownStyle={{
             backgroundColor: 'white', // Ensure dropdown has a visible background
             borderRadius: 8, // Rounded corners for consistency
@@ -529,7 +555,7 @@ const interventionFive = () => {
           placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
           selectedTextStyle={{color: 'black', fontSize: 16}}
           value={selectedPlantingModes}
-          onChange={item => setSelectedPlantingModes(item.value)} // Update the selected value based on 'id'
+          onChange={item => setSelectedPlantingModes(item.code)} // Update the selected value based on 'id'
           dropdownStyle={{
             backgroundColor: 'white', // Ensure dropdown has a visible background
             borderRadius: 8, // Rounded corners for consistency
@@ -546,8 +572,8 @@ const interventionFive = () => {
 
         <TextInput
           style={styles.input}
-          value={inputValue1}
-          onChange={text => setInputValue1(text)}
+          value={inputValue4}
+          onChangeText={text => setInputValue4(text)}
           placeholderTextColor="black"
           placeholder="select Seedling spacing"
         />
@@ -562,7 +588,7 @@ const interventionFive = () => {
           <TextInput
             style={styles.input}
             value={inputValue1}
-            onChange={text => setInputValue1(text)}
+            onChangeText={text => setInputValue1(text)}
           />
 
           <Text style={styles.label}>8.3.2.Reproductive material type</Text>
@@ -611,7 +637,7 @@ const interventionFive = () => {
           <TextInput
             style={styles.input}
             value={inputValue1}
-            onChange={text => setInputValue1(text)}
+            onChangeText={text => setInputValue1(text)}
           />
         </View> */}
 
@@ -627,6 +653,50 @@ const interventionFive = () => {
               onPress={() => setModalVisible(true)}>
               <Text style={styles.buttonText}>Add New</Text>
             </TouchableOpacity>
+          </View>
+
+          <View style={styles.tableContainer}>
+            {/* Headers */}
+            <View style={styles.headerRowContainer}>
+              <Text style={styles.headerLabel}>Name of Species</Text>
+              <Text style={styles.headerSeparator}>|</Text>
+              <Text style={styles.headerLabel}>Reproductive Material Type</Text>
+              <Text style={styles.headerSeparator}>|</Text>
+              <Text style={styles.headerLabel}>
+                Source of Planting Materials
+              </Text>
+              <Text style={styles.headerSeparator}>|</Text>
+              <Text style={styles.headerLabel}>
+                Seedlings Required (per ha)
+              </Text>
+            </View>
+
+            {/* Data Rows */}
+            {tableData.length > 0 ? (
+              <FlatList
+                data={tableData}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={({item}) => (
+                  <View style={styles.dataRowContainer}>
+                    <Text style={styles.cellContent}>{item.speciesName}</Text>
+                    <Text style={styles.cellSeparator}>|</Text>
+                    <Text style={styles.cellContent}>
+                      {item.reproductiveType}
+                    </Text>
+                    <Text style={styles.cellSeparator}>|</Text>
+                    <Text style={styles.cellContent}>{item.source}</Text>
+                    <Text style={styles.cellSeparator}>|</Text>
+                    <Text style={styles.cellContent}>
+                      {item.seedlingsRequired}
+                    </Text>
+                  </View>
+                )}
+              />
+            ) : (
+              <View style={styles.noDataContainer}>
+                <Text style={styles.noDataText}>No data available</Text>
+              </View>
+            )}
           </View>
 
           {/* Modal for preferred species inputs */}
@@ -645,9 +715,9 @@ const interventionFive = () => {
                     <Text style={styles.label}>8.3.1. Name of Species</Text>
                     <TextInput
                       style={styles.input}
-                      value={inputValue1}
+                      value={inputValue5}
                       placeholder="Enter Species Name"
-                      onChangeText={text => setInputValue1(text)}
+                      onChangeText={text => setInputValue5(text)}
                       placeholderTextColor="black"
                     />
 
@@ -709,10 +779,19 @@ const interventionFive = () => {
                     />
 
                     {/* Close modal button */}
-                    <Button
-                      title="Close"
-                      onPress={() => setModalVisible(false)}
-                    />
+                    <View
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        margin: 5,
+                      }}>
+                      <Button title="Save" />
+                      <Button
+                        title="Close"
+                        onPress={() => setModalVisible(false)}
+                      />
+                    </View>
                   </View>
                 </ScrollView>
               </View>
@@ -725,7 +804,7 @@ const interventionFive = () => {
         <View style={styles.button}>
           <TouchableOpacity
             style={styles.addButton}
-            onPress={() => navigation.navigate('interventionSix' as never)}>
+            onPress={() => interventionFiveSubmit()}>
             <Text style={styles.buttonText}>Next</Text>
           </TouchableOpacity>
         </View>
@@ -862,6 +941,77 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
+  },
+
+  tableContainer: {
+    padding: 16,
+    backgroundColor: 'white',
+  },
+  headerRowContainer: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderColor: 'gray',
+    paddingBottom: 8,
+    marginBottom: 8,
+  },
+  headerLabel: {
+    flex: 1,
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: 'black',
+  },
+  dataRowContainer: {
+    flexDirection: 'row',
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderColor: 'gray',
+  },
+  cellContent: {
+    flex: 1,
+    fontSize: 16,
+    color: 'black',
+  },
+  actionButtons: {
+    flexDirection: 'row',
+    flex: 1,
+    justifyContent: 'space-evenly',
+  },
+  editButtonStyle: {
+    backgroundColor: '#4CAF50',
+    paddingVertical: 4,
+    paddingHorizontal: 12,
+    borderRadius: 4,
+  },
+  deleteButtonStyle: {
+    backgroundColor: '#F44336',
+    paddingVertical: 4,
+    paddingHorizontal: 12,
+    borderRadius: 4,
+  },
+  buttonTextStyle: {
+    color: 'white',
+    fontSize: 14,
+  },
+  noDataContainer: {
+    padding: 16,
+    alignItems: 'center',
+  },
+  noDataText: {
+    fontSize: 16,
+    color: 'gray',
+  },
+  headerSeparator: {
+    alignSelf: 'center',
+    color: 'black',
+    // Adjusted margin for better spacing
+    fontWeight: 'bold',
+    // Increased font size for consistency
+  },
+  rowSeparator: {
+    alignSelf: 'center',
+    color: 'black',
+    marginHorizontal: 8, // Adjusted margin for better spacing
+    fontSize: 16, // Increased font size for consistency
   },
 });
 

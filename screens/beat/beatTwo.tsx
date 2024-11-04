@@ -9,6 +9,7 @@ import {
   ScrollView,
   Button,
   Modal,
+  FlatList,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {Dropdown} from 'react-native-element-dropdown';
@@ -178,6 +179,7 @@ const beatTwo = () => {
     // Navigate to the next screen
     navigation.navigate('beatThree');
   };
+  const tableData = [];
 
   return (
     <>
@@ -549,6 +551,48 @@ const beatTwo = () => {
             </TouchableOpacity>
           </View>
 
+          <View style={styles.tableContainer}>
+            {/* Headers */}
+            <View style={styles.headerRowContainer}>
+              <Text style={styles.headerLabel}>
+                Natural Disturbances/Threats/ Events issues (প্রাকৃতিক
+                সমস্যাসমূহ)
+              </Text>
+              <Text style={styles.headerSeparator}>|</Text>
+              <Text style={styles.headerLabel}>Frequency (মাত্রা)</Text>
+              <Text style={styles.headerSeparator}>|</Text>
+
+              <Text style={styles.headerLabel}>Actions</Text>
+            </View>
+
+            {/* Data Rows */}
+            {tableData.length > 0 ? (
+              <FlatList
+                data={tableData}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={({item}) => (
+                  <View style={styles.dataRowContainer}>
+                    <Text style={styles.cellContent}>{item.mouzaName}</Text>
+                    <Text style={styles.cellContent}>{item.surveyType}</Text>
+                    <Text style={styles.cellContent}>{item.sheetNumber}</Text>
+                    <View style={styles.actionButtons}>
+                      <TouchableOpacity style={styles.editButtonStyle}>
+                        <Text style={styles.buttonTextStyle}>Edit</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity style={styles.deleteButtonStyle}>
+                        <Text style={styles.buttonTextStyle}>Delete</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                )}
+              />
+            ) : (
+              <View style={styles.noDataContainer}>
+                <Text style={styles.noDataText}>No data available</Text>
+              </View>
+            )}
+          </View>
+
           {/* Modal Section */}
           <Modal
             animationType="slide"
@@ -607,10 +651,19 @@ const beatTwo = () => {
                   />
 
                   {/* Close Button */}
-                  <Button
-                    title="Close"
-                    onPress={() => setModalVisible(false)}
-                  />
+                  <View
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                      margin: 5,
+                    }}>
+                    <Button title="Save" />
+                    <Button
+                      title="Close"
+                      onPress={() => setModalVisible(false)}
+                    />
+                  </View>
                 </ScrollView>
               </View>
             </View>
@@ -697,6 +750,47 @@ const beatTwo = () => {
             </TouchableOpacity>
           </View>
 
+          <View style={styles.tableContainer}>
+            {/* Header Row */}
+            <View style={styles.headerRowContainer}>
+              <Text style={styles.headerLabel}>
+                Human interference issues <Text>(মানুষের কার্যক্রম)</Text>
+              </Text>
+              <Text style={styles.headerSeparator}>|</Text>
+              <Text style={styles.headerLabel}>Rank (মাত্রা)</Text>
+              <Text style={styles.headerSeparator}>|</Text>
+              <Text style={styles.headerLabel}>Notes</Text>
+              <Text style={styles.headerSeparator}>|</Text>
+              <Text style={styles.headerLabel}>Actions</Text>
+            </View>
+
+            {/* Data Rows */}
+            {tableData.length > 0 ? (
+              <FlatList
+                data={tableData}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={({item}) => (
+                  <View style={styles.dataRowContainer}>
+                    <Text style={styles.cellContent}>{item.humanIssue}</Text>
+                    <Text style={styles.cellContent}>{item.rank}</Text>
+                    <View style={styles.actionButtons}>
+                      <TouchableOpacity style={styles.editButtonStyle}>
+                        <Text style={styles.buttonTextStyle}>Edit</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity style={styles.deleteButtonStyle}>
+                        <Text style={styles.buttonTextStyle}>Delete</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                )}
+              />
+            ) : (
+              <View style={styles.noDataContainer}>
+                <Text style={styles.noDataText}>No data available</Text>
+              </View>
+            )}
+          </View>
+
           {/* Modal */}
           <Modal
             visible={modalVisible2}
@@ -759,10 +853,19 @@ const beatTwo = () => {
                     placeholderTextColor="black"
                   />
 
-                  <Button
-                    title="Close"
-                    onPress={() => setModalVisible2(false)}
-                  />
+                  <View
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                      margin: 5,
+                    }}>
+                    <Button title="Save" />
+                    <Button
+                      title="Close"
+                      onPress={() => setModalVisible2(false)}
+                    />
+                  </View>
                 </ScrollView>
               </View>
             </View>
@@ -947,6 +1050,77 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 10,
     elevation: 5, // Adds shadow for Android
+  },
+
+  tableContainer: {
+    padding: 16,
+    backgroundColor: 'white',
+  },
+  headerRowContainer: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderColor: 'gray',
+    paddingBottom: 8,
+    marginBottom: 8,
+  },
+  headerLabel: {
+    flex: 1,
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: 'black',
+  },
+  dataRowContainer: {
+    flexDirection: 'row',
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderColor: 'gray',
+  },
+  cellContent: {
+    flex: 1,
+    fontSize: 16,
+    color: 'black',
+  },
+  actionButtons: {
+    flexDirection: 'row',
+    flex: 1,
+    justifyContent: 'space-evenly',
+  },
+  editButtonStyle: {
+    backgroundColor: '#4CAF50',
+    paddingVertical: 4,
+    paddingHorizontal: 12,
+    borderRadius: 4,
+  },
+  deleteButtonStyle: {
+    backgroundColor: '#F44336',
+    paddingVertical: 4,
+    paddingHorizontal: 12,
+    borderRadius: 4,
+  },
+  buttonTextStyle: {
+    color: 'white',
+    fontSize: 14,
+  },
+  noDataContainer: {
+    padding: 16,
+    alignItems: 'center',
+  },
+  noDataText: {
+    fontSize: 16,
+    color: 'gray',
+  },
+  headerSeparator: {
+    alignSelf: 'center',
+    color: 'black',
+    // Adjusted margin for better spacing
+    fontWeight: 'bold',
+    // Increased font size for consistency
+  },
+  rowSeparator: {
+    alignSelf: 'center',
+    color: 'black',
+    marginHorizontal: 8, // Adjusted margin for better spacing
+    fontSize: 16, // Increased font size for consistency
   },
 });
 

@@ -16,7 +16,12 @@ import {useNavigation} from '@react-navigation/native';
 import {Colors, CommonStyles, Fonts, Sizes} from '../../constants/styles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {baseApi, token} from '../../constants/base_api';
-import {dis_nurserys_api, dis_nurserys_list, yes_no_lists_api, yes_no_lists_list} from '../../database/sqlDatabase';
+import {
+  dis_nurserys_api,
+  dis_nurserys_list,
+  yes_no_lists_api,
+  yes_no_lists_list,
+} from '../../database/sqlDatabase';
 
 const interventionSix = () => {
   const [dis_nursery, setDisNursery] = useState([]);
@@ -28,6 +33,7 @@ const interventionSix = () => {
   const [inputValue5, setInputValue5] = useState('');
   const [inputValue6, setInputValue6] = useState('');
   const [inputValue7, setInputValue7] = useState('');
+  const [inputValue100, setInputValue100] = useState('');
   const [showPicker, setShowPicker] = useState(false);
   const [date, setDate] = useState(new Date());
   const [selectedForest, setSelectedForest] = useState(null);
@@ -59,7 +65,7 @@ const interventionSix = () => {
     setShowPicker(Platform.OS === 'ios'); // Hide the picker after selection (Android closes automatically)
     setDate(currentDate);
     const formattedDate = `${currentDate.toLocaleDateString()} ${currentDate.toLocaleTimeString()}`;
-    setInputValue1(formattedDate); // Update TextInput with selected date and time
+    setInputValue100(formattedDate); // Update TextInput with selected date and time
   };
 
   const showDatePicker = () => {
@@ -118,6 +124,36 @@ const interventionSix = () => {
     yes_no_lists();
   }, []);
 
+  const interventionSixSubmit = () => {
+    console.log(
+      inputValue1,
+      inputValue2,
+      inputValue3,
+      inputValue4,
+      inputValue6,
+      inputValue7,
+
+      selectedDisNursery,
+      selectedyes_no_lists,
+      selectedyes_no_lists1,
+      selectedyes_no_lists2,
+      selectedyes_no_lists3,
+      selectedyes_no_lists4,
+      selectedyes_no_lists5,
+      selectedyes_no_lists6,
+      selectedyes_no_lists7,
+      selectedyes_no_lists8,
+      selectedyes_no_lists9,
+      selectedyes_no_lists10,
+      selectedyes_no_lists11,
+    );
+
+    navigation.navigate('interventionSeven' as never);
+  };
+
+
+  const tableData = [];
+
   return (
     <>
       <View style={styles.header}>
@@ -135,7 +171,7 @@ const interventionSix = () => {
         <TextInput
           style={styles.input}
           value={inputValue1}
-          onChange={text => setInputValue1(text)}
+          onChangeText={text => setInputValue1(text)}
           placeholderTextColor="black"
           placeholder="select Location Name"
         />
@@ -144,8 +180,8 @@ const interventionSix = () => {
         </Text>
         <TextInput
           style={styles.input}
-          value={inputValue1}
-          onChange={text => setInputValue1(text)}
+          value={inputValue2}
+          onChangeText={text => setInputValue2(text)}
           placeholderTextColor="black"
           placeholder="select Geographic Nursery location"
         />
@@ -154,8 +190,8 @@ const interventionSix = () => {
         </Text>
         <TextInput
           style={styles.input}
-          value={inputValue1}
-          onChange={text => setInputValue1(text)}
+          value={inputValue3}
+          onChangeText={text => setInputValue3(text)}
           placeholderTextColor="black"
           placeholder="select Geographic Nursery location"
         />
@@ -178,7 +214,7 @@ const interventionSix = () => {
           placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
           selectedTextStyle={{color: 'black', fontSize: 16}}
           value={selectedDisNursery}
-          onChange={item => setSelectedDisNursery(item.value)} // Update the selected value based on 'id'
+          onChange={item => setSelectedDisNursery(item.code)} // Update the selected value based on 'id'
           dropdownStyle={{
             backgroundColor: 'white', // Ensure dropdown has a visible background
             borderRadius: 8, // Rounded corners for consistency
@@ -200,7 +236,7 @@ const interventionSix = () => {
           placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
           selectedTextStyle={{color: 'black', fontSize: 16}}
           value={selectedyes_no_lists}
-          onChange={item => setSelectedDyes_no_lists(item.value)} // Update the selected value based on 'id'
+          onChange={item => setSelectedDyes_no_lists(item.code)} // Update the selected value based on 'id'
           dropdownStyle={{
             backgroundColor: 'white', // Ensure dropdown has a visible background
             borderRadius: 8, // Rounded corners for consistency
@@ -223,7 +259,7 @@ const interventionSix = () => {
           placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
           selectedTextStyle={{color: 'black', fontSize: 16}}
           value={selectedyes_no_lists1}
-          onChange={item => setSelectedDyes_no_lists1(item.value)} // Update the selected value based on 'id'
+          onChange={item => setSelectedDyes_no_lists1(item.code)} // Update the selected value based on 'id'
           dropdownStyle={{
             backgroundColor: 'white', // Ensure dropdown has a visible background
             borderRadius: 8, // Rounded corners for consistency
@@ -246,7 +282,7 @@ const interventionSix = () => {
           placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
           selectedTextStyle={{color: 'black', fontSize: 16}}
           value={selectedyes_no_lists2}
-          onChange={item => setSelectedDyes_no_lists2(item.value)} // Update the selected value based on 'id'
+          onChange={item => setSelectedDyes_no_lists2(item.code)} // Update the selected value based on 'id'
           dropdownStyle={{
             backgroundColor: 'white', // Ensure dropdown has a visible background
             borderRadius: 8, // Rounded corners for consistency
@@ -268,7 +304,7 @@ const interventionSix = () => {
           placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
           selectedTextStyle={{color: 'black', fontSize: 16}}
           value={selectedyes_no_lists3}
-          onChange={item => setSelectedDyes_no_lists3(item.value)} // Update the selected value based on 'id'
+          onChange={item => setSelectedDyes_no_lists3(item.code)} // Update the selected value based on 'id'
           dropdownStyle={{
             backgroundColor: 'white', // Ensure dropdown has a visible background
             borderRadius: 8, // Rounded corners for consistency
@@ -290,7 +326,7 @@ const interventionSix = () => {
           placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
           selectedTextStyle={{color: 'black', fontSize: 16}}
           value={selectedyes_no_lists4}
-          onChange={item => setSelectedDyes_no_lists4(item.value)} // Update the selected value based on 'id'
+          onChange={item => setSelectedDyes_no_lists4(item.code)} // Update the selected value based on 'id'
           dropdownStyle={{
             backgroundColor: 'white', // Ensure dropdown has a visible background
             borderRadius: 8, // Rounded corners for consistency
@@ -315,7 +351,7 @@ const interventionSix = () => {
           placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
           selectedTextStyle={{color: 'black', fontSize: 16}}
           value={selectedyes_no_lists5}
-          onChange={item => setSelectedDyes_no_lists5(item.value)} // Update the selected value based on 'id'
+          onChange={item => setSelectedDyes_no_lists5(item.code)} // Update the selected value based on 'id'
           dropdownStyle={{
             backgroundColor: 'white', // Ensure dropdown has a visible background
             borderRadius: 8, // Rounded corners for consistency
@@ -338,7 +374,7 @@ const interventionSix = () => {
           placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
           selectedTextStyle={{color: 'black', fontSize: 16}}
           value={selectedyes_no_lists6}
-          onChange={item => setSelectedDyes_no_lists6(item.value)} // Update the selected value based on 'id'
+          onChange={item => setSelectedDyes_no_lists6(item.code)} // Update the selected value based on 'id'
           dropdownStyle={{
             backgroundColor: 'white', // Ensure dropdown has a visible background
             borderRadius: 8, // Rounded corners for consistency
@@ -361,7 +397,7 @@ const interventionSix = () => {
           placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
           selectedTextStyle={{color: 'black', fontSize: 16}}
           value={selectedyes_no_lists7}
-          onChange={item => setSelectedDyes_no_lists7(item.value)} // Update the selected value based on 'id'
+          onChange={item => setSelectedDyes_no_lists7(item.code)} // Update the selected value based on 'id'
           dropdownStyle={{
             backgroundColor: 'white', // Ensure dropdown has a visible background
             borderRadius: 8, // Rounded corners for consistency
@@ -383,7 +419,7 @@ const interventionSix = () => {
           placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
           selectedTextStyle={{color: 'black', fontSize: 16}}
           value={selectedyes_no_lists8}
-          onChange={item => setSelectedDyes_no_lists8(item.value)} // Update the selected value based on 'id'
+          onChange={item => setSelectedDyes_no_lists8(item.code)} // Update the selected value based on 'id'
           dropdownStyle={{
             backgroundColor: 'white', // Ensure dropdown has a visible background
             borderRadius: 8, // Rounded corners for consistency
@@ -405,7 +441,7 @@ const interventionSix = () => {
           placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
           selectedTextStyle={{color: 'black', fontSize: 16}}
           value={selectedyes_no_lists9}
-          onChange={item => setSelectedDyes_no_lists9(item.value)} // Update the selected value based on 'id'
+          onChange={item => setSelectedDyes_no_lists9(item.code)} // Update the selected value based on 'id'
           dropdownStyle={{
             backgroundColor: 'white', // Ensure dropdown has a visible background
             borderRadius: 8, // Rounded corners for consistency
@@ -427,7 +463,7 @@ const interventionSix = () => {
           placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
           selectedTextStyle={{color: 'black', fontSize: 16}}
           value={selectedyes_no_lists10}
-          onChange={item => setSelectedDyes_no_lists10(item.value)} // Update the selected value based on 'id'
+          onChange={item => setSelectedDyes_no_lists10(item.code)} // Update the selected value based on 'id'
           dropdownStyle={{
             backgroundColor: 'white', // Ensure dropdown has a visible background
             borderRadius: 8, // Rounded corners for consistency
@@ -449,7 +485,7 @@ const interventionSix = () => {
           placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
           selectedTextStyle={{color: 'black', fontSize: 16}}
           value={selectedyes_no_lists11}
-          onChange={item => setSelectedDyes_no_lists11(item.value)} // Update the selected value based on 'id'
+          onChange={item => setSelectedDyes_no_lists11(item.code)} // Update the selected value based on 'id'
           dropdownStyle={{
             backgroundColor: 'white', // Ensure dropdown has a visible background
             borderRadius: 8, // Rounded corners for consistency
@@ -472,7 +508,7 @@ const interventionSix = () => {
           placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
           selectedTextStyle={{color: 'black', fontSize: 16}}
           value={selectedyes_no_lists12}
-          onChange={item => setSelectedDyes_no_lists12(item.value)} // Update the selected value based on 'id'
+          onChange={item => setSelectedDyes_no_lists12(item.code)} // Update the selected value based on 'id'
           dropdownStyle={{
             backgroundColor: 'white', // Ensure dropdown has a visible background
             borderRadius: 8, // Rounded corners for consistency
@@ -487,16 +523,16 @@ const interventionSix = () => {
         <Text style={styles.label}>9.c.1.1 Name of nursery caretaker:</Text>
         <TextInput
           style={styles.input}
-          value={inputValue1}
-          onChange={text => setInputValue1(text)}
+          value={inputValue4}
+          onChangeText={text => setInputValue4(text)}
           placeholderTextColor="black"
           placeholder="select nursery caretaker"
         />
         <Text style={styles.label}>9.c.1.2. Mobile no. of the Caretaker:</Text>
         <TextInput
           style={styles.input}
-          value={inputValue1}
-          onChange={text => setInputValue1(text)}
+          value={inputValue5}
+          onChangeText={text => setInputValue5(text)}
           placeholderTextColor="black"
           placeholder="select  Mobile no. of the Caretaker"
         />
@@ -504,8 +540,8 @@ const interventionSix = () => {
         <Text style={styles.label}>9.c.1.2. NID no. of the Caretaker:</Text>
         <TextInput
           style={styles.input}
-          value={inputValue1}
-          onChange={text => setInputValue1(text)}
+          value={inputValue6}
+          onChangeText={text => setInputValue6(text)}
           placeholderTextColor="black"
           placeholder="select NID no. of the Caretaker"
         />
@@ -513,7 +549,7 @@ const interventionSix = () => {
         <View style={styles.button}>
           <TouchableOpacity
             style={styles.addButton}
-            onPress={() => navigation.navigate('interventionSeven' as never)}>
+            onPress={() => interventionSixSubmit()}>
             <Text style={styles.buttonText}>Next</Text>
           </TouchableOpacity>
         </View>
@@ -632,6 +668,77 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'black',
     marginLeft: 10, // Space between back arrow and title
+  },
+
+  tableContainer: {
+    padding: 16,
+    backgroundColor: 'white',
+  },
+  headerRowContainer: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderColor: 'gray',
+    paddingBottom: 8,
+    marginBottom: 8,
+  },
+  headerLabel: {
+    flex: 1,
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: 'black',
+  },
+  dataRowContainer: {
+    flexDirection: 'row',
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderColor: 'gray',
+  },
+  cellContent: {
+    flex: 1,
+    fontSize: 16,
+    color: 'black',
+  },
+  actionButtons: {
+    flexDirection: 'row',
+    flex: 1,
+    justifyContent: 'space-evenly',
+  },
+  editButtonStyle: {
+    backgroundColor: '#4CAF50',
+    paddingVertical: 4,
+    paddingHorizontal: 12,
+    borderRadius: 4,
+  },
+  deleteButtonStyle: {
+    backgroundColor: '#F44336',
+    paddingVertical: 4,
+    paddingHorizontal: 12,
+    borderRadius: 4,
+  },
+  buttonTextStyle: {
+    color: 'white',
+    fontSize: 14,
+  },
+  noDataContainer: {
+    padding: 16,
+    alignItems: 'center',
+  },
+  noDataText: {
+    fontSize: 16,
+    color: 'gray',
+  },
+  headerSeparator: {
+    alignSelf: 'center',
+    color: 'black',
+    // Adjusted margin for better spacing
+    fontWeight: 'bold',
+    // Increased font size for consistency
+  },
+  rowSeparator: {
+    alignSelf: 'center',
+    color: 'black',
+    marginHorizontal: 8, // Adjusted margin for better spacing
+    fontSize: 16, // Increased font size for consistency
   },
 });
 

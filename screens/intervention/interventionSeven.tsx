@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -9,6 +9,7 @@ import {
   ScrollView,
   Button,
   Modal,
+  FlatList,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {Dropdown} from 'react-native-element-dropdown';
@@ -16,6 +17,7 @@ import DocumentPicker from 'react-native-document-picker';
 import {useNavigation} from '@react-navigation/native';
 import {Colors, CommonStyles, Fonts, Sizes} from '../../constants/styles';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {months_api, months_list} from '../../database/sqlDatabase';
 
 const interventionSeven = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -30,8 +32,34 @@ const interventionSeven = () => {
   const [showPicker, setShowPicker] = useState(false);
   const [date, setDate] = useState(new Date());
   const [selectedForest, setSelectedForest] = useState(null);
+  const [selectedMonth, setSelectedMonth] = useState(null);
+  const [selectedMonth2, setSelectedMonth2] = useState(null);
+  const [selectedMonth3, setSelectedMonth3] = useState(null);
+  const [months, setMonths] = useState(null);
 
   const navigation = useNavigation();
+
+  useEffect(() => {
+    const months = async () => {
+      try {
+        // const response = await fetch(`${baseApi}/months?token=${token}`);
+        // // console.log('data: ' + response);
+        // if (!response.ok) {
+        //   //throw new Error('Network response was not ok');
+        // }
+
+        // const jsonData = await response.json();
+        // console.log(jsonData, 'fetched jsonData'); // Log the fetched data
+        await months_api();
+        const data = await months_list();
+        setMonths(data); // Update state with the fetched data
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    months();
+  }, []);
 
   const onDocumentPress = async () => {
     const res = await DocumentPicker.pick({
@@ -44,7 +72,7 @@ const interventionSeven = () => {
     setShowPicker(Platform.OS === 'ios'); // Hide the picker after selection (Android closes automatically)
     setDate(currentDate);
     const formattedDate = `${currentDate.toLocaleDateString()} ${currentDate.toLocaleTimeString()}`;
-    setInputValue1(formattedDate); // Update TextInput with selected date and time
+    setInputValue100(formattedDate); // Update TextInput with selected date and time
   };
 
   const showDatePicker = () => {
@@ -58,6 +86,21 @@ const interventionSeven = () => {
     {label: 'Coniferous Forest', value: 'coniferous'},
     {label: 'Bamboo Forest', value: 'bamboo'},
   ];
+
+  const interventionSeven = () => {
+    console.log(
+      inputValue1,
+      inputValue2,
+      inputValue3,
+      inputValue4,
+      inputValue5,
+      inputValue6,
+    );
+
+    navigation.navigate('interventionEight' as never);
+  };
+
+  const tableData = [];
 
   return (
     <>
@@ -79,19 +122,19 @@ const interventionSeven = () => {
         <TextInput
           style={styles.input}
           value={inputValue1}
-          onChange={text => setInputValue1(text)}
+          onChangeText={text => setInputValue1(text)}
           placeholderTextColor="black"
           placeholder="select Plan Year"
         />
         <Text style={styles.label}>10.1.b. Plan Months:</Text>
-        <Dropdown
+        {/* <Dropdown
           style={styles.input} // Reusing the input style for consistency
-          data={forestOptions}
+          data={months}
           labelField="name"
           valueField="code"
           placeholder="Select Plan Months type"
-          value={selectedForest}
-          onChange={item => setSelectedForest(item.value)}
+          value={selectedMonth}
+          onChange={item => setSelectedMonths(item.code)}
           placeholderStyle={{color: 'black', fontSize: 16}}
           selectedTextStyle={{color: 'black', fontSize: 16}}
           dropdownStyle={{
@@ -102,33 +145,53 @@ const interventionSeven = () => {
             color: 'black',
             fontSize: 16,
           }}
-        />
+        /> */}
+
+        {/* <Dropdown
+          style={styles.input} // Reusing the input style for consistency
+          data={months}
+          labelField="name"
+          valueField="code"
+          placeholder="Select Plan Months type"
+          value={selectedMonth}
+          onChange={item => setSelectedMonth(item.code)} // Update based on selected month
+          placeholderStyle={{color: 'black', fontSize: 16}}
+          selectedTextStyle={{color: 'black', fontSize: 16}}
+          dropdownStyle={{
+            backgroundColor: 'white',
+            borderRadius: 8,
+          }}
+          itemTextStyle={{
+            color: 'black',
+            fontSize: 16,
+          }}
+        /> */}
         <Text style={styles.label}>10.2. Plantation Site Prearartion:</Text>
         <Text style={styles.label}>10.2.a. Plan Year:</Text>
         <TextInput
           style={styles.input}
-          value={inputValue1}
-          onChange={text => setInputValue1(text)}
+          value={inputValue2}
+          onChangeText={text => setInputValue2(text)}
           placeholderTextColor="black"
           placeholder="select Plan Year"
         />
 
         <Text style={styles.label}>10.2.b. Plan Months:</Text>
-        <Dropdown
+        {/* <Dropdown
           style={styles.input} // Reusing the input style for consistency
-          data={forestOptions}
+          data={months}
           labelField="name"
           valueField="code"
           placeholder="Select Plan Months type"
           value={selectedForest}
           onChange={item => setSelectedForest(item.value)}
-        />
+        /> */}
         <Text style={styles.label}>10.3. Planting:</Text>
         <Text style={styles.label}>10.3.a. Plan Year:</Text>
         <TextInput
           style={styles.input}
-          value={inputValue1}
-          onChange={text => setInputValue1(text)}
+          value={inputValue3}
+          onChangeText={text => setInputValue3(text)}
           placeholderTextColor="black"
           placeholder="select Plan Year"
         />
@@ -151,14 +214,14 @@ const interventionSeven = () => {
           <TextInput
             style={styles.input}
             value={inputValue1}
-            onChange={text => setInputValue1(text)}
+           onChangeText={text =>  setInputValue1(text)}
           />
 
           <Text style={styles.label}>10.4.b. Plan Year</Text>
           <TextInput
             style={styles.input}
             value={inputValue1}
-            onChange={text => setInputValue1(text)}
+           onChangeText={text =>  setInputValue1(text)}
           />
 
           <Text style={styles.label}>10.4.c. Plan Months</Text>
@@ -185,6 +248,38 @@ const interventionSeven = () => {
             </TouchableOpacity>
           </View>
 
+          <View style={styles.tableContainer}>
+            {/* Headers */}
+            <View style={styles.headerRowContainer}>
+              <Text style={styles.headerLabel}>Cycle</Text>
+              <Text style={styles.headerSeparator}>|</Text>
+              <Text style={styles.headerLabel}>Plan Year</Text>
+              <Text style={styles.headerSeparator}>|</Text>
+              <Text style={styles.headerLabel}>Plan Months</Text>
+            </View>
+
+            {/* Data Rows */}
+            {tableData.length > 0 ? (
+              <FlatList
+                data={tableData}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={({item}) => (
+                  <View style={styles.dataRowContainer}>
+                    <Text style={styles.cellContent}>{item.cycle}</Text>
+                    <Text style={styles.cellSeparator}>|</Text>
+                    <Text style={styles.cellContent}>{item.planYear}</Text>
+                    <Text style={styles.cellSeparator}>|</Text>
+                    <Text style={styles.cellContent}>{item.planMonths}</Text>
+                  </View>
+                )}
+              />
+            ) : (
+              <View style={styles.noDataContainer}>
+                <Text style={styles.noDataText}>No data available</Text>
+              </View>
+            )}
+          </View>
+
           {/* Modal for weeding and mulching inputs */}
           <Modal
             animationType="slide"
@@ -203,18 +298,18 @@ const interventionSeven = () => {
                     <Text style={styles.label}>10.4.a. Cycle (চক্র)</Text>
                     <TextInput
                       style={styles.input}
-                      value={inputValue1}
+                      value={inputValue4}
                       placeholder="Enter Cycle"
-                      onChangeText={text => setInputValue1(text)}
+                      onChangeText={text => setInputValue4(text)}
                       placeholderTextColor="black"
                     />
 
                     <Text style={styles.label}>10.4.b. Plan Year</Text>
                     <TextInput
                       style={styles.input}
-                      value={inputValue2}
+                      value={inputValue5}
                       placeholder="Enter Plan Year"
-                      onChangeText={text => setInputValue2(text)}
+                      onChangeText={text => setInputValue5(text)}
                       placeholderTextColor="black"
                     />
 
@@ -238,10 +333,19 @@ const interventionSeven = () => {
                     />
 
                     {/* Close modal button */}
-                    <Button
-                      title="Close"
-                      onPress={() => setModalVisible(false)}
-                    />
+                    <View
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        margin: 5,
+                      }}>
+                      <Button title="Save" />
+                      <Button
+                        title="Close"
+                        onPress={() => setModalVisible(false)}
+                      />
+                    </View>
                   </View>
                 </ScrollView>
               </View>
@@ -259,7 +363,7 @@ const interventionSeven = () => {
           <TextInput
             style={styles.input}
             value={inputValue1}
-            onChange={text => setInputValue1(text)}
+           onChangeText={text =>  setInputValue1(text)}
           />
           <Text style={styles.label}>10.5.b. Plan Months</Text>
           <Dropdown
@@ -285,6 +389,34 @@ const interventionSeven = () => {
             </TouchableOpacity>
           </View>
 
+          <View style={styles.tableContainer}>
+            {/* Headers */}
+            <View style={styles.headerRowContainer}>
+              <Text style={styles.headerLabel}>Plan Year</Text>
+              <Text style={styles.headerSeparator}>|</Text>
+              <Text style={styles.headerLabel}>Plan Months</Text>
+            </View>
+
+            {/* Data Rows */}
+            {tableData.length > 0 ? (
+              <FlatList
+                data={tableData}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={({item}) => (
+                  <View style={styles.dataRowContainer}>
+                    <Text style={styles.cellContent}>{item.planYear}</Text>
+                    <Text style={styles.cellSeparator}>|</Text>
+                    <Text style={styles.cellContent}>{item.planMonths}</Text>
+                  </View>
+                )}
+              />
+            ) : (
+              <View style={styles.noDataContainer}>
+                <Text style={styles.noDataText}>No data available</Text>
+              </View>
+            )}
+          </View>
+
           {/* Modal for vacancy filling inputs */}
           <Modal
             animationType="slide"
@@ -303,9 +435,9 @@ const interventionSeven = () => {
                     <Text style={styles.label}>10.5.a. Plan Year</Text>
                     <TextInput
                       style={styles.input}
-                      value={inputValue1}
+                      value={inputValue6}
                       placeholder="Enter Plan Year"
-                      onChangeText={text => setInputValue1(text)}
+                      onChangeText={text => setInputValue6(text)}
                     />
 
                     <Text style={styles.label}>10.5.b. Plan Months</Text>
@@ -328,10 +460,19 @@ const interventionSeven = () => {
                     />
 
                     {/* Close modal button */}
-                    <Button
-                      title="Close"
-                      onPress={() => setModalVisible2(false)}
-                    />
+                    <View
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        margin: 5,
+                      }}>
+                      <Button title="Save" />
+                      <Button
+                        title="Close"
+                        onPress={() => setModalVisible2(false)}
+                      />
+                    </View>
                   </View>
                 </ScrollView>
               </View>
@@ -344,7 +485,7 @@ const interventionSeven = () => {
         <View style={styles.button}>
           <TouchableOpacity
             style={styles.addButton}
-            onPress={() => navigation.navigate('interventionEight' as never)}>
+            onPress={() => interventionSeven()}>
             <Text style={styles.buttonText}>Next</Text>
           </TouchableOpacity>
         </View>
@@ -481,6 +622,77 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
+  },
+
+  tableContainer: {
+    padding: 16,
+    backgroundColor: 'white',
+  },
+  headerRowContainer: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderColor: 'gray',
+    paddingBottom: 8,
+    marginBottom: 8,
+  },
+  headerLabel: {
+    flex: 1,
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: 'black',
+  },
+  dataRowContainer: {
+    flexDirection: 'row',
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderColor: 'gray',
+  },
+  cellContent: {
+    flex: 1,
+    fontSize: 16,
+    color: 'black',
+  },
+  actionButtons: {
+    flexDirection: 'row',
+    flex: 1,
+    justifyContent: 'space-evenly',
+  },
+  editButtonStyle: {
+    backgroundColor: '#4CAF50',
+    paddingVertical: 4,
+    paddingHorizontal: 12,
+    borderRadius: 4,
+  },
+  deleteButtonStyle: {
+    backgroundColor: '#F44336',
+    paddingVertical: 4,
+    paddingHorizontal: 12,
+    borderRadius: 4,
+  },
+  buttonTextStyle: {
+    color: 'white',
+    fontSize: 14,
+  },
+  noDataContainer: {
+    padding: 16,
+    alignItems: 'center',
+  },
+  noDataText: {
+    fontSize: 16,
+    color: 'gray',
+  },
+  headerSeparator: {
+    alignSelf: 'center',
+    color: 'black',
+    // Adjusted margin for better spacing
+    fontWeight: 'bold',
+    // Increased font size for consistency
+  },
+  rowSeparator: {
+    alignSelf: 'center',
+    color: 'black',
+    marginHorizontal: 8, // Adjusted margin for better spacing
+    fontSize: 16, // Increased font size for consistency
   },
 });
 

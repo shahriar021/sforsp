@@ -43,6 +43,9 @@ const consultOne = () => {
   const [inputValue5, setInputValue5] = useState('');
   const [inputValue6, setInputValue6] = useState('');
   const [inputValue7, setInputValue7] = useState('');
+  const [inputValue8, setInputValue8] = useState('');
+  const [inputValue9, setInputValue9] = useState('');
+  const [inputValue100, setInputValue100] = useState('');
   const [showPicker, setShowPicker] = useState(false);
   const [date, setDate] = useState(new Date());
 
@@ -65,7 +68,7 @@ const consultOne = () => {
     setShowPicker(Platform.OS === 'ios'); // Hide the picker after selection (Android closes automatically)
     setDate(currentDate);
     const formattedDate = `${currentDate.toLocaleDateString()} ${currentDate.toLocaleTimeString()}`;
-    setInputValue1(formattedDate); // Update TextInput with selected date and time
+    setInputValue100(formattedDate); // Update TextInput with selected date and time
   };
 
   const showDatePicker = () => {
@@ -201,6 +204,28 @@ const consultOne = () => {
     forest_beat();
   }, [selectedForestrange]);
 
+  const consultOne = () => {
+    console.log(
+      inputValue1,
+      inputValue2,
+      inputValue3,
+      inputValue4,
+      inputValue5,
+      inputValue6,
+      inputValue7,
+      inputValue8,
+      inputValue9,
+
+      selectedForest,
+      selectedForestCircle,
+      selectedForestDivision,
+      selectedForestrange,
+      selectedForestbeat,
+    );
+
+    navigation.navigate('communityconsultTwo' as never);
+  };
+
   return (
     <>
       <View style={styles.header}>
@@ -225,6 +250,7 @@ const consultOne = () => {
           style={styles.input}
           placeholderTextColor="black"
           placeholder="select meeting place"
+          onChangeText={text => setInputValue1(text)}
         />
 
         <Text style={styles.label}>1.b. Name of Union (ইউনিয়নের নাম):</Text>
@@ -232,6 +258,7 @@ const consultOne = () => {
           style={styles.input}
           placeholderTextColor="black"
           placeholder="select Name of Union"
+          onChangeText={text => setInputValue2(text)}
         />
 
         <Text style={styles.label}>
@@ -245,6 +272,7 @@ const consultOne = () => {
             placeholder="Select date and time"
             editable={false} // Prevent manual editing
             pointerEvents="none" // Ensure the input doesn't focus, acting like a button
+            onChangeText={text => setInputValue3(text)}
           />
         </TouchableOpacity>
 
@@ -265,6 +293,7 @@ const consultOne = () => {
             placeholder="Select date and time"
             editable={false} // Prevent manual editing
             pointerEvents="none" // Ensure the input doesn't focus, acting like a button
+            onChangeText={text => setInputValue4(text)}
           />
         </TouchableOpacity>
 
@@ -285,6 +314,7 @@ const consultOne = () => {
           style={styles.input}
           placeholderTextColor="black"
           placeholder="select Name of Beat/Camp/SFPC Officer"
+          onChangeText={text => setInputValue5(text)}
         />
 
         <Text style={styles.label}>
@@ -295,13 +325,19 @@ const consultOne = () => {
           style={styles.input}
           placeholderTextColor="black"
           placeholder="select Mobile number "
+          onChangeText={text => setInputValue6(text)}
         />
 
         <Text style={styles.label}>
           1.f. Email address of Beat/Camp/SFPC Officer (বিট/ক্যাম্প/এসএফপিসি
           কর্মকর্তার ইমেইল আইডি):
         </Text>
-        <TextInput style={styles.input} />
+        <TextInput
+          style={styles.input}
+          placeholderTextColor="black"
+          placeholder="select Email adress "
+          onChangeText={text => setInputValue7(text)}
+        />
 
         <Text style={styles.label}>
           2. Location Data (Beat/Camp/SFPC Information) (এলাকার তথ্য)
@@ -421,6 +457,7 @@ const consultOne = () => {
           style={styles.input}
           placeholderTextColor="black"
           placeholder="select Block"
+          onChangeText={text => setInputValue8(text)}
         />
 
         <Text style={styles.label}>2.1.d.2.Char (চর):</Text>
@@ -428,12 +465,13 @@ const consultOne = () => {
           style={styles.input}
           placeholderTextColor="black"
           placeholder="select Char"
+          onChangeText={text => setInputValue9(text)}
         />
 
         <View style={styles.button}>
           <TouchableOpacity
             style={styles.addButton}
-            onPress={() => navigation.navigate('communityconsultTwo' as never)}>
+            onPress={() => consultOne()}>
             <Text style={styles.buttonText}>Next</Text>
           </TouchableOpacity>
         </View>

@@ -52,7 +52,7 @@ const interventionEight = () => {
     setShowPicker(Platform.OS === 'ios'); // Hide the picker after selection (Android closes automatically)
     setDate(currentDate);
     const formattedDate = `${currentDate.toLocaleDateString()} ${currentDate.toLocaleTimeString()}`;
-    setInputValue1(formattedDate); // Update TextInput with selected date and time
+    setInputValue100(formattedDate); // Update TextInput with selected date and time
   };
 
   const showDatePicker = () => {
@@ -89,6 +89,21 @@ const interventionEight = () => {
     months();
   }, []);
 
+  const interventionEight = () => {
+    console.log(
+      inputValue1,
+      inputValue2,
+      inputValue3,
+      planYear,
+      selectedMonths1,
+      selectedMonths2,
+      selectedMonths3,
+      selectedMonths4,
+    );
+  };
+
+  const tableData = [];
+
   return (
     <>
       <View style={styles.header}>
@@ -105,7 +120,7 @@ const interventionEight = () => {
         <TextInput
           style={styles.input}
           value={inputValue1}
-          onChange={text => setInputValue1(text)}
+          onChangeText={text => setInputValue1(text)}
           placeholderTextColor="black"
           placeholder="select Plan Year"
         />
@@ -119,7 +134,7 @@ const interventionEight = () => {
           placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
           selectedTextStyle={{color: 'black', fontSize: 16}}
           value={selectedMonths1}
-          onChange={item => setSelectedMonths1(item.value)} // Update the selected value based on 'id'
+          onChange={item => setSelectedMonths1(item.code)} // Update the selected value based on 'id'
           dropdownStyle={{
             backgroundColor: 'white', // Ensure dropdown has a visible background
             borderRadius: 8, // Rounded corners for consistency
@@ -133,8 +148,8 @@ const interventionEight = () => {
         <Text style={styles.label}>10.7.a. Plan Year:</Text>
         <TextInput
           style={styles.input}
-          value={inputValue1}
-          onChange={text => setInputValue1(text)}
+          value={inputValue2}
+          onChangeText={text => setInputValue2(text)}
           placeholderTextColor="black"
           placeholder="select Plan Year"
         />
@@ -148,7 +163,7 @@ const interventionEight = () => {
           placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
           selectedTextStyle={{color: 'black', fontSize: 16}}
           value={selectedMonths2}
-          onChange={item => setSelectedMonths2(item.value)} // Update the selected value based on 'id'
+          onChange={item => setSelectedMonths2(item.code)} // Update the selected value based on 'id'
           dropdownStyle={{
             backgroundColor: 'white', // Ensure dropdown has a visible background
             borderRadius: 8, // Rounded corners for consistency
@@ -167,7 +182,7 @@ const interventionEight = () => {
           <TextInput
             style={styles.input}
             value={inputValue1}
-            onChange={text => setInputValue1(text)}
+            onChangeText={text => setInputValue1(text)}
           />
           <Text style={styles.label}>10.8.b. Plan Months</Text>
           <Dropdown
@@ -201,6 +216,34 @@ const interventionEight = () => {
               onPress={() => setModalVisible(true)}>
               <Text style={styles.buttonText}>Add New</Text>
             </TouchableOpacity>
+          </View>
+
+          <View style={styles.tableContainer}>
+            {/* Headers */}
+            <View style={styles.headerRowContainer}>
+              <Text style={styles.headerLabel}>Plan Year</Text>
+              <Text style={styles.headerSeparator}>|</Text>
+              <Text style={styles.headerLabel}>Plan Months</Text>
+            </View>
+
+            {/* Data Rows */}
+            {tableData.length > 0 ? (
+              <FlatList
+                data={tableData}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={({item}) => (
+                  <View style={styles.dataRowContainer}>
+                    <Text style={styles.cellContent}>{item.planYear}</Text>
+                    <Text style={styles.cellSeparator}>|</Text>
+                    <Text style={styles.cellContent}>{item.planMonths}</Text>
+                  </View>
+                )}
+              />
+            ) : (
+              <View style={styles.noDataContainer}>
+                <Text style={styles.noDataText}>No data available</Text>
+              </View>
+            )}
           </View>
 
           {/* Modal for community protection inputs */}
@@ -249,10 +292,19 @@ const interventionEight = () => {
                     />
 
                     {/* Close modal button */}
-                    <Button
-                      title="Close"
-                      onPress={() => setModalVisible(false)}
-                    />
+                    <View
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        margin: 5,
+                      }}>
+                      <Button title="Save" />
+                      <Button
+                        title="Close"
+                        onPress={() => setModalVisible(false)}
+                      />
+                    </View>
                   </View>
                 </ScrollView>
               </View>
@@ -266,16 +318,16 @@ const interventionEight = () => {
         <Text style={styles.label}>10.9.a. Others Specify:</Text>
         <TextInput
           style={styles.input}
-          value={inputValue1}
-          onChange={text => setInputValue1(text)}
+          value={inputValue3}
+          onChangeText={text => setInputValue3(text)}
           placeholderTextColor="black"
           placeholder="select Others Specify"
         />
         <Text style={styles.label}>10.9.b. Plan Year:</Text>
         <TextInput
           style={styles.input}
-          value={inputValue1}
-          onChange={text => setInputValue1(text)}
+          value={inputValue4}
+          onChangeText={text => setInputValue4(text)}
           placeholderTextColor="black"
           placeholder="select plan year"
         />
@@ -289,7 +341,7 @@ const interventionEight = () => {
           placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
           selectedTextStyle={{color: 'black', fontSize: 16}}
           value={selectedMonths4}
-          onChange={item => setSelectedMonths4(item.value)} // Update the selected value based on 'id'
+          onChange={item => setSelectedMonths4(item.code)} // Update the selected value based on 'id'
           dropdownStyle={{
             backgroundColor: 'white', // Ensure dropdown has a visible background
             borderRadius: 8, // Rounded corners for consistency
@@ -312,7 +364,9 @@ const interventionEight = () => {
         </View>
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.addButton}>
+          <TouchableOpacity
+            style={styles.addButton}
+            onPress={() => interventionEight()}>
             <Text style={styles.buttonText}>Submit</Text>
           </TouchableOpacity>
 
@@ -463,6 +517,77 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white', // Set the text color
     textAlign: 'center', // Center the text
+  },
+
+  tableContainer: {
+    padding: 16,
+    backgroundColor: 'white',
+  },
+  headerRowContainer: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderColor: 'gray',
+    paddingBottom: 8,
+    marginBottom: 8,
+  },
+  headerLabel: {
+    flex: 1,
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: 'black',
+  },
+  dataRowContainer: {
+    flexDirection: 'row',
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderColor: 'gray',
+  },
+  cellContent: {
+    flex: 1,
+    fontSize: 16,
+    color: 'black',
+  },
+  actionButtons: {
+    flexDirection: 'row',
+    flex: 1,
+    justifyContent: 'space-evenly',
+  },
+  editButtonStyle: {
+    backgroundColor: '#4CAF50',
+    paddingVertical: 4,
+    paddingHorizontal: 12,
+    borderRadius: 4,
+  },
+  deleteButtonStyle: {
+    backgroundColor: '#F44336',
+    paddingVertical: 4,
+    paddingHorizontal: 12,
+    borderRadius: 4,
+  },
+  buttonTextStyle: {
+    color: 'white',
+    fontSize: 14,
+  },
+  noDataContainer: {
+    padding: 16,
+    alignItems: 'center',
+  },
+  noDataText: {
+    fontSize: 16,
+    color: 'gray',
+  },
+  headerSeparator: {
+    alignSelf: 'center',
+    color: 'black',
+    // Adjusted margin for better spacing
+    fontWeight: 'bold',
+    // Increased font size for consistency
+  },
+  rowSeparator: {
+    alignSelf: 'center',
+    color: 'black',
+    marginHorizontal: 8, // Adjusted margin for better spacing
+    fontSize: 16, // Increased font size for consistency
   },
 });
 

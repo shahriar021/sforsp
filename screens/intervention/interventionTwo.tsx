@@ -9,6 +9,7 @@ import {
   ScrollView,
   Button,
   Modal,
+  FlatList,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {Dropdown} from 'react-native-element-dropdown';
@@ -109,6 +110,8 @@ const interventionTwo = () => {
     navigation.navigate('interventionThree');
   };
 
+  const tableData = [];
+
   return (
     <>
       <View style={styles.header}>
@@ -172,7 +175,7 @@ const interventionTwo = () => {
           <TextInput
             style={styles.input}
             value={inputValue1}
-            onChange={text => setInputValue1(text)}
+            onChangeText={text => setInputValue1(text)}
           />
 
           <Text style={styles.label}>Total Area (ha)</Text>
@@ -180,7 +183,7 @@ const interventionTwo = () => {
           <TextInput
             style={styles.input}
             value={inputValue1}
-            onChange={text => setInputValue1(text)}
+            onChangeText={text => setInputValue1(text)}
           />
 
           <Text style={styles.label}>Total Area (ac)</Text>
@@ -188,7 +191,7 @@ const interventionTwo = () => {
           <TextInput
             style={styles.input}
             value={inputValue1}
-            onChange={text => setInputValue1(text)}
+            onChangeText={text => setInputValue1(text)}
           />
         </View> */}
 
@@ -206,6 +209,69 @@ const interventionTwo = () => {
               <Text style={styles.buttonText}>Add New</Text>
             </TouchableOpacity>
           </View>
+
+          <ScrollView style={styles.tableContainer} horizontal={true}>
+            <View style={{display: 'flex', flexDirection: 'column'}}>
+              {/* Headers */}
+              <View style={styles.headerRowContainer}>
+                <Text style={styles.headerLabel}>
+                  Site Map of Proposed Planting Site (প্রস্তাবিত বনায়নের ম্যাপ
+                  প্রনয়ণ)
+                </Text>
+                <Text style={styles.headerSeparator}>|</Text>
+                <Text style={styles.headerLabel}>
+                  Trace Shape with GPS (polytrace) (জিপিএস দিয়ে এলাকা ঘুরে এসে)
+                </Text>
+                <Text style={styles.headerSeparator}>|</Text>
+                <Text style={styles.headerLabel}>
+                  Trace Line with GPS (polyline) (জিপিএস দিয়ে লাইন আঁকা)
+                </Text>
+                <Text style={styles.headerSeparator}>|</Text>
+                <Text style={styles.headerLabel}>
+                  Name of Track GPX in GPS (জিপিএস-রিসিভারের ডিফল্ট নাম লিখুন)
+                </Text>
+                <Text style={styles.headerSeparator}>|</Text>
+                <Text style={styles.headerLabel}>Total Area (ha)</Text>
+                <Text style={styles.headerSeparator}>|</Text>
+                <Text style={styles.headerLabel}>Total Area (ac)</Text>
+              </View>
+
+              {/* Data Rows */}
+              {tableData.length > 0 ? (
+                <FlatList
+                  data={tableData}
+                  keyExtractor={(item, index) => index.toString()}
+                  renderItem={({item}) => (
+                    <View style={styles.dataRowContainer}>
+                      <Text style={styles.cellContent}>
+                        {item.plantingSiteMap}
+                      </Text>
+                      <Text style={styles.cellSeparator}>|</Text>
+                      <Text style={styles.cellContent}>
+                        {item.traceShapeGPS}
+                      </Text>
+                      <Text style={styles.cellSeparator}>|</Text>
+                      <Text style={styles.cellContent}>
+                        {item.traceLineGPS}
+                      </Text>
+                      <Text style={styles.cellSeparator}>|</Text>
+                      <Text style={styles.cellContent}>
+                        {item.trackGPXName}
+                      </Text>
+                      <Text style={styles.cellSeparator}>|</Text>
+                      <Text style={styles.cellContent}>{item.totalAreaHa}</Text>
+                      <Text style={styles.cellSeparator}>|</Text>
+                      <Text style={styles.cellContent}>{item.totalAreaAc}</Text>
+                    </View>
+                  )}
+                />
+              ) : (
+                <View style={styles.noDataContainer}>
+                  <Text style={styles.noDataText}>No data available</Text>
+                </View>
+              )}
+            </View>
+          </ScrollView>
 
           {/* Modal */}
           <Modal
@@ -305,10 +371,19 @@ const interventionTwo = () => {
                     />
 
                     {/* Close modal button */}
-                    <Button
-                      title="Close"
-                      onPress={() => setModalVisible(false)}
-                    />
+                    <View
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        margin: 5,
+                      }}>
+                      <Button title="Save" />
+                      <Button
+                        title="Close"
+                        onPress={() => setModalVisible(false)}
+                      />
+                    </View>
                   </View>
                 </ScrollView>
               </View>
@@ -321,7 +396,7 @@ const interventionTwo = () => {
         <TextInput
           style={styles.input}
           value={inputValue1}
-          onChange={text => setInputValue1(text)}
+          onChangeText={text => setInputValue1(text)}
         /> */}
 
         <View style={styles.txtNbutton}>
@@ -340,7 +415,7 @@ const interventionTwo = () => {
           style={styles.input}
           value={inputValue6}
           keyboardType="numeric"
-          onChange={text => setInputValue6(text)}
+          onChangeText={text => setInputValue6(text)}
           placeholderTextColor="black"
           placeholder="select Measured area"
         />
@@ -358,7 +433,7 @@ const interventionTwo = () => {
           <TextInput
             style={styles.input}
             value={inputValue1}
-            onChange={text => setInputValue1(text)}
+            onChangeText={text => setInputValue1(text)}
           />
 
           <Text style={styles.label}> 3.e.2. Longitude</Text>
@@ -366,7 +441,7 @@ const interventionTwo = () => {
           <TextInput
             style={styles.input}
             value={inputValue1}
-            onChange={text => setInputValue1(text)}
+            onChangeText={text => setInputValue1(text)}
           />
 
           <Text style={styles.label}> 3.e.3. Bearing (degree)</Text>
@@ -374,7 +449,7 @@ const interventionTwo = () => {
           <TextInput
             style={styles.input}
             value={inputValue1}
-            onChange={text => setInputValue1(text)}
+            onChangeText={text => setInputValue1(text)}
           />
 
           <Text style={styles.label}> 3.e.4. PPIC Location</Text>
@@ -382,7 +457,7 @@ const interventionTwo = () => {
           <TextInput
             style={styles.input}
             value={inputValue1}
-            onChange={text => setInputValue1(text)}
+            onChangeText={text => setInputValue1(text)}
           />
 
           <Text style={styles.label}> 3.e.5. PPIC Location ACC</Text>
@@ -390,7 +465,7 @@ const interventionTwo = () => {
           <TextInput
             style={styles.input}
             value={inputValue1}
-            onChange={text => setInputValue1(text)}
+            onChangeText={text => setInputValue1(text)}
           />
         </View> */}
 
@@ -464,10 +539,19 @@ const interventionTwo = () => {
                     />
 
                     {/* Close modal button */}
-                    <Button
-                      title="Close"
-                      onPress={() => setModalVisible2(false)}
-                    />
+                    <View
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        margin: 5,
+                      }}>
+                      <Button title="Save" />
+                      <Button
+                        title="Close"
+                        onPress={() => setModalVisible2(false)}
+                      />
+                    </View>
                   </View>
                 </ScrollView>
               </View>
@@ -489,7 +573,7 @@ const interventionTwo = () => {
         <TextInput
           style={styles.input}
           value={inputValue12}
-          onChange={text => setInputValue12(text)}
+          onChangeText={text => setInputValue12(text)}
           placeholderTextColor="black"
           placeholder="select Plantation site"
         />
@@ -658,6 +742,77 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 10,
     color: 'black',
+  },
+
+  tableContainer: {
+    padding: 16,
+    backgroundColor: 'white',
+  },
+  headerRowContainer: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderColor: 'gray',
+    paddingBottom: 8,
+    marginBottom: 8,
+  },
+  headerLabel: {
+    flex: 1,
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: 'black',
+  },
+  dataRowContainer: {
+    flexDirection: 'row',
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderColor: 'gray',
+  },
+  cellContent: {
+    flex: 1,
+    fontSize: 16,
+    color: 'black',
+  },
+  actionButtons: {
+    flexDirection: 'row',
+    flex: 1,
+    justifyContent: 'space-evenly',
+  },
+  editButtonStyle: {
+    backgroundColor: '#4CAF50',
+    paddingVertical: 4,
+    paddingHorizontal: 12,
+    borderRadius: 4,
+  },
+  deleteButtonStyle: {
+    backgroundColor: '#F44336',
+    paddingVertical: 4,
+    paddingHorizontal: 12,
+    borderRadius: 4,
+  },
+  buttonTextStyle: {
+    color: 'white',
+    fontSize: 14,
+  },
+  noDataContainer: {
+    padding: 16,
+    alignItems: 'center',
+  },
+  noDataText: {
+    fontSize: 16,
+    color: 'gray',
+  },
+  headerSeparator: {
+    alignSelf: 'center',
+    color: 'black',
+    // Adjusted margin for better spacing
+    fontWeight: 'bold',
+    // Increased font size for consistency
+  },
+  rowSeparator: {
+    alignSelf: 'center',
+    color: 'black',
+    marginHorizontal: 8, // Adjusted margin for better spacing
+    fontSize: 16, // Increased font size for consistency
   },
 });
 

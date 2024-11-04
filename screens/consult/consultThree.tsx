@@ -28,6 +28,7 @@ const consultThree = () => {
   const [inputValue5, setInputValue5] = useState('');
   const [inputValue6, setInputValue6] = useState('');
   const [inputValue7, setInputValue7] = useState('');
+  const [inputValue100, setInputValue100] = useState('');
   const [showPicker, setShowPicker] = useState(false);
   const [date, setDate] = useState(new Date());
   const [selectedForest, setSelectedForest] = useState(null);
@@ -53,7 +54,7 @@ const consultThree = () => {
     setShowPicker(Platform.OS === 'ios'); // Hide the picker after selection (Android closes automatically)
     setDate(currentDate);
     const formattedDate = `${currentDate.toLocaleDateString()} ${currentDate.toLocaleTimeString()}`;
-    setInputValue1(formattedDate); // Update TextInput with selected date and time
+    setInputValue100(formattedDate); // Update TextInput with selected date and time
   };
 
   const showDatePicker = () => {
@@ -89,6 +90,21 @@ const consultThree = () => {
 
     yes_no_lists();
   }, []);
+
+  const consultThree = () => {
+    console.log(
+      inputValue1,
+      inputValue2,
+
+      selectedyes_no_lists1,
+      selectedyes_no_lists2,
+      selectedyes_no_lists3,
+      selectedyes_no_lists4,
+      selectedyes_no_lists5,
+      selectedyes_no_lists6,
+      selectedyes_no_lists7,
+    );
+  };
 
   return (
     <>
@@ -292,6 +308,7 @@ const consultThree = () => {
           style={styles.input}
           placeholderTextColor="black"
           placeholder="select Male"
+          onChangeText={text => setInputValue1(text)}
         />
 
         <Text style={styles.label}>
@@ -301,6 +318,7 @@ const consultThree = () => {
           style={styles.input}
           placeholderTextColor="black"
           placeholder="select Female"
+          onChangeText={text => setInputValue2(text)}
         />
 
         <View style={styles.txtNbutton}>
@@ -315,7 +333,9 @@ const consultThree = () => {
         </View>
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.addButton}>
+          <TouchableOpacity
+            style={styles.addButton}
+            onPress={() => consultThree()}>
             <Text style={styles.buttonText}>Submit</Text>
           </TouchableOpacity>
 

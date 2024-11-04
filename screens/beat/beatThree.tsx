@@ -9,6 +9,7 @@ import {
   ScrollView,
   Button,
   Modal,
+  FlatList,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {Dropdown} from 'react-native-element-dropdown';
@@ -98,6 +99,8 @@ const beatThree = () => {
   const handleInputChange = (field, value) => {
     setInputValue(prevValue => ({...prevValue, [field]: value}));
   };
+
+  const tableData = []
 
   const submitBeatThree = () => {
     console.log(
@@ -317,6 +320,48 @@ const beatThree = () => {
           </TouchableOpacity>
         </View>
 
+        <View style={styles.tableContainer}>
+          {/* Headers */}
+          <View style={styles.headerRowContainer}>
+            <Text style={styles.headerLabel}>
+              Name of Mouza <Text>(মৌজার নাম)</Text>{' '}
+            </Text>
+            <Text style={styles.headerSeparator}>|</Text>
+            <Text style={styles.headerLabel}>Survey Types (সার্ভের ধরণ)</Text>
+            <Text style={styles.headerSeparator}>|</Text>
+            <Text style={styles.headerLabel}>Sheet Number (সিট নম্বর)</Text>
+            <Text style={styles.headerSeparator}>|</Text>
+            <Text style={styles.headerLabel}>Actions</Text>
+          </View>
+
+          {/* Data Rows */}
+          {tableData.length > 0 ? (
+            <FlatList
+              data={tableData}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={({item}) => (
+                <View style={styles.dataRowContainer}>
+                  <Text style={styles.cellContent}>{item.mouzaName}</Text>
+                  <Text style={styles.cellContent}>{item.surveyType}</Text>
+                  <Text style={styles.cellContent}>{item.sheetNumber}</Text>
+                  <View style={styles.actionButtons}>
+                    <TouchableOpacity style={styles.editButtonStyle}>
+                      <Text style={styles.buttonTextStyle}>Edit</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.deleteButtonStyle}>
+                      <Text style={styles.buttonTextStyle}>Delete</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              )}
+            />
+          ) : (
+            <View style={styles.noDataContainer}>
+              <Text style={styles.noDataText}>No data available</Text>
+            </View>
+          )}
+        </View>
+
         <View style={styles.txtNbutton}>
           {/* Section 6.1.b */}
           <Text style={styles.label}>
@@ -330,6 +375,48 @@ const beatThree = () => {
           </TouchableOpacity>
         </View>
 
+        <View style={styles.tableContainer}>
+          {/* Headers */}
+          <View style={styles.headerRowContainer}>
+            <Text style={styles.headerLabel}>
+              Name of Mouza <Text>(মৌজার নাম)</Text>{' '}
+            </Text>
+            <Text style={styles.headerSeparator}>|</Text>
+            <Text style={styles.headerLabel}>Survey Types (সার্ভের ধরণ)</Text>
+            <Text style={styles.headerSeparator}>|</Text>
+            <Text style={styles.headerLabel}>Sheet Number (সিট নম্বর)</Text>
+            <Text style={styles.headerSeparator}>|</Text>
+            <Text style={styles.headerLabel}>Actions</Text>
+          </View>
+
+          {/* Data Rows */}
+          {tableData.length > 0 ? (
+            <FlatList
+              data={tableData}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={({item}) => (
+                <View style={styles.dataRowContainer}>
+                  <Text style={styles.cellContent}>{item.mouzaName}</Text>
+                  <Text style={styles.cellContent}>{item.surveyType}</Text>
+                  <Text style={styles.cellContent}>{item.sheetNumber}</Text>
+                  <View style={styles.actionButtons}>
+                    <TouchableOpacity style={styles.editButtonStyle}>
+                      <Text style={styles.buttonTextStyle}>Edit</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.deleteButtonStyle}>
+                      <Text style={styles.buttonTextStyle}>Delete</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              )}
+            />
+          ) : (
+            <View style={styles.noDataContainer}>
+              <Text style={styles.noDataText}>No data available</Text>
+            </View>
+          )}
+        </View>
+
         <View style={styles.txtNbutton}>
           {/* Section 6.1.c */}
           <Text style={styles.label}>
@@ -341,6 +428,48 @@ const beatThree = () => {
             onPress={() => handleOpenModal('6.1.c')}>
             <Text style={styles.buttonText}>Add New</Text>
           </TouchableOpacity>
+        </View>
+
+        <View style={styles.tableContainer}>
+          {/* Headers */}
+          <View style={styles.headerRowContainer}>
+            <Text style={styles.headerLabel}>
+              Name of Mouza <Text>(মৌজার নাম)</Text>{' '}
+            </Text>
+            <Text style={styles.headerSeparator}>|</Text>
+            <Text style={styles.headerLabel}>Survey Types (সার্ভের ধরণ)</Text>
+            <Text style={styles.headerSeparator}>|</Text>
+            <Text style={styles.headerLabel}>Sheet Number (সিট নম্বর)</Text>
+            <Text style={styles.headerSeparator}>|</Text>
+            <Text style={styles.headerLabel}>Actions</Text>
+          </View>
+
+          {/* Data Rows */}
+          {tableData.length > 0 ? (
+            <FlatList
+              data={tableData}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={({item}) => (
+                <View style={styles.dataRowContainer}>
+                  <Text style={styles.cellContent}>{item.mouzaName}</Text>
+                  <Text style={styles.cellContent}>{item.surveyType}</Text>
+                  <Text style={styles.cellContent}>{item.sheetNumber}</Text>
+                  <View style={styles.actionButtons}>
+                    <TouchableOpacity style={styles.editButtonStyle}>
+                      <Text style={styles.buttonTextStyle}>Edit</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.deleteButtonStyle}>
+                      <Text style={styles.buttonTextStyle}>Delete</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              )}
+            />
+          ) : (
+            <View style={styles.noDataContainer}>
+              <Text style={styles.noDataText}>No data available</Text>
+            </View>
+          )}
         </View>
 
         {/* Modal */}
@@ -466,7 +595,19 @@ const beatThree = () => {
                   placeholderTextColor="black"
                 />
 
-                <Button title="Close" onPress={() => setModalVisible(false)} />
+                <View
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    margin: 5,
+                  }}>
+                  <Button title="Save" />
+                  <Button
+                    title="Close"
+                    onPress={() => setModalVisible(false)}
+                  />
+                </View>
               </ScrollView>
             </View>
           </View>
@@ -992,6 +1133,120 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     elevation: 5, // Adds shadow for Android
   },
+
+  tableContainer: {
+    padding: 16,
+    backgroundColor: 'white',
+  },
+  headerRowContainer: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderColor: 'gray',
+    paddingBottom: 8,
+    marginBottom: 8,
+  },
+  headerLabel: {
+    flex: 1,
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: 'black',
+  },
+  dataRowContainer: {
+    flexDirection: 'row',
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderColor: 'gray',
+  },
+  cellContent: {
+    flex: 1,
+    fontSize: 16,
+    color: 'black',
+  },
+  actionButtons: {
+    flexDirection: 'row',
+    flex: 1,
+    justifyContent: 'space-evenly',
+  },
+  editButtonStyle: {
+    backgroundColor: '#4CAF50',
+    paddingVertical: 4,
+    paddingHorizontal: 12,
+    borderRadius: 4,
+  },
+  deleteButtonStyle: {
+    backgroundColor: '#F44336',
+    paddingVertical: 4,
+    paddingHorizontal: 12,
+    borderRadius: 4,
+  },
+  buttonTextStyle: {
+    color: 'white',
+    fontSize: 14,
+  },
+  noDataContainer: {
+    padding: 16,
+    alignItems: 'center',
+  },
+  noDataText: {
+    fontSize: 16,
+    color: 'gray',
+  },
+  headerSeparator: {
+    alignSelf: 'center',
+    color: 'black',
+    // Adjusted margin for better spacing
+    fontWeight: 'bold',
+    // Increased font size for consistency
+  },
+  rowSeparator: {
+    alignSelf: 'center',
+    color: 'black',
+    marginHorizontal: 8, // Adjusted margin for better spacing
+    fontSize: 16, // Increased font size for consistency
+  },
 });
+
+
+const tableStyles = StyleSheet.create({
+  tableContainer: {
+    marginTop: 16,
+    paddingHorizontal: 16,
+  },
+  headerRowContainer: {
+    flexDirection: 'row',
+    backgroundColor: '#e0e0e0',
+    paddingVertical: 8,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  headerLabel: {
+    flex: 1,
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333',
+    textAlign: 'center',
+  },
+  headerSeparator: {
+    fontSize: 16,
+    color: '#333',
+  },
+  dataRowContainer: {
+    flexDirection: 'row',
+    paddingVertical: 8,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  cellContent: {
+    flex: 1,
+    fontSize: 16,
+    color: '#333',
+    textAlign: 'center',
+  },
+  cellSeparator: {
+    fontSize: 16,
+    color: '#333',
+  },
+});
+
 
 export default beatThree;

@@ -9,6 +9,7 @@ import {
   ScrollView,
   Button,
   Modal,
+  FlatList,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {Dropdown} from 'react-native-element-dropdown';
@@ -89,6 +90,7 @@ const beatFour = () => {
       inputValues.conservationParticipants,
     );
   };
+  const tableData = [];
 
   return (
     <>
@@ -197,6 +199,83 @@ const beatFour = () => {
             <Text style={styles.buttonText}>Add New</Text>
           </TouchableOpacity>
         </View>
+
+        <ScrollView style={styles.tableContainer} horizontal={true}>
+          {/* Headers */}
+          <View style={{display:"flex",flexDirection:"column"}}>
+            <View style={styles.headerRowContainer}>
+              <Text style={styles.headerLabel}>Upzilla (উপজেলা)</Text>
+              <Text style={styles.headerSeparator}>|</Text>
+              <Text style={styles.headerLabel}>Union (ইউনিয়ন)</Text>
+              <Text style={styles.headerSeparator}>|</Text>
+              <Text style={styles.headerLabel}>
+                Name of Villages/Para (গ্রাম/পাড়ার নাম)
+              </Text>
+              <Text style={styles.headerSeparator}>|</Text>
+              <Text style={styles.headerLabel}>
+                Geographic Location (গ্রামের অবস্থান)
+              </Text>
+              <Text style={styles.headerSeparator}>|</Text>
+              <Text style={styles.headerLabel}>Distance from Beat (KM)</Text>
+              <Text style={styles.headerSeparator}>|</Text>
+              <Text style={styles.headerLabel}>
+                Total Households (মোট খানার সংখ্যা)
+              </Text>
+              <Text style={styles.headerSeparator}>|</Text>
+              <Text style={styles.headerLabel}>Number of Forest Villagers</Text>
+              <Text style={styles.headerSeparator}>|</Text>
+              <Text style={styles.headerLabel}>
+                Social Forestry Participants
+              </Text>
+              <Text style={styles.headerSeparator}>|</Text>
+              <Text style={styles.headerLabel}>
+                Conservation Forum Participants
+              </Text>
+            </View>
+            <View>
+              {/* Data Rows */}
+              {tableData.length > 0 ? (
+                <FlatList
+                  data={tableData}
+                  keyExtractor={(item, index) => index.toString()}
+                  renderItem={({item}) => (
+                    <View style={styles.dataRowContainer}>
+                      <Text style={styles.cellContent}>{item.upzilla}</Text>
+                      <Text style={styles.cellSeparator}>|</Text>
+                      <Text style={styles.cellContent}>{item.union}</Text>
+                      <Text style={styles.cellSeparator}>|</Text>
+                      <Text style={styles.cellContent}>{item.villages}</Text>
+                      <Text style={styles.cellSeparator}>|</Text>
+                      <Text style={styles.cellContent}>
+                        {item.location1}, {item.location2}
+                      </Text>
+                      <Text style={styles.cellSeparator}>|</Text>
+                      <Text style={styles.cellContent}>{item.distance}</Text>
+                      <Text style={styles.cellSeparator}>|</Text>
+                      <Text style={styles.cellContent}>{item.households}</Text>
+                      <Text style={styles.cellSeparator}>|</Text>
+                      <Text style={styles.cellContent}>
+                        {item.forestVillagers}
+                      </Text>
+                      <Text style={styles.cellSeparator}>|</Text>
+                      <Text style={styles.cellContent}>
+                        {item.forestryParticipants}
+                      </Text>
+                      <Text style={styles.cellSeparator}>|</Text>
+                      <Text style={styles.cellContent}>
+                        {item.conservationForum}
+                      </Text>
+                    </View>
+                  )}
+                />
+              ) : (
+                <View style={styles.noDataContainer}>
+                  <Text style={styles.noDataText}>No data available</Text>
+                </View>
+              )}
+            </View>
+          </View>
+        </ScrollView>
 
         {/* Modal Component */}
         <Modal
@@ -323,10 +402,19 @@ const beatFour = () => {
                   />
 
                   {/* Close modal button */}
-                  <Button
-                    title="Close"
-                    onPress={() => setModalVisible(false)}
-                  />
+                  <View
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                      margin: 5,
+                    }}>
+                    <Button title="Save" />
+                    <Button
+                      title="Close"
+                      onPress={() => setModalVisible(false)}
+                    />
+                  </View>
                 </View>
               </ScrollView>
             </View>
@@ -344,7 +432,7 @@ const beatFour = () => {
         </View>
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.addButton} onPress={()=>beatFour()}>
+          <TouchableOpacity style={styles.addButton} onPress={() => beatFour()}>
             <Text style={styles.buttonText}>Submit</Text>
           </TouchableOpacity>
 
@@ -515,6 +603,77 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
+  },
+
+  tableContainer: {
+    padding: 16,
+    backgroundColor: 'white',
+  },
+  headerRowContainer: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderColor: 'gray',
+    paddingBottom: 8,
+    marginBottom: 8,
+  },
+  headerLabel: {
+    flex: 1,
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: 'black',
+  },
+  dataRowContainer: {
+    flexDirection: 'row',
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderColor: 'gray',
+  },
+  cellContent: {
+    flex: 1,
+    fontSize: 16,
+    color: 'black',
+  },
+  actionButtons: {
+    flexDirection: 'row',
+    flex: 1,
+    justifyContent: 'space-evenly',
+  },
+  editButtonStyle: {
+    backgroundColor: '#4CAF50',
+    paddingVertical: 4,
+    paddingHorizontal: 12,
+    borderRadius: 4,
+  },
+  deleteButtonStyle: {
+    backgroundColor: '#F44336',
+    paddingVertical: 4,
+    paddingHorizontal: 12,
+    borderRadius: 4,
+  },
+  buttonTextStyle: {
+    color: 'white',
+    fontSize: 14,
+  },
+  noDataContainer: {
+    padding: 16,
+    alignItems: 'center',
+  },
+  noDataText: {
+    fontSize: 16,
+    color: 'gray',
+  },
+  headerSeparator: {
+    alignSelf: 'center',
+    color: 'black',
+    // Adjusted margin for better spacing
+    fontWeight: 'bold',
+    // Increased font size for consistency
+  },
+  rowSeparator: {
+    alignSelf: 'center',
+    color: 'black',
+    marginHorizontal: 8, // Adjusted margin for better spacing
+    fontSize: 16, // Increased font size for consistency
   },
 });
 

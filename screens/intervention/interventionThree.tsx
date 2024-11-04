@@ -74,6 +74,8 @@ const interventionThree = () => {
     navigation.navigate('interventionFour');
   };
 
+  const tableData = []
+
   return (
     <>
       <View style={styles.header}>
@@ -101,7 +103,7 @@ const interventionThree = () => {
           <TextInput
             style={styles.input}
             value={inputValue1}
-            onChange={text => setInputValue1(text)}
+            onChangeText={text => setInputValue1(text)}
           />
 
           <Text style={styles.label}>
@@ -111,7 +113,7 @@ const interventionThree = () => {
           <TextInput
             style={styles.input}
             value={inputValue1}
-            onChange={text => setInputValue1(text)}
+            onChangeText={text => setInputValue1(text)}
           />
 
           <Text style={styles.label}>
@@ -121,7 +123,7 @@ const interventionThree = () => {
           <TextInput
             style={styles.input}
             value={inputValue1}
-            onChange={text => setInputValue1(text)}
+            onChangeText={text => setInputValue1(text)}
           />
 
           <Text style={styles.label}>
@@ -133,7 +135,7 @@ const interventionThree = () => {
           <TextInput
             style={styles.input}
             value={inputValue1}
-            onChange={text => setInputValue1(text)}
+            onChangeText={text => setInputValue1(text)}
           />
         </View> */}
 
@@ -150,6 +152,48 @@ const interventionThree = () => {
               onPress={() => setModalVisible(true)}>
               <Text style={styles.buttonText}>Add New</Text>
             </TouchableOpacity>
+          </View>
+
+          <View style={styles.tableContainer}>
+            {/* Headers */}
+            <View style={styles.headerRowContainer}>
+              <Text style={styles.headerLabel}>Plot No (প্লট নং)</Text>
+              <Text style={styles.headerSeparator}>|</Text>
+              <Text style={styles.headerLabel}>Geographic Plot Location 1</Text>
+              <Text style={styles.headerSeparator}>|</Text>
+              <Text style={styles.headerLabel}>Geographic Plot Location 2</Text>
+              <Text style={styles.headerSeparator}>|</Text>
+              <Text style={styles.headerLabel}>
+                Crown Closure (%) at Plot Center
+              </Text>
+            </View>
+
+            {/* Data Rows */}
+            {tableData.length > 0 ? (
+              <FlatList
+                data={tableData}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={({item}) => (
+                  <View style={styles.dataRowContainer}>
+                    <Text style={styles.cellContent}>{item.plotNo}</Text>
+                    <Text style={styles.cellSeparator}>|</Text>
+                    <Text style={styles.cellContent}>
+                      {item.geographicLocation1}
+                    </Text>
+                    <Text style={styles.cellSeparator}>|</Text>
+                    <Text style={styles.cellContent}>
+                      {item.geographicLocation2}
+                    </Text>
+                    <Text style={styles.cellSeparator}>|</Text>
+                    <Text style={styles.cellContent}>{item.crownClosure}</Text>
+                  </View>
+                )}
+              />
+            ) : (
+              <View style={styles.noDataContainer}>
+                <Text style={styles.noDataText}>No data available</Text>
+              </View>
+            )}
           </View>
 
           {/* Modal for plot size and location inputs */}
@@ -209,10 +253,19 @@ const interventionThree = () => {
                     />
 
                     {/* Close modal button */}
-                    <Button
-                      title="Close"
-                      onPress={() => setModalVisible(false)}
-                    />
+                    <View
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        margin: 5,
+                      }}>
+                      <Button title="Save" />
+                      <Button
+                        title="Close"
+                        onPress={() => setModalVisible(false)}
+                      />
+                    </View>
                   </View>
                 </ScrollView>
               </View>
@@ -225,7 +278,7 @@ const interventionThree = () => {
         <TextInput
           style={styles.input}
           value={inputValue5}
-          onChange={text => setInputValue5(text)}
+          onChangeText={text => setInputValue5(text)}
           placeholderTextColor="black"
           placeholder="select  From Plot center to North"
         />
@@ -235,7 +288,7 @@ const interventionThree = () => {
         <TextInput
           style={styles.input}
           value={inputValue6}
-          onChange={text => setInputValue6(text)}
+          onChangeText={text => setInputValue6(text)}
           placeholderTextColor="black"
           placeholder="select From Plot center to East"
         />
@@ -245,7 +298,7 @@ const interventionThree = () => {
         <TextInput
           style={styles.input}
           value={inputValue7}
-          onChange={text => setInputValue7(text)}
+          onChangeText={text => setInputValue7(text)}
           placeholderTextColor="black"
           placeholder="select From Plot center to South"
         />
@@ -255,7 +308,7 @@ const interventionThree = () => {
         <TextInput
           style={styles.input}
           value={inputValue8}
-          onChange={text => setInputValue8(text)}
+          onChangeText={text => setInputValue8(text)}
           placeholderTextColor="black"
           placeholder="select From Plot center to West"
         />
@@ -405,6 +458,77 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
+  },
+
+  tableContainer: {
+    padding: 16,
+    backgroundColor: 'white',
+  },
+  headerRowContainer: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderColor: 'gray',
+    paddingBottom: 8,
+    marginBottom: 8,
+  },
+  headerLabel: {
+    flex: 1,
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: 'black',
+  },
+  dataRowContainer: {
+    flexDirection: 'row',
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderColor: 'gray',
+  },
+  cellContent: {
+    flex: 1,
+    fontSize: 16,
+    color: 'black',
+  },
+  actionButtons: {
+    flexDirection: 'row',
+    flex: 1,
+    justifyContent: 'space-evenly',
+  },
+  editButtonStyle: {
+    backgroundColor: '#4CAF50',
+    paddingVertical: 4,
+    paddingHorizontal: 12,
+    borderRadius: 4,
+  },
+  deleteButtonStyle: {
+    backgroundColor: '#F44336',
+    paddingVertical: 4,
+    paddingHorizontal: 12,
+    borderRadius: 4,
+  },
+  buttonTextStyle: {
+    color: 'white',
+    fontSize: 14,
+  },
+  noDataContainer: {
+    padding: 16,
+    alignItems: 'center',
+  },
+  noDataText: {
+    fontSize: 16,
+    color: 'gray',
+  },
+  headerSeparator: {
+    alignSelf: 'center',
+    color: 'black',
+    // Adjusted margin for better spacing
+    fontWeight: 'bold',
+    // Increased font size for consistency
+  },
+  rowSeparator: {
+    alignSelf: 'center',
+    color: 'black',
+    marginHorizontal: 8, // Adjusted margin for better spacing
+    fontSize: 16, // Increased font size for consistency
   },
 });
 

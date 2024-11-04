@@ -34,6 +34,7 @@ const consultTwo = () => {
   const [inputValue5, setInputValue5] = useState('');
   const [inputValue6, setInputValue6] = useState('');
   const [inputValue7, setInputValue7] = useState('');
+  const [inputValue100, setInputValue100] = useState('');
   const [showPicker, setShowPicker] = useState(false);
   const [date, setDate] = useState(new Date());
   const [selectedForest, setSelectedForest] = useState(null);
@@ -59,7 +60,7 @@ const consultTwo = () => {
     setShowPicker(Platform.OS === 'ios'); // Hide the picker after selection (Android closes automatically)
     setDate(currentDate);
     const formattedDate = `${currentDate.toLocaleDateString()} ${currentDate.toLocaleTimeString()}`;
-    setInputValue1(formattedDate); // Update TextInput with selected date and time
+    setInputValue100(formattedDate); // Update TextInput with selected date and time
   };
 
   const showDatePicker = () => {
@@ -120,6 +121,23 @@ const consultTwo = () => {
     occupation_coms();
   }, []);
 
+  const consultTwo = () => {
+    console.log(
+      inputValue1,
+      inputValue2,
+      inputValue3,
+      inputValue4,
+
+      selectedyes_no_lists1,
+      selectedyes_no_lists2,
+      selectedyes_no_lists3,
+      selectedyes_no_lists4,
+      selectedyes_no_lists5,
+      selectedyes_no_lists6,
+    );
+    navigation.navigate('communityconsultThree' as never);
+  };
+
   return (
     <>
       <View style={styles.header}>
@@ -160,7 +178,7 @@ const consultTwo = () => {
           placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
           selectedTextStyle={{color: 'black', fontSize: 16}}
           value={selectedyes_no_lists1}
-          onChange={item => setSelectedDyes_no_lists1(item.value)} // Update the selected value based on 'id'
+          onChange={item => setSelectedDyes_no_lists1(item.code)} // Update the selected value based on 'id'
           dropdownStyle={{
             backgroundColor: 'white', // Ensure dropdown has a visible background
             borderRadius: 8, // Rounded corners for consistency
@@ -185,7 +203,7 @@ const consultTwo = () => {
           placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
           selectedTextStyle={{color: 'black', fontSize: 16}}
           value={selectedyes_no_lists2}
-          onChange={item => setSelectedDyes_no_lists2(item.value)} // Update the selected value based on 'id'
+          onChange={item => setSelectedDyes_no_lists2(item.code)} // Update the selected value based on 'id'
           dropdownStyle={{
             backgroundColor: 'white', // Ensure dropdown has a visible background
             borderRadius: 8, // Rounded corners for consistency
@@ -210,7 +228,7 @@ const consultTwo = () => {
           placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
           selectedTextStyle={{color: 'black', fontSize: 16}}
           value={selectedyes_no_lists3}
-          onChange={item => setSelectedDyes_no_lists3(item.value)} // Update the selected value based on 'id'
+          onChange={item => setSelectedDyes_no_lists3(item.code)} // Update the selected value based on 'id'
           dropdownStyle={{
             backgroundColor: 'white', // Ensure dropdown has a visible background
             borderRadius: 8, // Rounded corners for consistency
@@ -239,7 +257,7 @@ const consultTwo = () => {
           placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
           selectedTextStyle={{color: 'black', fontSize: 16}}
           value={selectedyes_no_lists4}
-          onChange={item => setSelectedDyes_no_lists4(item.value)} // Update the selected value based on 'id'
+          onChange={item => setSelectedDyes_no_lists4(item.code)} // Update the selected value based on 'id'
           dropdownStyle={{
             backgroundColor: 'white', // Ensure dropdown has a visible background
             borderRadius: 8, // Rounded corners for consistency
@@ -268,7 +286,7 @@ const consultTwo = () => {
           placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
           selectedTextStyle={{color: 'black', fontSize: 16}}
           value={selectedyes_no_lists5}
-          onChange={item => setSelectedDyes_no_lists5(item.value)} // Update the selected value based on 'id'
+          onChange={item => setSelectedDyes_no_lists5(item.code)} // Update the selected value based on 'id'
           dropdownStyle={{
             backgroundColor: 'white', // Ensure dropdown has a visible background
             borderRadius: 8, // Rounded corners for consistency
@@ -293,7 +311,7 @@ const consultTwo = () => {
           placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
           selectedTextStyle={{color: 'black', fontSize: 16}}
           value={selectedyes_no_lists6}
-          onChange={item => setSelectedDyes_no_lists6(item.value)} // Update the selected value based on 'id'
+          onChange={item => setSelectedDyes_no_lists6(item.code)} // Update the selected value based on 'id'
           dropdownStyle={{
             backgroundColor: 'white', // Ensure dropdown has a visible background
             borderRadius: 8, // Rounded corners for consistency
@@ -312,6 +330,7 @@ const consultTwo = () => {
           style={styles.input}
           placeholderTextColor="black"
           placeholder="select Others"
+          onChangeText={text => setInputValue1(text)}
         />
 
         <Text style={styles.label}>Answers (উত্তর)</Text>
@@ -319,6 +338,7 @@ const consultTwo = () => {
           style={styles.input}
           placeholderTextColor="black"
           placeholder="select Answers"
+          onChangeText={text => setInputValue2(text)}
         />
 
         <Text style={styles.label}>
@@ -339,7 +359,7 @@ const consultTwo = () => {
           placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
           selectedTextStyle={{color: 'black', fontSize: 16}}
           value={selectedoccupation_coms}
-          onChange={item => setSelectedDoccupation_coms(item.value)} // Update the selected value based on 'id'
+          onChange={item => setSelectedDoccupation_coms(item.code)} // Update the selected value based on 'id'
           dropdownStyle={{
             backgroundColor: 'white', // Ensure dropdown has a visible background
             borderRadius: 8, // Rounded corners for consistency
@@ -359,6 +379,7 @@ const consultTwo = () => {
           style={styles.input}
           placeholderTextColor="black"
           placeholder="select AIGAs from BFD"
+          onChangeText={text => setInputValue3(text)}
         />
 
         <Text style={styles.label}>
@@ -370,14 +391,13 @@ const consultTwo = () => {
           style={styles.input}
           placeholderTextColor="black"
           placeholder="select Community role/commitment"
+          onChangeText={text => setInputValue4(text)}
         />
 
         <View style={styles.button}>
           <TouchableOpacity
             style={styles.addButton}
-            onPress={() =>
-              navigation.navigate('communityconsultThree' as never)
-            }>
+            onPress={() => consultTwo()}>
             <Text style={styles.buttonText}>Next</Text>
           </TouchableOpacity>
         </View>

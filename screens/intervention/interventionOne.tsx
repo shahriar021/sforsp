@@ -9,6 +9,7 @@ import {
   ScrollView,
   Button,
   Modal,
+  FlatList,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {Dropdown} from 'react-native-element-dropdown';
@@ -351,6 +352,8 @@ const interventionOne = () => {
       navigation.navigate("interventionTwo")
   }
 
+  const tableData  = []
+
   return (
     <>
       <View style={styles.header}>
@@ -376,7 +379,7 @@ const interventionOne = () => {
         <TextInput
           style={styles.input}
           value={inputValue1}
-          onChange={text => setInputValue1(text)}
+          onChangeText={text => setInputValue1(text)}
           placeholderTextColor="black"
           placeholder="select Collection date"
         />
@@ -389,7 +392,7 @@ const interventionOne = () => {
         <TextInput
           style={styles.input}
           value={inputValue2}
-          onChange={text => setInputValue2(text)}
+          onChangeText={text => setInputValue2(text)}
           placeholderTextColor="black"
           placeholder="select  Beat/Camp/SFPC Officer"
         />
@@ -402,7 +405,7 @@ const interventionOne = () => {
         <TextInput
           style={styles.input}
           value={inputValue3}
-          onChange={text => setInputValue3(text)}
+          onChangeText={text => setInputValue3(text)}
           placeholderTextColor="black"
           placeholder="select Mobile number Beat"
         />
@@ -532,7 +535,7 @@ const interventionOne = () => {
         <TextInput
           style={styles.input}
           value={inputValue3}
-          onChange={text => setInputValue3(text)}
+          onChangeText={text => setInputValue3(text)}
           placeholderTextColor="black"
           placeholder="select Block"
         />
@@ -542,7 +545,7 @@ const interventionOne = () => {
         <TextInput
           style={styles.input}
           value={inputValue4}
-          onChange={text => setInputValue4(text)}
+          onChangeText={text => setInputValue4(text)}
           placeholderTextColor="black"
           placeholder="select Char"
         />
@@ -621,7 +624,7 @@ const interventionOne = () => {
         <TextInput
           style={styles.input}
           value={inputValue5}
-          onChange={text => setInputValue5(text)}
+          onChangeText={text => setInputValue5(text)}
           placeholderTextColor="black"
           placeholder="Union"
         />
@@ -631,7 +634,7 @@ const interventionOne = () => {
         <TextInput
           style={styles.input}
           value={inputValue6}
-          onChange={text => setInputValue6(text)}
+          onChangeText={text => setInputValue6(text)}
           placeholderTextColor="black"
           placeholder="select"
         />
@@ -644,6 +647,42 @@ const interventionOne = () => {
             onPress={() => setModalVisible(true)}>
             <Text style={styles.buttonText}>Add New</Text>
           </TouchableOpacity>
+        </View>
+
+        <View style={styles.tableContainer}>
+          {/* Headers */}
+          <View style={styles.headerRowContainer}>
+            <Text style={styles.headerLabel}>Name of Mouza (মৌজার নাম)</Text>
+            <Text style={styles.headerSeparator}>|</Text>
+            <Text style={styles.headerLabel}>Survey Types (সার্ভের ধরণ)</Text>
+            <Text style={styles.headerSeparator}>|</Text>
+            <Text style={styles.headerLabel}>Sheet Number (সিট নম্বর)</Text>
+            <Text style={styles.headerSeparator}>|</Text>
+            <Text style={styles.headerLabel}>Plot Number (দাগ নম্বর)</Text>
+          </View>
+
+          {/* Data Rows */}
+          {tableData.length > 0 ? (
+            <FlatList
+              data={tableData}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={({item}) => (
+                <View style={styles.dataRowContainer}>
+                  <Text style={styles.cellContent}>{item.mouzaName}</Text>
+                  <Text style={styles.cellSeparator}>|</Text>
+                  <Text style={styles.cellContent}>{item.surveyType}</Text>
+                  <Text style={styles.cellSeparator}>|</Text>
+                  <Text style={styles.cellContent}>{item.sheetNumber}</Text>
+                  <Text style={styles.cellSeparator}>|</Text>
+                  <Text style={styles.cellContent}>{item.plotNumber}</Text>
+                </View>
+              )}
+            />
+          ) : (
+            <View style={styles.noDataContainer}>
+              <Text style={styles.noDataText}>No data available</Text>
+            </View>
+          )}
         </View>
 
         {/* Modal */}
@@ -715,10 +754,19 @@ const interventionOne = () => {
                   />
 
                   {/* Close modal button */}
-                  <Button
-                    title="Close"
-                    onPress={() => setModalVisible(false)}
-                  />
+                  <View
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                      margin: 5,
+                    }}>
+                    <Button title="Save" />
+                    <Button
+                      title="Close"
+                      onPress={() => setModalVisible(false)}
+                    />
+                  </View>
                 </View>
               </ScrollView>
             </View>
@@ -867,6 +915,76 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white', // Set the text color
     textAlign: 'center', // Center the text
+  },
+  tableContainer: {
+    padding: 16,
+    backgroundColor: 'white',
+  },
+  headerRowContainer: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderColor: 'gray',
+    paddingBottom: 8,
+    marginBottom: 8,
+  },
+  headerLabel: {
+    flex: 1,
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: 'black',
+  },
+  dataRowContainer: {
+    flexDirection: 'row',
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderColor: 'gray',
+  },
+  cellContent: {
+    flex: 1,
+    fontSize: 16,
+    color: 'black',
+  },
+  actionButtons: {
+    flexDirection: 'row',
+    flex: 1,
+    justifyContent: 'space-evenly',
+  },
+  editButtonStyle: {
+    backgroundColor: '#4CAF50',
+    paddingVertical: 4,
+    paddingHorizontal: 12,
+    borderRadius: 4,
+  },
+  deleteButtonStyle: {
+    backgroundColor: '#F44336',
+    paddingVertical: 4,
+    paddingHorizontal: 12,
+    borderRadius: 4,
+  },
+  buttonTextStyle: {
+    color: 'white',
+    fontSize: 14,
+  },
+  noDataContainer: {
+    padding: 16,
+    alignItems: 'center',
+  },
+  noDataText: {
+    fontSize: 16,
+    color: 'gray',
+  },
+  headerSeparator: {
+    alignSelf: 'center',
+    color: 'black',
+    // Adjusted margin for better spacing
+    fontWeight: 'bold',
+    // Increased font size for consistency
+  },
+  rowSeparator: {
+    alignSelf: 'center',
+    color: 'black',
+    marginHorizontal: 8, // Adjusted margin for better spacing
+    fontSize: 16, // Increased font size for consistency
   },
 });
 

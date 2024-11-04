@@ -145,7 +145,11 @@ const interventionFour = () => {
       treesPerPlot,
       treesPerHector,
     );
+
+    navigation.navigate('interventionFive');
   };
+
+  const tableData = [];
 
   return (
     <>
@@ -170,7 +174,7 @@ const interventionFour = () => {
           <TextInput
             style={styles.input}
             value={inputValue1}
-            onChange={text => setInputValue1(text)}
+            onChangeText={text => setInputValue1(text)}
           />
 
           <Text style={styles.label}>
@@ -181,7 +185,7 @@ const interventionFour = () => {
           <TextInput
             style={styles.input}
             value={inputValue1}
-            onChange={text => setInputValue1(text)}
+            onChangeText={text => setInputValue1(text)}
           />
 
           <Text style={styles.label}> Number of Seedlings / Sapling</Text>
@@ -189,7 +193,7 @@ const interventionFour = () => {
           <TextInput
             style={styles.input}
             value={inputValue1}
-            onChange={text => setInputValue1(text)}
+            onChangeText={text => setInputValue1(text)}
           />
 
           <Text style={styles.label}>Number of Trees</Text>
@@ -197,7 +201,7 @@ const interventionFour = () => {
           <TextInput
             style={styles.input}
             value={inputValue1}
-            onChange={text => setInputValue1(text)}
+            onChangeText={text => setInputValue1(text)}
           />
         </View> */}
 
@@ -215,6 +219,48 @@ const interventionFour = () => {
             </TouchableOpacity>
           </View>
 
+          <View style={styles.tableContainer}>
+            {/* Headers */}
+            <View style={styles.headerRowContainer}>
+              <Text style={styles.headerLabel}>Plot No (প্লট নং)</Text>
+              <Text style={styles.headerSeparator}>|</Text>
+              <Text style={styles.headerLabel}>
+                Species Name (Local Name / from the app BGD Trees)
+              </Text>
+              <Text style={styles.headerSeparator}>|</Text>
+              <Text style={styles.headerLabel}>
+                Number of Seedlings / Sapling
+              </Text>
+              <Text style={styles.headerSeparator}>|</Text>
+              <Text style={styles.headerLabel}>Number of Trees</Text>
+            </View>
+
+            {/* Data Rows */}
+            {tableData.length > 0 ? (
+              <FlatList
+                data={tableData}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={({item}) => (
+                  <View style={styles.dataRowContainer}>
+                    <Text style={styles.cellContent}>{item.plotNo}</Text>
+                    <Text style={styles.cellSeparator}>|</Text>
+                    <Text style={styles.cellContent}>{item.speciesName}</Text>
+                    <Text style={styles.cellSeparator}>|</Text>
+                    <Text style={styles.cellContent}>
+                      {item.numberOfSeedlings}
+                    </Text>
+                    <Text style={styles.cellSeparator}>|</Text>
+                    <Text style={styles.cellContent}>{item.numberOfTrees}</Text>
+                  </View>
+                )}
+              />
+            ) : (
+              <View style={styles.noDataContainer}>
+                <Text style={styles.noDataText}>No data available</Text>
+              </View>
+            )}
+          </View>
+
           {/* Modal for regeneration species inputs */}
           <Modal
             animationType="slide"
@@ -228,40 +274,41 @@ const interventionFour = () => {
                     Add Regeneration Species
                   </Text>
 
+                  <Text style={styles.label}>Plot No (প্লট নং)</Text>
+                  <TextInput
+                    style={styles.input}
+                    value={inputValue1}
+                    placeholder="Enter Plot No"
+                    onChangeText={text => setInputValue1(text)}
+                    placeholderTextColor="black"
+                  />
+
+                  <Text style={styles.label}>
+                    Species Name (Local Name / from the app BGD Trees)
+                  </Text>
+                  <TextInput
+                    style={styles.input}
+                    value={inputValue2}
+                    placeholder="Enter Species Name"
+                    onChangeText={text => setInputValue2(text)}
+                    placeholderTextColor="black"
+                  />
+
+                  <Text style={styles.label}>
+                    Number of Seedlings / Sapling
+                  </Text>
+                  <TextInput
+                    style={styles.input}
+                    value={inputValue3}
+                    placeholder="Enter Number of Seedlings"
+                    onChangeText={text => setInputValue3(text)}
+                    placeholderTextColor="black"
+                  />
+
+                  <Text style={styles.label}>Number of Trees</Text>
+
                   {/* Form inside modal */}
                   <View style={styles.box}>
-                    <Text style={styles.label}>Plot No (প্লট নং)</Text>
-                    <TextInput
-                      style={styles.input}
-                      value={inputValue1}
-                      placeholder="Enter Plot No"
-                      onChangeText={text => setInputValue1(text)}
-                      placeholderTextColor="black"
-                    />
-
-                    <Text style={styles.label}>
-                      Species Name (Local Name / from the app BGD Trees)
-                    </Text>
-                    <TextInput
-                      style={styles.input}
-                      value={inputValue2}
-                      placeholder="Enter Species Name"
-                      onChangeText={text => setInputValue2(text)}
-                      placeholderTextColor="black"
-                    />
-
-                    <Text style={styles.label}>
-                      Number of Seedlings / Sapling
-                    </Text>
-                    <TextInput
-                      style={styles.input}
-                      value={inputValue3}
-                      placeholder="Enter Number of Seedlings"
-                      onChangeText={text => setInputValue3(text)}
-                      placeholderTextColor="black"
-                    />
-
-                    <Text style={styles.label}>Number of Trees</Text>
                     <TextInput
                       style={styles.input}
                       value={inputValue4}
@@ -271,10 +318,19 @@ const interventionFour = () => {
                     />
 
                     {/* Close modal button */}
-                    <Button
-                      title="Close"
-                      onPress={() => setModalVisible(false)}
-                    />
+                    <View
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        margin: 5,
+                      }}>
+                      <Button title="Save" />
+                      <Button
+                        title="Close"
+                        onPress={() => setModalVisible(false)}
+                      />
+                    </View>
                   </View>
                 </ScrollView>
               </View>
@@ -296,7 +352,7 @@ const interventionFour = () => {
           <TextInput
             style={styles.input}
             value={inputValue1}
-            onChange={text => setInputValue1(text)}
+            onChangeText={text => setInputValue1(text)}
           />
 
           <Text style={styles.label}>
@@ -307,7 +363,7 @@ const interventionFour = () => {
           <TextInput
             style={styles.input}
             value={inputValue1}
-            onChange={text => setInputValue1(text)}
+            onChangeText={text => setInputValue1(text)}
           />
 
           <Text style={styles.label}>
@@ -317,7 +373,7 @@ const interventionFour = () => {
           <TextInput
             style={styles.input}
             value={inputValue1}
-            onChange={text => setInputValue1(text)}
+            onChangeText={text => setInputValue1(text)}
           />
 
           <Text style={styles.label}>
@@ -329,7 +385,7 @@ const interventionFour = () => {
           <TextInput
             style={styles.input}
             value={inputValue1}
-            onChange={text => setInputValue1(text)}
+            onChangeText={text => setInputValue1(text)}
           />
         </View> */}
 
@@ -345,6 +401,60 @@ const interventionFour = () => {
               onPress={() => setModalVisible2(true)}>
               <Text style={styles.buttonText}>Add New</Text>
             </TouchableOpacity>
+          </View>
+
+          <View style={styles.tableContainer}>
+            {/* Headers */}
+            <View style={styles.headerRowContainer}>
+              <Text style={styles.headerLabel}>
+                Number of Seedlings/Sapling per Plot (প্রাকৃতিক চারার গড় সংখ্যা
+                (প্লটে প্রতি))
+              </Text>
+              <Text style={styles.headerSeparator}>|</Text>
+              <Text style={styles.headerLabel}>
+                Number of Seedlings/Sapling per Hector (প্রাকৃতিক চারার গড়
+                সংখ্যা (হেক্টর প্রতি))
+              </Text>
+              <Text style={styles.headerSeparator}>|</Text>
+              <Text style={styles.headerLabel}>
+                Number of Trees per Plot (প্রাকৃতিক গাছের গড় সংখ্যা (প্লটে
+                প্রতি))
+              </Text>
+              <Text style={styles.headerSeparator}>|</Text>
+              <Text style={styles.headerLabel}>
+                Number of Trees per Hector (প্রাকৃতিক গাছের গড় সংখ্যা (হেক্টর
+                প্রতি))
+              </Text>
+            </View>
+
+            {/* Data Rows */}
+            {tableData.length > 0 ? (
+              <FlatList
+                data={tableData}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={({item}) => (
+                  <View style={styles.dataRowContainer}>
+                    <Text style={styles.cellContent}>
+                      {item.seedlingsPerPlot}
+                    </Text>
+                    <Text style={styles.cellSeparator}>|</Text>
+                    <Text style={styles.cellContent}>
+                      {item.seedlingsPerHector}
+                    </Text>
+                    <Text style={styles.cellSeparator}>|</Text>
+                    <Text style={styles.cellContent}>{item.treesPerPlot}</Text>
+                    <Text style={styles.cellSeparator}>|</Text>
+                    <Text style={styles.cellContent}>
+                      {item.treesPerHector}
+                    </Text>
+                  </View>
+                )}
+              />
+            ) : (
+              <View style={styles.noDataContainer}>
+                <Text style={styles.noDataText}>No data available</Text>
+              </View>
+            )}
           </View>
 
           {/* Modal for average number of seedlings and trees inputs */}
@@ -410,10 +520,19 @@ const interventionFour = () => {
                     />
 
                     {/* Close modal button */}
-                    <Button
-                      title="Close"
-                      onPress={() => setModalVisible2(false)}
-                    />
+                    <View
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        margin: 5,
+                      }}>
+                      <Button title="Save" />
+                      <Button
+                        title="Close"
+                        onPress={() => setModalVisible2(false)}
+                      />
+                    </View>
                   </View>
                 </ScrollView>
               </View>
@@ -426,7 +545,7 @@ const interventionFour = () => {
         <TextInput
           style={styles.input}
           value={inputValue5}
-          onChange={text => setInputValue5(text)}
+          onChangeText={text => setInputValue5(text)}
           placeholderTextColor="black"
           placeholder="select Regeneration Plots"
         />
@@ -436,7 +555,7 @@ const interventionFour = () => {
         <TextInput
           style={styles.input}
           value={inputValue6}
-          onChange={text => setInputValue6(text)}
+          onChangeText={text => setInputValue6(text)}
           placeholderTextColor="black"
           placeholder="select Avg Seedling/Sapling per plot"
         />
@@ -446,7 +565,7 @@ const interventionFour = () => {
         <TextInput
           style={styles.input}
           value={inputValue7}
-          onChange={text => setInputValue7(text)}
+          onChangeText={text => setInputValue7(text)}
           placeholderTextColor="black"
           placeholder="select Avg. Trees per plot"
         />
@@ -456,7 +575,7 @@ const interventionFour = () => {
         <TextInput
           style={styles.input}
           value={inputValue8}
-          onChange={text => setInputValue8(text)}
+          onChangeText={text => setInputValue8(text)}
           placeholderTextColor="black"
           placeholder="select Trees Per hectare"
         />
@@ -476,7 +595,7 @@ const interventionFour = () => {
           placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
           selectedTextStyle={{color: 'black', fontSize: 16}}
           value={selectedYears}
-          onChange={item => setSelectedYears(item.value)} // Update the selected value based on 'id'
+          onChange={item => setSelectedYears(item.code)} // Update the selected value based on 'id'
           dropdownStyle={{
             backgroundColor: 'white', // Ensure dropdown has a visible background
             borderRadius: 8, // Rounded corners for consistency
@@ -494,7 +613,7 @@ const interventionFour = () => {
         <TextInput
           style={styles.input}
           value={inputValue9}
-          onChange={text => setInputValue9(text)}
+          onChangeText={text => setInputValue9(text)}
           placeholderTextColor="black"
           placeholder="select Proposed Plantation Area"
         />
@@ -513,7 +632,7 @@ const interventionFour = () => {
           placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
           selectedTextStyle={{color: 'black', fontSize: 16}}
           value={selectedInterventionList}
-          onChange={item => setselectedInterventionList(item.value)} // Update the selected value based on 'id'
+          onChange={item => setselectedInterventionList(item.code)} // Update the selected value based on 'id'
           dropdownStyle={{
             backgroundColor: 'white', // Ensure dropdown has a visible background
             borderRadius: 8, // Rounded corners for consistency
@@ -529,7 +648,7 @@ const interventionFour = () => {
         <TextInput
           style={styles.input}
           value={inputValue10}
-          onChange={text => setInputValue10(text)}
+          onChangeText={text => setInputValue10(text)}
           placeholderTextColor="black"
           placeholder="select Patches"
         />
@@ -539,7 +658,7 @@ const interventionFour = () => {
         <TextInput
           style={styles.input}
           value={inputValue11}
-          onChange={text => setInputValue11(text)}
+          onChangeText={text => setInputValue11(text)}
           placeholderTextColor="black"
           placeholder="select Seeding/ha"
         />
@@ -683,6 +802,77 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
+  },
+
+  tableContainer: {
+    padding: 16,
+    backgroundColor: 'white',
+  },
+  headerRowContainer: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderColor: 'gray',
+    paddingBottom: 8,
+    marginBottom: 8,
+  },
+  headerLabel: {
+    flex: 1,
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: 'black',
+  },
+  dataRowContainer: {
+    flexDirection: 'row',
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderColor: 'gray',
+  },
+  cellContent: {
+    flex: 1,
+    fontSize: 16,
+    color: 'black',
+  },
+  actionButtons: {
+    flexDirection: 'row',
+    flex: 1,
+    justifyContent: 'space-evenly',
+  },
+  editButtonStyle: {
+    backgroundColor: '#4CAF50',
+    paddingVertical: 4,
+    paddingHorizontal: 12,
+    borderRadius: 4,
+  },
+  deleteButtonStyle: {
+    backgroundColor: '#F44336',
+    paddingVertical: 4,
+    paddingHorizontal: 12,
+    borderRadius: 4,
+  },
+  buttonTextStyle: {
+    color: 'white',
+    fontSize: 14,
+  },
+  noDataContainer: {
+    padding: 16,
+    alignItems: 'center',
+  },
+  noDataText: {
+    fontSize: 16,
+    color: 'gray',
+  },
+  headerSeparator: {
+    alignSelf: 'center',
+    color: 'black',
+    // Adjusted margin for better spacing
+    fontWeight: 'bold',
+    // Increased font size for consistency
+  },
+  rowSeparator: {
+    alignSelf: 'center',
+    color: 'black',
+    marginHorizontal: 8, // Adjusted margin for better spacing
+    fontSize: 16, // Increased font size for consistency
   },
 });
 
