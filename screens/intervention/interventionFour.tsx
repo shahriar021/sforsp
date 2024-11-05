@@ -96,7 +96,7 @@ const interventionFour = () => {
 
         // const jsonData = await response.json();
         // console.log(jsonData, 'fetched jsonData'); // Log the fetched data
-        await financial_years_api();
+        //await financial_years_api();
         const data = await financial_years_list();
         setYears(data); // Update state with the fetched data
       } catch (error) {
@@ -120,7 +120,7 @@ const interventionFour = () => {
 
         // const jsonData = await response.json();
         // console.log(jsonData, 'fetched jsonData'); // Log the fetched data
-        await intervention_lists_api();
+        //await intervention_lists_api();
         const data = await intervention_lists_list();
         setInterventionList(data); // Update state with the fetched data
       } catch (error) {

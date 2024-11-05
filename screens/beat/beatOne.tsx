@@ -20,6 +20,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {baseApi, token} from '../../constants/base_api';
 import MonthPicker from 'react-native-month-year-picker';
 import {
+  gener43_2021_core_create,
   jur_ad_districts_api,
   jur_ad_districts_list,
   jur_ad_divisions_api,
@@ -39,6 +40,7 @@ import {
   mouza_types_api,
   mouza_types_list,
 } from '../../database/sqlDatabase';
+import useUUID from '../../hooks/useUUID';
 
 const beatOne = () => {
   const [fstLnd, setFstLnd] = useState([]);
@@ -55,16 +57,18 @@ const beatOne = () => {
 
   const [modalVisible, setModalVisible] = useState(false);
 
-  const [inputValue1, setInputValue1] = useState('');
-  const [inputValue2, setInputValue2] = useState('');
-  const [inputValue3, setInputValue3] = useState('');
-  const [inputValue4, setInputValue4] = useState('');
-  const [inputValue5, setInputValue5] = useState('');
-  const [inputValue6, setInputValue6] = useState('');
-  const [inputValue7, setInputValue7] = useState('');
-  const [inputValue8, setInputValue8] = useState('');
-  const [inputValue9, setInputValue9] = useState('');
-  const [inputValue10, setInputValue10] = useState('');
+  const [GUSER_DCOLLECTION_RAW, setInputValue1] = useState('');
+  const [GUSER_USER, setInputValue2] = useState('');
+  const [GUSER_USER_CELL, setGUSER_USER_CELL] = useState('');
+  const [GUSER_BEAT_ADDRESS, setGUSER_BEAT_ADDRESS] = useState('');
+  const [GUSER_TLOC_FD_BEAT_POINT_LAT, setGUSER_TLOC_FD_BEAT_POINT_LAT] =
+    useState('');
+  const [GUSER_TLOC_FD_BEAT_POINT_LNG, setGUSER_TLOC_FD_BEAT_POINT_LNG] =
+    useState('');
+  const [FBLI_FA_TLOC_FD_BLOCK, setFBLI_FA_TLOC_FD_BLOCK] = useState('');
+  const [FBLI_CA_UNION, setFBLI_CA_UNION] = useState('');
+  const [mouza_name, setmouza_name] = useState('');
+  const [sheet_number, setsheet_number] = useState('');
   const [showPicker, setShowPicker] = useState(false);
   const [date, setDate] = useState(new Date());
 
@@ -78,14 +82,14 @@ const beatOne = () => {
   const [selectedDistrict, setSelectedDistrict] = useState(null);
   const [selectedUpazila, setSelectedUpazila] = useState(null);
 
-  const [selectedSurvey, setselectedSurvey] = useState(null);
+  const [survey_type, setsurvey_type] = useState(null);
 
   const navigation = useNavigation();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await jur_fd_ecozones_api();
+        //await jur_fd_ecozones_api();
 
         const spatialData3 = await jur_fd_ecozones_list();
         setFstLnd(spatialData3);
@@ -123,6 +127,8 @@ const beatOne = () => {
     {label: 'Bamboo Forest', value: 'bamboo'},
   ];
 
+  const {md5} = useUUID();
+
   // useEffect(() => {
   //   const forest_landscape = async () => {
   //     try {
@@ -158,7 +164,7 @@ const beatOne = () => {
 
         // const jsonData = await response.json();
 
-        await jur_fd_circles_api();
+        //await jur_fd_circles_api();
         const data = await jur_fd_circles_list();
         // console.log(jsonData, 'fetched jsonData'); // Log the fetched data
         setFstCircle(data); // Update state with the fetched data
@@ -183,7 +189,7 @@ const beatOne = () => {
 
         // const jsonData = await response.json();
 
-        await jur_fd_divisions_api();
+        //await jur_fd_divisions_api();
         const data = await jur_fd_divisions_list();
         // console.log(jsonData, 'fetched jsonData'); // Log the fetched data
         setFstDivision(data); // Update state with the fetched data
@@ -208,7 +214,7 @@ const beatOne = () => {
 
         // const jsonData = await response.json();
         // console.log(jsonData, 'fetched jsonData'); // Log the fetched data
-        await jur_fd_ranges_api();
+        //await jur_fd_ranges_api();
         const data = await jur_fd_ranges_list();
         setFstRange(data); // Update state with the fetched data
       } catch (error) {
@@ -233,7 +239,7 @@ const beatOne = () => {
         // const jsonData = await response.json();
         // console.log(jsonData, 'fetched jsonData'); // Log the fetched data
 
-        await jur_fd_beats_api();
+        //await jur_fd_beats_api();
         const data = await jur_fd_beats_list();
         setFstbeat(data); // Update state with the fetched data
       } catch (error) {
@@ -257,7 +263,7 @@ const beatOne = () => {
 
         // const jsonData = await response.json();
 
-        await jur_ad_divisions_api();
+        //await jur_ad_divisions_api();
         const jur_ad_divisions = await jur_ad_divisions_list();
         // console.log(jsonData, 'fetched jsonData'); // Log the fetched data
         setDivision(jur_ad_divisions); // Update state with the fetched data
@@ -283,7 +289,7 @@ const beatOne = () => {
         // const jsonData = await response.json();
         // console.log(jsonData, 'fetched jsonData'); // Log the fetched data
 
-        await jur_ad_districts_api();
+        //await jur_ad_districts_api();
         const data = await jur_ad_districts_list();
         setDistrict(data); // Update state with the fetched data
       } catch (error) {
@@ -307,7 +313,7 @@ const beatOne = () => {
 
         // const jsonData = await response.json();
         // console.log(jsonData, 'fetched jsonData'); // Log the fetched data
-        await jur_ad_upazillas_api();
+        //await jur_ad_upazillas_api();
         const data = await jur_ad_upazillas_list();
         setUpazila(data); // Update state with the fetched data
       } catch (error) {
@@ -329,7 +335,7 @@ const beatOne = () => {
 
         // const jsonData = await response.json();
         // console.log(jsonData, 'fetched jsonData'); // Log the fetched data
-        await mouza_types_api();
+        //await mouza_types_api();
         const data = await mouza_types_list();
         setSurvey(data); // Update state with the fetched data
       } catch (error) {
@@ -340,27 +346,38 @@ const beatOne = () => {
     survey();
   }, []);
 
-  const beat_one_submit = () => {
-    console.log(
-      inputValue1,
-      inputValue2,
-      inputValue3,
-      inputValue4,
-      inputValue5,
-      inputValue6,
-      inputValue7,
-      inputValue9,
-      inputValue10,
+  const beat_one_submit = async () => {
+    // console.log(
+    //   GUSER_DCOLLECTION_RAW,
+    //   GUSER_USER,
+    //   GUSER_USER_CELL,
+    //   GUSER_BEAT_ADDRESS,
+    //   GUSER_TLOC_FD_BEAT_POINT_LAT,
+    //   GUSER_TLOC_FD_BEAT_POINT_LNG,
+    //   FBLI_FA_TLOC_FD_BLOCK,
+    //   mouza_name,
+    //   sheet_number,
+    //   selectedForest,
+    //   selectedForestCircle,
+    //   selectedForestDivision,
+    //   selectedForestrange,
+    //   selectedForestbeat,
+    //   selectedDistrict,
+    //   selectedUpazila,
+    //   survey_type,
+    //   md5,
+    // );
 
-      selectedForest,
-      selectedForestCircle,
-      selectedForestDivision,
-      selectedForestrange,
-      selectedForestbeat,
-      selectedDistrict,
-      selectedUpazila,
-      selectedSurvey,
-    );
+    // const dataToInsert = {
+    //   _uri: md5,
+    // };
+
+    // try {
+    //   await gener43_2021_core_create(dataToInsert);
+    //   console.log('All data inserted successfully');
+    // } catch (error) {
+    //   console.error('Failed to insert data:', error.message || error); // Log the error message
+    // }
 
     navigation.navigate('beatTwo');
   };
@@ -388,7 +405,7 @@ const beatOne = () => {
         <TouchableOpacity onPress={showDatePicker}>
           <TextInput
             style={styles.input}
-            value={inputValue1}
+            value={GUSER_DCOLLECTION_RAW}
             placeholder="Select date and time"
             editable={false} // Prevent manual editing
             pointerEvents="none" // Ensure the input doesn't focus, acting like a button
@@ -413,7 +430,7 @@ const beatOne = () => {
         <TextInput
           style={styles.input}
           placeholder="Type here SFPC Officer"
-          value={inputValue2} // This will initially be an empty string
+          value={GUSER_USER} // This will initially be an empty string
           onChangeText={text => setInputValue2(text)} // Updates inputValue2 with user input
           placeholderTextColor="black" // Optional: placeholder color
         />
@@ -425,8 +442,8 @@ const beatOne = () => {
         <TextInput
           style={styles.input}
           placeholder="Type here SFPC Officer Mobile"
-          value={inputValue3}
-          onChangeText={text => setInputValue3(text)}
+          value={GUSER_USER_CELL}
+          onChangeText={text => setGUSER_USER_CELL(text)}
           placeholderTextColor="black"
         />
 
@@ -437,8 +454,8 @@ const beatOne = () => {
         <TextInput
           style={styles.input}
           placeholder="Type here Address"
-          value={inputValue4}
-          onChangeText={text => setInputValue4(text)}
+          value={GUSER_BEAT_ADDRESS}
+          onChangeText={text => setGUSER_BEAT_ADDRESS(text)}
           placeholderTextColor="black"
         />
 
@@ -449,8 +466,8 @@ const beatOne = () => {
         <TextInput
           style={styles.input}
           placeholder="Type here GPS Location"
-          value={inputValue5}
-          onChangeText={text => setInputValue5(text)}
+          value={GUSER_TLOC_FD_BEAT_POINT_LAT}
+          onChangeText={text => setGUSER_TLOC_FD_BEAT_POINT_LAT(text)}
           placeholderTextColor="black"
         />
 
@@ -458,8 +475,8 @@ const beatOne = () => {
         <TextInput
           style={styles.input}
           placeholder="Type here Longitude"
-          value={inputValue6}
-          onChangeText={text => setInputValue6(text)}
+          value={GUSER_TLOC_FD_BEAT_POINT_LNG}
+          onChangeText={text => setGUSER_TLOC_FD_BEAT_POINT_LNG(text)}
           placeholderTextColor="black"
         />
 
@@ -582,8 +599,8 @@ const beatOne = () => {
         <TextInput
           style={styles.input}
           placeholder="Type here Block"
-          value={inputValue7}
-          onChangeText={text => setInputValue7(text)}
+          value={FBLI_FA_TLOC_FD_BLOCK}
+          onChangeText={text => setFBLI_FA_TLOC_FD_BLOCK(text)}
           placeholderTextColor="black"
         />
 
@@ -657,8 +674,8 @@ const beatOne = () => {
         <TextInput
           style={styles.input}
           placeholder="Type here Union"
-          value={inputValue8}
-          onChangeText={text => setInputValue8(text)}
+          value={FBLI_CA_UNION}
+          onChangeText={text => setFBLI_CA_UNION(text)}
           placeholderTextColor="black"
         />
         {/* <View style={styles.txtNbutton}>
@@ -676,8 +693,8 @@ const beatOne = () => {
           <TextInput
             style={styles.input}
             placeholder="Type here"
-            value={inputValue7}
-            onChangeText={text => setInputValue7(text)}
+            value={FBLI_FA_TLOC_FD_BLOCK}
+            onChangeText={text => setFBLI_FA_TLOC_FD_BLOCK(text)}
           />
 
           <Text style={styles.label}>2.3.b. Survey Types (সার্ভের ধরণ)</Text>
@@ -689,8 +706,8 @@ const beatOne = () => {
             placeholder="Select survey type"
             placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
             selectedTextStyle={{color: 'black', fontSize: 16}}
-            value={selectedSurvey}
-            onChange={item => setselectedSurvey(item.code)}
+            value={survey_type}
+            onChange={item => setsurvey_type(item.code)}
             dropdownStyle={{
               backgroundColor: 'white', // Ensure dropdown has a visible background
               borderRadius: 8, // Rounded corners for consistency
@@ -705,8 +722,8 @@ const beatOne = () => {
           <TextInput
             style={styles.input}
             placeholder="Type here"
-            value={inputValue7}
-            onChangeText={text => setInputValue7(text)}
+            value={FBLI_FA_TLOC_FD_BLOCK}
+            onChangeText={text => setFBLI_FA_TLOC_FD_BLOCK(text)}
           />
         </View> */}
 
@@ -780,8 +797,8 @@ const beatOne = () => {
                   <TextInput
                     style={styles.minput}
                     placeholder="Type here Mouza"
-                    value={inputValue9}
-                    onChangeText={text => setInputValue9(text)}
+                    value={mouza_name}
+                    onChangeText={text => setmouza_name(text)}
                     placeholderTextColor="black"
                   />
 
@@ -796,8 +813,8 @@ const beatOne = () => {
                     placeholder="Select survey type"
                     placeholderStyle={{color: 'black', fontSize: 16}}
                     selectedTextStyle={{color: 'black', fontSize: 16}}
-                    value={selectedSurvey}
-                    onChange={item => setselectedSurvey(item.code)}
+                    value={survey_type}
+                    onChange={item => setsurvey_type(item.code)}
                     dropdownStyle={{
                       backgroundColor: 'white',
                       borderRadius: 8,
@@ -814,8 +831,8 @@ const beatOne = () => {
                   <TextInput
                     style={styles.input}
                     placeholder="Type here Sheet Number"
-                    value={inputValue10}
-                    onChangeText={text => setInputValue10(text)}
+                    value={sheet_number}
+                    onChangeText={text => setsheet_number(text)}
                     placeholderTextColor="black"
                   />
 
@@ -1104,7 +1121,7 @@ const styles = StyleSheet.create({
     color: 'black',
     // Adjusted margin for better spacing
     fontWeight: 'bold',
-     // Increased font size for consistency
+    // Increased font size for consistency
   },
   rowSeparator: {
     alignSelf: 'center',

@@ -110,7 +110,7 @@ const beatTwo = () => {
 
         // const jsonData = await response.json();
         // console.log(jsonData, 'fetched jsonData'); // Log the fetched data
-        await natural_issues_api();
+        //await natural_issues_api();
         const data = await natural_issues_list();
         setnaturalIssue(data); // Update state with the fetched data
       } catch (error) {
@@ -132,7 +132,7 @@ const beatTwo = () => {
 
         // const jsonData = await response.json();
         // console.log(jsonData, 'fetched jsonData'); // Log the fetched data
-        await human_issues_api();
+        //await human_issues_api();
         const data = await human_issues_list();
         sethumanIssue(data); // Update state with the fetched data
       } catch (error) {

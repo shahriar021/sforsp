@@ -86,7 +86,7 @@ const consultTwo = () => {
 
         // const jsonData = await response.json();
         // console.log(jsonData, 'fetched jsonData'); // Log the fetched data
-        await yes_no_lists_api();
+        //await yes_no_lists_api();
         const data = await yes_no_lists_list();
         setyes_no_lists(data); // Update state with the fetched data
       } catch (error) {
@@ -110,7 +110,7 @@ const consultTwo = () => {
 
         // const jsonData = await response.json();
         // console.log(jsonData, 'fetched jsonData'); // Log the fetched data
-        await occupation_coms_api();
+        //await occupation_coms_api();
         const data = await occupation_coms_list();
         setoccupation_coms(data); // Update state with the fetched data
       } catch (error) {

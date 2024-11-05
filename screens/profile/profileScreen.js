@@ -44,6 +44,7 @@ import {
   aspects_api,
   aspects_delete,
   aspects_list,
+  gener43_2021_core_api,
   sources_api,
   sources_list,
   spatial_ref_sys_api,
@@ -61,6 +62,18 @@ const ProfileScreen = () => {
 
   const [selectedImage, setSelectedImage] = useState(null);
   const [photo, setPhoto] = useState('');
+
+  // useEffect(() => {
+  //   const gener43_2021_core_api_func = async () => {
+  //     console.log('i have beend called');
+  //     try {
+  //       await gener43_2021_core_api();
+  //     } catch (err) {
+  //       console.log('Error fetching gener43_2021_core API data:', err);
+  //     }
+  //   };
+  //   gener43_2021_core_api_func();
+  // }, []);
 
   // useEffect(() => {
   //   const fetchData = async () => {

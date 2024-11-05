@@ -83,7 +83,7 @@ const useUUID = () => {
   useEffect(() => {
     const formatedMd5 = uuid => {
       if (!uuid) return;
-      const data = `${uuid.slice(0, 8)}-${uuid.slice(8, 12)}-${uuid.slice(
+      const data = `uuid:${uuid.slice(0, 8)}-${uuid.slice(8, 12)}-${uuid.slice(
         12,
         16,
       )}-${uuid.slice(16, 20)}-${uuid.slice(20, 32)}`;

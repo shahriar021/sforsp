@@ -74,12 +74,59 @@ import beatDashboard from './screens/beat/beatDashboard';
 import InterventionDashboar from './screens/intervention/interventionDashboar';
 import consult from './screens/consult/consultDashboard';
 
+import {
+  gener43_2021_core_create,
+  human_issues_api,
+  jur_ad_districts_api,
+  jur_ad_districts_list,
+  jur_ad_divisions_api,
+  jur_ad_divisions_list,
+  jur_ad_upazillas_api,
+  jur_ad_upazillas_list,
+  jur_fd_beats_api,
+  jur_fd_beats_list,
+  jur_fd_circles_api,
+  jur_fd_circles_list,
+  jur_fd_divisions_api,
+  jur_fd_divisions_list,
+  jur_fd_ecozones_api,
+  jur_fd_ecozones_list,
+  jur_fd_ranges_api,
+  jur_fd_ranges_list,
+  mouza_types_api,
+  mouza_types_list,
+} from './database/sqlDatabase';
+
 LogBox.ignoreAllLogs();
 
 const Stack = createStackNavigator();
 
 const App = () => {
   // RemoteNotification();
+
+  //   if(data!=1){
+  //  jur_ad_districts_api();
+  //  d
+  //   }
+  //    jur_ad_districts_api();
+
+  useEffect(() => {
+    const callCreateApi = async () => {
+      await jur_ad_districts_api(),
+        await jur_ad_divisions_api(),
+        await jur_ad_upazillas_api(),
+        await jur_fd_beats_api(),
+        await jur_fd_circles_api(),
+        await jur_fd_divisions_api(),
+        await jur_fd_ecozones_api(),
+        await jur_fd_ranges_api(),
+        await mouza_types_api();
+      await human_issues_api();
+      await natural_issues_api();
+    };
+    callCreateApi();
+  }, []);
+
   useEffect(() => {
     // Request permission to receive notifications
     messaging()
