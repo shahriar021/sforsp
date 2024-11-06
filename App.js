@@ -75,6 +75,7 @@ import InterventionDashboar from './screens/intervention/interventionDashboar';
 import consult from './screens/consult/consultDashboard';
 
 import {
+  gener43_2021_core_api,
   gener43_2021_core_create,
   human_issues_api,
   jur_ad_districts_api,
@@ -126,6 +127,24 @@ const App = () => {
     };
     callCreateApi();
   }, []);
+
+  useEffect(() => {
+    try {
+      console.log('useEffect is being called');
+      const gener43_2021_core_api_func = async () => {
+        console.log('gener43_2021_core_api_func has been called');
+        try {
+          await gener43_2021_core_api();
+        } catch (err) {
+          console.log('Error fetching gener43_2021_core API data:', err);
+        }
+      };
+      gener43_2021_core_api_func();
+    } catch (error) {
+      console.log('Error in useEffect:', error);
+    }
+  }, []);
+
 
   useEffect(() => {
     // Request permission to receive notifications

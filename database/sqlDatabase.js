@@ -1,6 +1,6 @@
 import SQLite from 'react-native-sqlite-storage';
 import {baseApi, token} from '../constants/base_api';
-import { database } from './db';
+import {database} from './db';
 
 // const database = SQLite.openDatabase(
 //   {
@@ -5230,14 +5230,14 @@ export const human_issues_api = async () => {
               human_issues.code || null,
             ],
             (_, resultSet) =>
-              console.log('human_issues data inserted successfully', resultSet),
-            (_, error) => {
-              console.error(
-                'Error inserting human_issues data',
-                error,
-                human_issues,
-              );
-            },
+              //console.log('human_issues data inserted successfully', resultSet),
+              (_, error) => {
+                console.error(
+                  'Error inserting human_issues data',
+                  error,
+                  human_issues,
+                );
+              },
           );
         });
         resolve();
@@ -13176,14 +13176,14 @@ export const gener43_2021_core_api = async () => {
 
     await new Promise((resolve, reject) => {
       database.transaction(tx => {
-        tx.executeSql(
-          'DROP TABLE IF EXISTS gener43_2021_core',
-          [],
-          () => {
-            console.log('gener43_2021_core table dropped successfully');
-          },
-          reject,
-        );
+        // tx.executeSql(
+        //   'DROP TABLE IF EXISTS gener43_2021_core',
+        //   [],
+        //   () => {
+        //     console.log('gener43_2021_core table dropped successfully');
+        //   },
+        //   reject,
+        // );
 
         tx.executeSql(
           'CREATE TABLE IF NOT EXISTS gener43_2021_core (_uri text,_creator_uri_user text,_creation_date text,_last_update_uri_user text,_last_update_date text,_model_version text,_ui_version text,_is_complete text,_submission_date text,_marked_as_complete_date text,land_statistics_beat_land_bio_other_plant_ha text,guser_tloc_fd_beat_point_lng text,fbli_fa_tloc_fd_beat text,logistics3_countryboat_condition text,logistics4_gfirearms_303rifle text,land_statistics_beat_mgt_approach_other_pa_area_ha text,logistics4_others_water_tra text,bo_info_bo_cell text,logistics3_tvessel_condition text,ro_info_ro_cell text,logistics4_tfirearms_chineserifle_avail text,logistics3_tvessel_avail text,fbli_fa_tloc_fd_beat_txt text,logistics3_speedboat_condition text,fbli_fa_tloc_fd_division text,land_transports_bicycle_avail text,logistics3_others_water_tra_condition text,land_statistics_beat_land_info_vested_forest_ha text,subscriberid text,guser_user text,ro_info_name_of_ro text,fbli_fa_tloc_fd_block text,deviceid text,land_transports_motorb_condition text,fbli_generated_note_name_18 text,land_statistics_beat_land_bio_generated_note_name_74 text,logistics4_chineserifle_condition text,logistics3_speedboat_avail text,land_statistics_beat_mgt_approach_pa_ws_ha text,logistics4_generated_note_name_152 text,land_statistics_beat_land_bio_non_pp_ha text,land_statistics_beat_land_info_section_6_ha text,simserial text,guser_dcollection_raw text,land_transports_bicycle_condition text,land_statistics_beat_land_bio_social_accreted_ha text,guser_generated_note_name_10 text,land_statistics_beat_land_info_other_forestarea_ha text,bo_info_bo_nid text,land_transports_gbi_cycle text,land_transports_others_land_tra text,logistics3_gcountry_boat text,logistics4_gfirearms_slr text,fbli_fa_tloc_fd_cir text,land_transports_motorb_avail text,land_transports_others_land_tra_condition text,ro_info_ro_joining_date text,logistics4_others_water_tra_condition text,land_statistics_beat_land_bio_natural_to_dc_ha text,ro_info_ro_rank text,land_transports_others_land_tra_avail text,land_statistics_beat_mgt_approach_pa_safaripark_ha text,bo_info_bo_joining_date text,guser_user_cell text,ro_info_ro_nid text,guser_tloc_fd_beat_point_alt text,land_statistics_beat_land_info_section_4_ha text,guser_tloc_fd_beat_point_lat text,land_statistics_beat_mgt_approach_pa_sbca_ha text,logistics4_rifle303_condition text,guser_dcollection text,end_raw text,bo_info_generated_note_name_106 text,generated_note_name_81 text,ro_info_generated_note_name_97 text,fbli_fa_generated_note_name_21 text,land_transports_generated_note_name_125 text,guser_beat_address text,land_statistics_beat_land_info_aquired_forest_ha text,bo_info_bo_joining_date_raw text,land_statistics_beat_mgt_approach_pa_np_ha text,guser_tloc_fd_beat_point_acc text,logistics3_countryboat_avail text,fbli_ca_tloc_ad_district text,bo_info_name_of_bo text,land_statistics_beat_land_info_generated_note_name_53 text,land_statistics_beat_land_info_reserved_forest_ha text,logistics3_others_water_tra text,fbli_tloc_ecozone text,bo_info_bo_rank text,logistics4_slr_condition text,end text,fbli_fa_tloc_fd_range text,ro_info_ro_joining_date_raw text,phonenumber text,logistics3_trawler text,logistics4_gfirearms_shortgun text,logistics4_shortgun_condition text,start_raw text,land_statistics_total_legal_land_stats text,bo_info_bo_mail text,meta_instance_id text,logistics4_tfirearms_shortgun_avail text,fbli_ca_generated_note_name_33 text,fbli_ca_tloc_ad_division text,land_statistics_beat_mgt_approach_generated_note_name_65 text,logistics4_others_water_tra_avail text,logistics3_gspeed_boat text,logistics4_tfirearms_303rifle_avail text,logistics4_gfirearms_chineserifle text,today text,fbli_fa_tloc_fd_char text,land_transports_gmotorbike text,land_statistics_beat_land_info_protected_forest_ha text,land_statistics_beat_mgt_approach_pa_ecopark_ha text,fbli_fa_tloc_enter_range text,land_statistics_area_sum text,ro_info_ro_mail text,generated_note_name_123 text,start text,fbli_ca_union text,fbli_fa_tloc_enter_div text,today_raw text,generated_note_name_94 text,logistics3_others_water_tra_avail text,generated_note_name_95 text,logistics4_tfirearms_slr_avail text,logistics3_generated_note_name_137 text,project_id text,sort text,last_log_id text,restore_id text,created_at text,created_by text,updated_at text,updated_by text,deleted_at text,deleted_by text,deleted_status text,status text,land_statistics_beat_land_bio_social_accreted_skm text,land_statistics_beat_land_bio_non_pp_skm text,land_statistics_beat_land_bio_other_plant_skm text)',
@@ -13474,24 +13474,44 @@ export const gener43_2021_core_create = gener43_2021_core => {
         console.log('Inside transaction...');
 
         // Create table if it does not exist
-        tx.executeSql(
-          `CREATE TABLE IF NOT EXISTS gener43_2021_core (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            _uri TEXT
-          )
-          ;`,
-          [],
-          () => console.log('Table dropeed.'),
-          (tx, error) => {
-            console.error('Error creating table:', error.message || error);
-            reject(error); // Stop if table creation fails
-          },
-        );
+        // tx.executeSql(
+        //   `CREATE TABLE IF NOT EXISTS gener43_2021_core (
+        //     id INTEGER PRIMARY KEY AUTOINCREMENT,
+        //     _uri TEXT
+        //   )
+        //   ;`,
+        //   [],
+        //   () => console.log('Table dropeed.'),
+        //   (tx, error) => {
+        //     console.error('Error creating table:', error.message || error);
+        //     reject(error); // Stop if table creation fails
+        //   },
+        // );
 
         // Insert gener43_2021_core
         tx.executeSql(
-          `INSERT INTO gener43_2021_core (_uri) VALUES (?)`,
-          [gener43_2021_core._uri || null],
+          `INSERT INTO gener43_2021_core (_uri,_creation_date,GUSER_USER,GUSER_USER_CELL,GUSER_BEAT_ADDRESS,GUSER_TLOC_FD_BEAT_POINT_LAT,GUSER_TLOC_FD_BEAT_POINT_LNG,FBLI_TLOC_ECOZONE,FBLI_FA_TLOC_FD_CIR,FBLI_FA_TLOC_FD_DIVISION,FBLI_FA_TLOC_FD_RANGE,FBLI_FA_TLOC_FD_BEAT,FBLI_FA_TLOC_FD_BLOCK,FBLI_FA_TLOC_FD_CHAR,FBLI_CA_TLOC_AD_DIVISION,FBLI_CA_TLOC_AD_DISTRICT,FBLI_CA_UNION)
+           VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+          [
+            gener43_2021_core._uri || null,
+
+            gener43_2021_core._creation_date || null,
+            gener43_2021_core.GUSER_USER || null,
+            gener43_2021_core.GUSER_USER_CELL || null,
+            gener43_2021_core.GUSER_BEAT_ADDRESS || null,
+            gener43_2021_core.GUSER_TLOC_FD_BEAT_POINT_LAT || null,
+            gener43_2021_core.GUSER_TLOC_FD_BEAT_POINT_LNG || null,
+            gener43_2021_core.FBLI_TLOC_ECOZONE || null,
+            gener43_2021_core.FBLI_FA_TLOC_FD_CIR || null,
+            gener43_2021_core.FBLI_FA_TLOC_FD_DIVISION || null,
+            gener43_2021_core.FBLI_FA_TLOC_FD_RANGE || null,
+            gener43_2021_core.FBLI_FA_TLOC_FD_BEAT || null,
+            gener43_2021_core.FBLI_FA_TLOC_FD_BLOCK || null,
+            gener43_2021_core.FBLI_FA_TLOC_FD_CHAR || null,
+            gener43_2021_core.FBLI_CA_TLOC_AD_DIVISION || null,
+            gener43_2021_core.FBLI_CA_TLOC_AD_DISTRICT || null,
+            gener43_2021_core.FBLI_CA_UNION || null,
+          ],
           (tx, results) => {
             console.log('Data inserted successfully:', results);
             resolve(results);
@@ -13504,6 +13524,188 @@ export const gener43_2021_core_create = gener43_2021_core => {
       },
       error => {
         console.error('Transaction error:', error.message || error); // Log transaction-level errors
+        reject(error);
+      },
+      () => {
+        console.log('Transaction completed successfully.');
+      },
+    );
+  });
+};
+
+export const gener43_2021_core_update = (uuid, updatedValues) => {
+  return new Promise((resolve, reject) => {
+    console.log('Starting database transaction for update...');
+    database.transaction(
+      tx => {
+        console.log('Inside transaction...');
+
+        // Update the record based on uuid with the provided values
+        tx.executeSql(
+          `UPDATE gener43_2021_core 
+           SET 
+             LAND_STATISTICS_BEAT_LAND_INFO_RESERVED_FOREST_HA = ?,
+             LAND_STATISTICS_BEAT_LAND_INFO_SECTION_6_HA=?,
+             LAND_STATISTICS_BEAT_LAND_INFO_SECTION_4_HA=?,
+             LAND_STATISTICS_BEAT_LAND_INFO_PROTECTED_FOREST_HA=?,
+             LAND_STATISTICS_BEAT_LAND_INFO_VESTED_FOREST_HA=?,
+             LAND_STATISTICS_BEAT_LAND_INFO_AQUIRED_FOREST_HA=?,
+
+             LAND_STATISTICS_BEAT_MGT_APPROACH_PA_WS_HA=?,
+             LAND_STATISTICS_BEAT_MGT_APPROACH_PA_NP_HA=?,
+             LAND_STATISTICS_BEAT_MGT_APPROACH_PA_ECOPARK_HA=?,
+             LAND_STATISTICS_BEAT_MGT_APPROACH_PA_SAFARIPARK_HA=?,
+             LAND_STATISTICS_BEAT_MGT_APPROACH_PA_SBCA_HA=?,
+             LAND_STATISTICS_BEAT_MGT_APPROACH_OTHER_PA_AREA_HA=?,
+
+             LAND_STATISTICS_BEAT_LAND_BIO_NATURAL_TO_DC_HA=?,
+             LAND_STATISTICS_BEAT_LAND_BIO_SOCIAL_ACCRETED_HA=?,
+             LAND_STATISTICS_BEAT_LAND_BIO_SOCIAL_ACCRETED_SKM=?,
+             LAND_STATISTICS_BEAT_LAND_BIO_NON_PP_HA=?,
+             LAND_STATISTICS_BEAT_LAND_BIO_NON_PP_SKM=?,
+             LAND_STATISTICS_BEAT_LAND_BIO_OTHER_PLANT_HA=?,
+             LAND_STATISTICS_BEAT_LAND_BIO_OTHER_PLANT_SKM=?
+             
+           WHERE _uri = ?`,
+          [
+            updatedValues.LAND_STATISTICS_BEAT_LAND_INFO_RESERVED_FOREST_HA ||
+              null,
+            updatedValues.LAND_STATISTICS_BEAT_LAND_INFO_SECTION_6_HA || null,
+            updatedValues.LAND_STATISTICS_BEAT_LAND_INFO_SECTION_4_HA || null,
+            updatedValues.LAND_STATISTICS_BEAT_LAND_INFO_PROTECTED_FOREST_HA ||
+              null,
+            updatedValues.LAND_STATISTICS_BEAT_LAND_INFO_VESTED_FOREST_HA ||
+              null,
+            updatedValues.LAND_STATISTICS_BEAT_LAND_INFO_AQUIRED_FOREST_HA ||
+              null,
+
+            updatedValues.LAND_STATISTICS_BEAT_MGT_APPROACH_PA_WS_HA || null,
+            updatedValues.LAND_STATISTICS_BEAT_MGT_APPROACH_PA_NP_HA || null,
+            updatedValues.LAND_STATISTICS_BEAT_MGT_APPROACH_PA_ECOPARK_HA ||
+              null,
+            updatedValues.LAND_STATISTICS_BEAT_MGT_APPROACH_PA_SAFARIPARK_HA ||
+              null,
+            updatedValues.LAND_STATISTICS_BEAT_MGT_APPROACH_PA_SBCA_HA || null,
+            updatedValues.LAND_STATISTICS_BEAT_MGT_APPROACH_OTHER_PA_AREA_HA ||
+              null,
+
+            updatedValues.LAND_STATISTICS_BEAT_LAND_BIO_NATURAL_TO_DC_HA ||
+              null,
+            updatedValues.LAND_STATISTICS_BEAT_LAND_BIO_SOCIAL_ACCRETED_HA ||
+              null,
+            updatedValues.LAND_STATISTICS_BEAT_LAND_BIO_SOCIAL_ACCRETED_SKM ||
+              null,
+            updatedValues.LAND_STATISTICS_BEAT_LAND_BIO_NON_PP_HA || null,
+            updatedValues.LAND_STATISTICS_BEAT_LAND_BIO_NON_PP_SKM || null,
+            updatedValues.LAND_STATISTICS_BEAT_LAND_BIO_OTHER_PLANT_HA || null,
+            updatedValues.LAND_STATISTICS_BEAT_LAND_BIO_OTHER_PLANT_SKM || null,
+
+            uuid, // Use uuid to match the correct record
+          ],
+          (tx, results) => {
+            console.log('Data updated successfully:', results);
+            resolve(results);
+          },
+          (tx, error) => {
+            console.error('Error updating data:', error.message || error);
+            reject(error);
+          },
+        );
+      },
+      error => {
+        console.error('Transaction error:', error.message || error);
+        reject(error);
+      },
+      () => {
+        console.log('Transaction completed successfully.');
+      },
+    );
+  });
+};
+
+
+
+export const gener43_2021_core_update2 = (uuid, updatedValues) => {
+  return new Promise((resolve, reject) => {
+    console.log('Starting database transaction for update...');
+    database.transaction(
+      tx => {
+        console.log('Inside transaction...');
+
+        // Update the record based on uuid with the provided values
+        tx.executeSql(
+          `UPDATE gener43_2021_core 
+           SET 
+             LAND_STATISTICS_BEAT_LAND_INFO_RESERVED_FOREST_HA = ?,
+             LAND_STATISTICS_BEAT_LAND_INFO_SECTION_6_HA=?,
+             LAND_STATISTICS_BEAT_LAND_INFO_SECTION_4_HA=?,
+             LAND_STATISTICS_BEAT_LAND_INFO_PROTECTED_FOREST_HA=?,
+             LAND_STATISTICS_BEAT_LAND_INFO_VESTED_FOREST_HA=?,
+             LAND_STATISTICS_BEAT_LAND_INFO_AQUIRED_FOREST_HA=?,
+
+             LAND_STATISTICS_BEAT_MGT_APPROACH_PA_WS_HA=?,
+             LAND_STATISTICS_BEAT_MGT_APPROACH_PA_NP_HA=?,
+             LAND_STATISTICS_BEAT_MGT_APPROACH_PA_ECOPARK_HA=?,
+             LAND_STATISTICS_BEAT_MGT_APPROACH_PA_SAFARIPARK_HA=?,
+             LAND_STATISTICS_BEAT_MGT_APPROACH_PA_SBCA_HA=?,
+             LAND_STATISTICS_BEAT_MGT_APPROACH_OTHER_PA_AREA_HA=?,
+
+             LAND_STATISTICS_BEAT_LAND_BIO_NATURAL_TO_DC_HA=?,
+             LAND_STATISTICS_BEAT_LAND_BIO_SOCIAL_ACCRETED_HA=?,
+             LAND_STATISTICS_BEAT_LAND_BIO_SOCIAL_ACCRETED_SKM=?,
+             LAND_STATISTICS_BEAT_LAND_BIO_NON_PP_HA=?,
+             LAND_STATISTICS_BEAT_LAND_BIO_NON_PP_SKM=?,
+             LAND_STATISTICS_BEAT_LAND_BIO_OTHER_PLANT_HA=?,
+             LAND_STATISTICS_BEAT_LAND_BIO_OTHER_PLANT_SKM=?
+             
+           WHERE _uri = ?`,
+          [
+            updatedValues.LAND_STATISTICS_BEAT_LAND_INFO_RESERVED_FOREST_HA ||
+              null,
+            updatedValues.LAND_STATISTICS_BEAT_LAND_INFO_SECTION_6_HA || null,
+            updatedValues.LAND_STATISTICS_BEAT_LAND_INFO_SECTION_4_HA || null,
+            updatedValues.LAND_STATISTICS_BEAT_LAND_INFO_PROTECTED_FOREST_HA ||
+              null,
+            updatedValues.LAND_STATISTICS_BEAT_LAND_INFO_VESTED_FOREST_HA ||
+              null,
+            updatedValues.LAND_STATISTICS_BEAT_LAND_INFO_AQUIRED_FOREST_HA ||
+              null,
+
+            updatedValues.LAND_STATISTICS_BEAT_MGT_APPROACH_PA_WS_HA || null,
+            updatedValues.LAND_STATISTICS_BEAT_MGT_APPROACH_PA_NP_HA || null,
+            updatedValues.LAND_STATISTICS_BEAT_MGT_APPROACH_PA_ECOPARK_HA ||
+              null,
+            updatedValues.LAND_STATISTICS_BEAT_MGT_APPROACH_PA_SAFARIPARK_HA ||
+              null,
+            updatedValues.LAND_STATISTICS_BEAT_MGT_APPROACH_PA_SBCA_HA || null,
+            updatedValues.LAND_STATISTICS_BEAT_MGT_APPROACH_OTHER_PA_AREA_HA ||
+              null,
+
+            updatedValues.LAND_STATISTICS_BEAT_LAND_BIO_NATURAL_TO_DC_HA ||
+              null,
+            updatedValues.LAND_STATISTICS_BEAT_LAND_BIO_SOCIAL_ACCRETED_HA ||
+              null,
+            updatedValues.LAND_STATISTICS_BEAT_LAND_BIO_SOCIAL_ACCRETED_SKM ||
+              null,
+            updatedValues.LAND_STATISTICS_BEAT_LAND_BIO_NON_PP_HA || null,
+            updatedValues.LAND_STATISTICS_BEAT_LAND_BIO_NON_PP_SKM || null,
+            updatedValues.LAND_STATISTICS_BEAT_LAND_BIO_OTHER_PLANT_HA || null,
+            updatedValues.LAND_STATISTICS_BEAT_LAND_BIO_OTHER_PLANT_SKM || null,
+
+            uuid, // Use uuid to match the correct record
+          ],
+          (tx, results) => {
+            console.log('Data updated successfully:', results);
+            resolve(results);
+          },
+          (tx, error) => {
+            console.error('Error updating data:', error.message || error);
+            reject(error);
+          },
+        );
+      },
+      error => {
+        console.error('Transaction error:', error.message || error);
         reject(error);
       },
       () => {

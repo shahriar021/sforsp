@@ -14,10 +14,11 @@ import {
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {Dropdown} from 'react-native-element-dropdown';
 import DocumentPicker from 'react-native-document-picker';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {Colors, CommonStyles, Sizes} from '../../constants/styles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import useLogistic from '../../hooks/useLogistic';
+import { gener43_2021_core_update2 } from '../../database/sqlDatabase';
 
 const beatThree = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -61,6 +62,10 @@ const beatThree = () => {
 
   const navigation = useNavigation();
 
+  const route = useRoute();
+  const {uuid} = route.params;
+  console.log(uuid, 'uuid in page 3');
+
   const {logistic} = useLogistic();
   console.log(logistic, 'logistic');
 
@@ -100,9 +105,9 @@ const beatThree = () => {
     setInputValue(prevValue => ({...prevValue, [field]: value}));
   };
 
-  const tableData = []
+  const tableData = [];
 
-  const submitBeatThree = () => {
+  const submitBeatThree =async () => {
     console.log(
       inputValue7,
       inputValue8,
@@ -131,6 +136,38 @@ const beatThree = () => {
       selectedLogistic11,
       selectedLogistic12,
     );
+    const dataToInsert = {
+      LAND_STATISTICS_BEAT_LAND_INFO_RESERVED_FOREST_HA: inputValue2,
+      LAND_STATISTICS_BEAT_LAND_INFO_SECTION_6_HA: inputValue3,
+      LAND_STATISTICS_BEAT_LAND_INFO_SECTION_4_HA: inputValue4,
+      LAND_STATISTICS_BEAT_LAND_INFO_PROTECTED_FOREST_HA: inputValue5,
+      LAND_STATISTICS_BEAT_LAND_INFO_VESTED_FOREST_HA: inputValue6,
+      LAND_STATISTICS_BEAT_LAND_INFO_AQUIRED_FOREST_HA: inputValue7,
+      LAND_STATISTICS_BEAT_LAND_INFO_OTHER_FORESTAREA_HA: inputValue8,
+      LAND_STATISTICS_TOTAL_LEGAL_LAND_STATS: inputValue9,
+
+      LAND_STATISTICS_BEAT_MGT_APPROACH_PA_WS_HA: inputValue10,
+      LAND_STATISTICS_BEAT_MGT_APPROACH_PA_NP_HA: inputValue11,
+      LAND_STATISTICS_BEAT_MGT_APPROACH_PA_ECOPARK_HA: inputValue12,
+      LAND_STATISTICS_BEAT_MGT_APPROACH_PA_SAFARIPARK_HA: inputValue13,
+      LAND_STATISTICS_BEAT_MGT_APPROACH_PA_SBCA_HA: inputValue13,
+      LAND_STATISTICS_BEAT_MGT_APPROACH_OTHER_PA_AREA_HA: inputValue13,
+
+      LAND_STATISTICS_BEAT_LAND_BIO_NATURAL_TO_DC_HA: inputValue14,
+      LAND_STATISTICS_BEAT_LAND_BIO_SOCIAL_ACCRETED_HA: inputValue15,
+      LAND_STATISTICS_BEAT_LAND_BIO_SOCIAL_ACCRETED_SKM: inputValue16,
+      LAND_STATISTICS_BEAT_LAND_BIO_NON_PP_HA: inputValue17,
+      LAND_STATISTICS_BEAT_LAND_BIO_NON_PP_SKM: inputValue18,
+      LAND_STATISTICS_BEAT_LAND_BIO_OTHER_PLANT_HA: inputValue19,
+      LAND_STATISTICS_BEAT_LAND_BIO_OTHER_PLANT_SKM: inputValue20,
+    };
+
+    try {
+      await gener43_2021_core_update2(uId, dataToInsert);
+      console.log('All data inserted successfully');
+    } catch (error) {
+      console.error('Failed to insert data:', error.message || error); // Log the error message
+    }
     navigation.navigate('beatFour');
   };
 
@@ -1206,7 +1243,6 @@ const styles = StyleSheet.create({
   },
 });
 
-
 const tableStyles = StyleSheet.create({
   tableContainer: {
     marginTop: 16,
@@ -1247,6 +1283,5 @@ const tableStyles = StyleSheet.create({
     color: '#333',
   },
 });
-
 
 export default beatThree;

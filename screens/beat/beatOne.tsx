@@ -21,6 +21,7 @@ import {baseApi, token} from '../../constants/base_api';
 import MonthPicker from 'react-native-month-year-picker';
 import {
   gener43_2021_core_create,
+  gener43_2021_core_list,
   jur_ad_districts_api,
   jur_ad_districts_list,
   jur_ad_divisions_api,
@@ -66,6 +67,7 @@ const beatOne = () => {
   const [GUSER_TLOC_FD_BEAT_POINT_LNG, setGUSER_TLOC_FD_BEAT_POINT_LNG] =
     useState('');
   const [FBLI_FA_TLOC_FD_BLOCK, setFBLI_FA_TLOC_FD_BLOCK] = useState('');
+  const [FBLI_FA_TLOC_FD_CHAR, setFBLI_FA_TLOC_FD_CHAR] = useState('');
   const [FBLI_CA_UNION, setFBLI_CA_UNION] = useState('');
   const [mouza_name, setmouza_name] = useState('');
   const [sheet_number, setsheet_number] = useState('');
@@ -83,6 +85,9 @@ const beatOne = () => {
   const [selectedUpazila, setSelectedUpazila] = useState(null);
 
   const [survey_type, setsurvey_type] = useState(null);
+
+  // ------------------------------
+  const [gener43_2021_core_listdata, setgener43_2021_core_list] = useState([]);
 
   const navigation = useNavigation();
 
@@ -128,6 +133,14 @@ const beatOne = () => {
   ];
 
   const {md5} = useUUID();
+  const uuid = md5;
+  console.log(uuid, 'uuid-page 1');
+
+  // const formattedDate = (GUSER_DCOLLECTION_RAW) => {
+  //   const info = GUSER_DCOLLECTION_RAW; // Assuming info is in the format "11/2/2024"
+  //   const [day, month, year] = info?.split('/'); // Split the date by "/"
+  //   return `${day}-${month}-${year}`; // Return in "11-2-2021" format
+  // };
 
   // useEffect(() => {
   //   const forest_landscape = async () => {
@@ -346,40 +359,72 @@ const beatOne = () => {
     survey();
   }, []);
 
+  // useEffect(() => {
+  //   const gener43_2021_core_list_funct = async () => {
+  //     const data = await gener43_2021_core_list();
+  //     setgener43_2021_core_list(data);
+  //   };
+  //   gener43_2021_core_list_funct();
+  // }, []);
+
+  // console.log(gener43_2021_core_listdata, 'new data');
+
   const beat_one_submit = async () => {
-    // console.log(
-    //   GUSER_DCOLLECTION_RAW,
-    //   GUSER_USER,
-    //   GUSER_USER_CELL,
-    //   GUSER_BEAT_ADDRESS,
-    //   GUSER_TLOC_FD_BEAT_POINT_LAT,
-    //   GUSER_TLOC_FD_BEAT_POINT_LNG,
-    //   FBLI_FA_TLOC_FD_BLOCK,
-    //   mouza_name,
-    //   sheet_number,
-    //   selectedForest,
-    //   selectedForestCircle,
-    //   selectedForestDivision,
-    //   selectedForestrange,
-    //   selectedForestbeat,
-    //   selectedDistrict,
-    //   selectedUpazila,
-    //   survey_type,
-    //   md5,
-    // );
+    console.log(
+      GUSER_DCOLLECTION_RAW,
+      GUSER_USER,
+      GUSER_USER_CELL,
+      GUSER_BEAT_ADDRESS,
+      GUSER_TLOC_FD_BEAT_POINT_LAT,
+      GUSER_TLOC_FD_BEAT_POINT_LNG,
+      FBLI_FA_TLOC_FD_BLOCK,
+      mouza_name,
+      sheet_number,
+      selectedForest,
+      selectedForestCircle,
+      selectedForestDivision,
+      selectedForestrange,
+      selectedForestbeat,
+      selectedDistrict,
+      selectedUpazila,
+      survey_type,
+      md5,
+      'uuid is here.......',
+    );
 
-    // const dataToInsert = {
-    //   _uri: md5,
-    // };
+    const dataToInsert = {
+      _uri: uuid,
+      GUSER_DCOLLECTION_RAW: GUSER_DCOLLECTION_RAW,
+      GUSER_USER: GUSER_USER,
+      GUSER_USER_CELL: GUSER_USER_CELL,
+      GUSER_BEAT_ADDRESS: GUSER_BEAT_ADDRESS,
+      GUSER_TLOC_FD_BEAT_POINT_LAT: GUSER_TLOC_FD_BEAT_POINT_LAT,
+      GUSER_TLOC_FD_BEAT_POINT_LNG: GUSER_TLOC_FD_BEAT_POINT_LNG,
+      FBLI_FA_TLOC_FD_BLOCK: FBLI_FA_TLOC_FD_BLOCK,
+      mouza_name: mouza_name,
+      sheet_number: sheet_number,
 
-    // try {
-    //   await gener43_2021_core_create(dataToInsert);
-    //   console.log('All data inserted successfully');
-    // } catch (error) {
-    //   console.error('Failed to insert data:', error.message || error); // Log the error message
-    // }
+      FBLI_TLOC_ECOZONE: selectedForest,
+      FBLI_FA_TLOC_FD_CIR: selectedForestCircle,
+      FBLI_FA_TLOC_FD_DIVISION: selectedForestDivision,
+      FBLI_FA_TLOC_FD_RANGE: selectedForestrange,
+      FBLI_FA_TLOC_FD_BEAT: selectedForestbeat,
+      FBLI_CA_TLOC_AD_DIVISION: selectedDivision,
+      FBLI_CA_TLOC_AD_DISTRICT: selectedDistrict,
+      FBLI_CA_UNION: FBLI_CA_UNION,
 
-    navigation.navigate('beatTwo');
+      selectedUpazila: selectedUpazila,
+      survey_type: survey_type,
+    };
+
+    try {
+      await gener43_2021_core_create(dataToInsert);
+      console.log('All data inserted successfully');
+    } catch (error) {
+      console.error('Failed to insert data:', error.message || error); // Log the error message
+    }
+
+    navigation.navigate('beatTwo', {uId: uuid});
   };
 
   // console.log('fstDivison:', survey);
@@ -601,6 +646,15 @@ const beatOne = () => {
           placeholder="Type here Block"
           value={FBLI_FA_TLOC_FD_BLOCK}
           onChangeText={text => setFBLI_FA_TLOC_FD_BLOCK(text)}
+          placeholderTextColor="black"
+        />
+
+        <Text style={styles.label}>2.1.d.2.Char (চর):</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Type here Char"
+          value={FBLI_FA_TLOC_FD_CHAR}
+          onChangeText={text => setFBLI_FA_TLOC_FD_CHAR(text)}
           placeholderTextColor="black"
         />
 
