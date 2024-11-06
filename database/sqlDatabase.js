@@ -13623,8 +13623,6 @@ export const gener43_2021_core_update = (uuid, updatedValues) => {
   });
 };
 
-
-
 export const gener43_2021_core_update2 = (uuid, updatedValues) => {
   return new Promise((resolve, reject) => {
     console.log('Starting database transaction for update...');
@@ -13636,61 +13634,65 @@ export const gener43_2021_core_update2 = (uuid, updatedValues) => {
         tx.executeSql(
           `UPDATE gener43_2021_core 
            SET 
-             LAND_STATISTICS_BEAT_LAND_INFO_RESERVED_FOREST_HA = ?,
-             LAND_STATISTICS_BEAT_LAND_INFO_SECTION_6_HA=?,
-             LAND_STATISTICS_BEAT_LAND_INFO_SECTION_4_HA=?,
-             LAND_STATISTICS_BEAT_LAND_INFO_PROTECTED_FOREST_HA=?,
-             LAND_STATISTICS_BEAT_LAND_INFO_VESTED_FOREST_HA=?,
-             LAND_STATISTICS_BEAT_LAND_INFO_AQUIRED_FOREST_HA=?,
+             LAND_TRANSPORTS_MOTORB_AVAIL=?,
+      LAND_TRANSPORTS_MOTORB_CONDITION=?,
+      LAND_TRANSPORTS_BICYCLE_AVAIL=?,
+      LAND_TRANSPORTS_BICYCLE_CONDITION=?,
+      LAND_TRANSPORTS_OTHERS_LAND_TRA_AVAIL=?,
+      LAND_TRANSPORTS_OTHERS_LAND_TRA_CONDITION=?,
 
-             LAND_STATISTICS_BEAT_MGT_APPROACH_PA_WS_HA=?,
-             LAND_STATISTICS_BEAT_MGT_APPROACH_PA_NP_HA=?,
-             LAND_STATISTICS_BEAT_MGT_APPROACH_PA_ECOPARK_HA=?,
-             LAND_STATISTICS_BEAT_MGT_APPROACH_PA_SAFARIPARK_HA=?,
-             LAND_STATISTICS_BEAT_MGT_APPROACH_PA_SBCA_HA=?,
-             LAND_STATISTICS_BEAT_MGT_APPROACH_OTHER_PA_AREA_HA=?,
 
-             LAND_STATISTICS_BEAT_LAND_BIO_NATURAL_TO_DC_HA=?,
-             LAND_STATISTICS_BEAT_LAND_BIO_SOCIAL_ACCRETED_HA=?,
-             LAND_STATISTICS_BEAT_LAND_BIO_SOCIAL_ACCRETED_SKM=?,
-             LAND_STATISTICS_BEAT_LAND_BIO_NON_PP_HA=?,
-             LAND_STATISTICS_BEAT_LAND_BIO_NON_PP_SKM=?,
-             LAND_STATISTICS_BEAT_LAND_BIO_OTHER_PLANT_HA=?,
-             LAND_STATISTICS_BEAT_LAND_BIO_OTHER_PLANT_SKM=?
+      LOGISTICS3_SPEEDBOAT_AVAIL=?,
+      LOGISTICS3_SPEEDBOAT_CONDITION=?,
+      LOGISTICS3_TVESSEL_AVAIL=?,
+      LOGISTICS3_TVESSEL_CONDITION=?,
+      LOGISTICS3_COUNTRYBOAT_AVAIL=?,
+      LOGISTICS3_COUNTRYBOAT_CONDITION=?,
+      LOGISTICS3_OTHERS_WATER_TRA_AVAIL=?,
+      LOGISTICS3_OTHERS_WATER_TRA_CONDITION=?,
+
+
+      LOGISTICS4_TFIREARMS_303RIFLE_AVAIL=?,
+      LOGISTICS4_RIFLE303_CONDITION=?,
+      LOGISTICS4_TFIREARMS_SLR_AVAIL=?,
+      LOGISTICS4_SLR_CONDITION=?,
+      LOGISTICS4_TFIREARMS_SHORTGUN_AVAIL=?,
+      LOGISTICS4_SHORTGUN_CONDITION=?,
+      LOGISTICS4_TFIREARMS_CHINESERIFLE_AVAIL=?,
+      LOGISTICS4_CHINESERIFLE_CONDITION=?,
+      LOGISTICS4_OTHERS_WATER_TRA_AVAIL=?,
+      LOGISTICS4_OTHERS_WATER_TRA_CONDITION=?,
+
+             
              
            WHERE _uri = ?`,
           [
-            updatedValues.LAND_STATISTICS_BEAT_LAND_INFO_RESERVED_FOREST_HA ||
-              null,
-            updatedValues.LAND_STATISTICS_BEAT_LAND_INFO_SECTION_6_HA || null,
-            updatedValues.LAND_STATISTICS_BEAT_LAND_INFO_SECTION_4_HA || null,
-            updatedValues.LAND_STATISTICS_BEAT_LAND_INFO_PROTECTED_FOREST_HA ||
-              null,
-            updatedValues.LAND_STATISTICS_BEAT_LAND_INFO_VESTED_FOREST_HA ||
-              null,
-            updatedValues.LAND_STATISTICS_BEAT_LAND_INFO_AQUIRED_FOREST_HA ||
-              null,
+            updatedValues.LAND_TRANSPORTS_MOTORB_AVAIL || null,
+            updatedValues.LAND_TRANSPORTS_MOTORB_CONDITION || null,
+            updatedValues.LAND_TRANSPORTS_BICYCLE_AVAIL || null,
+            updatedValues.LAND_TRANSPORTS_BICYCLE_CONDITION || null,
+            updatedValues.LAND_TRANSPORTS_OTHERS_LAND_TRA_AVAIL || null,
+            updatedValues.LAND_TRANSPORTS_OTHERS_LAND_TRA_CONDITION || null,
 
-            updatedValues.LAND_STATISTICS_BEAT_MGT_APPROACH_PA_WS_HA || null,
-            updatedValues.LAND_STATISTICS_BEAT_MGT_APPROACH_PA_NP_HA || null,
-            updatedValues.LAND_STATISTICS_BEAT_MGT_APPROACH_PA_ECOPARK_HA ||
-              null,
-            updatedValues.LAND_STATISTICS_BEAT_MGT_APPROACH_PA_SAFARIPARK_HA ||
-              null,
-            updatedValues.LAND_STATISTICS_BEAT_MGT_APPROACH_PA_SBCA_HA || null,
-            updatedValues.LAND_STATISTICS_BEAT_MGT_APPROACH_OTHER_PA_AREA_HA ||
-              null,
+            updatedValues.LOGISTICS3_SPEEDBOAT_AVAIL || null,
+            updatedValues.LOGISTICS3_SPEEDBOAT_CONDITION || null,
+            updatedValues.LOGISTICS3_TVESSEL_AVAIL || null,
+            updatedValues.LOGISTICS3_TVESSEL_CONDITION || null,
+            updatedValues.LOGISTICS3_COUNTRYBOAT_AVAIL || null,
+            updatedValues.LOGISTICS3_COUNTRYBOAT_CONDITION || null,
+            updatedValues.LOGISTICS3_OTHERS_WATER_TRA_AVAIL || null,
+            updatedValues.LOGISTICS3_OTHERS_WATER_TRA_CONDITION || null,
 
-            updatedValues.LAND_STATISTICS_BEAT_LAND_BIO_NATURAL_TO_DC_HA ||
-              null,
-            updatedValues.LAND_STATISTICS_BEAT_LAND_BIO_SOCIAL_ACCRETED_HA ||
-              null,
-            updatedValues.LAND_STATISTICS_BEAT_LAND_BIO_SOCIAL_ACCRETED_SKM ||
-              null,
-            updatedValues.LAND_STATISTICS_BEAT_LAND_BIO_NON_PP_HA || null,
-            updatedValues.LAND_STATISTICS_BEAT_LAND_BIO_NON_PP_SKM || null,
-            updatedValues.LAND_STATISTICS_BEAT_LAND_BIO_OTHER_PLANT_HA || null,
-            updatedValues.LAND_STATISTICS_BEAT_LAND_BIO_OTHER_PLANT_SKM || null,
+            updatedValues.LOGISTICS4_TFIREARMS_303RIFLE_AVAIL || null,
+            updatedValues.LOGISTICS4_RIFLE303_CONDITION || null,
+            updatedValues.LOGISTICS4_TFIREARMS_SLR_AVAIL || null,
+            updatedValues.LOGISTICS4_SLR_CONDITION || null,
+            updatedValues.LOGISTICS4_TFIREARMS_SHORTGUN_AVAIL || null,
+            updatedValues.LOGISTICS4_SHORTGUN_CONDITION || null,
+            updatedValues.LOGISTICS4_TFIREARMS_CHINESERIFLE_AVAIL || null,
+            updatedValues.LOGISTICS4_CHINESERIFLE_CONDITION || null,
+            updatedValues.LOGISTICS4_OTHERS_WATER_TRA_AVAIL || null,
+            updatedValues.LOGISTICS4_OTHERS_WATER_TRA_CONDITION || null,
 
             uuid, // Use uuid to match the correct record
           ],
