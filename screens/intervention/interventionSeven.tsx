@@ -14,7 +14,7 @@ import {
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {Dropdown} from 'react-native-element-dropdown';
 import DocumentPicker from 'react-native-document-picker';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {Colors, CommonStyles, Fonts, Sizes} from '../../constants/styles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {months_api, months_list} from '../../database/sqlDatabase';
@@ -38,6 +38,11 @@ const interventionSeven = () => {
   const [months, setMonths] = useState(null);
 
   const navigation = useNavigation();
+
+  const route = useRoute();
+  const {uuid} = route.params;
+  const uid = uuid;
+  console.log(uid, 'uuid in page 7');
 
   useEffect(() => {
     const months = async () => {
@@ -97,7 +102,7 @@ const interventionSeven = () => {
       inputValue6,
     );
 
-    navigation.navigate('interventionEight' as never);
+    navigation.navigate('interventionEight' as never,{uId:uid});
   };
 
   const tableData = [];

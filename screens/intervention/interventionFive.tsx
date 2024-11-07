@@ -322,6 +322,8 @@ const interventionFive = () => {
       MAGROVE_PLANT_WIND_DIR: selectedDerectinsWind,
       MAGROVE_PLANT_FACING_ISLAND: inputValue4,
       MAGROVE_PLANT_FACING_DIR: selectedDerectinsAllDirect,
+      PLANTING_PLAN_BPLANTING: selectedPlantingModes,
+      PLANTING_PLAN_GPLANTING_SPACING: inputValue5,
     };
 
     try {
@@ -331,7 +333,7 @@ const interventionFive = () => {
       console.error('Failed to updated data:', error.message || error); // Log the error message
     }
 
-    // navigation.navigate('interventionSix' as never);
+    navigation.navigate('interventionSix' as never, {uuid: uid});
   };
 
   const tableData = [];
@@ -596,8 +598,8 @@ const interventionFive = () => {
 
         <TextInput
           style={styles.input}
-          value={inputValue4}
-          onChangeText={text => setInputValue4(text)}
+          value={inputValue5}
+          onChangeText={text => setInputValue5(text)}
           placeholderTextColor="black"
           placeholder="select Seedling spacing"
         />

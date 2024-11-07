@@ -14807,7 +14807,10 @@ export const plant27_2021_core_update5 = (uuid, updatedValues) => {
               MAGROVE_PLANT_WAVE_DIR=?,
               MAGROVE_PLANT_WIND_DIR=?,
               MAGROVE_PLANT_FACING_ISLAND=?,
-              MAGROVE_PLANT_FACING_DIR=?
+              MAGROVE_PLANT_FACING_DIR=?,
+
+              PLANTING_PLAN_BPLANTING=?,
+              PLANTING_PLAN_GPLANTING_SPACING=?
              
            WHERE _uri = ?`,
           [
@@ -14823,6 +14826,238 @@ export const plant27_2021_core_update5 = (uuid, updatedValues) => {
             updatedValues.MAGROVE_PLANT_WIND_DIR || null,
             updatedValues.MAGROVE_PLANT_FACING_ISLAND || null,
             updatedValues.MAGROVE_PLANT_FACING_DIR || null,
+
+            updatedValues.PLANTING_PLAN_BPLANTING || null,
+            updatedValues.PLANTING_PLAN_GPLANTING_SPACING || null,
+
+            uuid, // Use uuid to match the correct record
+          ],
+          (tx, results) => {
+            console.log('Data updated successfully:', results);
+            resolve(results);
+          },
+          (tx, error) => {
+            console.error('Error updating data:', error.message || error);
+            reject(error);
+          },
+        );
+      },
+      error => {
+        console.error('Transaction error:', error.message || error);
+        reject(error);
+      },
+      () => {
+        console.log('Transaction completed successfully.');
+      },
+    );
+  });
+};
+
+export const plant27_2021_core_update6=(uuid,updatedValues)=>{
+     return new Promise((resolve, reject) => {
+       console.log('Starting database transaction for update...');
+       database.transaction(
+         tx => {
+           console.log('Inside transaction...');
+
+           // Update the record based on uuid with the provided values
+           tx.executeSql(
+             `update plant27_2021_core 
+             set NURSERY_NURSERY_SITE_NURSERY_LOCATION=?,
+                NURSERY_NURSERY_SITE_PSITEPOINT_NUR_LAT=?,
+                NURSERY_NURSERY_SITE_PSITEPOINT_NUR_LNG=?,
+                NURSERY_NUR_SITE_SELECTION_HILL_SAL_NURSERY_DIS=?,
+                NURSERY_NUR_SITE_SELECTION_HILL_SAL_WATER_SOURCE=?,
+                NURSERY_NUR_SITE_SELECTION_HILL_SAL_HIGH_LAND=?,
+                NURSERY_NUR_SITE_SELECTION_HILL_SAL_DRAINAGE_FAC=?,
+                NURSERY_NUR_SITE_SELECTION_HILL_SAL_NURSERY_AREA=?,
+                NURSERY_NUR_SITE_SELECTION_HILL_SAL_NUESERY_SUNLIGHT=?,
+                NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_NURSERY_DIS2=?,
+                NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA1=?,
+                NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA2=?,
+                NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA3=?,
+                NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA4=?,
+                NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA5=?,
+                NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA6=?,
+                NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA7=?,
+                NURSERY_OTHERS_INFO_CARETAKER_INFO_CARETAKER_NAME=?,
+                NURSERY_OTHERS_INFO_CARETAKER_INFO_CAREKATER_MOBILE=?,
+                NURSERY_OTHERS_INFO_CARETAKER_INFO_CARETAKER_NID=?
+             where _uri=?`,
+             [
+               updatedValues.NURSERY_NURSERY_SITE_NURSERY_LOCATION || null,
+               updatedValues.NURSERY_NURSERY_SITE_PSITEPOINT_NUR_LAT || null,
+               updatedValues.NURSERY_NURSERY_SITE_PSITEPOINT_NUR_LNG || null,
+               updatedValues.NURSERY_NUR_SITE_SELECTION_HILL_SAL_NURSERY_DIS ||
+                 null,
+               updatedValues.NURSERY_NUR_SITE_SELECTION_HILL_SAL_WATER_SOURCE ||
+                 null,
+               updatedValues.NURSERY_NUR_SITE_SELECTION_HILL_SAL_HIGH_LAND ||
+                 null,
+               updatedValues.NURSERY_NUR_SITE_SELECTION_HILL_SAL_DRAINAGE_FAC ||
+                 null,
+               updatedValues.NURSERY_NUR_SITE_SELECTION_HILL_SAL_NURSERY_AREA ||
+                 null,
+               updatedValues.NURSERY_NUR_SITE_SELECTION_HILL_SAL_NUESERY_SUNLIGHT ||
+                 null,
+               updatedValues.NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_NURSERY_DIS2 ||
+                 null,
+               updatedValues.NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA1 ||
+                 null,
+               updatedValues.NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA2 ||
+                 null,
+               updatedValues.NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA3 ||
+                 null,
+               updatedValues.NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA4 ||
+                 null,
+               updatedValues.NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA5 ||
+                 null,
+               updatedValues.NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA6 ||
+                 null,
+               updatedValues.NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA7 ||
+                 null,
+               updatedValues.NURSERY_OTHERS_INFO_CARETAKER_INFO_CARETAKER_NAME ||
+                 null,
+               updatedValues.NURSERY_OTHERS_INFO_CARETAKER_INFO_CAREKATER_MOBILE ||
+                 null,
+               updatedValues.NURSERY_OTHERS_INFO_CARETAKER_INFO_CARETAKER_NID ||
+                 null,
+               uuid, // Use uuid to match the correct record
+             ],
+             (tx, results) => {
+               console.log('Data updated successfully:', results);
+               resolve(results);
+             },
+             (tx, error) => {
+               console.error('Error updating data:', error.message || error);
+               reject(error);
+             },
+           );
+         },
+         error => {
+           console.error('Transaction error:', error.message || error);
+           reject(error);
+         },
+         () => {
+           console.log('Transaction completed successfully.');
+         },
+       );
+     });
+}
+
+
+export const plant27_2021_core_update7 = (uuid, updatedValues) => {
+  return new Promise((resolve, reject) => {
+    console.log('Starting database transaction for update...');
+    database.transaction(
+      tx => {
+        console.log('Inside transaction...');
+
+        // Update the record based on uuid with the provided values
+        tx.executeSql(
+          `update plant27_2021_core 
+             set NURSERY_NURSERY_SITE_NURSERY_LOCATION=?,
+                NURSERY_NURSERY_SITE_PSITEPOINT_NUR_LAT=?,
+                NURSERY_NURSERY_SITE_PSITEPOINT_NUR_LNG=?,
+                NURSERY_NUR_SITE_SELECTION_HILL_SAL_NURSERY_DIS=?,
+                NURSERY_NUR_SITE_SELECTION_HILL_SAL_WATER_SOURCE=?,
+                NURSERY_NUR_SITE_SELECTION_HILL_SAL_HIGH_LAND=?,
+                NURSERY_NUR_SITE_SELECTION_HILL_SAL_DRAINAGE_FAC=?,
+                NURSERY_NUR_SITE_SELECTION_HILL_SAL_NURSERY_AREA=?,
+                NURSERY_NUR_SITE_SELECTION_HILL_SAL_NUESERY_SUNLIGHT=?,
+                NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_NURSERY_DIS2=?,
+                NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA1=?,
+                NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA2=?,
+                NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA3=?,
+                NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA4=?,
+                NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA5=?,
+                NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA6=?,
+                NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA7=?,
+                NURSERY_OTHERS_INFO_CARETAKER_INFO_CARETAKER_NAME=?,
+                NURSERY_OTHERS_INFO_CARETAKER_INFO_CAREKATER_MOBILE=?,
+                NURSERY_OTHERS_INFO_CARETAKER_INFO_CARETAKER_NID=?
+             where _uri=?`,
+          [
+            updatedValues.NURSERY_NURSERY_SITE_NURSERY_LOCATION || null,
+            updatedValues.NURSERY_NURSERY_SITE_PSITEPOINT_NUR_LAT || null,
+            updatedValues.NURSERY_NURSERY_SITE_PSITEPOINT_NUR_LNG || null,
+            updatedValues.NURSERY_NUR_SITE_SELECTION_HILL_SAL_NURSERY_DIS ||
+              null,
+            updatedValues.NURSERY_NUR_SITE_SELECTION_HILL_SAL_WATER_SOURCE ||
+              null,
+            updatedValues.NURSERY_NUR_SITE_SELECTION_HILL_SAL_HIGH_LAND || null,
+            updatedValues.NURSERY_NUR_SITE_SELECTION_HILL_SAL_DRAINAGE_FAC ||
+              null,
+            updatedValues.NURSERY_NUR_SITE_SELECTION_HILL_SAL_NURSERY_AREA ||
+              null,
+            updatedValues.NURSERY_NUR_SITE_SELECTION_HILL_SAL_NUESERY_SUNLIGHT ||
+              null,
+            updatedValues.NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_NURSERY_DIS2 ||
+              null,
+            updatedValues.NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA1 ||
+              null,
+            updatedValues.NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA2 ||
+              null,
+            updatedValues.NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA3 ||
+              null,
+            updatedValues.NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA4 ||
+              null,
+            updatedValues.NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA5 ||
+              null,
+            updatedValues.NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA6 ||
+              null,
+            updatedValues.NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA7 ||
+              null,
+            updatedValues.NURSERY_OTHERS_INFO_CARETAKER_INFO_CARETAKER_NAME ||
+              null,
+            updatedValues.NURSERY_OTHERS_INFO_CARETAKER_INFO_CAREKATER_MOBILE ||
+              null,
+            updatedValues.NURSERY_OTHERS_INFO_CARETAKER_INFO_CARETAKER_NID ||
+              null,
+            uuid, // Use uuid to match the correct record
+          ],
+          (tx, results) => {
+            console.log('Data updated successfully:', results);
+            resolve(results);
+          },
+          (tx, error) => {
+            console.error('Error updating data:', error.message || error);
+            reject(error);
+          },
+        );
+      },
+      error => {
+        console.error('Transaction error:', error.message || error);
+        reject(error);
+      },
+      () => {
+        console.log('Transaction completed successfully.');
+      },
+    );
+  });
+};
+
+
+export const plant27_2021_core_update8 = (uuid, updatedValues) => {
+  return new Promise((resolve, reject) => {
+    console.log('Starting database transaction for update...');
+    database.transaction(
+      tx => {
+        console.log('Inside transaction...');
+
+        // Update the record based on uuid with the provided values
+        tx.executeSql(
+          `update plant27_2021_core 
+              set GTRTS_COMPOST_COMPOST_YEAR_RAW=?,
+              GTRTS_CLIMBER_CUTTING_CLIMBER_YEAR_RAW=?,
+              GTRTS_OTHER_TREATMENT_OTHERS_SPECIFIED=?,
+              GTRTS_OTHER_TREATMENT_OTHER_YEAR_RAW=?
+             where _uri=?`,
+          [
+            updatedValues.GTRTS_COMPOST_COMPOST_YEAR_RAW || null,
+            updatedValues.GTRTS_CLIMBER_CUTTING_CLIMBER_YEAR_RAW || null,
+            updatedValues.GTRTS_OTHER_TREATMENT_OTHERS_SPECIFIED || null,
+            updatedValues.GTRTS_OTHER_TREATMENT_OTHER_YEAR_RAW || null,
 
             uuid, // Use uuid to match the correct record
           ],

@@ -12,13 +12,14 @@ import {
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {Dropdown} from 'react-native-element-dropdown';
 import DocumentPicker from 'react-native-document-picker';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {Colors, CommonStyles, Fonts, Sizes} from '../../constants/styles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {baseApi, token} from '../../constants/base_api';
 import {
   dis_nurserys_api,
   dis_nurserys_list,
+  plant27_2021_core_update6,
   yes_no_lists_api,
   yes_no_lists_list,
 } from '../../database/sqlDatabase';
@@ -53,6 +54,10 @@ const interventionSix = () => {
   const [selectedyes_no_lists12, setSelectedDyes_no_lists12] = useState(null);
 
   const navigation = useNavigation();
+  const route = useRoute();
+  const {uuid} = route.params;
+  const uid = uuid;
+  console.log(uid, 'uuid in page 6');
 
   const onDocumentPress = async () => {
     const res = await DocumentPicker.pick({
@@ -124,7 +129,7 @@ const interventionSix = () => {
     yes_no_lists();
   }, []);
 
-  const interventionSixSubmit = () => {
+  const interventionSixSubmit = async () => {
     console.log(
       inputValue1,
       inputValue2,
@@ -148,9 +153,47 @@ const interventionSix = () => {
       selectedyes_no_lists11,
     );
 
-    navigation.navigate('interventionSeven' as never);
-  };
+    const dataToInsert = {
+      NURSERY_NURSERY_SITE_NURSERY_LOCATION: inputValue1,
+      NURSERY_NURSERY_SITE_PSITEPOINT_NUR_LAT: inputValue2,
+      NURSERY_NURSERY_SITE_PSITEPOINT_NUR_LNG: inputValue3,
+      NURSERY_NUR_SITE_SELECTION_HILL_SAL_NURSERY_DIS: selectedDisNursery,
+      NURSERY_NUR_SITE_SELECTION_HILL_SAL_WATER_SOURCE: selectedyes_no_lists,
+      NURSERY_NUR_SITE_SELECTION_HILL_SAL_HIGH_LAND: selectedyes_no_lists1,
+      NURSERY_NUR_SITE_SELECTION_HILL_SAL_DRAINAGE_FAC: selectedyes_no_lists2,
+      NURSERY_NUR_SITE_SELECTION_HILL_SAL_NURSERY_AREA: selectedyes_no_lists3,
+      NURSERY_NUR_SITE_SELECTION_HILL_SAL_NUESERY_SUNLIGH:
+        selectedyes_no_lists4,
+      NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_NURSERY_DIS2:
+        selectedyes_no_lists5,
+      NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA1:
+        selectedyes_no_lists6,
+      NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA2:
+        selectedyes_no_lists7,
+      NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA3:
+        selectedyes_no_lists8,
+      NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA4:
+        selectedyes_no_lists9,
+      NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA5:
+        selectedyes_no_lists10,
+      NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA6:
+        selectedyes_no_lists11,
+      NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA7:
+        selectedyes_no_lists12,
+      NURSERY_OTHERS_INFO_CARETAKER_INFO_CARETAKER_NAME: inputValue1,
+      NURSERY_OTHERS_INFO_CARETAKER_INFO_CAREKATER_MOBILE: inputValue2,
+      NURSERY_OTHERS_INFO_CARETAKER_INFO_CARETAKER_NID: inputValue3,
+    };
 
+    try {
+      await plant27_2021_core_update6(uid, dataToInsert);
+      console.log('All data updated successfully');
+    } catch (error) {
+      console.error('Failed to updated data:', error.message || error); // Log the error message
+    }
+
+    navigation.navigate('interventionSeven' as never, {uuid: uid});
+  };
 
   const tableData = [];
 
