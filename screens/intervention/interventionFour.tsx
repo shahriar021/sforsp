@@ -14,7 +14,7 @@ import {
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {Dropdown} from 'react-native-element-dropdown';
 import DocumentPicker from 'react-native-document-picker';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {Colors, CommonStyles, Fonts, Sizes} from '../../constants/styles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {baseApi, token} from '../../constants/base_api';
@@ -23,6 +23,8 @@ import {
   financial_years_list,
   intervention_lists_api,
   intervention_lists_list,
+  plant27_2021_core_update2,
+  plant27_2021_core_update4,
 } from '../../database/sqlDatabase';
 
 const interventionFour = () => {
@@ -56,6 +58,11 @@ const interventionFour = () => {
     useState(null);
 
   const navigation = useNavigation();
+
+  const route = useRoute();
+  const {uuid} = route.params;
+  const uid = uuid;
+  console.log(uid, 'uuid in page 4');
 
   const onDocumentPress = async () => {
     const res = await DocumentPicker.pick({
@@ -131,7 +138,7 @@ const interventionFour = () => {
     intervention_list();
   }, []);
 
-  const interventionFourSubmit = () => {
+  const interventionFourSubmit = async () => {
     console.log(
       inputValue1,
       inputValue7,
@@ -147,7 +154,27 @@ const interventionFour = () => {
       treesPerHector,
     );
 
-    navigation.navigate('interventionFive');
+    const dataToInsert = {
+      REG_PLOT_NO: inputValue5,
+      REG_AVG_SEEDLING_ALL_PLOTS: inputValue6,
+      REG_AVG_TREES_ALL_PLOTS: inputValue7,
+      REG_AVG_TREES_PER_HA_ALL_PLOTS: inputValue8,
+
+      INTERVENTION_DETAILS_TLOC_PLANT_YEAR: selectedYears,
+      INTERVENTION_DETAILS_LLOC_PLANT_AREA: inputValue9,
+      INTERVENTION_DETAILS_TLOC_PLANT_TYPE: selectedInterventionList,
+      INTERVENTION_DETAILS_PATCHES_PLANT: inputValue10,
+      INTERVENTION_DETAILS_SEEDING_PLANT: inputValue11,
+    };
+
+    try {
+      await plant27_2021_core_update4(uid, dataToInsert);
+      console.log('All data updated successfully');
+    } catch (error) {
+      console.error('Failed to updated data:', error.message || error); // Log the error message
+    }
+
+    navigation.navigate('interventionFive',{uuid:uid});
   };
 
   const tableData = [];

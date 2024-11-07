@@ -40,6 +40,12 @@ const beatThree = () => {
   const [inputValue4, setInputValue4] = useState('');
   const [inputValue5, setInputValue5] = useState('');
   const [inputValue6, setInputValue6] = useState('');
+  const [inputValue6b1, setInputValue6b1] = useState('');
+  const [inputValue6b2, setInputValue6b2] = useState('');
+  const [inputValue6b3, setInputValue6b3] = useState('');
+  const [inputValue6b4, setInputValue6b4] = useState('');
+  const [inputValue6b5, setInputValue6b5] = useState('');
+  const [inputValue6b6, setInputValue6b6] = useState('');
   const [inputValue7, setInputValue7] = useState('');
   const [inputValue8, setInputValue8] = useState('');
   const [inputValue9, setInputValue9] = useState('');
@@ -137,6 +143,18 @@ const beatThree = () => {
       selectedLogistic12,
     );
     const dataToInsert = {
+      RO_INFO_NAME_OF_RO: inputValue1,
+      RO_INFO_RO_RANK: inputValue2,
+      RO_INFO_RO_JOINING_DATE_RAW: inputValue3,
+      RO_INFO_RO_CELL: inputValue4,
+      RO_INFO_RO_NID: inputValue5,
+      RO_INFO_RO_MAIL: inputValue6,
+      BO_INFO_NAME_OF_BO: inputValue6b1,
+      BO_INFO_BO_RANK: inputValue6b2,
+      BO_INFO_BO_JOINING_DATE_RAW: inputValue6b2,
+      BO_INFO_BO_CELL: inputValue6b3,
+      BO_INFO_BO_NID: inputValue6b4,
+      BO_INFO_BO_MAIL: inputValue6b5,
       LAND_TRANSPORTS_MOTORB_AVAIL: inputValue7,
       LAND_TRANSPORTS_MOTORB_CONDITION: selectedLogistic1,
       LAND_TRANSPORTS_BICYCLE_AVAIL: inputValue8,
@@ -186,61 +204,61 @@ const beatThree = () => {
           6. Existing Manpower and logistics in the Beat/Camp/SFPC
           (বিট/ক্যাম্প/এসএফপিসিতে বিদ্যমান জনবল ও সরবরাহ)
         </Text>
-        {/* <View style={styles.txtNbutton}>
+        <View style={styles.txtNbutton}>
           <Text style={styles.label}>
             6.1.a.Range Officer/Officer in charge (SFNTC) (ফরেষ্ট রেঞ্জার)
           </Text>
-          <View style={styles.addButton}>
+          {/* <View style={styles.addButton}>
             <Button title="Add New"></Button>
-          </View>
+          </View> */}
         </View>
-        <View style={styles.box}>
+        <View>
           <Text style={styles.label}>Name:</Text>
           <TextInput
             style={styles.input}
             placeholder="Type here"
-            value={inputValue7}
-            onChangeText={text => setInputValue7(text)}
+            value={inputValue1}
+            onChangeText={text => setInputValue1(text)}
           />
 
           <Text style={styles.label}>Rank::</Text>
           <TextInput
             style={styles.input}
             placeholder="Type here"
-            value={inputValue7}
-            onChangeText={text => setInputValue7(text)}
+            value={inputValue2}
+            onChangeText={text => setInputValue2(text)}
           />
 
           <Text style={styles.label}>Joining date of the Range/Beat::</Text>
           <TextInput
             style={styles.input}
             placeholder="Type here"
-            value={inputValue7}
-            onChangeText={text => setInputValue7(text)}
+            value={inputValue3}
+            onChangeText={text => setInputValue3(text)}
           />
 
           <Text style={styles.label}>Mobile Number::</Text>
           <TextInput
             style={styles.input}
             placeholder="Type here"
-            value={inputValue7}
-            onChangeText={text => setInputValue7(text)}
+            value={inputValue4}
+            onChangeText={text => setInputValue4(text)}
           />
 
           <Text style={styles.label}>NID:</Text>
           <TextInput
             style={styles.input}
             placeholder="Type here"
-            value={inputValue7}
-            onChangeText={text => setInputValue7(text)}
+            value={inputValue5}
+            onChangeText={text => setInputValue5(text)}
           />
 
           <Text style={styles.label}>E-mail:</Text>
           <TextInput
             style={styles.input}
             placeholder="Type here"
-            value={inputValue7}
-            onChangeText={text => setInputValue7(text)}
+            value={inputValue6}
+            onChangeText={text => setInputValue6(text)}
           />
 
           <Text style={styles.label}>
@@ -251,116 +269,95 @@ const beatThree = () => {
           <TextInput
             style={styles.input}
             placeholder="Type here"
-            value={inputValue7}
-            onChangeText={text => setInputValue7(text)}
+            value={inputValue6b1}
+            onChangeText={text => setInputValue6b1(text)}
           />
 
           <Text style={styles.label}>Rank::</Text>
           <TextInput
             style={styles.input}
             placeholder="Type here"
-            value={inputValue7}
-            onChangeText={text => setInputValue7(text)}
+            value={inputValue6b2}
+            onChangeText={text => setInputValue6b2(text)}
           />
 
           <Text style={styles.label}>Joining date of the Range/Beat::</Text>
           <TextInput
             style={styles.input}
             placeholder="Type here"
-            value={inputValue7}
-            onChangeText={text => setInputValue7(text)}
+            value={inputValue6b3}
+            onChangeText={text => setInputValue6b3(text)}
           />
 
           <Text style={styles.label}>Mobile Number::</Text>
           <TextInput
             style={styles.input}
             placeholder="Type here"
-            value={inputValue7}
-            onChangeText={text => setInputValue7(text)}
+            value={inputValue6b4}
+            onChangeText={text => setInputValue6b4(text)}
           />
 
           <Text style={styles.label}>NID:</Text>
           <TextInput
             style={styles.input}
             placeholder="Type here"
-            value={inputValue7}
-            onChangeText={text => setInputValue7(text)}
+            value={inputValue6b5}
+            onChangeText={text => setInputValue6b5(text)}
           />
 
           <Text style={styles.label}>E-mail:</Text>
           <TextInput
             style={styles.input}
             placeholder="Type here"
-            value={inputValue7}
-            onChangeText={text => setInputValue7(text)}
+            value={inputValue6b6}
+            onChangeText={text => setInputValue6b6(text)}
           />
+        </View>
 
-          <Text style={styles.label}>
-            6.1.c. All Other Staffs (অন্যান্য কর্মচারীর তথ্যাদি)
-          </Text>
+        {/* <View style={styles.tableContainer}>
+          
+          <View style={styles.headerRowContainer}>
+            <Text style={styles.headerLabel}>
+              Name of Mouza <Text>(মৌজার নাম)</Text>{' '}
+            </Text>
+            <Text style={styles.headerSeparator}>|</Text>
+            <Text style={styles.headerLabel}>Survey Types (সার্ভের ধরণ)</Text>
+            <Text style={styles.headerSeparator}>|</Text>
+            <Text style={styles.headerLabel}>Sheet Number (সিট নম্বর)</Text>
+            <Text style={styles.headerSeparator}>|</Text>
+            <Text style={styles.headerLabel}>Actions</Text>
+          </View>
 
-          <Text style={styles.label}>Name:</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Type here"
-            value={inputValue7}
-            onChangeText={text => setInputValue7(text)}
-          />
-
-          <Text style={styles.label}>Rank::</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Type here"
-            value={inputValue7}
-            onChangeText={text => setInputValue7(text)}
-          />
-
-          <Text style={styles.label}>Joining date of the Range/Beat::</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Type here"
-            value={inputValue7}
-            onChangeText={text => setInputValue7(text)}
-          />
-
-          <Text style={styles.label}>Mobile Number::</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Type here"
-            value={inputValue7}
-            onChangeText={text => setInputValue7(text)}
-          />
-
-          <Text style={styles.label}>NID:</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Type here"
-            value={inputValue7}
-            onChangeText={text => setInputValue7(text)}
-          />
-
-          <Text style={styles.label}>E-mail:</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Type here"
-            value={inputValue7}
-            onChangeText={text => setInputValue7(text)}
-          />
+          
+          {tableData.length > 0 ? (
+            <FlatList
+              data={tableData}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={({item}) => (
+                <View style={styles.dataRowContainer}>
+                  <Text style={styles.cellContent}>{item.mouzaName}</Text>
+                  <Text style={styles.cellContent}>{item.surveyType}</Text>
+                  <Text style={styles.cellContent}>{item.sheetNumber}</Text>
+                  <View style={styles.actionButtons}>
+                    <TouchableOpacity style={styles.editButtonStyle}>
+                      <Text style={styles.buttonTextStyle}>Edit</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.deleteButtonStyle}>
+                      <Text style={styles.buttonTextStyle}>Delete</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              )}
+            />
+          ) : (
+            <View style={styles.noDataContainer}>
+              <Text style={styles.noDataText}>No data available</Text>
+            </View>
+          )}
         </View> */}
 
-        <View style={styles.txtNbutton}>
-          <Text style={styles.label}>
-            6.1.a. Range Officer/Officer in charge (SFNTC) (ফরেষ্ট রেঞ্জার)
-          </Text>
-          <TouchableOpacity
-            style={styles.addButton}
-            onPress={() => setModalVisible(true)}>
-            <Text style={styles.buttonText}>Add New</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.tableContainer}>
-          {/* Headers */}
+        {/* <View style={styles.tableContainer}>
+         
           <View style={styles.headerRowContainer}>
             <Text style={styles.headerLabel}>
               Name of Mouza <Text>(মৌজার নাম)</Text>{' '}
@@ -373,7 +370,7 @@ const beatThree = () => {
             <Text style={styles.headerLabel}>Actions</Text>
           </View>
 
-          {/* Data Rows */}
+          
           {tableData.length > 0 ? (
             <FlatList
               data={tableData}
@@ -399,62 +396,7 @@ const beatThree = () => {
               <Text style={styles.noDataText}>No data available</Text>
             </View>
           )}
-        </View>
-
-        <View style={styles.txtNbutton}>
-          {/* Section 6.1.b */}
-          <Text style={styles.label}>
-            6.1.b. Beat/Camp/SFPC in charge (বিট কর্মকর্তা)
-          </Text>
-
-          <TouchableOpacity
-            style={styles.addButton}
-            onPress={() => handleOpenModal('6.1.b')}>
-            <Text style={styles.buttonText}>Add New</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.tableContainer}>
-          {/* Headers */}
-          <View style={styles.headerRowContainer}>
-            <Text style={styles.headerLabel}>
-              Name of Mouza <Text>(মৌজার নাম)</Text>{' '}
-            </Text>
-            <Text style={styles.headerSeparator}>|</Text>
-            <Text style={styles.headerLabel}>Survey Types (সার্ভের ধরণ)</Text>
-            <Text style={styles.headerSeparator}>|</Text>
-            <Text style={styles.headerLabel}>Sheet Number (সিট নম্বর)</Text>
-            <Text style={styles.headerSeparator}>|</Text>
-            <Text style={styles.headerLabel}>Actions</Text>
-          </View>
-
-          {/* Data Rows */}
-          {tableData.length > 0 ? (
-            <FlatList
-              data={tableData}
-              keyExtractor={(item, index) => index.toString()}
-              renderItem={({item}) => (
-                <View style={styles.dataRowContainer}>
-                  <Text style={styles.cellContent}>{item.mouzaName}</Text>
-                  <Text style={styles.cellContent}>{item.surveyType}</Text>
-                  <Text style={styles.cellContent}>{item.sheetNumber}</Text>
-                  <View style={styles.actionButtons}>
-                    <TouchableOpacity style={styles.editButtonStyle}>
-                      <Text style={styles.buttonTextStyle}>Edit</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.deleteButtonStyle}>
-                      <Text style={styles.buttonTextStyle}>Delete</Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              )}
-            />
-          ) : (
-            <View style={styles.noDataContainer}>
-              <Text style={styles.noDataText}>No data available</Text>
-            </View>
-          )}
-        </View>
+        </View> */}
 
         <View style={styles.txtNbutton}>
           {/* Section 6.1.c */}
@@ -464,7 +406,7 @@ const beatThree = () => {
 
           <TouchableOpacity
             style={styles.addButton}
-            onPress={() => handleOpenModal('6.1.c')}>
+            onPress={() => setModalVisible(true)}>
             <Text style={styles.buttonText}>Add New</Text>
           </TouchableOpacity>
         </View>

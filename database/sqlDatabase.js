@@ -13634,6 +13634,20 @@ export const gener43_2021_core_update2 = (uuid, updatedValues) => {
         tx.executeSql(
           `UPDATE gener43_2021_core 
            SET 
+
+           RO_INFO_NAME_OF_RO=?,
+      RO_INFO_RO_RANK=?,
+      RO_INFO_RO_JOINING_DATE_RAW=?,
+      RO_INFO_RO_CELL=?,
+      RO_INFO_RO_NID=?,
+      RO_INFO_RO_MAIL=?,
+      BO_INFO_NAME_OF_BO=?,
+      BO_INFO_BO_RANK=?,
+      BO_INFO_BO_JOINING_DATE_RAW=?,
+      BO_INFO_BO_CELL=?,
+      BO_INFO_BO_NID=?,
+      BO_INFO_BO_MAIL=?,
+
              LAND_TRANSPORTS_MOTORB_AVAIL=?,
       LAND_TRANSPORTS_MOTORB_CONDITION=?,
       LAND_TRANSPORTS_BICYCLE_AVAIL=?,
@@ -13693,6 +13707,19 @@ export const gener43_2021_core_update2 = (uuid, updatedValues) => {
             updatedValues.LOGISTICS4_CHINESERIFLE_CONDITION || null,
             updatedValues.LOGISTICS4_OTHERS_WATER_TRA_AVAIL || null,
             updatedValues.LOGISTICS4_OTHERS_WATER_TRA_CONDITION || null,
+
+            updatedValues.RO_INFO_NAME_OF_RO || null,
+            updatedValues.RO_INFO_RO_RANK || null,
+            updatedValues.RO_INFO_RO_JOINING_DATE_RAW || null,
+            updatedValues.RO_INFO_RO_CELL || null,
+            updatedValues.RO_INFO_RO_NID || null,
+            updatedValues.RO_INFO_RO_MAIL || null,
+            updatedValues.BO_INFO_NAME_OF_BO || null,
+            updatedValues.BO_INFO_BO_RANK || null,
+            updatedValues.BO_INFO_BO_JOINING_DATE_RAW || null,
+            updatedValues.BO_INFO_BO_CELL || null,
+            updatedValues.BO_INFO_BO_NID || null,
+            updatedValues.BO_INFO_BO_MAIL || null,
 
             uuid, // Use uuid to match the correct record
           ],
@@ -14560,201 +14587,42 @@ export const plant27_2021_core_create = plant27_2021_core => {
     database.transaction(tx => {
       // Insert plant27_2021_core
       tx.executeSql(
-        'INSERT INTO plant27_2021_core (_uri text,_creator_uri_user text,_creation_date text,_last_update_uri_user text,_last_update_date text,_model_version text,_ui_version text,_is_complete text,_submission_date text,_marked_as_complete_date text,planting_plan_seedling_num_generated_note_name_173 text,reg_avg_seedling_all_plots text,planting_plan_grpstocks_nte_1 text,planting_plan_grpstocks_nte_2 text,planting_plan_seedling_num_generated_note_name_174 text,location_data_ca_tloc_ad_district text,magrove_plant_wind_dir text,gsite_history text,location_data_generated_note_name_20 text,gtrts_planting_planting_year text,intervention_details_patches_plant text,intervention_details_seeding_plant text,planting_plan_gplanting_spacing text,magrove_plant_man_aff_clay_layer text,gtrts_other_treatment_other_year text,location_data_forest_ad_tloc_fd_range_txt text,magrove_plant_crabs_hole text,reg_avg_seedling_per_ha_all_plots text,location_data_ca_union text,subscriberid text,gtrts_planting_planting_year_raw text,gtrts_other_treatment_other_year_raw text,deviceid text,planting_plan_generated_note_name_151 text,intervention_details_tloc_plant_year text,nursery_nursery_site_generated_note_name_179 text,intervention_details_tloc_plant_type text,nursery_nur_site_selection_hill_sal_nuesery_sunlight text,location_data_ecozone text,gtrts_plantation_site_year text,guser_tuser_cell text,reg_avg_trees_per_ha_all_plots text,nursery_nur_site_selection_hill_sal_nursery_area text,gtrts_nuersery_raising_nursery_year text,gtrts_climber_cutting_climber_year text,nursery_nursery_site_psitepoint_nur_alt text,gtrts_nuersery_raising_generated_note_name_221 text,planting_plan_seedlings_per_ha text,gtrts_compost_compost_year_raw text,nursery_nursery_site_nursery_location text,gsite_land_cov_desc text,simserial text,guser_generated_note_name_13 text,guser_dcollection_raw text,nursery_nursery_site_gcoords_nur_site_east_nur text,gtrts_other_treatment_others_specified text,nursery_nur_site_selection_hill_sal_high_land text,magrove_plant_man_aff_level_inund text,allpatches text,generated_note_name_63 text,guser_tuser_email text,checked_by text,location_data_forest_ad_tloc_fd_cir text,nursery_nur_site_selection_coastal_area_nursery_dis2 text,nursery_nursery_site_psitepoint_nur_lat text,nursery_nur_site_selection_hill_sal_generated_note_name_190 text,location_data_tlocation text,magrove_plant_facing_island text,guser_tuser text,magrove_plant_mangrove_enrich_inundation_month text,nursery_others_info_caretaker_info_caretaker_name text,location_data_forest_ad_generated_note_name_23 text,gtrts_nuersery_raising_nursery_year_raw text,nursery_nursery_site_psitepoint_nur_acc text,gtrts_plantation_site_year_raw text,regin_note_generated_note_name_115 text,regin_note_generated_note_name_114 text,nursery_others_info_caretaker_info_caretaker_nid text,location_data_forest_ad_tloc_fd_char text,gtrts_other_treatment_generated_note_name_262 text,regin_note_generated_note_name_119 text,regin_note_generated_note_name_118 text,regin_note_generated_note_name_117 text,regin_note_generated_note_name_116 text,location_data_forest_ad_tloc_fd_block text,gtrts_compost_generated_note_name_247 text,location_data_forest_ad_tloc_fd_division text,gtrts_compost_compost_year text,gtrts_planting_generated_note_name_231 text,guser_dcollection text,checked text,gsite_hist_other text,magrove_plant_man_aff_generated_note_name_137 text,intervention_details_generated_note_name_122 text,magrove_plant_man_aff_generated_note_name_133 text,planting_plan_txt_build1 text,planting_plan_txt_build2 text,gtrts_climber_cutting_generated_note_name_252 text,end_raw text,location_data_forest_ad_tloc_enter_range text,nursery_nur_site_selection_hill_sal_nursery_dis text,planting_plan_bplanting text,nursery_nur_site_selection_hill_sal_drainage_fac text,location_data_ca_generated_note_name_36 text,intervention_details_lloc_plant_area text,nursery_nur_site_selection_coastal_area_coastal_area1 text,nursery_nur_site_selection_coastal_area_coastal_area2 text,magrove_plant_mangrove_enrich_generated_note_name_140 text,nursery_others_info_caretaker_info_carekater_mobile text,reg_plot_no text,nursery_nur_site_selection_coastal_area_coastal_area7 text,nursery_nur_site_selection_coastal_area_coastal_area5 text,nursery_nur_site_selection_coastal_area_coastal_area6 text,nursery_nur_site_selection_coastal_area_coastal_area3 text,magrove_plant_mangrove_enrich_plantation_age text,nursery_nur_site_selection_coastal_area_coastal_area4 text,end text,planting_plan_max_seedlings text,phonenumber text,gtrts_plantation_generated_note_name_226 text,start_raw text,location_data_forest_ad_tloc_fd_range text,nursery_others_info_caretaker_info_generated_note_name_212 text,meta_instance_id text,intervention_details_tloc_plant_others text,nursery_nursery_site_psitepoint_nur_lng text,nursery_nursery_site_gcoords_nur_site_north_nur text,location_data_forest_ad_tloc_fd_beat text,magrove_plant_facing_dir text,nursery_nursery_site_tpolytype_nur text,location_data_forest_ad_tloc_fd_beat_txt text,magrove_plant_man_aff_pioneers_sp text,today text,location_data_ca_tloc_ad_division text,gtrts_climber_cutting_climber_year_raw text,location_data_forest_ad_tloc_enter_div text,location_data_ca_village text,magrove_plant_wave_dir text,nursery_nur_site_selection_coastal_area_generated_note_name_199 text,gsite_generated_note_name_72 text,nursery_nur_site_selection_hill_sal_water_source text,start text,reg_avg_trees_all_plots text,today_raw text,approved text,magrove_plant_generated_note_name_131 text,project_id text,sort text,last_log_id text,restore_id text,created_at text,created_by text,updated_at text,updated_by text,deleted_at text,deleted_by text,deleted_status text,status text)',
+        `INSERT INTO plant27_2021_core (_uri , GUSER_DCOLLECTION_RAW,
+      GUSER_TUSER,
+      GUSER_TUSER_CELL,
+      GUSER_TUSER_EMAIL,
+      LOCATION_DATA_ECOZONE,
+      LOCATION_DATA_FOREST_AD_TLOC_FD_CIR,
+      LOCATION_DATA_FOREST_AD_TLOC_FD_DIVISION,
+      LOCATION_DATA_FOREST_AD_TLOC_FD_RANGE,
+      LOCATION_DATA_FOREST_AD_TLOC_FD_BEAT,
+      LOCATION_DATA_FOREST_AD_TLOC_FD_BLOCK,
+      LOCATION_DATA_FOREST_AD_TLOC_FD_CHAR,
+
+
+      LOCATION_DATA_CA_TLOC_AD_DIVISION,
+      LOCATION_DATA_CA_TLOC_AD_DISTRICT,
+      LOCATION_DATA_CA_UNION,
+      LOCATION_DATA_CA_VILLAGE
+      ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
         [
           plant27_2021_core._uri || null,
-          plant27_2021_core._creator_uri_user || null,
-          plant27_2021_core._creation_date || null,
-          plant27_2021_core._last_update_uri_user || null,
-          plant27_2021_core._last_update_date || null,
-          plant27_2021_core._model_version || null,
-          plant27_2021_core._ui_version || null,
-          plant27_2021_core._is_complete || null,
-          plant27_2021_core._submission_date || null,
-          plant27_2021_core._marked_as_complete_date || null,
-          plant27_2021_core.planting_plan_seedling_num_generated_note_name_173 ||
-            null,
-          plant27_2021_core.reg_avg_seedling_all_plots || null,
-          plant27_2021_core.planting_plan_grpstocks_nte_1 || null,
-          plant27_2021_core.planting_plan_grpstocks_nte_2 || null,
-          plant27_2021_core.planting_plan_seedling_num_generated_note_name_174 ||
-            null,
-          plant27_2021_core.location_data_ca_tloc_ad_district || null,
-          plant27_2021_core.magrove_plant_wind_dir || null,
-          plant27_2021_core.gsite_history || null,
-          plant27_2021_core.location_data_generated_note_name_20 || null,
-          plant27_2021_core.gtrts_planting_planting_year || null,
-          plant27_2021_core.intervention_details_patches_plant || null,
-          plant27_2021_core.intervention_details_seeding_plant || null,
-          plant27_2021_core.planting_plan_gplanting_spacing || null,
-          plant27_2021_core.magrove_plant_man_aff_clay_layer || null,
-          plant27_2021_core.gtrts_other_treatment_other_year || null,
-          plant27_2021_core.location_data_forest_ad_tloc_fd_range_txt || null,
-          plant27_2021_core.magrove_plant_crabs_hole || null,
-          plant27_2021_core.reg_avg_seedling_per_ha_all_plots || null,
-          plant27_2021_core.location_data_ca_union || null,
-          plant27_2021_core.subscriberid || null,
-          plant27_2021_core.gtrts_planting_planting_year_raw || null,
-          plant27_2021_core.gtrts_other_treatment_other_year_raw || null,
-          plant27_2021_core.deviceid || null,
-          plant27_2021_core.planting_plan_generated_note_name_151 || null,
-          plant27_2021_core.intervention_details_tloc_plant_year || null,
-          plant27_2021_core.nursery_nursery_site_generated_note_name_179 ||
-            null,
-          plant27_2021_core.intervention_details_tloc_plant_type || null,
-          plant27_2021_core.nursery_nur_site_selection_hill_sal_nuesery_sunlight ||
-            null,
-          plant27_2021_core.location_data_ecozone || null,
-          plant27_2021_core.gtrts_plantation_site_year || null,
-          plant27_2021_core.guser_tuser_cell || null,
-          plant27_2021_core.reg_avg_trees_per_ha_all_plots || null,
-          plant27_2021_core.nursery_nur_site_selection_hill_sal_nursery_area ||
-            null,
-          plant27_2021_core.gtrts_nuersery_raising_nursery_year || null,
-          plant27_2021_core.gtrts_climber_cutting_climber_year || null,
-          plant27_2021_core.nursery_nursery_site_psitepoint_nur_alt || null,
-          plant27_2021_core.gtrts_nuersery_raising_generated_note_name_221 ||
-            null,
-          plant27_2021_core.planting_plan_seedlings_per_ha || null,
-          plant27_2021_core.gtrts_compost_compost_year_raw || null,
-          plant27_2021_core.nursery_nursery_site_nursery_location || null,
-          plant27_2021_core.gsite_land_cov_desc || null,
-          plant27_2021_core.simserial || null,
-          plant27_2021_core.guser_generated_note_name_13 || null,
-          plant27_2021_core.guser_dcollection_raw || null,
-          plant27_2021_core.nursery_nursery_site_gcoords_nur_site_east_nur ||
-            null,
-          plant27_2021_core.gtrts_other_treatment_others_specified || null,
-          plant27_2021_core.nursery_nur_site_selection_hill_sal_high_land ||
-            null,
-          plant27_2021_core.magrove_plant_man_aff_level_inund || null,
-          plant27_2021_core.allpatches || null,
-          plant27_2021_core.generated_note_name_63 || null,
-          plant27_2021_core.guser_tuser_email || null,
-          plant27_2021_core.checked_by || null,
-          plant27_2021_core.location_data_forest_ad_tloc_fd_cir || null,
-          plant27_2021_core.nursery_nur_site_selection_coastal_area_nursery_dis2 ||
-            null,
-          plant27_2021_core.nursery_nursery_site_psitepoint_nur_lat || null,
-          plant27_2021_core.nursery_nur_site_selection_hill_sal_generated_note_name_190 ||
-            null,
-          plant27_2021_core.location_data_tlocation || null,
-          plant27_2021_core.magrove_plant_facing_island || null,
-          plant27_2021_core.guser_tuser || null,
-          plant27_2021_core.magrove_plant_mangrove_enrich_inundation_month ||
-            null,
-          plant27_2021_core.nursery_others_info_caretaker_info_caretaker_name ||
-            null,
-          plant27_2021_core.location_data_forest_ad_generated_note_name_23 ||
-            null,
-          plant27_2021_core.gtrts_nuersery_raising_nursery_year_raw || null,
-          plant27_2021_core.nursery_nursery_site_psitepoint_nur_acc || null,
-          plant27_2021_core.gtrts_plantation_site_year_raw || null,
-          plant27_2021_core.regin_note_generated_note_name_115 || null,
-          plant27_2021_core.regin_note_generated_note_name_114 || null,
-          plant27_2021_core.nursery_others_info_caretaker_info_caretaker_nid ||
-            null,
-          plant27_2021_core.location_data_forest_ad_tloc_fd_char || null,
-          plant27_2021_core.gtrts_other_treatment_generated_note_name_262 ||
-            null,
-          plant27_2021_core.regin_note_generated_note_name_119 || null,
-          plant27_2021_core.regin_note_generated_note_name_118 || null,
-          plant27_2021_core.regin_note_generated_note_name_117 || null,
-          plant27_2021_core.regin_note_generated_note_name_116 || null,
-          plant27_2021_core.location_data_forest_ad_tloc_fd_block || null,
-          plant27_2021_core.gtrts_compost_generated_note_name_247 || null,
-          plant27_2021_core.location_data_forest_ad_tloc_fd_division || null,
-          plant27_2021_core.gtrts_compost_compost_year || null,
-          plant27_2021_core.gtrts_planting_generated_note_name_231 || null,
-          plant27_2021_core.guser_dcollection || null,
-          plant27_2021_core.checked || null,
-          plant27_2021_core.gsite_hist_other || null,
-          plant27_2021_core.magrove_plant_man_aff_generated_note_name_137 ||
-            null,
-          plant27_2021_core.intervention_details_generated_note_name_122 ||
-            null,
-          plant27_2021_core.magrove_plant_man_aff_generated_note_name_133 ||
-            null,
-          plant27_2021_core.planting_plan_txt_build1 || null,
-          plant27_2021_core.planting_plan_txt_build2 || null,
-          plant27_2021_core.gtrts_climber_cutting_generated_note_name_252 ||
-            null,
-          plant27_2021_core.end_raw || null,
-          plant27_2021_core.location_data_forest_ad_tloc_enter_range || null,
-          plant27_2021_core.nursery_nur_site_selection_hill_sal_nursery_dis ||
-            null,
-          plant27_2021_core.planting_plan_bplanting || null,
-          plant27_2021_core.nursery_nur_site_selection_hill_sal_drainage_fac ||
-            null,
-          plant27_2021_core.location_data_ca_generated_note_name_36 || null,
-          plant27_2021_core.intervention_details_lloc_plant_area || null,
-          plant27_2021_core.nursery_nur_site_selection_coastal_area_coastal_area1 ||
-            null,
-          plant27_2021_core.nursery_nur_site_selection_coastal_area_coastal_area2 ||
-            null,
-          plant27_2021_core.magrove_plant_mangrove_enrich_generated_note_name_140 ||
-            null,
-          plant27_2021_core.nursery_others_info_caretaker_info_carekater_mobile ||
-            null,
-          plant27_2021_core.reg_plot_no || null,
-          plant27_2021_core.nursery_nur_site_selection_coastal_area_coastal_area7 ||
-            null,
-          plant27_2021_core.nursery_nur_site_selection_coastal_area_coastal_area5 ||
-            null,
-          plant27_2021_core.nursery_nur_site_selection_coastal_area_coastal_area6 ||
-            null,
-          plant27_2021_core.nursery_nur_site_selection_coastal_area_coastal_area3 ||
-            null,
-          plant27_2021_core.magrove_plant_mangrove_enrich_plantation_age ||
-            null,
-          plant27_2021_core.nursery_nur_site_selection_coastal_area_coastal_area4 ||
-            null,
-          plant27_2021_core.end || null,
-          plant27_2021_core.planting_plan_max_seedlings || null,
-          plant27_2021_core.phonenumber || null,
-          plant27_2021_core.gtrts_plantation_generated_note_name_226 || null,
-          plant27_2021_core.start_raw || null,
-          plant27_2021_core.location_data_forest_ad_tloc_fd_range || null,
-          plant27_2021_core.nursery_others_info_caretaker_info_generated_note_name_212 ||
-            null,
-          plant27_2021_core.meta_instance_id || null,
-          plant27_2021_core.intervention_details_tloc_plant_others || null,
-          plant27_2021_core.nursery_nursery_site_psitepoint_nur_lng || null,
-          plant27_2021_core.nursery_nursery_site_gcoords_nur_site_north_nur ||
-            null,
-          plant27_2021_core.location_data_forest_ad_tloc_fd_beat || null,
-          plant27_2021_core.magrove_plant_facing_dir || null,
-          plant27_2021_core.nursery_nursery_site_tpolytype_nur || null,
-          plant27_2021_core.location_data_forest_ad_tloc_fd_beat_txt || null,
-          plant27_2021_core.magrove_plant_man_aff_pioneers_sp || null,
-          plant27_2021_core.today || null,
-          plant27_2021_core.location_data_ca_tloc_ad_division || null,
-          plant27_2021_core.gtrts_climber_cutting_climber_year_raw || null,
-          plant27_2021_core.location_data_forest_ad_tloc_enter_div || null,
-          plant27_2021_core.location_data_ca_village || null,
-          plant27_2021_core.magrove_plant_wave_dir || null,
-          plant27_2021_core.nursery_nur_site_selection_coastal_area_generated_note_name_199 ||
-            null,
-          plant27_2021_core.gsite_generated_note_name_72 || null,
-          plant27_2021_core.nursery_nur_site_selection_hill_sal_water_source ||
-            null,
-          plant27_2021_core.start || null,
-          plant27_2021_core.reg_avg_trees_all_plots || null,
-          plant27_2021_core.today_raw || null,
-          plant27_2021_core.approved || null,
-          plant27_2021_core.magrove_plant_generated_note_name_131 || null,
-          plant27_2021_core.project_id || null,
-          plant27_2021_core.sort || null,
-          plant27_2021_core.last_log_id || null,
-          plant27_2021_core.restore_id || null,
-          plant27_2021_core.created_at || null,
-          plant27_2021_core.created_by || null,
-          plant27_2021_core.updated_at || null,
-          plant27_2021_core.updated_by || null,
-          plant27_2021_core.deleted_at || null,
-          plant27_2021_core.deleted_by || null,
-          plant27_2021_core.deleted_status || null,
-          plant27_2021_core.status || null,
+          plant27_2021_core.GUSER_DCOLLECTION_RAW || null,
+          plant27_2021_core.GUSER_TUSER || null,
+          plant27_2021_core.GUSER_TUSER_CELL || null,
+          plant27_2021_core.GUSER_TUSER_EMAIL || null,
+          plant27_2021_core.LOCATION_DATA_ECOZONE || null,
+          plant27_2021_core.LOCATION_DATA_FOREST_AD_TLOC_FD_CIR || null,
+          plant27_2021_core.LOCATION_DATA_FOREST_AD_TLOC_FD_DIVISION || null,
+          plant27_2021_core.LOCATION_DATA_FOREST_AD_TLOC_FD_RANGE || null,
+          plant27_2021_core.LOCATION_DATA_FOREST_AD_TLOC_FD_BEAT || null,
+          plant27_2021_core.LOCATION_DATA_FOREST_AD_TLOC_FD_BLOCK || null,
+          plant27_2021_core.LOCATION_DATA_FOREST_AD_TLOC_FD_CHAR || null,
+
+          plant27_2021_core.LOCATION_DATA_CA_TLOC_AD_DIVISION || null,
+          plant27_2021_core.LOCATION_DATA_CA_TLOC_AD_DISTRICT || null,
+          plant27_2021_core.LOCATION_DATA_CA_UNION || null,
+          plant27_2021_core.LOCATION_DATA_CA_VILLAGE || null,
         ],
         (tx, results) => {
           console.log('Data inserted successfully:', results);
@@ -14768,6 +14636,217 @@ export const plant27_2021_core_create = plant27_2021_core => {
     });
   });
 };
+
+export const plant27_2021_core_update = (uuid, updatedValues) => {
+  return new Promise((resolve, reject) => {
+    console.log('Starting database transaction for update...');
+    database.transaction(
+      tx => {
+        console.log('Inside transaction...');
+
+        // Update the record based on uuid with the provided values
+        tx.executeSql(
+          `UPDATE plant27_2021_core 
+           SET 
+              ALLPATCHES=?,
+              GSITE_LAND_COV_DESC=?,
+              GSITE_HISTORY=?
+             
+           WHERE _uri = ?`,
+          [
+            updatedValues.ALLPATCHES || null,
+            updatedValues.GSITE_LAND_COV_DESC || null,
+            updatedValues.GSITE_HISTORY || null,
+
+            uuid, // Use uuid to match the correct record
+          ],
+          (tx, results) => {
+            console.log('Data updated successfully:', results);
+            resolve(results);
+          },
+          (tx, error) => {
+            console.error('Error updating data:', error.message || error);
+            reject(error);
+          },
+        );
+      },
+      error => {
+        console.error('Transaction error:', error.message || error);
+        reject(error);
+      },
+      () => {
+        console.log('Transaction completed successfully.');
+      },
+    );
+  });
+};
+
+export const plant27_2021_core_update2 = (uuid, updatedValues) => {
+  return new Promise((resolve, reject) => {
+    console.log('Starting database transaction for update...');
+    database.transaction(
+      tx => {
+        console.log('Inside transaction...');
+
+        // Update the record based on uuid with the provided values
+        tx.executeSql(
+          `UPDATE plant27_2021_core 
+           SET 
+              ALLPATCHES=?,
+              GSITE_LAND_COV_DESC=?,
+              GSITE_HISTORY=?
+             
+           WHERE _uri = ?`,
+          [
+            updatedValues.ALLPATCHES || null,
+            updatedValues.GSITE_LAND_COV_DESC || null,
+            updatedValues.GSITE_HISTORY || null,
+
+            uuid, // Use uuid to match the correct record
+          ],
+          (tx, results) => {
+            console.log('Data updated successfully:', results);
+            resolve(results);
+          },
+          (tx, error) => {
+            console.error('Error updating data:', error.message || error);
+            reject(error);
+          },
+        );
+      },
+      error => {
+        console.error('Transaction error:', error.message || error);
+        reject(error);
+      },
+      () => {
+        console.log('Transaction completed successfully.');
+      },
+    );
+  });
+};
+
+export const plant27_2021_core_update4 = (uuid, updatedValues) => {
+  return new Promise((resolve, reject) => {
+    console.log('Starting database transaction for update...');
+    database.transaction(
+      tx => {
+        console.log('Inside transaction...');
+
+        // Update the record based on uuid with the provided values
+        tx.executeSql(
+          `UPDATE plant27_2021_core 
+           SET 
+              REG_PLOT_NO=?,
+              REG_AVG_SEEDLING_ALL_PLOTS=?,
+              REG_AVG_TREES_ALL_PLOTS=?,
+              REG_AVG_TREES_PER_HA_ALL_PLOTS=?,
+
+
+
+              INTERVENTION_DETAILS_TLOC_PLANT_YEAR=?,
+              INTERVENTION_DETAILS_LLOC_PLANT_AREA=?,
+              INTERVENTION_DETAILS_TLOC_PLANT_TYPE=?,
+              INTERVENTION_DETAILS_PATCHES_PLANT=?,
+              INTERVENTION_DETAILS_SEEDING_PLANT=?
+             
+           WHERE _uri = ?`,
+          [
+            updatedValues.REG_PLOT_NO || null,
+            updatedValues.REG_AVG_SEEDLING_ALL_PLOTS || null,
+            updatedValues.REG_AVG_TREES_ALL_PLOTS || null,
+            updatedValues.REG_AVG_TREES_PER_HA_ALL_PLOTS || null,
+
+            updatedValues.INTERVENTION_DETAILS_TLOC_PLANT_YEAR || null,
+            updatedValues.INTERVENTION_DETAILS_LLOC_PLANT_AREA || null,
+            updatedValues.INTERVENTION_DETAILS_TLOC_PLANT_TYPE || null,
+            updatedValues.INTERVENTION_DETAILS_PATCHES_PLANT || null,
+            updatedValues.INTERVENTION_DETAILS_SEEDING_PLANT || null,
+
+            uuid, // Use uuid to match the correct record
+          ],
+          (tx, results) => {
+            console.log('Data updated successfully:', results);
+            resolve(results);
+          },
+          (tx, error) => {
+            console.error('Error updating data:', error.message || error);
+            reject(error);
+          },
+        );
+      },
+      error => {
+        console.error('Transaction error:', error.message || error);
+        reject(error);
+      },
+      () => {
+        console.log('Transaction completed successfully.');
+      },
+    );
+  });
+};
+
+export const plant27_2021_core_update5 = (uuid, updatedValues) => {
+  return new Promise((resolve, reject) => {
+    console.log('Starting database transaction for update...');
+    database.transaction(
+      tx => {
+        console.log('Inside transaction...');
+
+        // Update the record based on uuid with the provided values
+        tx.executeSql(
+          `UPDATE plant27_2021_core 
+           SET 
+              MAGROVE_PLANT_MAN_AFF_CLAY_LAYER=?,
+              MAGROVE_PLANT_MAN_AFF_PIONEERS_SP=?,
+              MAGROVE_PLANT_MAN_AFF_LEVEL_INUND=?,
+
+
+              MAGROVE_PLANT_MANGROVE_ENRICH_INUNDATION_MONTH=?,
+              MAGROVE_PLANT_MANGROVE_ENRICH_PLANTATION_AGE=?,
+              MAGROVE_PLANT_CRABS_HOLE=?,
+              MAGROVE_PLANT_WAVE_DIR=?,
+              MAGROVE_PLANT_WIND_DIR=?,
+              MAGROVE_PLANT_FACING_ISLAND=?,
+              MAGROVE_PLANT_FACING_DIR=?
+             
+           WHERE _uri = ?`,
+          [
+            updatedValues.MAGROVE_PLANT_MAN_AFF_CLAY_LAYER || null,
+            updatedValues.MAGROVE_PLANT_MAN_AFF_PIONEERS_SP || null,
+            updatedValues.MAGROVE_PLANT_MAN_AFF_LEVEL_INUND || null,
+
+            updatedValues.MAGROVE_PLANT_MANGROVE_ENRICH_INUNDATION_MONTH ||
+              null,
+            updatedValues.MAGROVE_PLANT_MANGROVE_ENRICH_PLANTATION_AGE || null,
+            updatedValues.MAGROVE_PLANT_CRABS_HOLE || null,
+            updatedValues.MAGROVE_PLANT_WAVE_DIR || null,
+            updatedValues.MAGROVE_PLANT_WIND_DIR || null,
+            updatedValues.MAGROVE_PLANT_FACING_ISLAND || null,
+            updatedValues.MAGROVE_PLANT_FACING_DIR || null,
+
+            uuid, // Use uuid to match the correct record
+          ],
+          (tx, results) => {
+            console.log('Data updated successfully:', results);
+            resolve(results);
+          },
+          (tx, error) => {
+            console.error('Error updating data:', error.message || error);
+            reject(error);
+          },
+        );
+      },
+      error => {
+        console.error('Transaction error:', error.message || error);
+        reject(error);
+      },
+      () => {
+        console.log('Transaction completed successfully.');
+      },
+    );
+  });
+};
+
 // create end
 //---------------------------------------------------------//
 //API Start

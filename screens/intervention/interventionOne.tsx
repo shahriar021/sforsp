@@ -38,7 +38,9 @@ import {
   jur_fd_ranges_list,
   mouza_types_api,
   mouza_types_list,
+  plant27_2021_core_create,
 } from '../../database/sqlDatabase';
+import useUUID from '../../hooks/useUUID';
 
 const interventionOne = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -83,6 +85,10 @@ const interventionOne = () => {
 
   const {rankOptions, selectedRank, setSelectedRank} = useTrace();
   console.log(rankOptions, '  Rank');
+
+  const {md5} = useUUID();
+  const uuid = md5;
+  console.log(uuid, 'uuid-page 1');
 
   useEffect(() => {
     const forest_landscape = async () => {
@@ -325,34 +331,72 @@ const interventionOne = () => {
     {label: 'Bamboo Forest', value: 'bamboo'},
   ];
 
+  const interventionOneSubmit = async () => {
+    console.log('Input Values:', uuid);
+    console.log('inputValue1:', inputValue1);
+    console.log('inputValue2:', inputValue2);
+    console.log('inputValue3:', inputValue3);
+    console.log('inputValue4:', inputValue4);
+    console.log('inputValue5:', inputValue5);
+    console.log('inputValue6:', inputValue6);
+    console.log('inputValue7:', inputValue7);
+    console.log('inputValue8:', inputValue8);
+    console.log('inputValue9:', inputValue9);
 
-  const interventionOneSubmit=()=>{
-      console.log('Input Values:');
-      console.log('inputValue1:', inputValue1);
-      console.log('inputValue2:', inputValue2);
-      console.log('inputValue3:', inputValue3);
-      console.log('inputValue4:', inputValue4);
-      console.log('inputValue5:', inputValue5);
-      console.log('inputValue6:', inputValue6);
-      console.log('inputValue7:', inputValue7);
-      console.log('inputValue8:', inputValue8);
-      console.log('inputValue9:', inputValue9);
+    console.log('\nSelected Values:');
+    console.log('selectedForest:', selectedForest);
+    console.log('selectedForestCircle:', selectedForestCircle);
+    console.log('selectedForestDivision:', selectedForestDivision);
+    console.log('selectedForestRange:', selectedForestrange);
+    console.log('selectedForestBeat:', selectedForestbeat);
+    console.log('selectedSurvey:', selectedSurvey);
+    console.log('selectedDivision:', selectedDivision);
+    console.log('selectedDistrict:', selectedDistrict);
+    console.log('selectedUpazila:', selectedUpazila);
 
-      console.log('\nSelected Values:');
-      console.log('selectedForest:', selectedForest);
-      console.log('selectedForestCircle:', selectedForestCircle);
-      console.log('selectedForestDivision:', selectedForestDivision);
-      console.log('selectedForestRange:', selectedForestrange);
-      console.log('selectedForestBeat:', selectedForestbeat);
-      console.log('selectedSurvey:', selectedSurvey);
-      console.log('selectedDivision:', selectedDivision);
-      console.log('selectedDistrict:', selectedDistrict);
-      console.log('selectedUpazila:', selectedUpazila);
+    const dataToInsert = {
+      _uri: uuid,
+      GUSER_DCOLLECTION_RAW: inputValue1,
+      GUSER_TUSER: inputValue2,
+      GUSER_TUSER_CELL: inputValue3,
+      GUSER_TUSER_EMAIL: inputValue4,
+      LOCATION_DATA_ECOZONE: selectedForest,
+      LOCATION_DATA_FOREST_AD_TLOC_FD_CIR: selectedForestCircle,
+      LOCATION_DATA_FOREST_AD_TLOC_FD_DIVISION: selectedForestDivision,
+      LOCATION_DATA_FOREST_AD_TLOC_FD_RANGE: selectedForestrange,
+      LOCATION_DATA_FOREST_AD_TLOC_FD_BEAT: selectedForestbeat,
+      LOCATION_DATA_FOREST_AD_TLOC_FD_BLOCK: inputValue5,
+      LOCATION_DATA_FOREST_AD_TLOC_FD_CHAR: inputValue6,
 
-      navigation.navigate("interventionTwo")
-  }
+      LOCATION_DATA_CA_TLOC_AD_DIVISION: selectedDivision,
+      LOCATION_DATA_CA_TLOC_AD_DISTRICT: selectedDistrict,
+      LOCATION_DATA_CA_UNION: inputValue7,
+      LOCATION_DATA_CA_VILLAGE: inputValue8,
 
-  const tableData  = []
+      // FBLI_TLOC_ECOZONE: selectedForest,
+      // FBLI_FA_TLOC_FD_CIR: selectedForestCircle,
+      // FBLI_FA_TLOC_FD_DIVISION: selectedForestDivision,
+      // FBLI_FA_TLOC_FD_RANGE: selectedForestrange,
+      // FBLI_FA_TLOC_FD_BEAT: selectedForestbeat,
+      // FBLI_CA_TLOC_AD_DIVISION: selectedDivision,
+      // FBLI_CA_TLOC_AD_DISTRICT: selectedDistrict,
+      // FBLI_CA_UNION: FBLI_CA_UNION,
+
+      // selectedUpazila: selectedUpazila,
+      // survey_type: survey_type,
+    };
+
+    try {
+      await plant27_2021_core_create(dataToInsert);
+      console.log('All data inserted successfully');
+    } catch (error) {
+      console.error('Failed to insert data:', error.message || error); // Log the error message
+    }
+
+    navigation.navigate('interventionTwo', {uId: uuid});
+  };
+
+  const tableData = [];
 
   return (
     <>
@@ -406,6 +450,19 @@ const interventionOne = () => {
           style={styles.input}
           value={inputValue3}
           onChangeText={text => setInputValue3(text)}
+          placeholderTextColor="black"
+          placeholder="select Mobile number Beat"
+        />
+
+        <Text style={styles.label}>
+          1.d. Email address of Beat/Camp/SFPC Officer (বিট/ক্যাম্প/এসএফপিসি
+          কর্মকর্তার ইমেল):
+        </Text>
+
+        <TextInput
+          style={styles.input}
+          value={inputValue4}
+          onChangeText={text => setInputValue4(text)}
           placeholderTextColor="black"
           placeholder="select Mobile number Beat"
         />
@@ -534,8 +591,8 @@ const interventionOne = () => {
 
         <TextInput
           style={styles.input}
-          value={inputValue3}
-          onChangeText={text => setInputValue3(text)}
+          value={inputValue5}
+          onChangeText={text => setInputValue5(text)}
           placeholderTextColor="black"
           placeholder="select Block"
         />
@@ -544,8 +601,8 @@ const interventionOne = () => {
 
         <TextInput
           style={styles.input}
-          value={inputValue4}
-          onChangeText={text => setInputValue4(text)}
+          value={inputValue6}
+          onChangeText={text => setInputValue6(text)}
           placeholderTextColor="black"
           placeholder="select Char"
         />
@@ -623,20 +680,20 @@ const interventionOne = () => {
 
         <TextInput
           style={styles.input}
-          value={inputValue5}
-          onChangeText={text => setInputValue5(text)}
+          value={inputValue7}
+          onChangeText={text => setInputValue7(text)}
           placeholderTextColor="black"
-          placeholder="Union"
+          placeholder="select Union"
         />
 
         <Text style={styles.label}>2.2.e. Village (গ্রাম):</Text>
 
         <TextInput
           style={styles.input}
-          value={inputValue6}
-          onChangeText={text => setInputValue6(text)}
+          value={inputValue8}
+          onChangeText={text => setInputValue8(text)}
           placeholderTextColor="black"
-          placeholder="select"
+          placeholder="select Village"
         />
         <View style={styles.txtNbutton}>
           <Text style={styles.headerLabel}>

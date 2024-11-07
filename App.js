@@ -96,6 +96,7 @@ import {
   jur_fd_ranges_list,
   mouza_types_api,
   mouza_types_list,
+  plant27_2021_core_api,
 } from './database/sqlDatabase';
 
 LogBox.ignoreAllLogs();
@@ -146,42 +147,61 @@ const App = () => {
   }, []);
 
 
+
   useEffect(() => {
-    // Request permission to receive notifications
-    messaging()
-      .requestPermission()
-      .then(authStatus => {
-        const enabled =
-          authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-          authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-
-        if (enabled) {
-          console.log('Authorization status:', authStatus);
+    try {
+      console.log('useEffect is being called');
+      const plant27_2021_core_api_func = async () => {
+        console.log('plant27_2021_core_api_func has been called');
+        try {
+          await plant27_2021_core_api();
+        } catch (err) {
+          console.log('Error fetching plant27_2021_core API data:', err);
         }
-      });
-
-    // Get the device token
-    messaging()
-      .getToken()
-      .then(token => {
-        console.log('Device FCM Token: ', token);
-        // Save this token for use in Postman
-      });
-
-    // Listen to whether the token changes
-    return messaging().onTokenRefresh(token => {
-      console.log('Device FCM Token Refreshed: ', token);
-      // Save this token for use in Postman
-    });
-
-    // Handle incoming messages
-    const unsubscribe = messaging().onMessage(async remoteMessage => {
-      console.log('A new FCM message arrived!', JSON.stringify(remoteMessage));
-      // Display a notification using your preferred method
-    });
-
-    return unsubscribe;
+      };
+      plant27_2021_core_api_func();
+    } catch (error) {
+      console.log('Error in useEffect:', error);
+    }
   }, []);
+
+
+  // useEffect(() => {
+  //   // Request permission to receive notifications
+  //   messaging()
+  //     .requestPermission()
+  //     .then(authStatus => {
+  //       const enabled =
+  //         authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+  //         authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+  //       if (enabled) {
+  //         console.log('Authorization status:', authStatus);
+  //       }
+  //     });
+
+  //   // Get the device token
+  //   messaging()
+  //     .getToken()
+  //     .then(token => {
+  //       console.log('Device FCM Token: ', token);
+  //       // Save this token for use in Postman
+  //     });
+
+  //   // Listen to whether the token changes
+  //   return messaging().onTokenRefresh(token => {
+  //     console.log('Device FCM Token Refreshed: ', token);
+  //     // Save this token for use in Postman
+  //   });
+
+  //   // Handle incoming messages
+  //   const unsubscribe = messaging().onMessage(async remoteMessage => {
+  //     console.log('A new FCM message arrived!', JSON.stringify(remoteMessage));
+  //     // Display a notification using your preferred method
+  //   });
+
+  //   return unsubscribe;
+  // }, []);
 
   const [userId, setUserId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);

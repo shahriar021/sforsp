@@ -14,7 +14,7 @@ import {
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {Dropdown} from 'react-native-element-dropdown';
 import DocumentPicker from 'react-native-document-picker';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {Colors, CommonStyles, Fonts, Sizes} from '../../constants/styles';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -34,6 +34,10 @@ const interventionThree = () => {
   const [selectedForest, setSelectedForest] = useState(null);
 
   const navigation = useNavigation();
+  const route = useRoute();
+  const {uuid} = route.params;
+  const uid=uuid;
+  console.log(uid, 'uuid in page 2');
 
   const onDocumentPress = async () => {
     const res = await DocumentPicker.pick({
@@ -72,7 +76,7 @@ const interventionThree = () => {
       console.log('inputValue7:', inputValue7),
       console.log('inputValue8:', inputValue8),
     );
-    navigation.navigate('interventionFour');
+    navigation.navigate('interventionFour', {uuid: uid});
   };
 
   const tableData = []

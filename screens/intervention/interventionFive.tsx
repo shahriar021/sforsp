@@ -14,7 +14,7 @@ import {
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {Dropdown} from 'react-native-element-dropdown';
 import DocumentPicker from 'react-native-document-picker';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {Colors, CommonStyles, Fonts, Sizes} from '../../constants/styles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {baseApi, token} from '../../constants/base_api';
@@ -27,6 +27,7 @@ import {
   inundations_list,
   month_inun_lists_api,
   month_inun_lists_list,
+  plant27_2021_core_update5,
   planting_modes_api,
   planting_modes_list,
   repro_types_api,
@@ -78,6 +79,10 @@ const interventionFive = () => {
   const [seedlingsRequired, setSeedlingsRequired] = useState('');
 
   const navigation = useNavigation();
+  const route = useRoute();
+  const {uuid} = route.params;
+  const uid = uuid;
+  console.log(uid, 'uuid in page 5');
 
   const onDocumentPress = async () => {
     const res = await DocumentPicker.pick({
@@ -287,7 +292,7 @@ const interventionFive = () => {
     sources();
   }, []);
 
-  const interventionFiveSubmit = () => {
+  const interventionFiveSubmit = async () => {
     console.log(
       // inputValue1,
       // inputValue2,
@@ -305,11 +310,29 @@ const interventionFive = () => {
       selectedDerectinsAllDirect,
     );
 
-    navigation.navigate('interventionSix' as never);
+    const dataToInsert = {
+      MAGROVE_PLANT_MAN_AFF_CLAY_LAYER: inputValue1,
+      MAGROVE_PLANT_MAN_AFF_PIONEERS_SP: inputValue2,
+      MAGROVE_PLANT_MAN_AFF_LEVEL_INUND: inputValue3,
+
+      MAGROVE_PLANT_MANGROVE_ENRICH_INUNDATION_MONTH: selectedInundationMonth,
+      MAGROVE_PLANT_MANGROVE_ENRICH_PLANTATION_AGE: selectedAgePlantation,
+      MAGROVE_PLANT_CRABS_HOLE: selectedYesNo,
+      MAGROVE_PLANT_WAVE_DIR: selectedDerectins,
+      MAGROVE_PLANT_WIND_DIR: selectedDerectinsWind,
+      MAGROVE_PLANT_FACING_ISLAND: inputValue4,
+      MAGROVE_PLANT_FACING_DIR: selectedDerectinsAllDirect,
+    };
+
+    try {
+      await plant27_2021_core_update5(uid, dataToInsert);
+      console.log('All data updated successfully');
+    } catch (error) {
+      console.error('Failed to updated data:', error.message || error); // Log the error message
+    }
+
+    // navigation.navigate('interventionSix' as never);
   };
-
-
-
 
   const tableData = [];
 
@@ -509,8 +532,8 @@ const interventionFive = () => {
 
         <TextInput
           style={styles.input}
-          value={inputValue3}
-          onChangeText={text => setInputValue3(text)}
+          value={inputValue4}
+          onChangeText={text => setInputValue4(text)}
           placeholderTextColor="black"
           placeholder="Facing of the Island"
         />

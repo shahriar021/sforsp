@@ -14,12 +14,16 @@ import {
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {Dropdown} from 'react-native-element-dropdown';
 import DocumentPicker from 'react-native-document-picker';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {Colors, CommonStyles, Fonts, Sizes} from '../../constants/styles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import useTrace from '../../hooks/useTrace';
 import {baseApi, token} from '../../constants/base_api';
-import {historys_api, historys_list} from '../../database/sqlDatabase';
+import {
+  historys_api,
+  historys_list,
+  plant27_2021_core_update,
+} from '../../database/sqlDatabase';
 
 const interventionTwo = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -48,6 +52,9 @@ const interventionTwo = () => {
 
   const {rankOptions, selectedRank, setSelectedRank} = useTrace();
   console.log(rankOptions, '  Rank');
+  const route = useRoute();
+  const {uId} = route.params;
+  console.log(uId, 'uuid in page 2');
 
   const onDocumentPress = async () => {
     const res = await DocumentPicker.pick({
@@ -97,17 +104,43 @@ const interventionTwo = () => {
     history();
   }, []);
 
-  const interventionTwo = () => {
-    console.log(
-      inputValue2,
-      inputValue3,
-      inputValue4,
-      inputValue5,
-      inputValue6,
-      'intervention two',
-    );
+  const interventionTwo = async () => {
+    console.log('Input Values:', uId);
+    console.log('inputValue1:', inputValue1);
+    console.log('inputValue2:', inputValue2);
+    console.log('inputValue3:', inputValue3);
+    console.log('inputValue4:', inputValue4);
+    console.log('inputValue5:', inputValue5);
+    console.log('inputValue6:', inputValue6);
+    console.log('inputValue7:', inputValue7);
+    console.log('inputValue8:', inputValue8);
+    console.log('inputValue9:', inputValue9);
 
-    navigation.navigate('interventionThree');
+    // console.log('\nSelected Values:');
+    // console.log('selectedForest:', selectedForest);
+    // console.log('selectedForestCircle:', selectedForestCircle);
+    // console.log('selectedForestDivision:', selectedForestDivision);
+    // console.log('selectedForestRange:', selectedForestrange);
+    // console.log('selectedForestBeat:', selectedForestbeat);
+    // console.log('selectedSurvey:', selectedSurvey);
+    // console.log('selectedDivision:', selectedDivision);
+    // console.log('selectedDistrict:', selectedDistrict);
+    // console.log('selectedUpazila:', selectedUpazila);
+
+    const dataToInsert = {
+      ALLPATCHES: inputValue6,
+      GSITE_LAND_COV_DESC: inputValue12,
+      GSITE_HISTORY: selectedHistory,
+    };
+
+    try {
+      await plant27_2021_core_update(uId, dataToInsert);
+      console.log('All data updated successfully');
+    } catch (error) {
+      console.error('Failed to updated data:', error.message || error); // Log the error message
+    }
+
+    navigation.navigate('interventionThree',{uuid:uId});
   };
 
   const tableData = [];
