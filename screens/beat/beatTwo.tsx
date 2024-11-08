@@ -22,11 +22,14 @@ import useRank from '../../hooks/useRank';
 import {
   gener43_2021_core_list,
   gener43_2021_core_update,
+  gener43_2021_gnatissues_create,
   human_issues_api,
   human_issues_list,
   natural_issues_api,
   natural_issues_list,
 } from '../../database/sqlDatabase';
+import useUUID from '../../hooks/useUUID';
+import useCreateUri from '../../hooks/useCreatUri';
 
 const beatTwo = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -64,12 +67,17 @@ const beatTwo = () => {
   const [selectedNaturalIssue, setSelectedNaturalIssue] = useState(null);
   const [selectedHumanIssue, setSelectedHumanIssue] = useState(null);
 
+  const [oridianl, setoridianl] = useState(0);
+  const {initialUUID, generateUUID} = useUUID();
+  const [newUUID, setNewUUID] = useState('');
+
   // console.log(selectedHumanIssue, 'human issue');
   // console.log(selectedNaturalIssue, 'natural issue');
 
   const route = useRoute();
   const {uId} = route.params;
   console.log(uId, 'uuid');
+  const uri = useCreateUri();
 
   const navigation = useNavigation();
 
@@ -150,6 +158,48 @@ const beatTwo = () => {
   }, []);
 
   // console.log(humanIssue, 'humanIssue issue..');
+
+  const getCurrentDateandTime = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    const days = now.getDate().toString().padStart(2, '0');
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+    const miliseconds = now.getMilliseconds().toString().padStart(4, '0');
+
+    return `${year}-${month}-${days} ${hours}:${minutes}:${seconds}:${miliseconds}`;
+  };
+
+  const addNewSaveOne = async () => {
+    const newGeneratedUUID = generateUUID(); // Generate a new UUID
+    setNewUUID(newGeneratedUUID); // If you need it later in the state, set it
+    const updatedOrdinalNumber = oridianl + 1; // Increment the value directly here
+    setoridianl(updatedOrdinalNumber);
+
+    const dataToInsertadd = {
+      _uri: newGeneratedUUID, // Use the freshly generated UUID
+      _creator_uri_user: uri,
+      _parent_auri: uId,
+      _top_level_auri: uId,
+      _creation_date: getCurrentDateandTime(),
+      _last_update_date: getCurrentDateandTime(),
+      natissues: selectedNaturalIssue,
+      nat_level: selectedRank,
+
+      _ordinal_number: updatedOrdinalNumber,
+    };
+
+    console.log(dataToInsertadd, 'datato insert');
+
+    try {
+      await gener43_2021_gnatissues_create(dataToInsertadd);
+      console.log('All data inserted successfully');
+    } catch (error) {
+      console.error('Failed to insert data:', error.message || error);
+    }
+  };
 
   const beatTwosubmit = async () => {
     // Log input values from inputValue1 to inputValue23
@@ -707,7 +757,7 @@ const beatTwo = () => {
                       justifyContent: 'center',
                       margin: 5,
                     }}>
-                    <Button title="Save" />
+                    <Button title="Save" onPress={addNewSaveOne} />
                     <Button
                       title="Close"
                       onPress={() => setModalVisible(false)}

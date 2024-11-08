@@ -88,6 +88,7 @@ const beatOne = () => {
   const [selectedUpazila, setSelectedUpazila] = useState(null);
 
   const [survey_type, setsurvey_type] = useState(null);
+  const [oridianl, setoridianl] = useState(0);
 
   // ------------------------------
   const [gener43_2021_core_listdata, setgener43_2021_core_list] = useState([]);
@@ -142,7 +143,7 @@ const beatOne = () => {
   const [newUUID, setNewUUID] = useState('');
 
   // Function to generate a new UUID
-  // const handleGenerateNewUUID = async () => {
+  // const addNewGenerateNewUUID = async () => {
   //   const newGeneratedUUID = generateUUID(); // Generate a new UUID
   //   setNewUUID(newGeneratedUUID); // Update state, if needed elsewhere
 
@@ -177,9 +178,11 @@ const beatOne = () => {
     return `${year}-${month}-${days} ${hours}:${minutes}:${seconds}:${miliseconds}`;
   };
 
-  const handleGenerateNewUUID = async () => {
+  const addNewGenerateNewUUID = async () => {
     const newGeneratedUUID = generateUUID(); // Generate a new UUID
     setNewUUID(newGeneratedUUID); // If you need it later in the state, set it
+    const updatedOrdinalNumber = oridianl + 1; // Increment the value directly here
+    setoridianl(updatedOrdinalNumber);
 
     const dataToInsertadd = {
       _uri: newGeneratedUUID, // Use the freshly generated UUID
@@ -191,6 +194,7 @@ const beatOne = () => {
       mouza1: mouza_name,
       survey_types: survey_type,
       sheet1: sheet_number,
+      _ordinal_number: updatedOrdinalNumber,
     };
 
     console.log(dataToInsertadd, 'datato insert');
@@ -205,6 +209,8 @@ const beatOne = () => {
 
   console.log(initialUUID, 'page -1');
   console.log(newUUID, 'page -add new');
+
+  console.log(oridianl, 'ordinal');
 
   // const {md5} = useUUID();
   // const uuid = md5;
@@ -984,7 +990,7 @@ const beatOne = () => {
                       justifyContent: 'center',
                       margin: 5,
                     }}>
-                    <Button title="Save" onPress={handleGenerateNewUUID} />
+                    <Button title="Save" onPress={addNewGenerateNewUUID} />
                     <Button
                       title="Close"
                       onPress={() => setModalVisible(false)}

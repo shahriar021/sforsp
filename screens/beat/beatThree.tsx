@@ -18,7 +18,13 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import {Colors, CommonStyles, Sizes} from '../../constants/styles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import useLogistic from '../../hooks/useLogistic';
-import {gener43_2021_core_update2} from '../../database/sqlDatabase';
+import {
+  gener43_2021_core_update2,
+  gener43_2021_others_info1_create,
+} from '../../database/sqlDatabase';
+import useUUID from '../../hooks/useUUID';
+import {getCurrentDateandTime} from '../../hooks/dateUtils';
+import useCreateUri from '../../hooks/useCreatUri';
 
 const beatThree = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -46,6 +52,12 @@ const beatThree = () => {
   const [inputValue6b4, setInputValue6b4] = useState('');
   const [inputValue6b5, setInputValue6b5] = useState('');
   const [inputValue6b6, setInputValue6b6] = useState('');
+  const [inputValue6c1, setInputValue6c1] = useState('');
+  const [inputValue6c2, setInputValue6c2] = useState('');
+  const [inputValue6c3, setInputValue6c3] = useState('');
+  const [inputValue6c4, setInputValue6c4] = useState('');
+  const [inputValue6c5, setInputValue6c5] = useState('');
+  const [inputValue6c6, setInputValue6c6] = useState('');
   const [inputValue7, setInputValue7] = useState('');
   const [inputValue8, setInputValue8] = useState('');
   const [inputValue9, setInputValue9] = useState('');
@@ -66,6 +78,10 @@ const beatThree = () => {
 
   const [modalTitle, setModalTitle] = useState('');
 
+  const [oridianl, setoridianl] = useState(0);
+  const {initialUUID, generateUUID} = useUUID();
+  const [newUUID, setNewUUID] = useState('');
+
   const navigation = useNavigation();
 
   const route = useRoute();
@@ -74,6 +90,7 @@ const beatThree = () => {
 
   const {logistic} = useLogistic();
   console.log(logistic, 'logistic');
+  const uri = useCreateUri();
 
   const onDocumentPress = async () => {
     const res = await DocumentPicker.pick({
@@ -112,6 +129,40 @@ const beatThree = () => {
   };
 
   const tableData = [];
+
+  const addnewsave = async () => {
+    const newGeneratedUUID = generateUUID(); // Generate a new UUID
+    setNewUUID(newGeneratedUUID); // If you need it later in the state, set it
+    const updatedOrdinalNumber = oridianl + 1; // Increment the value directly here
+    setoridianl(updatedOrdinalNumber);
+
+    const currentDate = getCurrentDateandTime();
+
+    const dataToInsertadd = {
+      _uri: newGeneratedUUID, // Use the freshly generated UUID
+      _creator_uri_user: uri,
+      _parent_auri: uuid,
+      _top_level_auri: uuid,
+      _creation_date: currentDate,
+      _last_update_date: currentDate,
+      name_of_others: inputValue6c1,
+      others_rank: inputValue6c2,
+      others_joining_date: inputValue6c3,
+      others_cell: inputValue6c4,
+      others_nid: inputValue6c5,
+      others_mail: inputValue6c6,
+      _ordinal_number: updatedOrdinalNumber,
+    };
+
+    console.log(dataToInsertadd, 'datato insert');
+
+    try {
+      await gener43_2021_others_info1_create(dataToInsertadd);
+      console.log('All data inserted successfully');
+    } catch (error) {
+      console.error('Failed to insert data:', error.message || error);
+    }
+  };
 
   const submitBeatThree = async () => {
     console.log(
@@ -189,6 +240,7 @@ const beatThree = () => {
     } catch (error) {
       console.error('Failed to insert data:', error.message || error); // Log the error message
     }
+    navigation.navigate('beatFour', {uId: uuid});
   };
 
   return (
@@ -524,8 +576,8 @@ const beatThree = () => {
                 <TextInput
                   style={styles.input}
                   placeholder="Enter name"
-                  value={inputValue2.name}
-                  onChangeText={text => handleInputChange('name', text)}
+                  value={inputValue6c1}
+                  onChangeText={text => setInputValue6c1(text)}
                   placeholderTextColor="black"
                 />
 
@@ -533,8 +585,8 @@ const beatThree = () => {
                 <TextInput
                   style={styles.input}
                   placeholder="Enter rank"
-                  value={inputValue2.rank}
-                  onChangeText={text => handleInputChange('rank', text)}
+                  value={inputValue6c2}
+                  onChangeText={text => setInputValue6c2(text)}
                   placeholderTextColor="black"
                 />
 
@@ -544,8 +596,8 @@ const beatThree = () => {
                 <TextInput
                   style={styles.input}
                   placeholder="Enter joining date"
-                  value={inputValue1.joiningDate}
-                  onChangeText={text => handleInputChange('joiningDate', text)}
+                  value={inputValue6c3}
+                  onChangeText={text => setInputValue6c3(text)}
                   placeholderTextColor="black"
                 />
 
@@ -553,8 +605,8 @@ const beatThree = () => {
                 <TextInput
                   style={styles.input}
                   placeholder="Enter mobile number"
-                  value={inputValue1.mobile}
-                  onChangeText={text => handleInputChange('mobile', text)}
+                  value={inputValue6c4}
+                  onChangeText={text => setInputValue6c4(text)}
                   placeholderTextColor="black"
                 />
 
@@ -562,8 +614,8 @@ const beatThree = () => {
                 <TextInput
                   style={styles.input}
                   placeholder="Enter NID"
-                  value={inputValue1.nid}
-                  onChangeText={text => handleInputChange('nid', text)}
+                  value={inputValue6c5}
+                  onChangeText={text => setInputValue6c5(text)}
                   placeholderTextColor="black"
                 />
 
@@ -571,8 +623,8 @@ const beatThree = () => {
                 <TextInput
                   style={styles.input}
                   placeholder="Enter e-mail"
-                  value={inputValue1.email}
-                  onChangeText={text => handleInputChange('email', text)}
+                  value={inputValue6c6}
+                  onChangeText={text => setInputValue6c6(text)}
                   placeholderTextColor="black"
                 />
 
@@ -583,7 +635,7 @@ const beatThree = () => {
                     justifyContent: 'center',
                     margin: 5,
                   }}>
-                  <Button title="Save" />
+                  <Button title="Save" onPress={addnewsave} />
                   <Button
                     title="Close"
                     onPress={() => setModalVisible(false)}

@@ -14067,23 +14067,23 @@ export const gener43_2021_others_info1_create = gener43_2021_others_info1 => {
     database.transaction(tx => {
       // Insert gener43_2021_others_info1
       tx.executeSql(
-        'INSERT INTO gener43_2021_others_info1 (_uri text,_creator_uri_user text,_creation_date text,_last_update_uri_user text,_last_update_date text,_parent_auri text,_ordinal_number text,_top_level_auri text,generated_note_name_115 text,others_joining_date text,others_nid text,others_rank text,others_cell text,name_of_others text,others_joining_date_raw text,others_mail text)',
+        'INSERT INTO gener43_2021_others_info1 (_uri ,_creator_uri_user ,_creation_date ,_last_update_date ,_parent_auri ,_ordinal_number ,_top_level_auri ,others_joining_date ,others_nid ,others_rank ,others_cell ,name_of_others ,others_joining_date_raw ,others_mail ) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
         [
           gener43_2021_others_info1._uri || null,
           gener43_2021_others_info1._creator_uri_user || null,
           gener43_2021_others_info1._creation_date || null,
-          gener43_2021_others_info1._last_update_uri_user || null,
+          
           gener43_2021_others_info1._last_update_date || null,
           gener43_2021_others_info1._parent_auri || null,
           gener43_2021_others_info1._ordinal_number || null,
           gener43_2021_others_info1._top_level_auri || null,
-          gener43_2021_others_info1.generated_note_name_115 || null,
+          
           gener43_2021_others_info1.others_joining_date || null,
           gener43_2021_others_info1.others_nid || null,
           gener43_2021_others_info1.others_rank || null,
           gener43_2021_others_info1.others_cell || null,
           gener43_2021_others_info1.name_of_others || null,
-          gener43_2021_others_info1.others_joining_date_raw || null,
+          
           gener43_2021_others_info1.others_mail || null,
         ],
         (tx, results) => {
@@ -25165,6 +25165,7 @@ export const gener43_2021_fbli_m_sh1_create = gener43_2021_fbli_m_sh1 => {
       gener43_2021_fbli_m_sh1.mouza1,
       gener43_2021_fbli_m_sh1.survey_types,
       gener43_2021_fbli_m_sh1.sheet1,
+      gener43_2021_fbli_m_sh1._ordinal_number,
     );
     database.transaction(tx => {
       tx.executeSql(
@@ -25176,8 +25177,9 @@ export const gener43_2021_fbli_m_sh1_create = gener43_2021_fbli_m_sh1 => {
       _last_update_date,
       mouza1,
       survey_types,
-      sheet1
-        ) VALUES (?,?,?,?,?,?,?,?,?)`,
+      sheet1,
+      _ordinal_number
+        ) VALUES (?,?,?,?,?,?,?,?,?,?)`,
         [
           gener43_2021_fbli_m_sh1._uri || null,
           gener43_2021_fbli_m_sh1._creator_uri_user || null,
@@ -25188,6 +25190,7 @@ export const gener43_2021_fbli_m_sh1_create = gener43_2021_fbli_m_sh1 => {
           gener43_2021_fbli_m_sh1.mouza1 || null,
           gener43_2021_fbli_m_sh1.survey_types || null,
           gener43_2021_fbli_m_sh1.sheet1 || null,
+          gener43_2021_fbli_m_sh1._ordinal_number || null,
         ],
         (tx, results) => {
           console.log('Data inserted successfully:', results);
@@ -35746,20 +35749,19 @@ export const gener43_2021_gnatissues_create = gener43_2021_gnatissues => {
     database.transaction(tx => {
       // Insert gener43_2021_gnatissues
       tx.executeSql(
-        'INSERT INTO gener43_2021_gnatissues (_uri text,_creator_uri_user text,_creation_date text,_last_update_uri_user text,_last_update_date text,_parent_auri text,_ordinal_number text,_top_level_auri text,natissues text,nat_level text,generated_note_name_83 text,nat_other text)',
+        `INSERT INTO gener43_2021_gnatissues (_uri ,_creator_uri_user ,_creation_date , _last_update_date 
+        ,_parent_auri ,_ordinal_number ,_top_level_auri ,natissues ,nat_level  )VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         [
           gener43_2021_gnatissues._uri || null,
           gener43_2021_gnatissues._creator_uri_user || null,
           gener43_2021_gnatissues._creation_date || null,
-          gener43_2021_gnatissues._last_update_uri_user || null,
+
           gener43_2021_gnatissues._last_update_date || null,
           gener43_2021_gnatissues._parent_auri || null,
           gener43_2021_gnatissues._ordinal_number || null,
           gener43_2021_gnatissues._top_level_auri || null,
           gener43_2021_gnatissues.natissues || null,
           gener43_2021_gnatissues.nat_level || null,
-          gener43_2021_gnatissues.generated_note_name_83 || null,
-          gener43_2021_gnatissues.nat_other || null,
         ],
         (tx, results) => {
           console.log('Data inserted successfully:', results);
@@ -35920,37 +35922,74 @@ export const gener43_2021_gvillages_delete = async () => {
 //---------------------------------------------------------//
 // create start
 //---------------------------------------------------------//
+// export const gener43_2021_gvillages_create = gener43_2021_gvillages => {
+//   return new Promise((resolve, reject) => {
+//     database.transaction(tx => {
+//       // Insert gener43_2021_gvillages
+//       tx.executeSql(
+//         'INSERT INTO gener43_2021_gvillages (_uri ,_creator_uri_user ,_creation_date ,_last_update_uri_user ,_last_update_date ,_parent_auri ,_ordinal_number ,_top_level_auri ,socfor_partic ,vrecord_how ,villa_ad_union ,forest_vilgrs ,tot_hh ,vsitepoint_acc ,vsitepoint_lat ,fcv_partc ,tvillage_name ,vsitepoint_alt ,grcoords_vsite_east ,villa_ad_upzilla ,generated_note_name_170 ,grcoords_vsite_north ,vsitepoint_lng ,villa_dist )values(?)',
+//         [
+//           gener43_2021_gvillages._uri || null,
+//           gener43_2021_gvillages._creator_uri_user || null,
+//           gener43_2021_gvillages._creation_date || null,
+//           gener43_2021_gvillages._last_update_uri_user || null,
+//           gener43_2021_gvillages._last_update_date || null,
+//           gener43_2021_gvillages._parent_auri || null,
+//           gener43_2021_gvillages._ordinal_number || null,
+//           gener43_2021_gvillages._top_level_auri || null,
+//           gener43_2021_gvillages.socfor_partic || null,
+//           gener43_2021_gvillages.vrecord_how || null,
+//           gener43_2021_gvillages.villa_ad_union || null,
+//           gener43_2021_gvillages.forest_vilgrs || null,
+//           gener43_2021_gvillages.tot_hh || null,
+//           gener43_2021_gvillages.vsitepoint_acc || null,
+//           gener43_2021_gvillages.vsitepoint_lat || null,
+//           gener43_2021_gvillages.fcv_partc || null,
+//           gener43_2021_gvillages.tvillage_name || null,
+//           gener43_2021_gvillages.vsitepoint_alt || null,
+//           gener43_2021_gvillages.grcoords_vsite_east || null,
+//           gener43_2021_gvillages.villa_ad_upzilla || null,
+//           gener43_2021_gvillages.generated_note_name_170 || null,
+//           gener43_2021_gvillages.grcoords_vsite_north || null,
+//           gener43_2021_gvillages.vsitepoint_lng || null,
+//           gener43_2021_gvillages.villa_dist || null,
+//         ],
+//         (tx, results) => {
+//           console.log('Data inserted successfully:', results);
+//           resolve(results);
+//         },
+//         (tx, error) => {
+//           console.error('Error inserting data:', error);
+//           reject(error);
+//         },
+//       );
+//     });
+//   });
+// };
+
 export const gener43_2021_gvillages_create = gener43_2021_gvillages => {
   return new Promise((resolve, reject) => {
     database.transaction(tx => {
-      // Insert gener43_2021_gvillages
+      // Insert into gener43_2021_gvillages with fields matching the frontend data
       tx.executeSql(
-        'INSERT INTO gener43_2021_gvillages (_uri text,_creator_uri_user text,_creation_date text,_last_update_uri_user text,_last_update_date text,_parent_auri text,_ordinal_number text,_top_level_auri text,socfor_partic text,vrecord_how text,villa_ad_union text,forest_vilgrs text,tot_hh text,vsitepoint_acc text,vsitepoint_lat text,fcv_partc text,tvillage_name text,vsitepoint_alt text,grcoords_vsite_east text,villa_ad_upzilla text,generated_note_name_170 text,grcoords_vsite_north text,vsitepoint_lng text,villa_dist text)',
+        'INSERT INTO gener43_2021_gvillages (_uri, _creator_uri_user, _creation_date, _last_update_date, _parent_auri, _ordinal_number, _top_level_auri, villa_ad_upzilla, villa_ad_union, tvillage_name, villa_dist, tot_hh, forest_vilgrs, socfor_partic, vsitepoint_lat, vsitepoint_lng) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
         [
           gener43_2021_gvillages._uri || null,
           gener43_2021_gvillages._creator_uri_user || null,
           gener43_2021_gvillages._creation_date || null,
-          gener43_2021_gvillages._last_update_uri_user || null,
           gener43_2021_gvillages._last_update_date || null,
           gener43_2021_gvillages._parent_auri || null,
           gener43_2021_gvillages._ordinal_number || null,
           gener43_2021_gvillages._top_level_auri || null,
-          gener43_2021_gvillages.socfor_partic || null,
-          gener43_2021_gvillages.vrecord_how || null,
-          gener43_2021_gvillages.villa_ad_union || null,
-          gener43_2021_gvillages.forest_vilgrs || null,
-          gener43_2021_gvillages.tot_hh || null,
-          gener43_2021_gvillages.vsitepoint_acc || null,
-          gener43_2021_gvillages.vsitepoint_lat || null,
-          gener43_2021_gvillages.fcv_partc || null,
-          gener43_2021_gvillages.tvillage_name || null,
-          gener43_2021_gvillages.vsitepoint_alt || null,
-          gener43_2021_gvillages.grcoords_vsite_east || null,
           gener43_2021_gvillages.villa_ad_upzilla || null,
-          gener43_2021_gvillages.generated_note_name_170 || null,
-          gener43_2021_gvillages.grcoords_vsite_north || null,
-          gener43_2021_gvillages.vsitepoint_lng || null,
+          gener43_2021_gvillages.villa_ad_union || null,
+          gener43_2021_gvillages.tvillage_name || null,
           gener43_2021_gvillages.villa_dist || null,
+          gener43_2021_gvillages.tot_hh || null,
+          gener43_2021_gvillages.forest_vilgrs || null,
+          gener43_2021_gvillages.socfor_partic || null,
+          gener43_2021_gvillages.vsitepoint_lat || null,
+          gener43_2021_gvillages.vsitepoint_lng || null,
         ],
         (tx, results) => {
           console.log('Data inserted successfully:', results);
@@ -35964,6 +36003,7 @@ export const gener43_2021_gvillages_create = gener43_2021_gvillages => {
     });
   });
 };
+
 // create end
 //---------------------------------------------------------//
 //API Start

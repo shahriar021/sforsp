@@ -78,6 +78,10 @@ import {
   gener43_2021_core_api,
   gener43_2021_core_create,
   gener43_2021_fbli_m_sh1_api,
+  gener43_2021_ghumissues_api,
+  gener43_2021_gnatissues_api,
+  gener43_2021_gvillages_api,
+  gener43_2021_others_info1_api,
   human_issues_api,
   jur_ad_districts_api,
   jur_ad_districts_list,
@@ -97,6 +101,7 @@ import {
   jur_fd_ranges_list,
   mouza_types_api,
   mouza_types_list,
+  natural_issues_api,
   plant27_2021_core_api,
 } from './database/sqlDatabase';
 
@@ -124,8 +129,8 @@ const App = () => {
         await jur_fd_ecozones_api(),
         await jur_fd_ranges_api(),
         await mouza_types_api();
-      await human_issues_api();
       await natural_issues_api();
+      await human_issues_api();
     };
     callCreateApi();
   }, []);
@@ -170,6 +175,86 @@ const App = () => {
   useEffect(() => {
     try {
       console.log('useEffect is being called');
+      const gener43_2021_gnatissues_api_func = async () => {
+        console.log('ggener43_2021_fbli_m_sh1_api_func has been called');
+        try {
+          await gener43_2021_gnatissues_api();
+        } catch (err) {
+          console.log(
+            'Error fetching gener43_2021_fbli_m_sh1_api API data:',
+            err,
+          );
+        }
+      };
+      gener43_2021_gnatissues_api_func();
+    } catch (error) {
+      console.log('Error in useEffect:', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      console.log('useEffect is being called');
+      const gener43_2021_ghumissues_api_func = async () => {
+        console.log('gener43_2021_ghumissues_api has been called');
+        try {
+          await gener43_2021_ghumissues_api();
+        } catch (err) {
+          console.log(
+            'Error fetching gener43_2021_ghumissues_api API data:',
+            err,
+          );
+        }
+      };
+      gener43_2021_ghumissues_api_func();
+    } catch (error) {
+      console.log('Error in useEffect:', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      console.log('useEffect is being called');
+      const gener43_2021_others_info1_api_func = async () => {
+        console.log('gener43_2021_others_info1_api_func has been called');
+        try {
+          await gener43_2021_others_info1_api();
+        } catch (err) {
+          console.log(
+            'Error fetching gener43_2021_others_info1_api_func API data:',
+            err,
+          );
+        }
+      };
+      gener43_2021_others_info1_api_func();
+    } catch (error) {
+      console.log('Error in useEffect:', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      console.log('useEffect is being called');
+      const gener43_2021_gvillages_api_func = async () => {
+        console.log('gener43_2021_gvillages_api_func has been called');
+        try {
+          await gener43_2021_gvillages_api();
+        } catch (err) {
+          console.log(
+            'Error fetching gener43_2021_gvillages_api_func API data:',
+            err,
+          );
+        }
+      };
+      gener43_2021_gvillages_api_func();
+    } catch (error) {
+      console.log('Error in useEffect:', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      console.log('useEffect is being called');
       const plant27_2021_core_api_func = async () => {
         console.log('plant27_2021_core_api_func has been called');
         try {
@@ -183,6 +268,23 @@ const App = () => {
       console.log('Error in useEffect:', error);
     }
   }, []);
+
+  // useEffect(() => {
+  //   try {
+  //     console.log('useEffect is being called');
+  //     const plant27_2021_core_api_func = async () => {
+  //       console.log('plant27_2021_core_api_func has been called');
+  //       try {
+  //         await natural_issues_api();
+  //       } catch (err) {
+  //         console.log('Error fetching plant27_2021_core API data:', err);
+  //       }
+  //     };
+  //     plant27_2021_core_api_func();
+  //   } catch (error) {
+  //     console.log('Error in useEffect:', error);
+  //   }
+  // }, []);
 
   // useEffect(() => {
   //   // Request permission to receive notifications

@@ -14,9 +14,13 @@ import {
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {Dropdown} from 'react-native-element-dropdown';
 import DocumentPicker from 'react-native-document-picker';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {Colors, CommonStyles, Sizes} from '../../constants/styles';
 import Icon from 'react-native-vector-icons/Ionicons';
+import useUUID from '../../hooks/useUUID';
+import useCreateUri from '../../hooks/useCreatUri';
+import {gener43_2021_gvillages_create} from '../../database/sqlDatabase';
+import {getCurrentDateandTime} from '../../hooks/dateUtils';
 
 const beatFour = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -27,6 +31,9 @@ const beatFour = () => {
   const [inputValue5, setInputValue5] = useState('');
   const [inputValue6, setInputValue6] = useState('');
   const [inputValue7, setInputValue7] = useState('');
+  const [inputValue8, setInputValue8] = useState('');
+  const [inputValue9, setInputValue9] = useState('');
+  const [inputValue10, setInputValue10] = useState('');
   const [showPicker, setShowPicker] = useState(false);
   const [date, setDate] = useState(new Date());
   const [selectedForest, setSelectedForest] = useState(null);
@@ -44,7 +51,15 @@ const beatFour = () => {
     conservationParticipants: '',
   });
 
+  const [oridianl, setoridianl] = useState(0);
+  const {initialUUID, generateUUID} = useUUID();
+  const [newUUID, setNewUUID] = useState('');
+
   const navigation = useNavigation();
+  const route = useRoute();
+  const {uId} = route.params;
+  console.log(uId, 'uuid in page 4');
+  const uri = useCreateUri();
 
   const onDocumentPress = async () => {
     const res = await DocumentPicker.pick({
@@ -72,23 +87,62 @@ const beatFour = () => {
     {label: 'Bamboo Forest', value: 'bamboo'},
   ];
 
+  const addNewSave =async () => {
+    const newGeneratedUUID = generateUUID(); // Generate a new UUID
+    setNewUUID(newGeneratedUUID); // If you need it later in the state, set it
+    const updatedOrdinalNumber = oridianl + 1; // Increment the value directly here
+    setoridianl(updatedOrdinalNumber);
+
+    const currentDate = getCurrentDateandTime();
+
+    const dataToInsertadd = {
+      _uri: newGeneratedUUID, // Use the freshly generated UUID
+      _creator_uri_user: uri,
+      _parent_auri: uId,
+      _top_level_auri: uId,
+      _creation_date: currentDate,
+      _last_update_date: currentDate,
+      villa_ad_upzilla: inputValue1,
+      villa_ad_union: inputValue2,
+      tvillage_name: inputValue3,
+      villa_dist: inputValue6,
+      tot_hh: inputValue7,
+      forest_vilgrs: inputValue8,
+      socfor_partic: inputValue9,
+      vsitepoint_lat: inputValue4,
+      vsitepoint_lng: inputValue5,
+      _ordinal_number: updatedOrdinalNumber,
+    };
+
+    console.log(dataToInsertadd, 'datato insert');
+
+    try {
+      await gener43_2021_gvillages_create(dataToInsertadd);
+      console.log('All data inserted successfully');
+    } catch (error) {
+      console.error('Failed to insert data:', error.message || error);
+    }
+  };
+
   const handleInputChange = (name, value) => {
     setInputValues(prevValues => ({...prevValues, [name]: value}));
   };
 
-  const beatFour = () => {
-    console.log(
-      inputValues.upzilla,
-      inputValues.union,
-      inputValues.villages,
-      inputValues.location1,
-      inputValues.location2,
-      inputValues.distance,
-      inputValues.households,
-      inputValues.forestVillagers,
-      inputValues.forestryParticipants,
-      inputValues.conservationParticipants,
-    );
+  const beatFour = async () => {
+    // console.log(
+    //   inputValues.upzilla,
+    //   inputValues.union,
+    //   inputValues.villages,
+    //   inputValues.location1,
+    //   inputValues.location2,
+    //   inputValues.distance,
+    //   inputValues.households,
+    //   inputValues.forestVillagers,
+    //   inputValues.forestryParticipants,
+    //   inputValues.conservationParticipants,
+    // );
+
+    
   };
   const tableData = [];
 
@@ -202,7 +256,7 @@ const beatFour = () => {
 
         <ScrollView style={styles.tableContainer} horizontal={true}>
           {/* Headers */}
-          <View style={{display:"flex",flexDirection:"column"}}>
+          <View style={{display: 'flex', flexDirection: 'column'}}>
             <View style={styles.headerRowContainer}>
               <Text style={styles.headerLabel}>Upzilla (উপজেলা)</Text>
               <Text style={styles.headerSeparator}>|</Text>
@@ -294,8 +348,8 @@ const beatFour = () => {
                   <TextInput
                     style={styles.input}
                     placeholder="Type here Upzilla"
-                    value={inputValues.upzilla}
-                    onChangeText={text => handleInputChange('upzilla', text)}
+                    value={inputValue1}
+                    onChangeText={text => setInputValue1(text)}
                     placeholderTextColor="black"
                   />
 
@@ -303,8 +357,8 @@ const beatFour = () => {
                   <TextInput
                     style={styles.input}
                     placeholder="Type here Union"
-                    value={inputValues.union}
-                    onChangeText={text => handleInputChange('union', text)}
+                    value={inputValue2}
+                    onChangeText={text => setInputValue2(text)}
                     placeholderTextColor="black"
                   />
 
@@ -314,8 +368,8 @@ const beatFour = () => {
                   <TextInput
                     style={styles.input}
                     placeholder="Type here Villages/Para"
-                    value={inputValues.villages}
-                    onChangeText={text => handleInputChange('villages', text)}
+                    value={inputValue3}
+                    onChangeText={text => setInputValue3(text)}
                     placeholderTextColor="black"
                   />
 
@@ -324,16 +378,16 @@ const beatFour = () => {
                   </Text>
                   <TextInput
                     style={styles.input}
-                    placeholder="Location 1"
-                    value={inputValues.location1}
-                    onChangeText={text => handleInputChange('location1', text)}
+                    placeholder="Lat"
+                    value={inputValue4}
+                    onChangeText={text => setInputValue4(text)}
                     placeholderTextColor="black"
                   />
                   <TextInput
                     style={styles.input}
-                    placeholder="Location 2"
-                    value={inputValues.location2}
-                    onChangeText={text => handleInputChange('location2', text)}
+                    placeholder="Lon"
+                    value={inputValue5}
+                    onChangeText={text => setInputValue5(text)}
                     placeholderTextColor="black"
                   />
 
@@ -344,8 +398,8 @@ const beatFour = () => {
                   <TextInput
                     style={styles.input}
                     placeholder="Type here Distance from Beat"
-                    value={inputValues.distance}
-                    onChangeText={text => handleInputChange('distance', text)}
+                    value={inputValue6}
+                    onChangeText={text => setInputValue6(text)}
                     placeholderTextColor="black"
                   />
 
@@ -355,8 +409,8 @@ const beatFour = () => {
                   <TextInput
                     style={styles.input}
                     placeholder="Type here Total Households"
-                    value={inputValues.households}
-                    onChangeText={text => handleInputChange('households', text)}
+                    value={inputValue7}
+                    onChangeText={text => setInputValue7(text)}
                     placeholderTextColor="black"
                   />
 
@@ -367,10 +421,8 @@ const beatFour = () => {
                   <TextInput
                     style={styles.input}
                     placeholder="Type here Number of Forest Villagers"
-                    value={inputValues.forestVillagers}
-                    onChangeText={text =>
-                      handleInputChange('forestVillagers', text)
-                    }
+                    value={inputValue8}
+                    onChangeText={text => setInputValue8(text)}
                     placeholderTextColor="black"
                   />
 
@@ -381,10 +433,8 @@ const beatFour = () => {
                   <TextInput
                     style={styles.input}
                     placeholder="Type here Social Forestry Participants"
-                    value={inputValues.forestryParticipants}
-                    onChangeText={text =>
-                      handleInputChange('forestryParticipants', text)
-                    }
+                    value={inputValue9}
+                    onChangeText={text => setInputValue9(text)}
                     placeholderTextColor="black"
                   />
 
@@ -394,10 +444,8 @@ const beatFour = () => {
                   <TextInput
                     style={styles.input}
                     placeholder="Type here Conservation Forum Participants "
-                    value={inputValues.conservationParticipants}
-                    onChangeText={text =>
-                      handleInputChange('conservationParticipants', text)
-                    }
+                    value={inputValue10}
+                    onChangeText={text => setInputValue10(text)}
                     placeholderTextColor="black"
                   />
 
@@ -409,7 +457,7 @@ const beatFour = () => {
                       justifyContent: 'center',
                       margin: 5,
                     }}>
-                    <Button title="Save" />
+                    <Button title="Save" onPress={addNewSave} />
                     <Button
                       title="Close"
                       onPress={() => setModalVisible(false)}
