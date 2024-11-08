@@ -22,6 +22,7 @@ import MonthPicker from 'react-native-month-year-picker';
 import {
   gener43_2021_core_create,
   gener43_2021_core_list,
+  gener43_2021_fbli_m_sh1_create,
   jur_ad_districts_api,
   jur_ad_districts_list,
   jur_ad_divisions_api,
@@ -44,6 +45,7 @@ import {
 import useUUID from '../../hooks/useUUID';
 
 const beatOne = () => {
+  const [uuidadd2, setuuidadd2] = useState('');
   const [fstLnd, setFstLnd] = useState([]);
   const [fstCircle, setFstCircle] = useState([]);
   const [fstDivision, setFstDivision] = useState([]);
@@ -132,9 +134,52 @@ const beatOne = () => {
     {label: 'Bamboo Forest', value: 'bamboo'},
   ];
 
-  const {md5} = useUUID();
-  const uuid = md5;
-  console.log(uuid, 'uuid-page 1');
+  const {initialUUID, generateUUID} = useUUID();
+  const [newUUID, setNewUUID] = useState('');
+
+  // Function to generate a new UUID
+  const handleGenerateNewUUID = async () => {
+    const newGeneratedUUID = generateUUID(); // Generate a new UUID
+    setNewUUID(newGeneratedUUID); // Update state, if needed elsewhere
+
+    // Use the newly generated UUID directly
+    const dataToInsertadd = {
+      _uri: newGeneratedUUID, // Use newGeneratedUUID directly
+    };
+    console.log(dataToInsertadd, 'datato insert');
+
+    // Delayed insertion logic remains unchanged
+    setTimeout(async () => {
+      try {
+        await gener43_2021_fbli_m_sh1_create(dataToInsertadd);
+        console.log('All data inserted successfully');
+      } catch (error) {
+        console.error('Failed to insert data:', error.message || error);
+      }
+    }, 1000);
+
+    setTimeout(() => console.log(dataToInsertadd), 1000);
+  };
+
+  console.log(initialUUID, 'page -1');
+  console.log(newUUID, 'page -add new');
+
+
+  // const {md5} = useUUID();
+  // const uuid = md5;
+
+  // console.log(uuid, 'uuid-page 1');
+  // const uuid2 = md5;
+  // console.log(uuid2, 'uuid-page 1-2');
+
+  // useEffect(() => {
+  //   if (modalVisible) {
+  //     const uuid2 = md5;
+  //     setuuidadd2(uuid2);
+  //   }
+  // }, [modalVisible]);
+
+  // console.log(uuidadd2, 'uuid-page 1 in add new');
 
   // const formattedDate = (GUSER_DCOLLECTION_RAW) => {
   //   const info = GUSER_DCOLLECTION_RAW; // Assuming info is in the format "11/2/2024"
@@ -370,30 +415,30 @@ const beatOne = () => {
   // console.log(gener43_2021_core_listdata, 'new data');
 
   const beat_one_submit = async () => {
-    console.log(
-      GUSER_DCOLLECTION_RAW,
-      GUSER_USER,
-      GUSER_USER_CELL,
-      GUSER_BEAT_ADDRESS,
-      GUSER_TLOC_FD_BEAT_POINT_LAT,
-      GUSER_TLOC_FD_BEAT_POINT_LNG,
-      FBLI_FA_TLOC_FD_BLOCK,
-      mouza_name,
-      sheet_number,
-      selectedForest,
-      selectedForestCircle,
-      selectedForestDivision,
-      selectedForestrange,
-      selectedForestbeat,
-      selectedDistrict,
-      selectedUpazila,
-      survey_type,
-      md5,
-      'uuid is here.......',
-    );
+    // console.log(
+    //   GUSER_DCOLLECTION_RAW,
+    //   GUSER_USER,
+    //   GUSER_USER_CELL,
+    //   GUSER_BEAT_ADDRESS,
+    //   GUSER_TLOC_FD_BEAT_POINT_LAT,
+    //   GUSER_TLOC_FD_BEAT_POINT_LNG,
+    //   FBLI_FA_TLOC_FD_BLOCK,
+    //   mouza_name,
+    //   sheet_number,
+    //   selectedForest,
+    //   selectedForestCircle,
+    //   selectedForestDivision,
+    //   selectedForestrange,
+    //   selectedForestbeat,
+    //   selectedDistrict,
+    //   selectedUpazila,
+    //   survey_type,
+    //   md5,
+    //   'uuid is here.......',
+    // );
 
     const dataToInsert = {
-      _uri: uuid,
+      _uri: initialUUID,
       GUSER_DCOLLECTION_RAW: GUSER_DCOLLECTION_RAW,
       GUSER_USER: GUSER_USER,
       GUSER_USER_CELL: GUSER_USER_CELL,
@@ -424,7 +469,7 @@ const beatOne = () => {
       console.error('Failed to insert data:', error.message || error); // Log the error message
     }
 
-    navigation.navigate('beatTwo', {uId: uuid});
+    navigation.navigate('beatTwo', {uId: initialUUID});
   };
 
   // console.log('fstDivison:', survey);
@@ -898,7 +943,7 @@ const beatOne = () => {
                       justifyContent: 'center',
                       margin: 5,
                     }}>
-                    <Button title="Save" />
+                    <Button title="Save" onPress={handleGenerateNewUUID} />
                     <Button
                       title="Close"
                       onPress={() => setModalVisible(false)}

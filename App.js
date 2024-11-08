@@ -77,6 +77,7 @@ import consult from './screens/consult/consultDashboard';
 import {
   gener43_2021_core_api,
   gener43_2021_core_create,
+  gener43_2021_fbli_m_sh1_api,
   human_issues_api,
   jur_ad_districts_api,
   jur_ad_districts_list,
@@ -146,7 +147,25 @@ const App = () => {
     }
   }, []);
 
-
+  useEffect(() => {
+    try {
+      console.log('useEffect is being called');
+      const ggener43_2021_fbli_m_sh1_api_func = async () => {
+        console.log('ggener43_2021_fbli_m_sh1_api_func has been called');
+        try {
+          await gener43_2021_fbli_m_sh1_api();
+        } catch (err) {
+          console.log(
+            'Error fetching gener43_2021_fbli_m_sh1_api API data:',
+            err,
+          );
+        }
+      };
+      ggener43_2021_fbli_m_sh1_api_func();
+    } catch (error) {
+      console.log('Error in useEffect:', error);
+    }
+  }, []);
 
   useEffect(() => {
     try {
@@ -164,7 +183,6 @@ const App = () => {
       console.log('Error in useEffect:', error);
     }
   }, []);
-
 
   // useEffect(() => {
   //   // Request permission to receive notifications

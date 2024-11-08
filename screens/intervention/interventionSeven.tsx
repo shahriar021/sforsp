@@ -17,7 +17,12 @@ import DocumentPicker from 'react-native-document-picker';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {Colors, CommonStyles, Fonts, Sizes} from '../../constants/styles';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {months_api, months_list} from '../../database/sqlDatabase';
+import {
+  months_api,
+  months_list,
+  plant27_2021_core_update7,
+} from '../../database/sqlDatabase';
+import MonthPicker from 'react-native-month-year-picker';
 
 const interventionSeven = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -30,12 +35,20 @@ const interventionSeven = () => {
   const [inputValue6, setInputValue6] = useState('');
   const [inputValue7, setInputValue7] = useState('');
   const [showPicker, setShowPicker] = useState(false);
+  const [showPicker2, setShowPicker2] = useState(false);
+  const [showPicker3, setShowPicker3] = useState(false);
   const [date, setDate] = useState(new Date());
   const [selectedForest, setSelectedForest] = useState(null);
   const [selectedMonth, setSelectedMonth] = useState(null);
   const [selectedMonth2, setSelectedMonth2] = useState(null);
   const [selectedMonth3, setSelectedMonth3] = useState(null);
-  const [months, setMonths] = useState(null);
+
+  const [selectedMonths1, setSelectedMonths1] = useState(null);
+  const [selectedMonths2, setSelectedMonths2] = useState(null);
+  const [selectedMonths3, setSelectedMonths3] = useState(null);
+  const [selectedMonths4, setSelectedMonths4] = useState(null);
+
+  const [months, setMonths] = useState([]);
 
   const navigation = useNavigation();
 
@@ -72,17 +85,53 @@ const interventionSeven = () => {
     });
   };
 
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShowPicker(Platform.OS === 'ios'); // Hide the picker after selection (Android closes automatically)
-    setDate(currentDate);
-    const formattedDate = `${currentDate.toLocaleDateString()} ${currentDate.toLocaleTimeString()}`;
-    setInputValue100(formattedDate); // Update TextInput with selected date and time
+  // const onChange = (event, selectedDate) => {
+  //   const currentDate = selectedDate || date;
+  //   setShowPicker(Platform.OS === 'ios'); // Hide the picker after selection (Android closes automatically)
+  //   setDate(currentDate);
+  //   const formattedDate = `${currentDate.toLocaleDateString()} ${currentDate.toLocaleTimeString()}`;
+  //   setInputValue100(formattedDate); // Update TextInput with selected date and time
+  // };
+
+  // const showDatePicker = () => {
+  //   setShowPicker(true); // Show the DateTimePicker when the TextInput is pressed
+  // };
+
+  const handleValueChange = (event, newDate) => {
+    // When user selects a date
+    if (newDate) {
+      const formattedDate = `${newDate.getFullYear()}-${String(
+        newDate.getMonth() + 1,
+      ).padStart(2, '0')}-07`; // Formats as yyyy-mm-07 (sets the day as 07)
+      setInputValue1(formattedDate);
+      // TODO: Save `formattedDate` to the database as needed
+    }
+    setShowPicker(false); // Hide the picker after selection
   };
 
-  const showDatePicker = () => {
-    setShowPicker(true); // Show the DateTimePicker when the TextInput is pressed
+  const handleValueChange2 = (event, newDate) => {
+    if (newDate) {
+      const formattedDate = `${newDate.getFullYear()}-${String(
+        newDate.getMonth() + 1,
+      ).padStart(2, '0')}-07`; // Formats as yyyy-mm-07
+      setInputValue2(formattedDate);
+    }
+    setShowPicker2(false);
   };
+
+  const handleValueChange3 = (event, newDate) => {
+    if (newDate) {
+      const formattedDate = `${newDate.getFullYear()}-${String(
+        newDate.getMonth() + 1,
+      ).padStart(2, '0')}-07`;
+      setInputValue3(formattedDate);
+    }
+    setShowPicker3(false);
+  };
+
+  setTimeout(() => setShowPicker(false), 0);
+  setTimeout(() => setShowPicker2(false), 0);
+  setTimeout(() => setShowPicker3(false), 0);
 
   const forestOptions = [
     {label: 'Tropical Rainforest', value: 'tropical'},
@@ -92,7 +141,7 @@ const interventionSeven = () => {
     {label: 'Bamboo Forest', value: 'bamboo'},
   ];
 
-  const interventionSeven = () => {
+  const interventionSeven = async () => {
     console.log(
       inputValue1,
       inputValue2,
@@ -102,7 +151,25 @@ const interventionSeven = () => {
       inputValue6,
     );
 
-    navigation.navigate('interventionEight' as never,{uId:uid});
+    const dataToInsert = {
+      GTRTS_NUERSERY_RAISING_NURSERY_YEAR_RAW: inputValue1,
+      GTRTS_PLANTATION_SITE_YEAR_RAW: inputValue2,
+      GTRTS_PLANTING_PLANTING_YEAR: inputValue3,
+     
+
+      // NURSERY_OTHERS_INFO_CARETAKER_INFO_CARETAKER_NAME: inputValue1,
+      // NURSERY_OTHERS_INFO_CARETAKER_INFO_CAREKATER_MOBILE: inputValue2,
+      // NURSERY_OTHERS_INFO_CARETAKER_INFO_CARETAKER_NID: inputValue3,
+    };
+
+    try {
+      await plant27_2021_core_update7(uid, dataToInsert);
+      console.log('All data updated successfully');
+    } catch (error) {
+      console.error('Failed to updated data:', error.message || error); // Log the error message
+    }
+
+    // navigation.navigate('interventionEight' as never, {uId: uid});
   };
 
   const tableData = [];
@@ -124,33 +191,39 @@ const interventionSeven = () => {
           10. Silvicultural Calender 10.1. Nursery Raising:
         </Text>
         <Text style={styles.label}>10.1.a. Plan Year:</Text>
-        <TextInput
-          style={styles.input}
-          value={inputValue1}
-          onChangeText={text => setInputValue1(text)}
-          placeholderTextColor="black"
-          placeholder="select Plan Year"
-        />
+        <TouchableOpacity onPress={() => setShowPicker(true)}>
+          <Text style={styles.input}>{inputValue1 || 'Select Plan Year'}</Text>
+        </TouchableOpacity>
+
+        {showPicker && (
+          <MonthPicker
+            onChange={handleValueChange}
+            value={new Date()} // default value for picker, can be adjusted
+            minimumDate={new Date(2000, 0)} // optional
+            maximumDate={new Date(2030, 11)} // optional
+            mode="short" // or "full"
+          />
+        )}
         <Text style={styles.label}>10.1.b. Plan Months:</Text>
-        {/* <Dropdown
-          style={styles.input} // Reusing the input style for consistency
+        <Dropdown
+          style={styles.input}
           data={months}
-          labelField="name"
-          valueField="code"
-          placeholder="Select Plan Months type"
-          value={selectedMonth}
-          onChange={item => setSelectedMonths(item.code)}
-          placeholderStyle={{color: 'black', fontSize: 16}}
+          labelField="name" // Display the 'name' field in the dropdown
+          valueField="code" // Use the 'id' as the value field
+          placeholder="Select month"
+          placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
           selectedTextStyle={{color: 'black', fontSize: 16}}
+          value={selectedMonths1}
+          onChange={item => setSelectedMonths1(item.code)} // Update the selected value based on 'id'
           dropdownStyle={{
-            backgroundColor: 'white',
-            borderRadius: 8,
+            backgroundColor: 'white', // Ensure dropdown has a visible background
+            borderRadius: 8, // Rounded corners for consistency
           }}
           itemTextStyle={{
-            color: 'black',
-            fontSize: 16,
+            color: 'black', // Set item text color to black for visibility
+            fontSize: 16, // Set an appropriate font size
           }}
-        /> */}
+        />
 
         {/* <Dropdown
           style={styles.input} // Reusing the input style for consistency
@@ -173,42 +246,72 @@ const interventionSeven = () => {
         /> */}
         <Text style={styles.label}>10.2. Plantation Site Prearartion:</Text>
         <Text style={styles.label}>10.2.a. Plan Year:</Text>
-        <TextInput
-          style={styles.input}
-          value={inputValue2}
-          onChangeText={text => setInputValue2(text)}
-          placeholderTextColor="black"
-          placeholder="select Plan Year"
-        />
+        <TouchableOpacity onPress={() => setShowPicker2(true)}>
+          <Text style={styles.input}>{inputValue2 || 'Select Plan Year'}</Text>
+        </TouchableOpacity>
+        {showPicker2 && (
+          <MonthPicker
+            onChange={handleValueChange2}
+            value={new Date()}
+            minimumDate={new Date(2000, 0)}
+            maximumDate={new Date(2030, 11)}
+            mode="short"
+          />
+        )}
 
         <Text style={styles.label}>10.2.b. Plan Months:</Text>
-        {/* <Dropdown
-          style={styles.input} // Reusing the input style for consistency
+        <Dropdown
+          style={styles.input}
           data={months}
-          labelField="name"
-          valueField="code"
-          placeholder="Select Plan Months type"
-          value={selectedForest}
-          onChange={item => setSelectedForest(item.value)}
-        /> */}
+          labelField="name" // Display the 'name' field in the dropdown
+          valueField="code" // Use the 'id' as the value field
+          placeholder="Select month"
+          placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
+          selectedTextStyle={{color: 'black', fontSize: 16}}
+          value={selectedMonths1}
+          onChange={item => setSelectedMonths2(item.code)} // Update the selected value based on 'id'
+          dropdownStyle={{
+            backgroundColor: 'white', // Ensure dropdown has a visible background
+            borderRadius: 8, // Rounded corners for consistency
+          }}
+          itemTextStyle={{
+            color: 'black', // Set item text color to black for visibility
+            fontSize: 16, // Set an appropriate font size
+          }}
+        />
         <Text style={styles.label}>10.3. Planting:</Text>
         <Text style={styles.label}>10.3.a. Plan Year:</Text>
-        <TextInput
-          style={styles.input}
-          value={inputValue3}
-          onChangeText={text => setInputValue3(text)}
-          placeholderTextColor="black"
-          placeholder="select Plan Year"
-        />
+        <TouchableOpacity onPress={() => setShowPicker3(true)}>
+          <Text style={styles.input}>{inputValue3 || 'Select Plan Year'}</Text>
+        </TouchableOpacity>
+        {showPicker3 && (
+          <MonthPicker
+            onChange={handleValueChange3}
+            value={new Date()}
+            minimumDate={new Date(2000, 0)}
+            maximumDate={new Date(2030, 11)}
+            mode="short"
+          />
+        )}
         <Text style={styles.label}>10.3.b. Plan Months:</Text>
         <Dropdown
-          style={styles.input} // Reusing the input style for consistency
-          data={forestOptions}
-          labelField="label"
-          valueField="value"
-          placeholder="Select Plan Months type"
-          value={selectedForest}
-          onChange={item => setSelectedForest(item.value)}
+          style={styles.input}
+          data={months}
+          labelField="name" // Display the 'name' field in the dropdown
+          valueField="code" // Use the 'id' as the value field
+          placeholder="Select month"
+          placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
+          selectedTextStyle={{color: 'black', fontSize: 16}}
+          value={selectedMonths1}
+          onChange={item => setSelectedMonths3(item.code)} // Update the selected value based on 'id'
+          dropdownStyle={{
+            backgroundColor: 'white', // Ensure dropdown has a visible background
+            borderRadius: 8, // Rounded corners for consistency
+          }}
+          itemTextStyle={{
+            color: 'black', // Set item text color to black for visibility
+            fontSize: 16, // Set an appropriate font size
+          }}
         />
         {/* <View style={styles.txtNbutton}>
           <Text style={styles.label}>10.4. Weeding and Mulching:</Text>

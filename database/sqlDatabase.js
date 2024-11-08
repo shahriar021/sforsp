@@ -14853,100 +14853,7 @@ export const plant27_2021_core_update5 = (uuid, updatedValues) => {
   });
 };
 
-export const plant27_2021_core_update6=(uuid,updatedValues)=>{
-     return new Promise((resolve, reject) => {
-       console.log('Starting database transaction for update...');
-       database.transaction(
-         tx => {
-           console.log('Inside transaction...');
-
-           // Update the record based on uuid with the provided values
-           tx.executeSql(
-             `update plant27_2021_core 
-             set NURSERY_NURSERY_SITE_NURSERY_LOCATION=?,
-                NURSERY_NURSERY_SITE_PSITEPOINT_NUR_LAT=?,
-                NURSERY_NURSERY_SITE_PSITEPOINT_NUR_LNG=?,
-                NURSERY_NUR_SITE_SELECTION_HILL_SAL_NURSERY_DIS=?,
-                NURSERY_NUR_SITE_SELECTION_HILL_SAL_WATER_SOURCE=?,
-                NURSERY_NUR_SITE_SELECTION_HILL_SAL_HIGH_LAND=?,
-                NURSERY_NUR_SITE_SELECTION_HILL_SAL_DRAINAGE_FAC=?,
-                NURSERY_NUR_SITE_SELECTION_HILL_SAL_NURSERY_AREA=?,
-                NURSERY_NUR_SITE_SELECTION_HILL_SAL_NUESERY_SUNLIGHT=?,
-                NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_NURSERY_DIS2=?,
-                NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA1=?,
-                NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA2=?,
-                NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA3=?,
-                NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA4=?,
-                NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA5=?,
-                NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA6=?,
-                NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA7=?,
-                NURSERY_OTHERS_INFO_CARETAKER_INFO_CARETAKER_NAME=?,
-                NURSERY_OTHERS_INFO_CARETAKER_INFO_CAREKATER_MOBILE=?,
-                NURSERY_OTHERS_INFO_CARETAKER_INFO_CARETAKER_NID=?
-             where _uri=?`,
-             [
-               updatedValues.NURSERY_NURSERY_SITE_NURSERY_LOCATION || null,
-               updatedValues.NURSERY_NURSERY_SITE_PSITEPOINT_NUR_LAT || null,
-               updatedValues.NURSERY_NURSERY_SITE_PSITEPOINT_NUR_LNG || null,
-               updatedValues.NURSERY_NUR_SITE_SELECTION_HILL_SAL_NURSERY_DIS ||
-                 null,
-               updatedValues.NURSERY_NUR_SITE_SELECTION_HILL_SAL_WATER_SOURCE ||
-                 null,
-               updatedValues.NURSERY_NUR_SITE_SELECTION_HILL_SAL_HIGH_LAND ||
-                 null,
-               updatedValues.NURSERY_NUR_SITE_SELECTION_HILL_SAL_DRAINAGE_FAC ||
-                 null,
-               updatedValues.NURSERY_NUR_SITE_SELECTION_HILL_SAL_NURSERY_AREA ||
-                 null,
-               updatedValues.NURSERY_NUR_SITE_SELECTION_HILL_SAL_NUESERY_SUNLIGHT ||
-                 null,
-               updatedValues.NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_NURSERY_DIS2 ||
-                 null,
-               updatedValues.NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA1 ||
-                 null,
-               updatedValues.NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA2 ||
-                 null,
-               updatedValues.NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA3 ||
-                 null,
-               updatedValues.NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA4 ||
-                 null,
-               updatedValues.NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA5 ||
-                 null,
-               updatedValues.NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA6 ||
-                 null,
-               updatedValues.NURSERY_NUR_SITE_SELECTION_COASTAL_AREA_COASTAL_AREA7 ||
-                 null,
-               updatedValues.NURSERY_OTHERS_INFO_CARETAKER_INFO_CARETAKER_NAME ||
-                 null,
-               updatedValues.NURSERY_OTHERS_INFO_CARETAKER_INFO_CAREKATER_MOBILE ||
-                 null,
-               updatedValues.NURSERY_OTHERS_INFO_CARETAKER_INFO_CARETAKER_NID ||
-                 null,
-               uuid, // Use uuid to match the correct record
-             ],
-             (tx, results) => {
-               console.log('Data updated successfully:', results);
-               resolve(results);
-             },
-             (tx, error) => {
-               console.error('Error updating data:', error.message || error);
-               reject(error);
-             },
-           );
-         },
-         error => {
-           console.error('Transaction error:', error.message || error);
-           reject(error);
-         },
-         () => {
-           console.log('Transaction completed successfully.');
-         },
-       );
-     });
-}
-
-
-export const plant27_2021_core_update7 = (uuid, updatedValues) => {
+export const plant27_2021_core_update6 = (uuid, updatedValues) => {
   return new Promise((resolve, reject) => {
     console.log('Starting database transaction for update...');
     database.transaction(
@@ -15037,6 +14944,48 @@ export const plant27_2021_core_update7 = (uuid, updatedValues) => {
   });
 };
 
+export const plant27_2021_core_update7 = (uuid, updatedValues) => {
+  return new Promise((resolve, reject) => {
+    console.log('Starting database transaction for update...');
+    database.transaction(
+      tx => {
+        console.log('Inside transaction...');
+
+        // Update the record based on uuid with the provided values
+        tx.executeSql(
+          `update plant27_2021_core 
+             set GTRTS_NUERSERY_RAISING_NURSERY_YEAR_RAW=?,
+                GTRTS_PLANTATION_SITE_YEAR_RAW=?,
+                GTRTS_PLANTING_PLANTING_YEAR=?
+                
+             where _uri=?`,
+          [
+            updatedValues.GTRTS_NUERSERY_RAISING_NURSERY_YEAR_RAW || null,
+            updatedValues.GTRTS_PLANTATION_SITE_YEAR_RAW || null,
+            updatedValues.GTRTS_PLANTING_PLANTING_YEAR || null,
+
+            uuid, // Use uuid to match the correct record
+          ],
+          (tx, results) => {
+            console.log('Data updated successfully:', results);
+            resolve(results);
+          },
+          (tx, error) => {
+            console.error('Error updating data:', error.message || error);
+            reject(error);
+          },
+        );
+      },
+      error => {
+        console.error('Transaction error:', error.message || error);
+        reject(error);
+      },
+      () => {
+        console.log('Transaction completed successfully.');
+      },
+    );
+  });
+};
 
 export const plant27_2021_core_update8 = (uuid, updatedValues) => {
   return new Promise((resolve, reject) => {
@@ -24949,11 +24898,85 @@ export const gener43_2021_core_test_create = gener43_2021_core_test => {
 // create end
 //---------------------------------------------------------//
 //API Start
+// export const gener43_2021_fbli_m_sh1_api = async () => {
+//   try {
+//     const response = await fetch(
+//       `${baseApi}/gener43_2021_fbli_m_sh1?token=${token}`,
+//     );
+//     const data = await response.json();
+//     console.log('Total gener43_2021_fbli_m_sh1 items from API:', data.length);
+
+//     await new Promise((resolve, reject) => {
+//       database.transaction(tx => {
+//         tx.executeSql(
+//           'DROP TABLE IF EXISTS gener43_2021_fbli_m_sh1',
+//           [],
+//           () => {
+//             console.log('gener43_2021_fbli_m_sh1 table dropped successfully');
+//           },
+//           reject,
+//         );
+
+//         tx.executeSql(
+//           'CREATE TABLE IF NOT EXISTS gener43_2021_fbli_m_sh1 (_uri text,_creator_uri_user text,_creation_date text,_last_update_uri_user text,_last_update_date text,_parent_auri text,_ordinal_number text,_top_level_auri text,mouza1 text,survey_types text,others_s_types text,sheet1 text,generated_note_name_40 text)',
+//           [],
+//           () => {
+//             console.log('gener43_2021_fbli_m_sh1 table created successfully');
+//           },
+//           reject,
+//         );
+
+//         data.forEach(gener43_2021_fbli_m_sh1 => {
+//           tx.executeSql(
+//             'INSERT INTO gener43_2021_fbli_m_sh1 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+//             [
+//               gener43_2021_fbli_m_sh1._uri || null,
+//               gener43_2021_fbli_m_sh1._creator_uri_user || null,
+//               gener43_2021_fbli_m_sh1._creation_date || null,
+//               gener43_2021_fbli_m_sh1._last_update_uri_user || null,
+//               gener43_2021_fbli_m_sh1._last_update_date || null,
+//               gener43_2021_fbli_m_sh1._parent_auri || null,
+//               gener43_2021_fbli_m_sh1._ordinal_number || null,
+//               gener43_2021_fbli_m_sh1._top_level_auri || null,
+//               gener43_2021_fbli_m_sh1.mouza1 || null,
+//               gener43_2021_fbli_m_sh1.survey_types || null,
+//               gener43_2021_fbli_m_sh1.others_s_types || null,
+//               gener43_2021_fbli_m_sh1.sheet1 || null,
+//               gener43_2021_fbli_m_sh1.generated_note_name_40 || null,
+//             ],
+//             (_, resultSet) =>
+//               console.log(
+//                 'gener43_2021_fbli_m_sh1 data inserted successfully',
+//                 resultSet,
+//               ),
+//             (_, error) => {
+//               console.error(
+//                 'Error inserting gener43_2021_fbli_m_sh1 data',
+//                 error,
+//                 gener43_2021_fbli_m_sh1,
+//               );
+//             },
+//           );
+//         });
+//         resolve();
+//       });
+//     });
+//   } catch (error) {
+//     console.error(
+//       'Error fetching gener43_2021_fbli_m_sh1 data from API',
+//       error,
+//     );
+//   }
+// };
 export const gener43_2021_fbli_m_sh1_api = async () => {
   try {
     const response = await fetch(
       `${baseApi}/gener43_2021_fbli_m_sh1?token=${token}`,
     );
+    if (!response.ok) {
+      throw new Error(`Network response was not ok: ${response.statusText}`);
+    }
+
     const data = await response.json();
     console.log('Total gener43_2021_fbli_m_sh1 items from API:', data.length);
 
@@ -24962,24 +24985,49 @@ export const gener43_2021_fbli_m_sh1_api = async () => {
         tx.executeSql(
           'DROP TABLE IF EXISTS gener43_2021_fbli_m_sh1',
           [],
-          () => {
-            console.log('gener43_2021_fbli_m_sh1 table dropped successfully');
+          () =>
+            console.log('gener43_2021_fbli_m_sh1 table dropped successfully'),
+          (_, error) => {
+            console.error('Error dropping table:', error);
+            reject(error); // Reject on error
           },
-          reject,
         );
 
         tx.executeSql(
-          'CREATE TABLE IF NOT EXISTS gener43_2021_fbli_m_sh1 (_uri text,_creator_uri_user text,_creation_date text,_last_update_uri_user text,_last_update_date text,_parent_auri text,_ordinal_number text,_top_level_auri text,mouza1 text,survey_types text,others_s_types text,sheet1 text,generated_note_name_40 text)',
+          `CREATE TABLE IF NOT EXISTS gener43_2021_fbli_m_sh1 (
+             _uri TEXT,
+             _creator_uri_user TEXT,
+             _creation_date TEXT,
+             _last_update_uri_user TEXT,
+             _last_update_date TEXT,
+             _parent_auri TEXT,
+             _ordinal_number TEXT,
+             _top_level_auri TEXT,
+             mouza1 TEXT,
+             survey_types TEXT,
+             others_s_types TEXT,
+             sheet1 TEXT,
+             generated_note_name_40 TEXT
+           )`,
           [],
-          () => {
-            console.log('gener43_2021_fbli_m_sh1 table created successfully');
+          () =>
+            console.log('gener43_2021_fbli_m_sh1 table created successfully'),
+          (_, error) => {
+            console.error('Error creating table:', error);
+            reject(error); // Reject on error
           },
-          reject,
         );
 
+        // Handle data insertion after the table is created
         data.forEach(gener43_2021_fbli_m_sh1 => {
           tx.executeSql(
-            'INSERT INTO gener43_2021_fbli_m_sh1 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            `INSERT INTO gener43_2021_fbli_m_sh1 (
+               _uri, _creator_uri_user, _creation_date, 
+               _last_update_uri_user, _last_update_date, 
+               _parent_auri, _ordinal_number, _top_level_auri, 
+               mouza1, survey_types, others_s_types, sheet1, 
+               generated_note_name_40
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
               gener43_2021_fbli_m_sh1._uri || null,
               gener43_2021_fbli_m_sh1._creator_uri_user || null,
@@ -24996,20 +25044,17 @@ export const gener43_2021_fbli_m_sh1_api = async () => {
               gener43_2021_fbli_m_sh1.generated_note_name_40 || null,
             ],
             (_, resultSet) =>
-              console.log(
-                'gener43_2021_fbli_m_sh1 data inserted successfully',
-                resultSet,
-              ),
+              console.log('Data inserted successfully:', resultSet),
             (_, error) => {
               console.error(
-                'Error inserting gener43_2021_fbli_m_sh1 data',
+                'Error inserting data:',
                 error,
                 gener43_2021_fbli_m_sh1,
               );
             },
           );
         });
-        resolve();
+        resolve(); // Resolve after all operations
       });
     });
   } catch (error) {
@@ -25019,6 +25064,7 @@ export const gener43_2021_fbli_m_sh1_api = async () => {
     );
   }
 };
+
 //API End
 //---------------------------------------------------------//
 // List Start
@@ -25085,30 +25131,39 @@ export const gener43_2021_fbli_m_sh1_delete = async () => {
 //---------------------------------------------------------//
 // create start
 //---------------------------------------------------------//
+// export const gener43_2021_fbli_m_sh1_create = gener43_2021_fbli_m_sh1 => {
+//   return new Promise((resolve, reject) => {
+//     database.transaction(tx => {
+//       // Insert gener43_2021_fbli_m_sh1
+//       tx.executeSql(
+//         'INSERT INTO gener43_2021_fbli_m_sh1 (_uri ) values(?)',
+//         [
+//           gener43_2021_fbli_m_sh1._uri || null,
+
+//         ],
+//         (tx, results) => {
+//           console.log('Data inserted successfully:', results);
+//           resolve(results);
+//         },
+//         (tx, error) => {
+//           console.error('Error inserting data:', error);
+//           reject(error);
+//         },
+//       );
+//     });
+//   });
+// };
 export const gener43_2021_fbli_m_sh1_create = gener43_2021_fbli_m_sh1 => {
   return new Promise((resolve, reject) => {
+    console.log('Attempting to insert _uri:', gener43_2021_fbli_m_sh1._uri);
     database.transaction(tx => {
-      // Insert gener43_2021_fbli_m_sh1
       tx.executeSql(
-        'INSERT INTO gener43_2021_fbli_m_sh1 (_uri text,_creator_uri_user text,_creation_date text,_last_update_uri_user text,_last_update_date text,_parent_auri text,_ordinal_number text,_top_level_auri text,mouza1 text,survey_types text,others_s_types text,sheet1 text,generated_note_name_40 text)',
-        [
-          gener43_2021_fbli_m_sh1._uri || null,
-          gener43_2021_fbli_m_sh1._creator_uri_user || null,
-          gener43_2021_fbli_m_sh1._creation_date || null,
-          gener43_2021_fbli_m_sh1._last_update_uri_user || null,
-          gener43_2021_fbli_m_sh1._last_update_date || null,
-          gener43_2021_fbli_m_sh1._parent_auri || null,
-          gener43_2021_fbli_m_sh1._ordinal_number || null,
-          gener43_2021_fbli_m_sh1._top_level_auri || null,
-          gener43_2021_fbli_m_sh1.mouza1 || null,
-          gener43_2021_fbli_m_sh1.survey_types || null,
-          gener43_2021_fbli_m_sh1.others_s_types || null,
-          gener43_2021_fbli_m_sh1.sheet1 || null,
-          gener43_2021_fbli_m_sh1.generated_note_name_40 || null,
-        ],
+        // Make sure this query matches your database schema
+        'INSERT INTO gener43_2021_fbli_m_sh1 (_uri) VALUES (?)',
+        [gener43_2021_fbli_m_sh1._uri || null],
         (tx, results) => {
           console.log('Data inserted successfully:', results);
-          resolve(results);
+          resolve(results); // results contains info such as rowsAffected and insertId
         },
         (tx, error) => {
           console.error('Error inserting data:', error);
@@ -25118,6 +25173,7 @@ export const gener43_2021_fbli_m_sh1_create = gener43_2021_fbli_m_sh1 => {
     });
   });
 };
+
 // create end
 //---------------------------------------------------------//
 //API Start

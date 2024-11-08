@@ -123,6 +123,10 @@ const interventionEight = () => {
     {label: 'Coniferous Forest', value: 'coniferous'},
     {label: 'Bamboo Forest', value: 'bamboo'},
   ];
+  setTimeout(() => setShowPicker(false), 0);
+  setTimeout(() => setShowPicker2(false), 0);
+  setTimeout(() => setShowPicker3(false), 0);
+  setTimeout(() => setShowPicker4(false), 0);
 
   useEffect(() => {
     const months = async () => {
