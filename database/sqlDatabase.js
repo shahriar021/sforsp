@@ -25155,12 +25155,40 @@ export const gener43_2021_fbli_m_sh1_delete = async () => {
 // };
 export const gener43_2021_fbli_m_sh1_create = gener43_2021_fbli_m_sh1 => {
   return new Promise((resolve, reject) => {
-    console.log('Attempting to insert _uri:', gener43_2021_fbli_m_sh1._uri);
+    console.log(
+      'Attempting to insert _uri:',
+      gener43_2021_fbli_m_sh1._uri,
+      gener43_2021_fbli_m_sh1._creation_date,
+      gener43_2021_fbli_m_sh1._parent_auri,
+      gener43_2021_fbli_m_sh1._top_level_auri,
+      gener43_2021_fbli_m_sh1._creator_uri_user,
+      gener43_2021_fbli_m_sh1.mouza1,
+      gener43_2021_fbli_m_sh1.survey_types,
+      gener43_2021_fbli_m_sh1.sheet1,
+    );
     database.transaction(tx => {
       tx.executeSql(
         // Make sure this query matches your database schema
-        'INSERT INTO gener43_2021_fbli_m_sh1 (_uri) VALUES (?)',
-        [gener43_2021_fbli_m_sh1._uri || null],
+        `INSERT INTO gener43_2021_fbli_m_sh1 (_uri,_creator_uri_user,
+          _parent_auri,
+      _top_level_auri,
+      _creation_date,
+      _last_update_date,
+      mouza1,
+      survey_types,
+      sheet1
+        ) VALUES (?,?,?,?,?,?,?,?,?)`,
+        [
+          gener43_2021_fbli_m_sh1._uri || null,
+          gener43_2021_fbli_m_sh1._creator_uri_user || null,
+          gener43_2021_fbli_m_sh1._parent_auri || null,
+          gener43_2021_fbli_m_sh1._top_level_auri || null,
+          gener43_2021_fbli_m_sh1._creation_date || null,
+          gener43_2021_fbli_m_sh1._last_update_date || null,
+          gener43_2021_fbli_m_sh1.mouza1 || null,
+          gener43_2021_fbli_m_sh1.survey_types || null,
+          gener43_2021_fbli_m_sh1.sheet1 || null,
+        ],
         (tx, results) => {
           console.log('Data inserted successfully:', results);
           resolve(results); // results contains info such as rowsAffected and insertId

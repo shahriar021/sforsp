@@ -43,6 +43,7 @@ import {
   mouza_types_list,
 } from '../../database/sqlDatabase';
 import useUUID from '../../hooks/useUUID';
+import useCreateUri from '../../hooks/useCreatUri';
 
 const beatOne = () => {
   const [uuidadd2, setuuidadd2] = useState('');
@@ -92,6 +93,9 @@ const beatOne = () => {
   const [gener43_2021_core_listdata, setgener43_2021_core_list] = useState([]);
 
   const navigation = useNavigation();
+  //create useruri
+  const uri = useCreateUri();
+  console.log(uri, 'user creation....');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -138,32 +142,69 @@ const beatOne = () => {
   const [newUUID, setNewUUID] = useState('');
 
   // Function to generate a new UUID
+  // const handleGenerateNewUUID = async () => {
+  //   const newGeneratedUUID = generateUUID(); // Generate a new UUID
+  //   setNewUUID(newGeneratedUUID); // Update state, if needed elsewhere
+
+  //   // Use the newly generated UUID directly
+  //   const dataToInsertadd = {
+  //     _uri: newGeneratedUUID, // Use newGeneratedUUID directly
+  //   };
+  //   console.log(dataToInsertadd, 'datato insert');
+
+  //   // Delayed insertion logic remains unchanged
+  //   setTimeout(async () => {
+  //     try {
+  //       await gener43_2021_fbli_m_sh1_create(dataToInsertadd);
+  //       console.log('All data inserted successfully');
+  //     } catch (error) {
+  //       console.error('Failed to insert data:', error.message || error);
+  //     }
+  //   }, 1000);
+
+  //   setTimeout(() => console.log(dataToInsertadd), 1000);
+  // };
+  const getCurrentDateandTime = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    const days = now.getDate().toString().padStart(2, '0');
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+    const miliseconds = now.getMilliseconds().toString().padStart(4, '0');
+
+    return `${year}-${month}-${days} ${hours}:${minutes}:${seconds}:${miliseconds}`;
+  };
+
   const handleGenerateNewUUID = async () => {
     const newGeneratedUUID = generateUUID(); // Generate a new UUID
-    setNewUUID(newGeneratedUUID); // Update state, if needed elsewhere
+    setNewUUID(newGeneratedUUID); // If you need it later in the state, set it
 
-    // Use the newly generated UUID directly
     const dataToInsertadd = {
-      _uri: newGeneratedUUID, // Use newGeneratedUUID directly
+      _uri: newGeneratedUUID, // Use the freshly generated UUID
+      _creator_uri_user: uri,
+      _parent_auri: initialUUID,
+      _top_level_auri: initialUUID,
+      _creation_date: getCurrentDateandTime(),
+      _last_update_date: getCurrentDateandTime(),
+      mouza1: mouza_name,
+      survey_types: survey_type,
+      sheet1: sheet_number,
     };
+
     console.log(dataToInsertadd, 'datato insert');
 
-    // Delayed insertion logic remains unchanged
-    setTimeout(async () => {
-      try {
-        await gener43_2021_fbli_m_sh1_create(dataToInsertadd);
-        console.log('All data inserted successfully');
-      } catch (error) {
-        console.error('Failed to insert data:', error.message || error);
-      }
-    }, 1000);
-
-    setTimeout(() => console.log(dataToInsertadd), 1000);
+    try {
+      await gener43_2021_fbli_m_sh1_create(dataToInsertadd);
+      console.log('All data inserted successfully');
+    } catch (error) {
+      console.error('Failed to insert data:', error.message || error);
+    }
   };
 
   console.log(initialUUID, 'page -1');
   console.log(newUUID, 'page -add new');
-
 
   // const {md5} = useUUID();
   // const uuid = md5;
