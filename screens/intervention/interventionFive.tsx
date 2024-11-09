@@ -28,6 +28,7 @@ import {
   month_inun_lists_api,
   month_inun_lists_list,
   plant27_2021_core_update5,
+  plant27_2021_planting_plan_gplanting_gspp_create,
   planting_modes_api,
   planting_modes_list,
   repro_types_api,
@@ -37,6 +38,9 @@ import {
   yes_no_lists_api,
   yes_no_lists_list,
 } from '../../database/sqlDatabase';
+import {getCurrentDateandTime} from '../../hooks/dateUtils';
+import useUUID from '../../hooks/useUUID';
+import useCreateUri from '../../hooks/useCreatUri';
 
 const interventionFive = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -77,6 +81,11 @@ const interventionFive = () => {
   // const [selectedRepro, setSelectedRepro] = useState(null);
   const [selectedSource, setSelectedSource] = useState(null);
   const [seedlingsRequired, setSeedlingsRequired] = useState('');
+
+  const {initialUUID, generateUUID} = useUUID();
+  const [newUUID, setNewUUID] = useState('');
+  const [oridianl, setoridianl] = useState(0);
+  const uri = useCreateUri();
 
   const navigation = useNavigation();
   const route = useRoute();
@@ -291,6 +300,36 @@ const interventionFive = () => {
 
     sources();
   }, []);
+
+  const addNew = async () => {
+    const newGeneratedUUID = generateUUID(); // Generate a new UUID
+    setNewUUID(newGeneratedUUID); // If you need it later in the state, set it
+    const updatedOrdinalNumber = oridianl + 1; // Increment the value directly here
+    setoridianl(updatedOrdinalNumber);
+
+    const dataToInsertadd = {
+      _uri: newGeneratedUUID, // Use the freshly generated UUID
+      _creator_uri_user: uri,
+      _parent_auri: uid,
+      _top_level_auri: uid,
+      _creation_date: getCurrentDateandTime(),
+      _last_update_date: getCurrentDateandTime(),
+      pref_species: inputValue5,
+      pref_repro_type: selectedRepro,
+      pref_source: selectedSource,
+      pref_nrseedlings: seedlingsRequired,
+      _ordinal_number: updatedOrdinalNumber,
+    };
+
+    console.log(dataToInsertadd, 'datato insert');
+
+    try {
+      await plant27_2021_planting_plan_gplanting_gspp_create(dataToInsertadd);
+      console.log('All data inserted successfully');
+    } catch (error) {
+      console.error('Failed to insert data:', error.message || error);
+    }
+  };
 
   const interventionFiveSubmit = async () => {
     console.log(
@@ -812,7 +851,7 @@ const interventionFive = () => {
                         justifyContent: 'center',
                         margin: 5,
                       }}>
-                      <Button title="Save" />
+                      <Button title="Save" onPress={addNew} />
                       <Button
                         title="Close"
                         onPress={() => setModalVisible(false)}

@@ -14072,18 +14072,18 @@ export const gener43_2021_others_info1_create = gener43_2021_others_info1 => {
           gener43_2021_others_info1._uri || null,
           gener43_2021_others_info1._creator_uri_user || null,
           gener43_2021_others_info1._creation_date || null,
-          
+
           gener43_2021_others_info1._last_update_date || null,
           gener43_2021_others_info1._parent_auri || null,
           gener43_2021_others_info1._ordinal_number || null,
           gener43_2021_others_info1._top_level_auri || null,
-          
+
           gener43_2021_others_info1.others_joining_date || null,
           gener43_2021_others_info1.others_nid || null,
           gener43_2021_others_info1.others_rank || null,
           gener43_2021_others_info1.others_cell || null,
           gener43_2021_others_info1.name_of_others || null,
-          
+
           gener43_2021_others_info1.others_mail || null,
         ],
         (tx, results) => {
@@ -15173,12 +15173,51 @@ export const plant27_2021_filling_month_delete = async () => {
 //---------------------------------------------------------//
 // create start
 //---------------------------------------------------------//
+// export const plant27_2021_filling_month_create = plant27_2021_filling_month => {
+//   return new Promise((resolve, reject) => {
+//     database.transaction(tx => {
+//       // Insert plant27_2021_filling_month
+//       tx.executeSql(
+//         `INSERT INTO plant27_2021_filling_month
+// (_uri, _creator_uri_user, _creation_date, _last_update_uri_user, _last_update_date, _parent_auri, _ordinal_number, _top_level_auri, value)
+// VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
+// `,
+//         [
+//           plant27_2021_filling_month._uri || null,
+//           plant27_2021_filling_month._creator_uri_user || null,
+//           plant27_2021_filling_month._creation_date || null,
+//           plant27_2021_filling_month._last_update_uri_user || null,
+//           plant27_2021_filling_month._last_update_date || null,
+//           plant27_2021_filling_month._parent_auri || null,
+//           plant27_2021_filling_month._ordinal_number || null,
+//           plant27_2021_filling_month._top_level_auri || null,
+//           plant27_2021_filling_month.value || null,
+//         ],
+//         (tx, results) => {
+//           console.log('Data inserted successfully:', results);
+//           resolve(results);
+//         },
+//         (tx, error) => {
+//           console.error('Error inserting data:', error);
+//           reject(error);
+//         },
+//       );
+//     });
+//   });
+// };
 export const plant27_2021_filling_month_create = plant27_2021_filling_month => {
   return new Promise((resolve, reject) => {
     database.transaction(tx => {
-      // Insert plant27_2021_filling_month
+      console.log(
+        'Starting transaction for inserting into plant27_2021_filling_month',
+      );
+      console.log('Data to be inserted:', plant27_2021_filling_month);
+
+      // Insert data into plant27_2021_filling_month table
       tx.executeSql(
-        'INSERT INTO plant27_2021_filling_month (_uri text,_creator_uri_user text,_creation_date text,_last_update_uri_user text,_last_update_date text,_parent_auri text,_ordinal_number text,_top_level_auri text,value text)',
+        `INSERT INTO plant27_2021_filling_month 
+        (_uri, _creator_uri_user, _creation_date, _last_update_uri_user, _last_update_date, _parent_auri, _ordinal_number, _top_level_auri, value) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         [
           plant27_2021_filling_month._uri || null,
           plant27_2021_filling_month._creator_uri_user || null,
@@ -15191,17 +15230,21 @@ export const plant27_2021_filling_month_create = plant27_2021_filling_month => {
           plant27_2021_filling_month.value || null,
         ],
         (tx, results) => {
-          console.log('Data inserted successfully:', results);
+          console.log('Data inserted successfully (filling month):', results);
           resolve(results);
         },
         (tx, error) => {
-          console.error('Error inserting data:', error);
+          console.error(
+            'Error inserting data into plant27_2021_filling_month:',
+            error,
+          );
           reject(error);
         },
       );
     });
   });
 };
+
 // create end
 //---------------------------------------------------------//
 //API Start
@@ -16321,7 +16364,10 @@ export const plant27_2021_gtrts_vacancy_filling_create =
       database.transaction(tx => {
         // Insert plant27_2021_gtrts_vacancy_filling
         tx.executeSql(
-          'INSERT INTO plant27_2021_gtrts_vacancy_filling (_uri text,_creator_uri_user text,_creation_date text,_last_update_uri_user text,_last_update_date text,_parent_auri text,_ordinal_number text,_top_level_auri text,generated_note_name_242 text,filling_year_raw text,filling_year text)',
+          `INSERT INTO plant27_2021_gtrts_vacancy_filling 
+(_uri, _creator_uri_user, _creation_date, _last_update_uri_user, _last_update_date, _parent_auri, _ordinal_number, _top_level_auri, generated_note_name_242, filling_year_raw, filling_year) 
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+`,
           [
             plant27_2021_gtrts_vacancy_filling._uri || null,
             plant27_2021_gtrts_vacancy_filling._creator_uri_user || null,
@@ -16497,7 +16543,10 @@ export const plant27_2021_gtrts_weeding_create = plant27_2021_gtrts_weeding => {
     database.transaction(tx => {
       // Insert plant27_2021_gtrts_weeding
       tx.executeSql(
-        'INSERT INTO plant27_2021_gtrts_weeding (_uri text,_creator_uri_user text,_creation_date text,_last_update_uri_user text,_last_update_date text,_parent_auri text,_ordinal_number text,_top_level_auri text,generated_note_name_236 text,weeding_cycle text,weeding_year text,weeding_year_raw text)',
+        `INSERT INTO plant27_2021_gtrts_weeding 
+(_uri, _creator_uri_user, _creation_date, _last_update_uri_user, _last_update_date, _parent_auri, _ordinal_number, _top_level_auri, generated_note_name_236, weeding_cycle, weeding_year, weeding_year_raw) 
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+`,
         [
           plant27_2021_gtrts_weeding._uri || null,
           plant27_2021_gtrts_weeding._creator_uri_user || null,
@@ -16513,7 +16562,7 @@ export const plant27_2021_gtrts_weeding_create = plant27_2021_gtrts_weeding => {
           plant27_2021_gtrts_weeding.weeding_year_raw || null,
         ],
         (tx, results) => {
-          console.log('Data inserted successfully:', results);
+          console.log('Data inserted successfully gtrts:', results);
           resolve(results);
         },
         (tx, error) => {
@@ -33153,7 +33202,10 @@ export const sufal192020_weeding_month_create = sufal192020_weeding_month => {
     database.transaction(tx => {
       // Insert sufal192020_weeding_month
       tx.executeSql(
-        'INSERT INTO sufal192020_weeding_month (_uri text,_creator_uri_user text,_creation_date text,_last_update_uri_user text,_last_update_date text,_parent_auri text,_ordinal_number text,_top_level_auri text,value text)',
+        `INSERT INTO sufal192020_weeding_month 
+(_uri, _creator_uri_user, _creation_date, _last_update_uri_user, _last_update_date, _parent_auri, _ordinal_number, _top_level_auri, value) 
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
+`,
         [
           sufal192020_weeding_month._uri || null,
           sufal192020_weeding_month._creator_uri_user || null,
@@ -36864,7 +36916,9 @@ export const plant27_2021_community_month_create =
       database.transaction(tx => {
         // Insert plant27_2021_community_month
         tx.executeSql(
-          'INSERT INTO plant27_2021_community_month (_uri text,_creator_uri_user text,_creation_date text,_last_update_uri_user text,_last_update_date text,_parent_auri text,_ordinal_number text,_top_level_auri text,value text)',
+          `INSERT INTO plant27_2021_community_month 
+  (_uri, _creator_uri_user, _creation_date, _last_update_uri_user, _last_update_date, _parent_auri, _ordinal_number, _top_level_auri, value) 
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
           [
             plant27_2021_community_month._uri || null,
             plant27_2021_community_month._creator_uri_user || null,
@@ -38571,7 +38625,10 @@ export const plant27_2021_gregen_spp_regen_create =
       database.transaction(tx => {
         // Insert plant27_2021_gregen_spp_regen
         tx.executeSql(
-          'INSERT INTO plant27_2021_gregen_spp_regen (_uri text,_creator_uri_user text,_creation_date text,_last_update_uri_user text,_last_update_date text,_parent_auri text,_ordinal_number text,_top_level_auri text,num_trees text,rspp_name text,generated_note_name_95 text,rspp_nr_nat text)',
+          `INSERT INTO plant27_2021_gregen_spp_regen 
+(_uri, _creator_uri_user, _creation_date, _last_update_uri_user, _last_update_date, _parent_auri, _ordinal_number, _top_level_auri, num_trees, rspp_name, generated_note_name_95, rspp_nr_nat) 
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+`,
           [
             plant27_2021_gregen_spp_regen._uri || null,
             plant27_2021_gregen_spp_regen._creator_uri_user || null,
@@ -38753,7 +38810,10 @@ export const plant27_2021_gr_regen_create = plant27_2021_gr_regen => {
     database.transaction(tx => {
       // Insert plant27_2021_gr_regen
       tx.executeSql(
-        'INSERT INTO plant27_2021_gr_regen (_uri text,_creator_uri_user text,_creation_date text,_last_update_uri_user text,_last_update_date text,_parent_auri text,_ordinal_number text,_top_level_auri text,reg_avg_seedling_per_ha_per_plot text,gregen_gregen_plot_crown_closure text,reg_avg_seedling_per_plot text,gregen_gregen_plot_generated_note_name_80 text,reg_avg_trees_per_ha_per_plot text,generated_note_name_106 text,generated_note_name_103 text,gregen_gregen_plot_rsitepoint_alt text,gregen_gregen_plot_grcoords_re_rsite_east text,gregen_gregen_plot_rsitepoint_lng text,gregen_gregen_plot_regen_plot_no text,gregen_gregen_plot_rsitepoint_lat text,gregen_gregen_plot_rsitepoint_acc text,reg_avg_trees_per_plot text,gregen_gregen_plot_rrecord_how text,gregen_gregen_plot_grcoords_re_rsite_north text)',
+        `INSERT INTO plant27_2021_gr_regen 
+(_uri, _creator_uri_user, _creation_date, _last_update_uri_user, _last_update_date, _parent_auri, _ordinal_number, _top_level_auri, reg_avg_seedling_per_ha_per_plot, gregen_gregen_plot_crown_closure, reg_avg_seedling_per_plot, gregen_gregen_plot_generated_note_name_80, reg_avg_trees_per_ha_per_plot, generated_note_name_106, generated_note_name_103, gregen_gregen_plot_rsitepoint_alt, gregen_gregen_plot_grcoords_re_rsite_east, gregen_gregen_plot_rsitepoint_lng, gregen_gregen_plot_regen_plot_no, gregen_gregen_plot_rsitepoint_lat, gregen_gregen_plot_rsitepoint_acc, reg_avg_trees_per_plot, gregen_gregen_plot_rrecord_how, gregen_gregen_plot_grcoords_re_rsite_north) 
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+`,
         [
           plant27_2021_gr_regen._uri || null,
           plant27_2021_gr_regen._creator_uri_user || null,
@@ -39143,7 +39203,10 @@ export const plant27_2021_gtrts_community_protection_create =
       database.transaction(tx => {
         // Insert plant27_2021_gtrts_community_protection
         tx.executeSql(
-          'INSERT INTO plant27_2021_gtrts_community_protection (_uri text,_creator_uri_user text,_creation_date text,_last_update_uri_user text,_last_update_date text,_parent_auri text,_ordinal_number text,_top_level_auri text,generated_note_name_257 text,community_year_raw text,community_year text)',
+          `INSERT INTO plant27_2021_gtrts_community_protection 
+(_uri, _creator_uri_user, _creation_date, _last_update_uri_user, _last_update_date, _parent_auri, _ordinal_number, _top_level_auri, generated_note_name_257, community_year_raw, community_year)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+`,
           [
             plant27_2021_gtrts_community_protection._uri || null,
             plant27_2021_gtrts_community_protection._creator_uri_user || null,
@@ -40255,7 +40318,11 @@ export const plant27_2021_location_data_m_sh1_create =
       database.transaction(tx => {
         // Insert plant27_2021_location_data_m_sh1
         tx.executeSql(
-          'INSERT INTO plant27_2021_location_data_m_sh1 (_uri text,_creator_uri_user text,_creation_date text,_last_update_uri_user text,_last_update_date text,_parent_auri text,_ordinal_number text,_top_level_auri text,mouza1 text,generated_note_name_45 text,survey_types text,others_s_types text,sheet1 text,plot_no text)',
+          `INSERT INTO plant27_2021_location_data_m_sh1 
+(_uri, _creator_uri_user, _creation_date, _last_update_uri_user, _last_update_date, _parent_auri, _ordinal_number, _top_level_auri, mouza1, generated_note_name_45, survey_types, others_s_types, sheet1, plot_no)
+VALUES 
+(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+`,
           [
             plant27_2021_location_data_m_sh1._uri || null,
             plant27_2021_location_data_m_sh1._creator_uri_user || null,
@@ -40973,7 +41040,10 @@ export const plant27_2021_planting_plan_gplanting_gspp_create =
       database.transaction(tx => {
         // Insert plant27_2021_planting_plan_gplanting_gspp
         tx.executeSql(
-          'INSERT INTO plant27_2021_planting_plan_gplanting_gspp (_uri text,_creator_uri_user text,_creation_date text,_last_update_uri_user text,_last_update_date text,_parent_auri text,_ordinal_number text,_top_level_auri text,pref_source text,generated_note_name_156 text,pref_other_source text,pref_species text,pref_repro_type text,pref_nrseedlings text)',
+          `INSERT INTO plant27_2021_planting_plan_gplanting_gspp 
+(_uri, _creator_uri_user, _creation_date, _last_update_uri_user, _last_update_date, _parent_auri, _ordinal_number, _top_level_auri, pref_source, generated_note_name_156, pref_other_source, pref_species, pref_repro_type, pref_nrseedlings) 
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+`,
           [
             plant27_2021_planting_plan_gplanting_gspp._uri || null,
             plant27_2021_planting_plan_gplanting_gspp._creator_uri_user || null,
@@ -41149,7 +41219,10 @@ export const plant27_2021_rphotoextra_create = plant27_2021_rphotoextra => {
     database.transaction(tx => {
       // Insert plant27_2021_rphotoextra
       tx.executeSql(
-        'INSERT INTO plant27_2021_rphotoextra (_uri text,_creator_uri_user text,_creation_date text,_last_update_uri_user text,_last_update_date text,_parent_auri text,_ordinal_number text,_top_level_auri text,ppiclocationextra_alt text,xpic_bearing text,generated_note_name_65 text,ppiclocationextra_lng text,ppiclocationextra_acc text,ppiclocationextra_lat text)',
+        `INSERT INTO plant27_2021_rphotoextra 
+(_uri, _creator_uri_user, _creation_date, _last_update_uri_user, _last_update_date, _parent_auri, _ordinal_number, _top_level_auri, ppiclocationextra_alt, xpic_bearing, generated_note_name_65, ppiclocationextra_lng, ppiclocationextra_acc, ppiclocationextra_lat) 
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+`,
         [
           plant27_2021_rphotoextra._uri || null,
           plant27_2021_rphotoextra._creator_uri_user || null,
@@ -41312,10 +41385,28 @@ export const plant27_2021_s_site_delete = async () => {
 //---------------------------------------------------------//
 export const plant27_2021_s_site_create = plant27_2021_s_site => {
   return new Promise((resolve, reject) => {
+    console.log(
+      plant27_2021_s_site._uri,
+      plant27_2021_s_site._creator_uri_user,
+      plant27_2021_s_site._creation_date,
+      plant27_2021_s_site._last_update_uri_user,
+      plant27_2021_s_site._last_update_date,
+      plant27_2021_s_site._parent_auri,
+      plant27_2021_s_site._ordinal_number,
+      plant27_2021_s_site._top_level_auri,
+      plant27_2021_s_site.trace_gpx,
+      plant27_2021_s_site.polyline,
+      plant27_2021_s_site.totarea_ha,
+      plant27_2021_s_site.tmain_polytype,
+      plant27_2021_s_site.polytrace,
+      plant27_2021_s_site.generated_note_name_54,
+      plant27_2021_s_site.totarea_ac,
+      'in backend',
+    );
     database.transaction(tx => {
       // Insert plant27_2021_s_site
       tx.executeSql(
-        'INSERT INTO plant27_2021_s_site (_uri text,_creator_uri_user text,_creation_date text,_last_update_uri_user text,_last_update_date text,_parent_auri text,_ordinal_number text,_top_level_auri text,trace_gpx text,polyline text,totarea_ha text,tmain_polytype text,polytrace text,generated_note_name_54 text,totarea_ac text)',
+        'INSERT INTO plant27_2021_s_site (_uri ,_creator_uri_user ,_creation_date ,_last_update_uri_user ,_last_update_date ,_parent_auri ,_ordinal_number ,_top_level_auri ,trace_gpx ,polyline ,totarea_ha ,tmain_polytype ,polytrace ,generated_note_name_54 ,totarea_ac )values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
         [
           plant27_2021_s_site._uri || null,
           plant27_2021_s_site._creator_uri_user || null,
@@ -41487,12 +41578,60 @@ export const plant27_2021_weeding_month_delete = async () => {
 //---------------------------------------------------------//
 // create start
 //---------------------------------------------------------//
+// export const plant27_2021_weeding_month_create = plant27_2021_weeding_month => {
+//   return new Promise((resolve, reject) => {
+//     database.transaction(tx => {
+//       // Insert plant27_2021_weeding_month
+//       tx.executeSql(
+//         `INSERT INTO plant27_2021_weeding_month
+// (_uri, _creator_uri_user, _creation_date, _last_update_uri_user, _last_update_date, _parent_auri, _ordinal_number, _top_level_auri, value)
+// VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
+// `,
+//         [
+//           plant27_2021_weeding_month._uri || null,
+//           plant27_2021_weeding_month._creator_uri_user || null,
+//           plant27_2021_weeding_month._creation_date || null,
+//           plant27_2021_weeding_month._last_update_uri_user || null,
+//           plant27_2021_weeding_month._last_update_date || null,
+//           plant27_2021_weeding_month._parent_auri || null,
+//           plant27_2021_weeding_month._ordinal_number || null,
+//           plant27_2021_weeding_month._top_level_auri || null,
+//           plant27_2021_weeding_month.value || null,
+//         ],
+//         (tx, results) => {
+//           console.log('Data inserted successfully of month:', results);
+//           resolve(results);
+//         },
+//         (tx, error) => {
+//           console.error(
+//             'Error inserting data of weeding month:',
+//             error.message || error,
+//           );
+//           reject(error);
+//         },
+//       );
+//     });
+//   });
+// };
+
 export const plant27_2021_weeding_month_create = plant27_2021_weeding_month => {
+  console.log('Starting weeding month create');
+  console.log('URI:', plant27_2021_weeding_month._uri);
+  console.log(
+    'Creator URI User:',
+    plant27_2021_weeding_month._creator_uri_user,
+  );
+  console.log('Creation Date:', plant27_2021_weeding_month._creation_date);
+  console.log('Value:', plant27_2021_weeding_month.value);
+  // Repeat for other fields
+
   return new Promise((resolve, reject) => {
     database.transaction(tx => {
-      // Insert plant27_2021_weeding_month
+      console.log('Transaction started');
       tx.executeSql(
-        'INSERT INTO plant27_2021_weeding_month (_uri text,_creator_uri_user text,_creation_date text,_last_update_uri_user text,_last_update_date text,_parent_auri text,_ordinal_number text,_top_level_auri text,value text)',
+        `INSERT INTO plant27_2021_weeding_month 
+        (_uri, _creator_uri_user, _creation_date, _last_update_uri_user, _last_update_date, _parent_auri, _ordinal_number, _top_level_auri, value) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);`,
         [
           plant27_2021_weeding_month._uri || null,
           plant27_2021_weeding_month._creator_uri_user || null,
@@ -41505,17 +41644,18 @@ export const plant27_2021_weeding_month_create = plant27_2021_weeding_month => {
           plant27_2021_weeding_month.value || null,
         ],
         (tx, results) => {
-          console.log('Data inserted successfully:', results);
+          console.log('Data inserted successfully (weeding month):', results);
           resolve(results);
         },
         (tx, error) => {
-          console.error('Error inserting data:', error);
+          console.error('Error inserting data of weeding month:', error);
           reject(error);
         },
       );
     });
   });
 };
+
 // create end
 //---------------------------------------------------------//
 //API Start

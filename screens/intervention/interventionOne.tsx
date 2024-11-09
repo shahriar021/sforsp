@@ -39,8 +39,12 @@ import {
   mouza_types_api,
   mouza_types_list,
   plant27_2021_core_create,
+  plant27_2021_location_data_m_sh1_create,
+  plant27_2021_location_data_m_sh1_list,
 } from '../../database/sqlDatabase';
 import useUUID from '../../hooks/useUUID';
+import {getCurrentDateandTime} from '../../hooks/dateUtils';
+import useCreateUri from '../../hooks/useCreatUri';
 
 const interventionOne = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -66,6 +70,9 @@ const interventionOne = () => {
   const [inputValue7, setInputValue7] = useState('');
   const [inputValue8, setInputValue8] = useState('');
   const [inputValue9, setInputValue9] = useState('');
+  const [inputValue10, setInputValue10] = useState('');
+  const [inputValue11, setInputValue11] = useState('');
+  const [inputValue12, setInputValue12] = useState('');
   const [showPicker, setShowPicker] = useState(false);
   const [date, setDate] = useState(new Date());
 
@@ -80,6 +87,11 @@ const interventionOne = () => {
   const [selectedDivision, setSelectedDivision] = useState(null);
   const [selectedDistrict, setSelectedDistrict] = useState(null);
   const [selectedUpazila, setSelectedUpazila] = useState(null);
+  const [testData, setTestData] = useState([]);
+  const {initialUUID, generateUUID} = useUUID();
+  const [newUUID, setNewUUID] = useState('');
+  const [oridianl, setoridianl] = useState(0);
+  const uri = useCreateUri();
 
   const navigation = useNavigation();
 
@@ -103,7 +115,7 @@ const interventionOne = () => {
 
         // const jsonData = await response.json();
         // // console.log(jsonData, 'fetched jsonData'); // Log the fetched data
-        await jur_fd_ecozones_api();
+        //await jur_fd_ecozones_api();
         const data = await jur_fd_ecozones_list();
         setFstLnd(data); // Update state with the fetched data
       } catch (error) {
@@ -127,7 +139,7 @@ const interventionOne = () => {
 
         // const jsonData = await response.json();
         // console.log(jsonData, 'fetched jsonData'); // Log the fetched data
-        await jur_fd_circles_api();
+        //await jur_fd_circles_api();
         const data = await jur_fd_circles_list();
         setFstCircle(data); // Update state with the fetched data
       } catch (error) {
@@ -151,7 +163,7 @@ const interventionOne = () => {
 
         // const jsonData = await response.json();
         // console.log(jsonData, 'fetched jsonData'); // Log the fetched data
-        await jur_fd_divisions_api();
+        //await jur_fd_divisions_api();
         const data = await jur_fd_divisions_list();
         setFstDivision(data); // Update state with the fetched data
       } catch (error) {
@@ -175,7 +187,7 @@ const interventionOne = () => {
 
         // const jsonData = await response.json();
         // console.log(jsonData, 'fetched jsonData'); // Log the fetched data
-        await jur_fd_ranges_api();
+        //await jur_fd_ranges_api();
         const data = await jur_fd_ranges_list();
         setFstRange(data); // Update state with the fetched data
       } catch (error) {
@@ -199,7 +211,7 @@ const interventionOne = () => {
 
         // const jsonData = await response.json();
         // console.log(jsonData, 'fetched jsonData'); // Log the fetched data
-        await jur_fd_beats_api();
+        // await jur_fd_beats_api();
         const data = await jur_fd_beats_list();
         setFstbeat(data); // Update state with the fetched data
       } catch (error) {
@@ -224,7 +236,7 @@ const interventionOne = () => {
         // const jsonData = await response.json();
         // console.log(jsonData, 'fetched jsonData'); // Log the fetched data
 
-        await jur_ad_divisions_api();
+        //await jur_ad_divisions_api();
         const data = await jur_ad_divisions_list();
         setDivision(data); // Update state with the fetched data
       } catch (error) {
@@ -272,7 +284,7 @@ const interventionOne = () => {
 
         // const jsonData = await response.json();
         // console.log(jsonData, 'fetched jsonData'); // Log the fetched data
-        await jur_ad_upazillas_api();
+        // await jur_ad_upazillas_api();
         const data = await jur_ad_upazillas_list();
         setUpazila(data); // Update state with the fetched data
       } catch (error) {
@@ -393,10 +405,52 @@ const interventionOne = () => {
       console.error('Failed to insert data:', error.message || error); // Log the error message
     }
 
-    navigation.navigate('interventionTwo', {uId: uuid});
+    navigation.navigate('interventionTwo', {uId: initialUUID});
   };
 
   const tableData = [];
+
+  const addNew = async () => {
+    const newGeneratedUUID = generateUUID(); // Generate a new UUID
+    setNewUUID(newGeneratedUUID); // If you need it later in the state, set it
+    const updatedOrdinalNumber = oridianl + 1; // Increment the value directly here
+    setoridianl(updatedOrdinalNumber);
+
+    const dataToInsertadd = {
+      _uri: newGeneratedUUID, // Use the freshly generated UUID
+      _creator_uri_user: uri,
+      _parent_auri: initialUUID,
+      _top_level_auri: initialUUID,
+      _creation_date: getCurrentDateandTime(),
+      _last_update_date: getCurrentDateandTime(),
+      mouza1: inputValue10,
+      survey_types: selectedSurvey,
+      sheet1: inputValue11,
+      plot_no: inputValue12,
+      _ordinal_number: updatedOrdinalNumber,
+    };
+
+    console.log(dataToInsertadd, 'datato insert');
+
+    try {
+      await plant27_2021_location_data_m_sh1_create(dataToInsertadd);
+      console.log('All data inserted successfully');
+    } catch (error) {
+      console.error('Failed to insert data:', error.message || error);
+    }
+  };
+
+  //-----------------just to check
+
+  // useEffect(() => {
+  //   const getData = async () => {
+  //     const data = await plant27_2021_location_data_m_sh1_list();
+  //     setTestData(data);
+  //   };
+  //   getData();
+  // }, []);
+
+  // setTimeout(() => console.log(testData, 'test data....'), 5000);
 
   return (
     <>
@@ -760,9 +814,9 @@ const interventionOne = () => {
                   </Text>
                   <TextInput
                     style={styles.input}
-                    value={inputValue7}
+                    value={inputValue10}
                     placeholder="Enter Mouza Name"
-                    onChangeText={text => setInputValue7(text)}
+                    onChangeText={text => setInputValue10(text)}
                   />
 
                   <Text style={styles.label}>
@@ -793,9 +847,9 @@ const interventionOne = () => {
                   </Text>
                   <TextInput
                     style={styles.input}
-                    value={inputValue8}
+                    value={inputValue11}
                     placeholder="Enter Sheet Number"
-                    onChangeText={text => setInputValue8(text)}
+                    onChangeText={text => setInputValue11(text)}
                     placeholderTextColor="black"
                     placeholder="select"
                   />
@@ -805,9 +859,9 @@ const interventionOne = () => {
                   </Text>
                   <TextInput
                     style={styles.input}
-                    value={inputValue9}
+                    value={inputValue12}
                     placeholder="Enter Plot Number"
-                    onChangeText={text => setInputValue9(text)}
+                    onChangeText={text => setInputValue12(text)}
                   />
 
                   {/* Close modal button */}
@@ -818,7 +872,7 @@ const interventionOne = () => {
                       justifyContent: 'center',
                       margin: 5,
                     }}>
-                    <Button title="Save" />
+                    <Button title="Save" onPress={addNew} />
                     <Button
                       title="Close"
                       onPress={() => setModalVisible(false)}

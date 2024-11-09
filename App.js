@@ -102,7 +102,19 @@ import {
   mouza_types_api,
   mouza_types_list,
   natural_issues_api,
+  plant27_2021_community_month_api,
   plant27_2021_core_api,
+  plant27_2021_filling_month_api,
+  plant27_2021_gr_regen_api,
+  plant27_2021_gregen_spp_regen_api,
+  plant27_2021_gtrts_community_protection_api,
+  plant27_2021_gtrts_vacancy_filling_api,
+  plant27_2021_gtrts_weeding_api,
+  plant27_2021_location_data_m_sh1_api,
+  plant27_2021_planting_plan_gplanting_gspp_api,
+  plant27_2021_rphotoextra_api,
+  plant27_2021_s_site_api,
+  plant27_2021_weeding_month_api,
 } from './database/sqlDatabase';
 
 LogBox.ignoreAllLogs();
@@ -264,6 +276,267 @@ const App = () => {
         }
       };
       plant27_2021_core_api_func();
+    } catch (error) {
+      console.log('Error in useEffect:', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      console.log('useEffect is being called');
+      const plant27_2021_location_data_m_sh1_api_func = async () => {
+        console.log(
+          'plant27_2021_location_data_m_sh1_api_func has been called',
+        );
+        try {
+          await plant27_2021_location_data_m_sh1_api();
+        } catch (err) {
+          console.log(
+            'Error fetching plant27_2021_location_data_m_sh1_api_func API data:',
+            err,
+          );
+        }
+      };
+      plant27_2021_location_data_m_sh1_api_func();
+    } catch (error) {
+      console.log('Error in useEffect:', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      console.log('useEffect is being called');
+      const plant27_2021_location_data_m_sh1_api_func = async () => {
+        console.log('plant27_2021_s_site_api has been called');
+        try {
+          await plant27_2021_s_site_api();
+        } catch (err) {
+          console.log('Error fetching plant27_2021_s_site_api API data:', err);
+        }
+      };
+      plant27_2021_location_data_m_sh1_api_func();
+    } catch (error) {
+      console.log('Error in useEffect:', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      console.log('useEffect is being called');
+      const plant27_2021_rphotoextra_api_func = async () => {
+        console.log('plant27_2021_rphotoextra_api has been called');
+        try {
+          await plant27_2021_rphotoextra_api();
+        } catch (err) {
+          console.log(
+            'Error fetching plant27_2021_rphotoextra_api API data:',
+            err,
+          );
+        }
+      };
+      plant27_2021_rphotoextra_api_func();
+    } catch (error) {
+      console.log('Error in useEffect:', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      console.log('useEffect is being called');
+      const plant27_2021_gr_regen_api_func = async () => {
+        console.log('plant27_2021_gr_regen_api has been called');
+        try {
+          await plant27_2021_gr_regen_api();
+        } catch (err) {
+          console.log(
+            'Error fetching plant27_2021_gr_regen_api API data:',
+            err,
+          );
+        }
+      };
+      plant27_2021_gr_regen_api_func();
+    } catch (error) {
+      console.log('Error in useEffect:', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      console.log('useEffect is being called');
+      const plant27_2021_gregen_spp_regen_api_func = async () => {
+        console.log('plant27_2021_gregen_spp_regen_api has been called');
+        try {
+          await plant27_2021_gregen_spp_regen_api();
+        } catch (err) {
+          console.log(
+            'Error fetching plant27_2021_gregen_spp_regen_api API data:',
+            err,
+          );
+        }
+      };
+      plant27_2021_gregen_spp_regen_api_func();
+    } catch (error) {
+      console.log('Error in useEffect:', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      console.log('useEffect is being called');
+      const plant27_2021_planting_plan_gplanting_gspp_api_func = async () => {
+        console.log(
+          'plant27_2021_planting_plan_gplanting_gspp_api has been called',
+        );
+        try {
+          await plant27_2021_planting_plan_gplanting_gspp_api();
+        } catch (err) {
+          console.log(
+            'Error fetching plant27_2021_planting_plan_gplanting_gspp_api API data:',
+            err,
+          );
+        }
+      };
+      plant27_2021_planting_plan_gplanting_gspp_api_func();
+    } catch (error) {
+      console.log('Error in useEffect:', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      console.log('useEffect is being called');
+      const plant27_2021_gtrts_weeding_api_func = async () => {
+        console.log('plant27_2021_gtrts_weeding_api has been called');
+        try {
+          await plant27_2021_gtrts_weeding_api();
+        } catch (err) {
+          console.log(
+            'Error fetching plant27_2021_gtrts_weeding_api API data:',
+            err,
+          );
+        }
+      };
+      plant27_2021_gtrts_weeding_api_func();
+    } catch (error) {
+      console.log('Error in useEffect:', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      console.log('useEffect is being called');
+      const plant27_2021_gtrts_weeding_api_func = async () => {
+        console.log('plant27_2021_gtrts_weeding_api has been called');
+        try {
+          await plant27_2021_gtrts_weeding_api();
+        } catch (err) {
+          console.log(
+            'Error fetching plant27_2021_gtrts_weeding_api API data:',
+            err,
+          );
+        }
+      };
+      plant27_2021_gtrts_weeding_api_func();
+    } catch (error) {
+      console.log('Error in useEffect:', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      console.log('useEffect is being called');
+      const plant27_2021_weeding_month_api_func = async () => {
+        console.log('plant27_2021_weeding_month_api has been called');
+        try {
+          await plant27_2021_weeding_month_api();
+        } catch (err) {
+          console.log(
+            'Error fetching plant27_2021_weeding_month_api API data:',
+            err,
+          );
+        }
+      };
+      plant27_2021_weeding_month_api_func();
+    } catch (error) {
+      console.log('Error in useEffect:', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      console.log('useEffect is being called');
+      const plant27_2021_weeding_month_api_func = async () => {
+        console.log('plant27_2021_weeding_month_api has been called');
+        try {
+          await plant27_2021_gtrts_vacancy_filling_api();
+        } catch (err) {
+          console.log(
+            'Error fetching plant27_2021_weeding_month_api API data:',
+            err,
+          );
+        }
+      };
+      plant27_2021_weeding_month_api_func();
+    } catch (error) {
+      console.log('Error in useEffect:', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      console.log('useEffect is being called');
+      const plant27_2021_filling_month_api_func = async () => {
+        console.log('plant27_2021_filling_month_api has been called');
+        try {
+          await plant27_2021_filling_month_api();
+        } catch (err) {
+          console.log(
+            'Error fetching plant27_2021_filling_month_api API data:',
+            err,
+          );
+        }
+      };
+      plant27_2021_filling_month_api_func();
+    } catch (error) {
+      console.log('Error in useEffect:', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      console.log('useEffect is being called');
+      const plant27_2021_filling_month_api_func = async () => {
+        console.log('plant27_2021_filling_month_api has been called');
+        try {
+          await plant27_2021_gtrts_community_protection_api();
+        } catch (err) {
+          console.log(
+            'Error fetching plant27_2021_filling_month_api API data:',
+            err,
+          );
+        }
+      };
+      plant27_2021_filling_month_api_func();
+    } catch (error) {
+      console.log('Error in useEffect:', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      console.log('useEffect is being called');
+      const plant27_2021_filling_month_api_func = async () => {
+        console.log('plant27_2021_filling_month_api has been called');
+        try {
+          await plant27_2021_community_month_api();
+        } catch (err) {
+          console.log(
+            'Error fetching plant27_2021_filling_month_api API data:',
+            err,
+          );
+        }
+      };
+      plant27_2021_filling_month_api_func();
     } catch (error) {
       console.log('Error in useEffect:', error);
     }

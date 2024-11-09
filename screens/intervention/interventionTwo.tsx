@@ -23,7 +23,12 @@ import {
   historys_api,
   historys_list,
   plant27_2021_core_update,
+  plant27_2021_rphotoextra_create,
+  plant27_2021_s_site_create,
 } from '../../database/sqlDatabase';
+import { getCurrentDateandTime } from '../../hooks/dateUtils';
+import useCreateUri from '../../hooks/useCreatUri';
+import useUUID from '../../hooks/useUUID';
 
 const interventionTwo = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -47,6 +52,10 @@ const interventionTwo = () => {
 
   const [selectedForest, setSelectedForest] = useState(null);
   const [selectedHistory, setSelectedHistory] = useState(null);
+  const {initialUUID, generateUUID} = useUUID();
+  const [newUUID, setNewUUID] = useState('');
+  const [oridianl, setoridianl] = useState(0);
+  const uri = useCreateUri();
 
   const navigation = useNavigation();
 
@@ -103,6 +112,76 @@ const interventionTwo = () => {
 
     history();
   }, []);
+
+  const addNewone=async()=>{
+    
+
+    const newGeneratedUUID = generateUUID(); // Generate a new UUID
+    setNewUUID(newGeneratedUUID); // If you need it later in the state, set it
+    const updatedOrdinalNumber = oridianl + 1; // Increment the value directly here
+    setoridianl(updatedOrdinalNumber);
+
+    const dataToInsertadd = {
+      _uri: newGeneratedUUID, // Use the freshly generated UUID
+      _creator_uri_user: uri,
+      _parent_auri: uId,
+      _top_level_auri: uId,
+      _creation_date: getCurrentDateandTime(),
+      _last_update_date: getCurrentDateandTime(),
+      tmain_polytype: selectedRank,
+      polytrace: inputValue1,
+      polyline: inputValue2,
+      trace_gpx: inputValue3,
+      totarea_ha: inputValue4,
+      totarea_ac: inputValue5,
+      _ordinal_number: updatedOrdinalNumber,
+    };
+
+    console.log(dataToInsertadd, 'datato insert');
+
+    try {
+      await plant27_2021_s_site_create(dataToInsertadd);
+      console.log('All data inserted successfully');
+    } catch (error) {
+      console.error('Failed to insert data:', error.message || error);
+    }
+  }
+
+
+  const addNewTwo=async()=>{
+
+    const newGeneratedUUID = generateUUID(); // Generate a new UUID
+    setNewUUID(newGeneratedUUID); // If you need it later in the state, set it
+    const updatedOrdinalNumber = oridianl + 1; // Increment the value directly here
+    setoridianl(updatedOrdinalNumber);
+
+    const dataToInsertadd = {
+      _uri: newGeneratedUUID, // Use the freshly generated UUID
+      _creator_uri_user: uri,
+      _parent_auri: uId,
+      _top_level_auri: uId,
+      _creation_date: getCurrentDateandTime(),
+      _last_update_date: getCurrentDateandTime(),
+      ppiclocationextra_lat: inputValue7,
+      ppiclocationextra_lng: inputValue8,
+      xpic_bearing: inputValue9,
+      ppiclocationextra_alt: inputValue10,
+      ppiclocationextra_acc: inputValue11,
+
+      _ordinal_number: updatedOrdinalNumber,
+    };
+
+    console.log(dataToInsertadd, 'datato insert');
+
+    try {
+      await plant27_2021_rphotoextra_create(dataToInsertadd);
+      console.log('All data inserted successfully');
+    } catch (error) {
+      console.error('Failed to insert data:', error.message || error);
+    }
+  }
+
+
 
   const interventionTwo = async () => {
     console.log('Input Values:', uId);
@@ -411,7 +490,7 @@ const interventionTwo = () => {
                         justifyContent: 'center',
                         margin: 5,
                       }}>
-                      <Button title="Save" />
+                      <Button title="Save" onPress={addNewone}/>
                       <Button
                         title="Close"
                         onPress={() => setModalVisible(false)}
@@ -621,7 +700,7 @@ const interventionTwo = () => {
                         justifyContent: 'center',
                         margin: 5,
                       }}>
-                      <Button title="Save" />
+                      <Button title="Save" onPress={addNewTwo}/>
                       <Button
                         title="Close"
                         onPress={() => setModalVisible2(false)}

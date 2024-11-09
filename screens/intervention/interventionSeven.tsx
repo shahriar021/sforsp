@@ -21,8 +21,15 @@ import {
   months_api,
   months_list,
   plant27_2021_core_update7,
+  plant27_2021_filling_month_create,
+  plant27_2021_gtrts_vacancy_filling_create,
+  plant27_2021_gtrts_weeding_create,
+  plant27_2021_weeding_month_create,
 } from '../../database/sqlDatabase';
 import MonthPicker from 'react-native-month-year-picker';
+import useUUID from '../../hooks/useUUID';
+import useCreateUri from '../../hooks/useCreatUri';
+import {getCurrentDateandTime} from '../../hooks/dateUtils';
 
 const interventionSeven = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -37,11 +44,14 @@ const interventionSeven = () => {
   const [showPicker, setShowPicker] = useState(false);
   const [showPicker2, setShowPicker2] = useState(false);
   const [showPicker3, setShowPicker3] = useState(false);
+  const [showPicker4, setShowPicker4] = useState(false);
   const [date, setDate] = useState(new Date());
   const [selectedForest, setSelectedForest] = useState(null);
   const [selectedMonth, setSelectedMonth] = useState(null);
   const [selectedMonth2, setSelectedMonth2] = useState(null);
   const [selectedMonth3, setSelectedMonth3] = useState(null);
+  const [selectedMonth4, setSelectedMonth4] = useState(null);
+  const [selectedMonth5, setSelectedMonth5] = useState(null);
 
   const [selectedMonths1, setSelectedMonths1] = useState(null);
   const [selectedMonths2, setSelectedMonths2] = useState(null);
@@ -49,6 +59,11 @@ const interventionSeven = () => {
   const [selectedMonths4, setSelectedMonths4] = useState(null);
 
   const [months, setMonths] = useState([]);
+
+  const {initialUUID, generateUUID} = useUUID();
+  const [newUUID, setNewUUID] = useState('');
+  const [oridianl, setoridianl] = useState(0);
+  const uri = useCreateUri();
 
   const navigation = useNavigation();
 
@@ -129,9 +144,20 @@ const interventionSeven = () => {
     setShowPicker3(false);
   };
 
+  const handleValueChange4 = (event, newDate) => {
+    if (newDate) {
+      const formattedDate = `${newDate.getFullYear()}-${String(
+        newDate.getMonth() + 1,
+      ).padStart(2, '0')}-07`;
+      setInputValue4(formattedDate);
+    }
+    setShowPicker4(false);
+  };
+
   setTimeout(() => setShowPicker(false), 0);
   setTimeout(() => setShowPicker2(false), 0);
   setTimeout(() => setShowPicker3(false), 0);
+  setTimeout(() => setShowPicker4(false), 0);
 
   const forestOptions = [
     {label: 'Tropical Rainforest', value: 'tropical'},
@@ -140,6 +166,104 @@ const interventionSeven = () => {
     {label: 'Coniferous Forest', value: 'coniferous'},
     {label: 'Bamboo Forest', value: 'bamboo'},
   ];
+
+  const addNewOne = async () => {
+    const newGeneratedUUID = generateUUID(); // Generate a new UUID
+    setNewUUID(newGeneratedUUID); // If you need it later in the state, set it
+    const updatedOrdinalNumber = oridianl + 1; // Increment the value directly here
+    setoridianl(updatedOrdinalNumber);
+
+    const dataToInsertadd1 = {
+      _uri: newGeneratedUUID, // Use the freshly generated UUID
+      _creator_uri_user: uri,
+      _parent_auri: initialUUID,
+      _top_level_auri: initialUUID,
+      _creation_date: getCurrentDateandTime(),
+      _last_update_date: getCurrentDateandTime(),
+      weeding_cycle: inputValue4,
+      weeding_year: inputValue5,
+      _ordinal_number: updatedOrdinalNumber,
+    };
+
+    const dataToInsertadd2 = {
+      _uri: newGeneratedUUID, // Use the freshly generated UUID
+      _creator_uri_user: uri,
+      _parent_auri: initialUUID,
+      _top_level_auri: initialUUID,
+      _creation_date: getCurrentDateandTime(),
+      _last_update_date: getCurrentDateandTime(),
+      // value: selectedMonth4,
+      value: setSelectedMonth5,
+
+      _ordinal_number: updatedOrdinalNumber,
+    };
+
+    console.log(dataToInsertadd1, 'datato insert', dataToInsertadd2);
+
+    try {
+      await plant27_2021_gtrts_weeding_create(dataToInsertadd1);
+      // setTimeout(async () => {
+      //   await plant27_2021_weeding_month_create(dataToInsertadd2);
+      // }, 2000);
+      console.log('Before weeding month insertion');
+      await plant27_2021_weeding_month_create(dataToInsertadd2);
+      console.log('After weeding month insertion');
+
+      console.log('All data inserted successfully');
+    } catch (error) {
+      console.error('Failed to insert data:', error.message || error);
+    }
+  };
+
+  const addNewTwo = async () => {
+    const newGeneratedUUID = generateUUID(); // Generate a new UUID
+    setNewUUID(newGeneratedUUID); // If you need it later in the state, set it
+    const updatedOrdinalNumber = oridianl + 1; // Increment the value directly here
+    setoridianl(updatedOrdinalNumber);
+
+    const dataToInsertadd1 = {
+      _uri: newGeneratedUUID, // Use the freshly generated UUID
+      _creator_uri_user: uri,
+      _parent_auri: initialUUID,
+      _top_level_auri: initialUUID,
+      _creation_date: getCurrentDateandTime(),
+      _last_update_date: getCurrentDateandTime(),
+
+      filling_year: inputValue5,
+      _ordinal_number: updatedOrdinalNumber,
+    };
+
+    const dataToInsertadd2 = {
+      _uri: newGeneratedUUID, // Use the freshly generated UUID
+      _creator_uri_user: uri,
+      _parent_auri: initialUUID,
+      _top_level_auri: initialUUID,
+      _creation_date: getCurrentDateandTime(),
+      _last_update_date: getCurrentDateandTime(),
+      // value: selectedMonth4,
+      value: selectedMonth5,
+
+      _ordinal_number: updatedOrdinalNumber,
+    };
+
+    console.log(dataToInsertadd1, 'datato insert', dataToInsertadd2);
+
+    try {
+      await plant27_2021_gtrts_vacancy_filling_create(dataToInsertadd1);
+      // setTimeout(async () => {
+      //   await plant27_2021_weeding_month_create(dataToInsertadd2);
+      // }, 2000);
+      console.log('Before weeding month insertion');
+      await plant27_2021_filling_month_create(dataToInsertadd2);
+      console.log('After weeding month insertion');
+
+      console.log('All data inserted successfully');
+    } catch (error) {
+      console.error('Failed to insert data:', error.message || error);
+    }
+  };
+
+  console.log(selectedMonth5, 'selectedMonth5');
 
   const interventionSeven = async () => {
     console.log(
@@ -155,7 +279,6 @@ const interventionSeven = () => {
       GTRTS_NUERSERY_RAISING_NURSERY_YEAR_RAW: inputValue1,
       GTRTS_PLANTATION_SITE_YEAR_RAW: inputValue2,
       GTRTS_PLANTING_PLANTING_YEAR: inputValue3,
-     
 
       // NURSERY_OTHERS_INFO_CARETAKER_INFO_CARETAKER_NAME: inputValue1,
       // NURSERY_OTHERS_INFO_CARETAKER_INFO_CAREKATER_MOBILE: inputValue2,
@@ -169,7 +292,7 @@ const interventionSeven = () => {
       console.error('Failed to updated data:', error.message || error); // Log the error message
     }
 
-    // navigation.navigate('interventionEight' as never, {uId: uid});
+    navigation.navigate('interventionEight' as never, {uId: uid});
   };
 
   const tableData = [];
@@ -424,12 +547,12 @@ const interventionSeven = () => {
                     <Text style={styles.label}>10.4.c. Plan Months</Text>
                     <Dropdown
                       style={styles.input}
-                      data={forestOptions}
-                      labelField="label"
-                      valueField="value"
+                      data={months}
+                      labelField="name"
+                      valueField="code"
                       placeholder="Select forest type"
-                      value={selectedForest}
-                      onChange={item => setSelectedForest(item.value)}
+                      value={selectedMonth4}
+                      onChange={item => setSelectedMonth4(item.code)}
                       dropdownStyle={{
                         backgroundColor: 'white',
                         borderRadius: 8,
@@ -448,7 +571,7 @@ const interventionSeven = () => {
                         justifyContent: 'center',
                         margin: 5,
                       }}>
-                      <Button title="Save" />
+                      <Button title="Save" onPress={addNewOne} />
                       <Button
                         title="Close"
                         onPress={() => setModalVisible(false)}
@@ -541,22 +664,30 @@ const interventionSeven = () => {
                   {/* Form inside modal */}
                   <View style={styles.box}>
                     <Text style={styles.label}>10.5.a. Plan Year</Text>
-                    <TextInput
-                      style={styles.input}
-                      value={inputValue6}
-                      placeholder="Enter Plan Year"
-                      onChangeText={text => setInputValue6(text)}
-                    />
+                    <TouchableOpacity onPress={() => setShowPicker4(true)}>
+                      <Text style={styles.input}>
+                        {inputValue5 || 'Select Plan Year'}
+                      </Text>
+                    </TouchableOpacity>
+                    {showPicker4 && (
+                      <MonthPicker
+                        onChange={handleValueChange4}
+                        value={new Date()}
+                        minimumDate={new Date(2000, 0)}
+                        maximumDate={new Date(2030, 11)}
+                        mode="short"
+                      />
+                    )}
 
                     <Text style={styles.label}>10.5.b. Plan Months</Text>
                     <Dropdown
                       style={styles.input}
-                      data={forestOptions}
-                      labelField="label"
-                      valueField="value"
+                      data={months}
+                      labelField="name"
+                      valueField="code"
                       placeholder="Select month"
-                      value={selectedForest}
-                      onChange={item => setSelectedForest(item.value)}
+                      value={selectedMonth5}
+                      onChange={item => setSelectedMonth5(item.code)}
                       dropdownStyle={{
                         backgroundColor: 'white',
                         borderRadius: 8,
@@ -575,7 +706,7 @@ const interventionSeven = () => {
                         justifyContent: 'center',
                         margin: 5,
                       }}>
-                      <Button title="Save" />
+                      <Button title="Save" onPress={addNewTwo} />
                       <Button
                         title="Close"
                         onPress={() => setModalVisible2(false)}

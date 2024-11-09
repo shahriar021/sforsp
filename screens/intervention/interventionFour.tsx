@@ -25,7 +25,12 @@ import {
   intervention_lists_list,
   plant27_2021_core_update2,
   plant27_2021_core_update4,
+  plant27_2021_gr_regen_create,
+  plant27_2021_gregen_spp_regen_create,
 } from '../../database/sqlDatabase';
+import {getCurrentDateandTime} from '../../hooks/dateUtils';
+import useUUID from '../../hooks/useUUID';
+import useCreateUri from '../../hooks/useCreatUri';
 
 const interventionFour = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -56,6 +61,11 @@ const interventionFour = () => {
   const [selectedYears, setSelectedYears] = useState(null);
   const [selectedInterventionList, setselectedInterventionList] =
     useState(null);
+
+  const {initialUUID, generateUUID} = useUUID();
+  const [newUUID, setNewUUID] = useState('');
+  const [oridianl, setoridianl] = useState(0);
+  const uri = useCreateUri();
 
   const navigation = useNavigation();
 
@@ -138,6 +148,65 @@ const interventionFour = () => {
     intervention_list();
   }, []);
 
+  const addNewone = async () => {
+    const newGeneratedUUID = generateUUID(); // Generate a new UUID
+    setNewUUID(newGeneratedUUID); // If you need it later in the state, set it
+    const updatedOrdinalNumber = oridianl + 1; // Increment the value directly here
+    setoridianl(updatedOrdinalNumber);
+
+    const dataToInsertadd = {
+      _uri: newGeneratedUUID, // Use the freshly generated UUID
+      _creator_uri_user: uri,
+      _parent_auri: uid,
+      _top_level_auri: uid,
+      _creation_date: getCurrentDateandTime(),
+      _last_update_date: getCurrentDateandTime(),
+      rspp_name: inputValue2,
+      rspp_nr_nat: inputValue3,
+      num_trees: inputValue4,
+      _ordinal_number: updatedOrdinalNumber,
+    };
+
+    console.log(dataToInsertadd, 'datato insert');
+
+    try {
+      await plant27_2021_gregen_spp_regen_create(dataToInsertadd);
+      console.log('All data inserted successfully');
+    } catch (error) {
+      console.error('Failed to insert data:', error.message || error);
+    }
+  };
+
+  const addNewTwo = async () => {
+    const newGeneratedUUID = generateUUID(); // Generate a new UUID
+    setNewUUID(newGeneratedUUID); // If you need it later in the state, set it
+    const updatedOrdinalNumber = oridianl + 1; // Increment the value directly here
+    setoridianl(updatedOrdinalNumber);
+
+    const dataToInsertadd = {
+      _uri: newGeneratedUUID, // Use the freshly generated UUID
+      _creator_uri_user: uri,
+      _parent_auri: initialUUID,
+      _top_level_auri: initialUUID,
+      _creation_date: getCurrentDateandTime(),
+      _last_update_date: getCurrentDateandTime(),
+      reg_avg_seedling_per_plot: seedlingsPerPlot,
+      reg_avg_trees_per_ha_per_plot: seedlingsPerHector,
+      reg_avg_trees_per_plot: treesPerPlot,
+      reg_avg_seedling_per_ha_per_plot: treesPerHector,
+      _ordinal_number: updatedOrdinalNumber,
+    };
+
+    console.log(dataToInsertadd, 'datato insert');
+
+    try {
+      await plant27_2021_gr_regen_create(dataToInsertadd);
+      console.log('All data inserted successfully');
+    } catch (error) {
+      console.error('Failed to insert data:', error.message || error);
+    }
+  };
+
   const interventionFourSubmit = async () => {
     console.log(
       inputValue1,
@@ -174,7 +243,7 @@ const interventionFour = () => {
       console.error('Failed to updated data:', error.message || error); // Log the error message
     }
 
-    navigation.navigate('interventionFive',{uuid:uid});
+    navigation.navigate('interventionFive', {uuid: uid});
   };
 
   const tableData = [];
@@ -353,7 +422,7 @@ const interventionFour = () => {
                         justifyContent: 'center',
                         margin: 5,
                       }}>
-                      <Button title="Save" />
+                      <Button title="Save" onPress={addNewone} />
                       <Button
                         title="Close"
                         onPress={() => setModalVisible(false)}
@@ -555,7 +624,7 @@ const interventionFour = () => {
                         justifyContent: 'center',
                         margin: 5,
                       }}>
-                      <Button title="Save" />
+                      <Button title="Save" onPress={addNewTwo} />
                       <Button
                         title="Close"
                         onPress={() => setModalVisible2(false)}

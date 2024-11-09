@@ -21,9 +21,14 @@ import {baseApi, token} from '../../constants/base_api';
 import {
   months_api,
   months_list,
+  plant27_2021_community_month_create,
   plant27_2021_core_update8,
+  plant27_2021_gtrts_community_protection_create,
 } from '../../database/sqlDatabase';
 import MonthPicker from 'react-native-month-year-picker';
+import {getCurrentDateandTime} from '../../hooks/dateUtils';
+import useUUID from '../../hooks/useUUID';
+import useCreateUri from '../../hooks/useCreatUri';
 
 const interventionEight = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -49,6 +54,12 @@ const interventionEight = () => {
   const [showPicker2, setShowPicker2] = useState(false);
   const [showPicker3, setShowPicker3] = useState(false);
   const [showPicker4, setShowPicker4] = useState(false);
+  const [showPicker5, setShowPicker5] = useState(false);
+
+  const {initialUUID, generateUUID} = useUUID();
+  const [newUUID, setNewUUID] = useState('');
+  const [oridianl, setoridianl] = useState(0);
+  const uri = useCreateUri();
 
   const navigation = useNavigation();
   const route = useRoute();
@@ -116,6 +127,16 @@ const interventionEight = () => {
     setShowPicker4(false);
   };
 
+  const handleValueChange5 = (event, newDate) => {
+    if (newDate) {
+      const formattedDate = `${newDate.getFullYear()}-${String(
+        newDate.getMonth() + 1,
+      ).padStart(2, '0')}-07`;
+      setInputValue5(formattedDate);
+    }
+    setShowPicker5(false);
+  };
+
   const forestOptions = [
     {label: 'Tropical Rainforest', value: 'tropical'},
     {label: 'Mangrove Forest', value: 'mangrove'},
@@ -127,6 +148,7 @@ const interventionEight = () => {
   setTimeout(() => setShowPicker2(false), 0);
   setTimeout(() => setShowPicker3(false), 0);
   setTimeout(() => setShowPicker4(false), 0);
+  setTimeout(() => setShowPicker5(false), 0);
 
   useEffect(() => {
     const months = async () => {
@@ -149,6 +171,54 @@ const interventionEight = () => {
 
     months();
   }, []);
+
+  const addNew = async () => {
+    const newGeneratedUUID = generateUUID(); // Generate a new UUID
+    setNewUUID(newGeneratedUUID); // If you need it later in the state, set it
+    const updatedOrdinalNumber = oridianl + 1; // Increment the value directly here
+    setoridianl(updatedOrdinalNumber);
+
+    const dataToInsertadd1 = {
+      _uri: newGeneratedUUID, // Use the freshly generated UUID
+      _creator_uri_user: uri,
+      _parent_auri: initialUUID,
+      _top_level_auri: initialUUID,
+      _creation_date: getCurrentDateandTime(),
+      _last_update_date: getCurrentDateandTime(),
+
+      community_year: inputValue5,
+      _ordinal_number: updatedOrdinalNumber,
+    };
+
+    const dataToInsertadd2 = {
+      _uri: newGeneratedUUID, // Use the freshly generated UUID
+      _creator_uri_user: uri,
+      _parent_auri: initialUUID,
+      _top_level_auri: initialUUID,
+      _creation_date: getCurrentDateandTime(),
+      _last_update_date: getCurrentDateandTime(),
+      // value: selectedMonth4,
+      value: selectedMonths3,
+
+      _ordinal_number: updatedOrdinalNumber,
+    };
+
+    console.log(dataToInsertadd1, 'datato insert', dataToInsertadd2);
+
+    try {
+      await plant27_2021_gtrts_community_protection_create(dataToInsertadd1);
+      // setTimeout(async () => {
+      //   await plant27_2021_weeding_month_create(dataToInsertadd2);
+      // }, 2000);
+      console.log('Before weeding month insertion');
+      await plant27_2021_community_month_create(dataToInsertadd2);
+      console.log('After weeding month insertion');
+
+      console.log('All data inserted successfully');
+    } catch (error) {
+      console.error('Failed to insert data:', error.message || error);
+    }
+  };
 
   const interventionEight = async () => {
     console.log(
@@ -356,13 +426,20 @@ const interventionEight = () => {
                   {/* Form inside modal */}
                   <View style={styles.box}>
                     <Text style={styles.label}>10.8.a. Plan Year</Text>
-                    <TextInput
-                      style={styles.input}
-                      value={planYear}
-                      placeholder="Enter Plan Year"
-                      onChangeText={text => setPlanYear(text)}
-                      placeholderTextColor="black"
-                    />
+                    <TouchableOpacity onPress={() => setShowPicker5(true)}>
+                      <Text style={styles.input}>
+                        {inputValue5 || 'Select Plan Year'}
+                      </Text>
+                    </TouchableOpacity>
+                    {showPicker5 && (
+                      <MonthPicker
+                        onChange={handleValueChange5}
+                        value={new Date()}
+                        minimumDate={new Date(2000, 0)}
+                        maximumDate={new Date(2030, 11)}
+                        mode="short"
+                      />
+                    )}
 
                     <Text style={styles.label}>10.8.b. Plan Months</Text>
                     <Dropdown
@@ -393,7 +470,7 @@ const interventionEight = () => {
                         justifyContent: 'center',
                         margin: 5,
                       }}>
-                      <Button title="Save" />
+                      <Button title="Save" onPress={addNew} />
                       <Button
                         title="Close"
                         onPress={() => setModalVisible(false)}

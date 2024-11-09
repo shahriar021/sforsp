@@ -17,6 +17,10 @@ import DocumentPicker from 'react-native-document-picker';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {Colors, CommonStyles, Fonts, Sizes} from '../../constants/styles';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {plant27_2021_gr_regen_create} from '../../database/sqlDatabase';
+import {getCurrentDateandTime} from '../../hooks/dateUtils';
+import useCreateUri from '../../hooks/useCreatUri';
+import useUUID from '../../hooks/useUUID';
 
 const interventionThree = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -33,11 +37,16 @@ const interventionThree = () => {
   const [date, setDate] = useState(new Date());
   const [selectedForest, setSelectedForest] = useState(null);
 
+  const {initialUUID, generateUUID} = useUUID();
+  const [newUUID, setNewUUID] = useState('');
+  const [oridianl, setoridianl] = useState(0);
+  const uri = useCreateUri();
+
   const navigation = useNavigation();
   const route = useRoute();
   const {uuid} = route.params;
-  const uid=uuid;
-  console.log(uid, 'uuid in page 2');
+  const uid = uuid;
+  console.log(uid, 'uuid in page 3');
 
   const onDocumentPress = async () => {
     const res = await DocumentPicker.pick({
@@ -65,6 +74,36 @@ const interventionThree = () => {
     {label: 'Bamboo Forest', value: 'bamboo'},
   ];
 
+  const addNew = async () => {
+    const newGeneratedUUID = generateUUID(); // Generate a new UUID
+    setNewUUID(newGeneratedUUID); // If you need it later in the state, set it
+    const updatedOrdinalNumber = oridianl + 1; // Increment the value directly here
+    setoridianl(updatedOrdinalNumber);
+
+    const dataToInsertadd = {
+      _uri: newGeneratedUUID, // Use the freshly generated UUID
+      _creator_uri_user: uri,
+      _parent_auri: initialUUID,
+      _top_level_auri: initialUUID,
+      _creation_date: getCurrentDateandTime(),
+      _last_update_date: getCurrentDateandTime(),
+      gregen_gregen_plot_regen_plot_no: inputValue1,
+      gregen_gregen_plot_rsitepoint_lat: inputValue2,
+      gregen_gregen_plot_rsitepoint_lng: inputValue3,
+      gregen_gregen_plot_crown_closure: inputValue4,
+      _ordinal_number: updatedOrdinalNumber,
+    };
+
+    console.log(dataToInsertadd, 'datato insert');
+
+    try {
+      await plant27_2021_gr_regen_create(dataToInsertadd);
+      console.log('All data inserted successfully');
+    } catch (error) {
+      console.error('Failed to insert data:', error.message || error);
+    }
+  };
+
   const interventionThree = () => {
     console.log(
       console.log('inputValue1:', inputValue1),
@@ -79,7 +118,7 @@ const interventionThree = () => {
     navigation.navigate('interventionFour', {uuid: uid});
   };
 
-  const tableData = []
+  const tableData = [];
 
   return (
     <>
@@ -265,7 +304,7 @@ const interventionThree = () => {
                         justifyContent: 'center',
                         margin: 5,
                       }}>
-                      <Button title="Save" />
+                      <Button title="Save" onPress={addNew} />
                       <Button
                         title="Close"
                         onPress={() => setModalVisible(false)}
