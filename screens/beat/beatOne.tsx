@@ -22,6 +22,7 @@ import MonthPicker from 'react-native-month-year-picker';
 import {
   gener43_2021_core_create,
   gener43_2021_core_list,
+  gener43_2021_fbli_ca_tloc_ad_upzilla_create,
   gener43_2021_fbli_m_sh1_create,
   jur_ad_districts_api,
   jur_ad_districts_list,
@@ -509,8 +510,24 @@ const beatOne = () => {
       survey_type: survey_type,
     };
 
+    const updatedOrdinalNumber = oridianl + 1; // Increment the value directly here
+    setoridianl(updatedOrdinalNumber);
+
+    const dataToInserUpazila = {
+      _uri: initialUUID, // Use the freshly generated UUID
+      _creator_uri_user: uri,
+      _parent_auri: initialUUID,
+      _top_level_auri: initialUUID,
+      _creation_date: getCurrentDateandTime(),
+      _last_update_date: getCurrentDateandTime(),
+      value: selectedUpazila,
+
+      _ordinal_number: updatedOrdinalNumber,
+    };
+
     try {
       await gener43_2021_core_create(dataToInsert);
+      await gener43_2021_fbli_ca_tloc_ad_upzilla_create(dataToInserUpazila);
       console.log('All data inserted successfully');
     } catch (error) {
       console.error('Failed to insert data:', error.message || error); // Log the error message

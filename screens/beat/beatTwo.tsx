@@ -22,7 +22,12 @@ import useRank from '../../hooks/useRank';
 import {
   gener43_2021_core_list,
   gener43_2021_core_update,
+  gener43_2021_fbli_ca_tloc_ad_upzilla_create,
   gener43_2021_gnatissues_create,
+  gener43_2021_xpic_beat_index_blb_api,
+  gener43_2021_xpic_beat_index_blb_create,
+  gener43_2021_xpic_beat_index_bn_create,
+  gener43_2021_xpic_beat_index_ref_create,
   human_issues_api,
   human_issues_list,
   natural_issues_api,
@@ -30,6 +35,8 @@ import {
 } from '../../database/sqlDatabase';
 import useUUID from '../../hooks/useUUID';
 import useCreateUri from '../../hooks/useCreatUri';
+import RNFS from 'react-native-fs';
+import RNFetchBlob from 'rn-fetch-blob';
 
 const beatTwo = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -67,6 +74,8 @@ const beatTwo = () => {
   const [selectedNaturalIssue, setSelectedNaturalIssue] = useState(null);
   const [selectedHumanIssue, setSelectedHumanIssue] = useState(null);
 
+  const [image, setImage] = useState([]);
+
   const [oridianl, setoridianl] = useState(0);
   const {initialUUID, generateUUID} = useUUID();
   const [newUUID, setNewUUID] = useState('');
@@ -85,10 +94,74 @@ const beatTwo = () => {
   const {rankOptions, selectedRank, setSelectedRank} = useRank();
   //console.log(rankOptions, '  Rank');
 
+  // const onDocumentPress = async () => {
+  //   try {
+  //     const res = await DocumentPicker.pick({
+  //       type: ['application/*', 'text/*', 'image/*'], // General MIME types to capture all related formats
+  //     });
+
+  //     // Ensure a file is selected
+  //     if (res && res.length > 0) {
+  //       const fileUri = res[0].uri;
+
+  //       // Read the file data using RNFS as Base64
+  //       const fileData = await RNFS.readFile(fileUri, 'base64');
+
+  //       // No need to JSON.stringify unless required by your API
+  //       setImage(fileData); // Assuming setImage stores the Base64 string
+  //       //console.log(fileData, 'res.photo...');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error picking or reading file:', error);
+  //   }
+  // };
+
+  // const onDocumentPress = async () => {
+  //   try {
+  //     const res = await DocumentPicker.pick({
+  //       type: ['application/*', 'text/*', 'image/*'], // General MIME types to capture all related formats
+  //     });
+
+  //     // Ensure a file is selected
+  //     if (res && res.length > 0) {
+  //       const fileUri = res[0].uri;
+
+  //       // Use fetch() to create a Blob from the file URI
+  //       const response = await fetch(fileUri);
+  //       const blob = await response.blob(); // Convert response to Blob
+
+  //       // Set the Blob in state or use it as needed
+  //       setImage(blob); // Assuming setImage stores the Blob
+
+  //       console.log('Blob created:', blob);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error picking or creating Blob from file:', error);
+  //   }
+  // };
+
   const onDocumentPress = async () => {
-    const res = await DocumentPicker.pick({
-      type: ['application/*', 'text/*'], // General MIME types to capture all related formats
-    });
+    try {
+      const res = await DocumentPicker.pick({
+        type: ['application/*', 'text/*', 'image/*'], // MIME types to cover general files
+      });
+
+      // Ensure a file is selected
+      if (res && res.length > 0) {
+        const fileUri = res[0].uri;
+
+        // Read the file using rn-fetch-blob as base64
+        const base64Data = await RNFetchBlob.fs.readFile(fileUri, 'base64');
+
+        // Create a Blob from Base64 data
+        const blob = RNFetchBlob.base64.decode(base64Data);
+        setImage(blob);
+
+        //console.log('Blob created successfully:', blob);
+      }
+    } catch (error) {
+      console.error('Error picking or creating Blob from file:', error);
+    }
   };
 
   const onChange = (event, selectedDate) => {
@@ -159,6 +232,8 @@ const beatTwo = () => {
 
   // console.log(humanIssue, 'humanIssue issue..');
 
+  //console.log(image,"image");
+
   const getCurrentDateandTime = () => {
     const now = new Date();
     const year = now.getFullYear();
@@ -195,6 +270,7 @@ const beatTwo = () => {
 
     try {
       await gener43_2021_gnatissues_create(dataToInsertadd);
+
       console.log('All data inserted successfully');
     } catch (error) {
       console.error('Failed to insert data:', error.message || error);
@@ -202,6 +278,10 @@ const beatTwo = () => {
   };
 
   const beatTwosubmit = async () => {
+    const newGeneratedUUID = generateUUID(); // Generate a new UUID
+    setNewUUID(newGeneratedUUID); // If you need it later in the state, set it
+    const updatedOrdinalNumber = oridianl + 1; // Increment the value directly here
+    setoridianl(updatedOrdinalNumber);
     // Log input values from inputValue1 to inputValue23
     console.log(
       inputValue1,
@@ -258,8 +338,50 @@ const beatTwo = () => {
       LAND_STATISTICS_BEAT_LAND_BIO_OTHER_PLANT_SKM: inputValue20,
     };
 
+    const dataToInsertimageOne = {
+      _uri: newGeneratedUUID, // Use the freshly generated UUID
+      _creator_uri_user: uri,
+      _parent_auri: uId,
+      _top_level_auri: uId,
+      _creation_date: getCurrentDateandTime(),
+      _last_update_date: getCurrentDateandTime(),
+      value: image,
+
+      _ordinal_number: updatedOrdinalNumber,
+    };
+    const dataToInsertimageTwo = {
+      _uri: newGeneratedUUID, // Use the freshly generated UUID
+      _creator_uri_user: uri,
+      _parent_auri: uId,
+      _top_level_auri: uId,
+      _creation_date: getCurrentDateandTime(),
+      _last_update_date: getCurrentDateandTime(),
+      value: image,
+
+      _ordinal_number: updatedOrdinalNumber,
+    };
+    const dataToInsertimageThree = {
+      _uri: newGeneratedUUID, // Use the freshly generated UUID
+      _creator_uri_user: uri,
+      _parent_auri: uId,
+      _top_level_auri: uId,
+      _creation_date: getCurrentDateandTime(),
+      _last_update_date: getCurrentDateandTime(),
+      value: image,
+
+      _ordinal_number: updatedOrdinalNumber,
+    };
+
+    
+
+    // console.log('Data to insert:', dataToInsertimageOne);
+
     try {
       await gener43_2021_core_update(uId, dataToInsert);
+      await gener43_2021_xpic_beat_index_blb_create(dataToInsertimageOne);
+      await gener43_2021_xpic_beat_index_bn_create(dataToInsertimageTwo);
+      await gener43_2021_xpic_beat_index_ref_create(dataToInsertimageThree);
+     
       console.log('All data inserted successfully');
     } catch (error) {
       console.error('Failed to insert data:', error.message || error); // Log the error message

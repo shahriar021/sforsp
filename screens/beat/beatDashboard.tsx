@@ -271,10 +271,12 @@ const beatDashboard = () => {
         </Collapsible>
 
         <TouchableOpacity onPress={toggleExpanded3} style={styles.headerb}>
-          <Text style={styles.headerText}>
-            3. Index Map of the Beat/Camp/SFPC (বিট/ক্যাম্প/এসএফপিসি - এর
-            ইনডেক্স ম্যাপ)
-          </Text>
+          <View style={styles.textContainer}>
+            <Text style={styles.headerText}>
+              3. Index Map of the Beat/Camp/SFPC (বিট/ক্যাম্প/এসএফপিসি - এর
+              ইনডেক্স ম্যাপ)
+            </Text>
+          </View>
           {isCollapsed3 ? (
             <AntDesign name="plus" size={24} color="black" />
           ) : (
@@ -350,10 +352,12 @@ const beatDashboard = () => {
         </Collapsible>
 
         <TouchableOpacity onPress={toggleExpanded4} style={styles.headerb}>
-          <Text style={styles.headerText}>
-            4. Land information of the Beat/Camp/SFPC (বিট/ক্যাম্প/এসএফপিসির
-            ভূমির তথ্যাদি)
-          </Text>
+          <View style={styles.textContainer}>
+            <Text style={styles.headerText}>
+              4. Land information of the Beat/Camp/SFPC (বিট/ক্যাম্প/এসএফপিসির
+              ভূমির তথ্যাদি)
+            </Text>
+          </View>
           {isCollapsed4 ? (
             <AntDesign name="plus" size={24} color="black" />
           ) : (
@@ -468,10 +472,12 @@ const beatDashboard = () => {
         </Collapsible>
 
         <TouchableOpacity onPress={toggleExpanded5} style={styles.headerb}>
-          <Text style={styles.headerText}>
-            5. Existing problems and its their intensity in Forest land (বনভূমির
-            বিদ্যমান সমস্যা এবং সমস্যার মাত্রা)
-          </Text>
+          <View style={styles.textContainer}>
+            <Text style={styles.headerText}>
+              5. Existing problems and its their intensity in Forest land
+              (বনভূমির বিদ্যমান সমস্যা এবং সমস্যার মাত্রা)
+            </Text>
+          </View>
           {isCollapsed5 ? (
             <AntDesign name="plus" size={24} color="black" />
           ) : (
@@ -816,7 +822,6 @@ const beatDashboard = () => {
                   <Text style={styles.uploadButtonText}>Upload</Text>
                 </TouchableOpacity>
               </View>
-             
 
               <View style={styles.tableContainer}>
                 {/* Header Row */}

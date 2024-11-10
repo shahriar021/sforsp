@@ -77,11 +77,17 @@ import consult from './screens/consult/consultDashboard';
 import {
   gener43_2021_core_api,
   gener43_2021_core_create,
+  gener43_2021_fbli_ca_tloc_ad_upzilla_api,
   gener43_2021_fbli_m_sh1_api,
   gener43_2021_ghumissues_api,
   gener43_2021_gnatissues_api,
   gener43_2021_gvillages_api,
   gener43_2021_others_info1_api,
+  gener43_2021_overallnotes_ima_blb_api,
+  gener43_2021_overallnotes_ima_bn_api,
+  gener43_2021_overallnotes_ima_ref_api,
+  gener43_2021_xpic_beat_index_blb_api,
+  gener43_2021_xpic_beat_index_ref_api,
   human_issues_api,
   jur_ad_districts_api,
   jur_ad_districts_list,
@@ -263,6 +269,156 @@ const App = () => {
       console.log('Error in useEffect:', error);
     }
   }, []);
+
+  useEffect(() => {
+    try {
+      console.log('useEffect is being called');
+      const gener43_2021_xpic_beat_index_blb_api_func = async () => {
+        console.log('gener43_2021_xpic_beat_index_blb_api has been called');
+        try {
+          await gener43_2021_xpic_beat_index_blb_api();
+        } catch (err) {
+          console.log(
+            'Error fetching gener43_2021_xpic_beat_index_blb_api API data:',
+            err,
+          );
+        }
+      };
+      gener43_2021_xpic_beat_index_blb_api_func();
+    } catch (error) {
+      console.log('Error in useEffect:', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      console.log('useEffect is being called');
+      const gener43_2021_xpic_beat_index_bn_api_func = async () => {
+        console.log('gener43_2021_xpic_beat_index_bn_api_func has been called');
+        try {
+          await gener43_2021_xpic_beat_index_bn_api();
+        } catch (err) {
+          console.log(
+            'Error fetching gener43_2021_xpic_beat_index_bn_api_func API data:',
+            err,
+          );
+        }
+      };
+      gener43_2021_xpic_beat_index_bn_api_func();
+    } catch (error) {
+      console.log('Error in useEffect:', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      console.log('useEffect is being called');
+      const gener43_2021_xpic_beat_index_ref_api_func = async () => {
+        console.log(
+          'gener43_2021_xpic_beat_index_ref_api_func has been called',
+        );
+        try {
+          await gener43_2021_xpic_beat_index_ref_api();
+        } catch (err) {
+          console.log(
+            'Error fetching gener43_2021_xpic_beat_index_ref_api_func API data:',
+            err,
+          );
+        }
+      };
+      gener43_2021_xpic_beat_index_ref_api_func();
+    } catch (error) {
+      console.log('Error in useEffect:', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      console.log('useEffect is being called');
+      const gener43_2021_fbli_ca_tloc_ad_upzilla_api_func = async () => {
+        console.log('gener43_2021_fbli_ca_tloc_ad_upzilla_api has been called');
+        try {
+          await gener43_2021_fbli_ca_tloc_ad_upzilla_api();
+        } catch (err) {
+          console.log(
+            'Error fetching gener43_2021_fbli_ca_tloc_ad_upzilla_api_func API data:',
+            err,
+          );
+        }
+      };
+      gener43_2021_fbli_ca_tloc_ad_upzilla_api_func();
+    } catch (error) {
+      console.log('Error in useEffect:', error);
+    }
+  }, []);
+
+
+
+
+  useEffect(() => {
+    try {
+      console.log('useEffect is being called');
+      const gener43_2021_overallnotes_ima_blb_api_func = async () => {
+        console.log('gener43_2021_overallnotes_ima_blb_api has been called');
+        try {
+          await gener43_2021_overallnotes_ima_blb_api();
+        } catch (err) {
+          console.log(
+            'Error fetching gener43_2021_overallnotes_ima_blb_api API data:',
+            err,
+          );
+        }
+      };
+      gener43_2021_overallnotes_ima_blb_api_func();
+    } catch (error) {
+      console.log('Error in useEffect:', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      console.log('useEffect is being called');
+      const gener43_2021_overallnotes_ima_bn_api_func = async () => {
+        console.log('gener43_2021_overallnotes_ima_bn_api has been called');
+        try {
+          await gener43_2021_overallnotes_ima_bn_api();
+        } catch (err) {
+          console.log(
+            'Error fetching gener43_2021_overallnotes_ima_bn_api API data:',
+            err,
+          );
+        }
+      };
+      gener43_2021_overallnotes_ima_bn_api_func();
+    } catch (error) {
+      console.log('Error in useEffect:', error);
+    }
+  }, []);
+
+
+
+
+  useEffect(() => {
+    try {
+      console.log('useEffect is being called');
+      const gener43_2021_overallnotes_ima_ref_api_func = async () => {
+        console.log('gener43_2021_overallnotes_ima_ref_api has been called');
+        try {
+          await gener43_2021_overallnotes_ima_ref_api();
+        } catch (err) {
+          console.log(
+            'Error fetching gener43_2021_overallnotes_ima_ref_api API data:',
+            err,
+          );
+        }
+      };
+      gener43_2021_overallnotes_ima_ref_api_func();
+    } catch (error) {
+      console.log('Error in useEffect:', error);
+    }
+  }, []);
+
+  // ------------------------------------gen-------------------------------------
 
   useEffect(() => {
     try {

@@ -13896,7 +13896,10 @@ export const gener43_2021_fbli_ca_tloc_ad_upzilla_create =
       database.transaction(tx => {
         // Insert gener43_2021_fbli_ca_tloc_ad_upzilla
         tx.executeSql(
-          'INSERT INTO gener43_2021_fbli_ca_tloc_ad_upzilla (_uri text,_creator_uri_user text,_creation_date text,_last_update_uri_user text,_last_update_date text,_parent_auri text,_ordinal_number text,_top_level_auri text,value text)',
+          `INSERT INTO gener43_2021_fbli_ca_tloc_ad_upzilla 
+(_uri, _creator_uri_user, _creation_date, _last_update_uri_user, _last_update_date, _parent_auri, _ordinal_number, _top_level_auri, value) 
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
+`,
           [
             gener43_2021_fbli_ca_tloc_ad_upzilla._uri || null,
             gener43_2021_fbli_ca_tloc_ad_upzilla._creator_uri_user || null,
@@ -13909,7 +13912,7 @@ export const gener43_2021_fbli_ca_tloc_ad_upzilla_create =
             gener43_2021_fbli_ca_tloc_ad_upzilla.value || null,
           ],
           (tx, results) => {
-            console.log('Data inserted successfully:', results);
+            console.log('Data inserted successfully:upazila', results);
             resolve(results);
           },
           (tx, error) => {
@@ -26838,7 +26841,7 @@ export const gener43_2021_xpic_beat_index_blb_api = async () => {
         );
 
         tx.executeSql(
-          'CREATE TABLE IF NOT EXISTS gener43_2021_xpic_beat_index_blb (_uri text,_creator_uri_user text,_creation_date text,_last_update_uri_user text,_last_update_date text,_top_level_auri text,value text)',
+          'CREATE TABLE IF NOT EXISTS gener43_2021_xpic_beat_index_blb (_uri text,_creator_uri_user text,_creation_date text,_last_update_uri_user text,_last_update_date text,_top_level_auri text,value bytea)',
           [],
           () => {
             console.log(
@@ -26956,10 +26959,14 @@ export const gener43_2021_xpic_beat_index_blb_delete = async () => {
 export const gener43_2021_xpic_beat_index_blb_create =
   gener43_2021_xpic_beat_index_blb => {
     return new Promise((resolve, reject) => {
+      console.log(gener43_2021_xpic_beat_index_blb.value);
       database.transaction(tx => {
         // Insert gener43_2021_xpic_beat_index_blb
         tx.executeSql(
-          'INSERT INTO gener43_2021_xpic_beat_index_blb (_uri text,_creator_uri_user text,_creation_date text,_last_update_uri_user text,_last_update_date text,_top_level_auri text,value text)',
+          `INSERT INTO gener43_2021_xpic_beat_index_blb 
+(_uri, _creator_uri_user, _creation_date, _last_update_uri_user, _last_update_date, _top_level_auri, value) 
+VALUES (?, ?, ?, ?, ?, ?, ?);
+`,
           [
             gener43_2021_xpic_beat_index_blb._uri || null,
             gener43_2021_xpic_beat_index_blb._creator_uri_user || null,
@@ -26970,11 +26977,11 @@ export const gener43_2021_xpic_beat_index_blb_create =
             gener43_2021_xpic_beat_index_blb.value || null,
           ],
           (tx, results) => {
-            console.log('Data inserted successfully:', results);
+            console.log('Data inserted successfully: blb...', results);
             resolve(results);
           },
           (tx, error) => {
-            console.error('Error inserting data:', error);
+            console.error('Error inserting data: in blob....', error);
             reject(error);
           },
         );
