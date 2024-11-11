@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -19,7 +19,10 @@ import {Colors, CommonStyles, Sizes} from '../../constants/styles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import useUUID from '../../hooks/useUUID';
 import useCreateUri from '../../hooks/useCreatUri';
-import {gener43_2021_gvillages_create} from '../../database/sqlDatabase';
+import {
+  gener43_2021_core_list,
+  gener43_2021_gvillages_create,
+} from '../../database/sqlDatabase';
 import {getCurrentDateandTime} from '../../hooks/dateUtils';
 
 const beatFour = () => {
@@ -54,6 +57,7 @@ const beatFour = () => {
   const [oridianl, setoridianl] = useState(0);
   const {initialUUID, generateUUID} = useUUID();
   const [newUUID, setNewUUID] = useState('');
+  const [gener43_2021_core_listdata, setgener43_2021_core_list] = useState([]);
 
   const navigation = useNavigation();
   const route = useRoute();
@@ -87,7 +91,7 @@ const beatFour = () => {
     {label: 'Bamboo Forest', value: 'bamboo'},
   ];
 
-  const addNewSave =async () => {
+  const addNewSave = async () => {
     const newGeneratedUUID = generateUUID(); // Generate a new UUID
     setNewUUID(newGeneratedUUID); // If you need it later in the state, set it
     const updatedOrdinalNumber = oridianl + 1; // Increment the value directly here
@@ -141,9 +145,18 @@ const beatFour = () => {
     //   inputValues.forestryParticipants,
     //   inputValues.conservationParticipants,
     // );
-
-    
   };
+
+  useEffect(() => {
+    const gener43_2021_core_list_funct = async () => {
+      const data = await gener43_2021_core_list();
+      setgener43_2021_core_list(data);
+    };
+    gener43_2021_core_list_funct();
+  }, []);
+
+  console.log(gener43_2021_core_listdata, 'new data');
+
   const tableData = [];
 
   return (
@@ -454,14 +467,35 @@ const beatFour = () => {
                     style={{
                       display: 'flex',
                       flexDirection: 'row',
-                      justifyContent: 'center',
+                      justifyContent: 'space-between',
                       margin: 5,
                     }}>
-                    <Button title="Save" onPress={addNewSave} />
-                    <Button
-                      title="Close"
-                      onPress={() => setModalVisible(false)}
-                    />
+                    <TouchableOpacity
+                      style={{
+                        flex: 1,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        margin: 5,
+                        padding: 10,
+                        backgroundColor: '#007AFF', // Default iOS button color. Use '#2196F3' for Android.
+                        borderRadius: 5,
+                      }}
+                      onPress={addNewSave}>
+                      <Text style={{color: 'white'}}>Save</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={{
+                        flex: 1,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        margin: 5,
+                        padding: 10,
+                        backgroundColor: '#007AFF', // Same default color as above
+                        borderRadius: 5,
+                      }}
+                      onPress={() => setModalVisible(false)}>
+                      <Text style={{color: 'white'}}>Close</Text>
+                    </TouchableOpacity>
                   </View>
                 </View>
               </ScrollView>
@@ -488,6 +522,9 @@ const beatFour = () => {
             <Text style={styles.buttonText}>Cancel</Text>
           </TouchableOpacity>
         </View>
+        <TouchableOpacity style={styles.addButton}>
+          <Text style={styles.buttonText}>Sync</Text>
+        </TouchableOpacity>
       </ScrollView>
     </>
   );

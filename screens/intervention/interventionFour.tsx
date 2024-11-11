@@ -55,6 +55,15 @@ const interventionFour = () => {
   const [inputValue9, setInputValue9] = useState('');
   const [inputValue10, setInputValue10] = useState('');
   const [inputValue11, setInputValue11] = useState('');
+  const [totalSeedlings, setTotalSeedlings] = useState(0);
+  const [totalSeedlingsPerHec, setTotalSeedlingsPerHec] = useState(0);
+  const [totalTreesPerHec, setTotalTreesPerHec] = useState(0);
+  const [totalTreesPerPlot, setTotalTreesPerPlot] = useState(0);
+  const [avgOfRg, setAvgOfRg] = useState('');
+  const [avg, setAvg] = useState(0);
+  const [avg2, setAvg2] = useState(0);
+  const [avg3, setAvg3] = useState(0);
+  const [avg4, setAvg4] = useState(0);
   const [showPicker, setShowPicker] = useState(false);
   const [date, setDate] = useState(new Date());
   const [selectedForest, setSelectedForest] = useState(null);
@@ -73,6 +82,40 @@ const interventionFour = () => {
   const {uuid} = route.params;
   const uid = uuid;
   console.log(uid, 'uuid in page 4');
+
+  useEffect(() => {
+    if (oridianl !== 0) {
+      const newAverage = totalSeedlings / oridianl;
+      setAvg(newAverage); // Update the average
+    } else {
+      setAvg(0); // If no plots, set average to 0
+    }
+  }, [oridianl, totalSeedlings]);
+
+  useEffect(() => {
+    if (oridianl !== 0) {
+      const newAverage = totalSeedlingsPerHec / oridianl;
+      setAvg2(newAverage); // Update the average
+    } else {
+      setAvg2(0); // If no plots, set average to 0
+    }
+  }, [oridianl, totalSeedlingsPerHec]);
+
+  useEffect(() => {
+    if (oridianl !== 0) {
+      const newAverage = totalTreesPerPlot / oridianl;
+      setAvg3(newAverage);
+    } else {
+      setAvg3(0);
+    }
+  }, [oridianl, totalTreesPerPlot]);
+
+  useEffect(() => {
+    if (oridianl !== 0) {
+      const newAverage = totalTreesPerHec / oridianl;
+      setAvg4(newAverage);
+    }
+  }, [oridianl, totalTreesPerHec]);
 
   const onDocumentPress = async () => {
     const res = await DocumentPicker.pick({
@@ -148,6 +191,8 @@ const interventionFour = () => {
     intervention_list();
   }, []);
 
+  console.log(avg, 'average.....');
+
   const addNewone = async () => {
     const newGeneratedUUID = generateUUID(); // Generate a new UUID
     setNewUUID(newGeneratedUUID); // If you need it later in the state, set it
@@ -177,12 +222,66 @@ const interventionFour = () => {
     }
   };
 
+  // const addNewTwo = async () => {
+  //   const newGeneratedUUID = generateUUID(); // Generate a new UUID
+  //   setNewUUID(newGeneratedUUID); // If you need it later in the state, set it
+  //   const updatedOrdinalNumber = oridianl + 1; // Increment the value directly here
+  //   setoridianl(updatedOrdinalNumber);
+
+  //   const dataToInsertadd = {
+  //     _uri: newGeneratedUUID, // Use the freshly generated UUID
+  //     _creator_uri_user: uri,
+  //     _parent_auri: initialUUID,
+  //     _top_level_auri: initialUUID,
+  //     _creation_date: getCurrentDateandTime(),
+  //     _last_update_date: getCurrentDateandTime(),
+  //     reg_avg_seedling_per_plot: seedlingsPerPlot,
+  //     reg_avg_trees_per_ha_per_plot: seedlingsPerHector,
+  //     reg_avg_trees_per_plot: treesPerPlot,
+  //     reg_avg_seedling_per_ha_per_plot: treesPerHector,
+  //     _ordinal_number: updatedOrdinalNumber,
+  //   };
+
+  //   var avg =
+  //     updatedOrdinalNumber !== 0
+  //       ? (seedlingsPerPlot + avg) / updatedOrdinalNumber
+  //       : 0;
+  //   console.log(avg, 'avarage....');
+  //   setAvgOfRg(avg);
+
+  //   console.log(dataToInsertadd, 'datato insert');
+
+  //   try {
+  //     await plant27_2021_gr_regen_create(dataToInsertadd);
+  //     console.log('All data inserted successfully');
+  //   } catch (error) {
+  //     console.error('Failed to insert data:', error.message || error);
+  //   }
+  // };
+
   const addNewTwo = async () => {
     const newGeneratedUUID = generateUUID(); // Generate a new UUID
     setNewUUID(newGeneratedUUID); // If you need it later in the state, set it
     const updatedOrdinalNumber = oridianl + 1; // Increment the value directly here
     setoridianl(updatedOrdinalNumber);
 
+    const seedlings = parseFloat(seedlingsPerPlot);
+    setTotalSeedlings(totalSeedlings + seedlings); // Update running total of seedlings
+    setSeedlingsPerPlot('');
+
+    const seedlinghc = parseFloat(seedlingsPerHector);
+    setTotalSeedlingsPerHec(totalSeedlingsPerHec + seedlinghc);
+    setSeedlingsPerHector('');
+
+    const treesPhc = parseFloat(treesPerHector);
+    setTotalTreesPerHec(totalTreesPerHec + treesPhc);
+    setTreesPerHector('');
+
+    const treesPplt = parseFloat(treesPerPlot);
+    setTotalTreesPerPlot(treesPplt + totalTreesPerPlot);
+    setTreesPerPlot('');
+
+    // Construct dataToInsertadd to insert into the database
     const dataToInsertadd = {
       _uri: newGeneratedUUID, // Use the freshly generated UUID
       _creator_uri_user: uri,
@@ -190,15 +289,16 @@ const interventionFour = () => {
       _top_level_auri: initialUUID,
       _creation_date: getCurrentDateandTime(),
       _last_update_date: getCurrentDateandTime(),
-      reg_avg_seedling_per_plot: seedlingsPerPlot,
-      reg_avg_trees_per_ha_per_plot: seedlingsPerHector,
-      reg_avg_trees_per_plot: treesPerPlot,
-      reg_avg_seedling_per_ha_per_plot: treesPerHector,
+      reg_avg_seedling_per_plot: avg,
+      reg_avg_trees_per_ha_per_plot: avg2,
+      reg_avg_trees_per_plot: avg3,
+      reg_avg_seedling_per_ha_per_plot: avg4,
       _ordinal_number: updatedOrdinalNumber,
     };
 
-    console.log(dataToInsertadd, 'datato insert');
+    console.log(dataToInsertadd, 'data to insert');
 
+    // Try to insert the data into the database
     try {
       await plant27_2021_gr_regen_create(dataToInsertadd);
       console.log('All data inserted successfully');
@@ -419,14 +519,35 @@ const interventionFour = () => {
                       style={{
                         display: 'flex',
                         flexDirection: 'row',
-                        justifyContent: 'center',
+                        justifyContent: 'space-between',
                         margin: 5,
                       }}>
-                      <Button title="Save" onPress={addNewone} />
-                      <Button
-                        title="Close"
-                        onPress={() => setModalVisible(false)}
-                      />
+                      <TouchableOpacity
+                        style={{
+                          flex: 1,
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          margin: 5,
+                          padding: 10,
+                          backgroundColor: '#007AFF', // Default iOS button color. Use '#2196F3' for Android.
+                          borderRadius: 5,
+                        }}
+                        onPress={addNewone}>
+                        <Text style={{color: 'white'}}>Save</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={{
+                          flex: 1,
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          margin: 5,
+                          padding: 10,
+                          backgroundColor: '#007AFF', // Same default color as above
+                          borderRadius: 5,
+                        }}
+                        onPress={() => setModalVisible(false)}>
+                        <Text style={{color: 'white'}}>Close</Text>
+                      </TouchableOpacity>
                     </View>
                   </View>
                 </ScrollView>
@@ -579,6 +700,7 @@ const interventionFour = () => {
                       placeholder="Enter Seedlings/Sapling per Plot"
                       onChangeText={text => setSeedlingsPerPlot(text)}
                       placeholderTextColor="black"
+                      keyboardType="numeric"
                     />
 
                     <Text style={styles.label}>
@@ -590,6 +712,7 @@ const interventionFour = () => {
                       value={seedlingsPerHector}
                       placeholder="Enter Seedlings/Sapling per Hector"
                       onChangeText={text => setSeedlingsPerHector(text)}
+                      keyboardType="numeric"
                     />
 
                     <Text style={styles.label}>
@@ -602,6 +725,7 @@ const interventionFour = () => {
                       placeholder="Enter Trees per Plot"
                       placeholderTextColor="black"
                       onChangeText={text => setTreesPerPlot(text)}
+                      keyboardType="numeric"
                     />
 
                     <Text style={styles.label}>
@@ -614,6 +738,7 @@ const interventionFour = () => {
                       placeholder="Enter Trees per Hector"
                       onChangeText={text => setTreesPerHector(text)}
                       placeholderTextColor="black"
+                      keyboardType="numeric"
                     />
 
                     {/* Close modal button */}
@@ -621,14 +746,35 @@ const interventionFour = () => {
                       style={{
                         display: 'flex',
                         flexDirection: 'row',
-                        justifyContent: 'center',
+                        justifyContent: 'space-between',
                         margin: 5,
                       }}>
-                      <Button title="Save" onPress={addNewTwo} />
-                      <Button
-                        title="Close"
-                        onPress={() => setModalVisible2(false)}
-                      />
+                      <TouchableOpacity
+                        style={{
+                          flex: 1,
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          margin: 5,
+                          padding: 10,
+                          backgroundColor: '#007AFF', // Default iOS button color. Use '#2196F3' for Android.
+                          borderRadius: 5,
+                        }}
+                        onPress={addNewTwo}>
+                        <Text style={{color: 'white'}}>Save</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={{
+                          flex: 1,
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          margin: 5,
+                          padding: 10,
+                          backgroundColor: '#007AFF', // Same default color as above
+                          borderRadius: 5,
+                        }}
+                        onPress={() => setModalVisible2(false)}>
+                        <Text style={{color: 'white'}}>Close</Text>
+                      </TouchableOpacity>
                     </View>
                   </View>
                 </ScrollView>
@@ -641,8 +787,8 @@ const interventionFour = () => {
 
         <TextInput
           style={styles.input}
-          value={inputValue5}
-          onChangeText={text => setInputValue5(text)}
+          value={avg !== 0 ? avg.toString() : '0'}
+          // onChangeText={text => setInputValue5(text)}
           placeholderTextColor="black"
           placeholder="select Regeneration Plots"
         />
@@ -651,8 +797,8 @@ const interventionFour = () => {
 
         <TextInput
           style={styles.input}
-          value={inputValue6}
-          onChangeText={text => setInputValue6(text)}
+          value={avg2 !== 0 ? avg2.toString() : '0'}
+          // onChangeText={text => setInputValue6(text)}
           placeholderTextColor="black"
           placeholder="select Avg Seedling/Sapling per plot"
         />
@@ -661,8 +807,8 @@ const interventionFour = () => {
 
         <TextInput
           style={styles.input}
-          value={inputValue7}
-          onChangeText={text => setInputValue7(text)}
+          value={avg3 !== 0 ? avg3.toString() : '0'}
+          // onChangeText={text => setInputValue7(text)}
           placeholderTextColor="black"
           placeholder="select Avg. Trees per plot"
         />
@@ -671,7 +817,7 @@ const interventionFour = () => {
 
         <TextInput
           style={styles.input}
-          value={inputValue8}
+          value={avg4 !== 0 ? avg4.toString() : '0'}
           onChangeText={text => setInputValue8(text)}
           placeholderTextColor="black"
           placeholder="select Trees Per hectare"

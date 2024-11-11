@@ -301,14 +301,35 @@ const interventionThree = () => {
                       style={{
                         display: 'flex',
                         flexDirection: 'row',
-                        justifyContent: 'center',
+                        justifyContent: 'space-between',
                         margin: 5,
                       }}>
-                      <Button title="Save" onPress={addNew} />
-                      <Button
-                        title="Close"
-                        onPress={() => setModalVisible(false)}
-                      />
+                      <TouchableOpacity
+                        style={{
+                          flex: 1,
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          margin: 5,
+                          padding: 10,
+                          backgroundColor: '#007AFF', // Default iOS button color. Use '#2196F3' for Android.
+                          borderRadius: 5,
+                        }}
+                        onPress={addNew}>
+                        <Text style={{color: 'white'}}>Save</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={{
+                          flex: 1,
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          margin: 5,
+                          padding: 10,
+                          backgroundColor: '#007AFF', // Same default color as above
+                          borderRadius: 5,
+                        }}
+                        onPress={() => setModalVisible(false)}>
+                        <Text style={{color: 'white'}}>Close</Text>
+                      </TouchableOpacity>
                     </View>
                   </View>
                 </ScrollView>

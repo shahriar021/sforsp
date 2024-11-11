@@ -39,12 +39,14 @@ import {
   mouza_types_api,
   mouza_types_list,
   plant27_2021_core_create,
+  plant27_2021_location_data_ca_tloc_ad_upzilla_create,
   plant27_2021_location_data_m_sh1_create,
   plant27_2021_location_data_m_sh1_list,
 } from '../../database/sqlDatabase';
 import useUUID from '../../hooks/useUUID';
 import {getCurrentDateandTime} from '../../hooks/dateUtils';
 import useCreateUri from '../../hooks/useCreatUri';
+import {useGlobalState} from '../../hooks/globalStateContext';
 
 const interventionOne = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -94,6 +96,12 @@ const interventionOne = () => {
   const uri = useCreateUri();
 
   const navigation = useNavigation();
+  const {setIsSelected} = useGlobalState();
+
+  if (selectedForest == 3) {
+    console.log('yes this upokul..');
+    setIsSelected(true);
+  }
 
   const {rankOptions, selectedRank, setSelectedRank} = useTrace();
   console.log(rankOptions, '  Rank');
@@ -344,6 +352,8 @@ const interventionOne = () => {
   ];
 
   const interventionOneSubmit = async () => {
+    const newGeneratedUUID = generateUUID(); // Generate a new UUID
+    setNewUUID(newGeneratedUUID);
     console.log('Input Values:', uuid);
     console.log('inputValue1:', inputValue1);
     console.log('inputValue2:', inputValue2);
@@ -398,8 +408,21 @@ const interventionOne = () => {
       // survey_type: survey_type,
     };
 
+    const dataToInsertUpazila = {
+      _uri: newGeneratedUUID,
+      _creator_uri_user: uri,
+      _parent_auri: initialUUID,
+      _top_level_auri: initialUUID,
+      _creation_date: getCurrentDateandTime(),
+      _last_update_date: getCurrentDateandTime(),
+      value: selectedUpazila,
+    };
+
     try {
       await plant27_2021_core_create(dataToInsert);
+      await plant27_2021_location_data_ca_tloc_ad_upzilla_create(
+        dataToInsertUpazila,
+      );
       console.log('All data inserted successfully');
     } catch (error) {
       console.error('Failed to insert data:', error.message || error); // Log the error message
@@ -434,6 +457,7 @@ const interventionOne = () => {
 
     try {
       await plant27_2021_location_data_m_sh1_create(dataToInsertadd);
+
       console.log('All data inserted successfully');
     } catch (error) {
       console.error('Failed to insert data:', error.message || error);
@@ -451,6 +475,8 @@ const interventionOne = () => {
   // }, []);
 
   // setTimeout(() => console.log(testData, 'test data....'), 5000);
+
+  console.log(selectedForest, 'upokul');
 
   return (
     <>
@@ -531,12 +557,12 @@ const interventionOne = () => {
           style={styles.input}
           data={fstLnd}
           labelField="name" // Display the 'name' field in the dropdown
-          valueField="id" // Use the 'id' as the value field
+          valueField="code" // Use the 'id' as the value field
           placeholder="Select Landscape type"
           placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
           selectedTextStyle={{color: 'black', fontSize: 16}}
           value={selectedForest}
-          onChange={item => setSelectedForest(item.value)} // Update the selected value based on 'id'
+          onChange={item => setSelectedForest(item.code)} // Update the selected value based on 'id'
           dropdownStyle={{
             backgroundColor: 'white', // Ensure dropdown has a visible background
             borderRadius: 8, // Rounded corners for consistency
@@ -869,14 +895,35 @@ const interventionOne = () => {
                     style={{
                       display: 'flex',
                       flexDirection: 'row',
-                      justifyContent: 'center',
+                      justifyContent: 'space-between',
                       margin: 5,
                     }}>
-                    <Button title="Save" onPress={addNew} />
-                    <Button
-                      title="Close"
-                      onPress={() => setModalVisible(false)}
-                    />
+                    <TouchableOpacity
+                      style={{
+                        flex: 1,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        margin: 5,
+                        padding: 10,
+                        backgroundColor: '#007AFF', // Default iOS button color. Use '#2196F3' for Android.
+                        borderRadius: 5,
+                      }}
+                      onPress={addNew}>
+                      <Text style={{color: 'white'}}>Save</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={{
+                        flex: 1,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        margin: 5,
+                        padding: 10,
+                        backgroundColor: '#007AFF', // Same default color as above
+                        borderRadius: 5,
+                      }}
+                      onPress={() => setModalVisible(false)}>
+                      <Text style={{color: 'white'}}>Close</Text>
+                    </TouchableOpacity>
                   </View>
                 </View>
               </ScrollView>

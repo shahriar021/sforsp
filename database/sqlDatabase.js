@@ -14993,6 +14993,13 @@ export const plant27_2021_core_update7 = (uuid, updatedValues) => {
 export const plant27_2021_core_update8 = (uuid, updatedValues) => {
   return new Promise((resolve, reject) => {
     console.log('Starting database transaction for update...');
+    console.log(
+      updatedValues.GTRTS_COMPOST_COMPOST_YEAR_RAW,
+      updatedValues.GTRTS_CLIMBER_CUTTING_CLIMBER_YEAR_RAW,
+      updatedValues.GTRTS_OTHER_TREATMENT_OTHERS_SPECIFIED,
+      updatedValues.GTRTS_OTHER_TREATMENT_OTHER_YEAR_RAW,
+      'see al values  for update...',
+    );
     database.transaction(
       tx => {
         console.log('Inside transaction...');
@@ -39023,7 +39030,10 @@ export const plant27_2021_gtrts_climber_cutting_climber_month_create =
       database.transaction(tx => {
         // Insert plant27_2021_gtrts_climber_cutting_climber_month
         tx.executeSql(
-          'INSERT INTO plant27_2021_gtrts_climber_cutting_climber_month (_uri text,_creator_uri_user text,_creation_date text,_last_update_uri_user text,_last_update_date text,_parent_auri text,_ordinal_number text,_top_level_auri text,value text)',
+          `INSERT INTO plant27_2021_gtrts_climber_cutting_climber_month 
+(_uri, _creator_uri_user, _creation_date, _last_update_uri_user, _last_update_date, _parent_auri, _ordinal_number, _top_level_auri, value) 
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
+`,
           [
             plant27_2021_gtrts_climber_cutting_climber_month._uri || null,
             plant27_2021_gtrts_climber_cutting_climber_month._creator_uri_user ||
@@ -39047,7 +39057,7 @@ export const plant27_2021_gtrts_climber_cutting_climber_month_create =
             resolve(results);
           },
           (tx, error) => {
-            console.error('Error inserting data:', error);
+            console.error('Error inserting data: climber month', error);
             reject(error);
           },
         );
@@ -39395,7 +39405,10 @@ export const plant27_2021_gtrts_compost_compost_month_create =
       database.transaction(tx => {
         // Insert plant27_2021_gtrts_compost_compost_month
         tx.executeSql(
-          'INSERT INTO plant27_2021_gtrts_compost_compost_month (_uri text,_creator_uri_user text,_creation_date text,_last_update_uri_user text,_last_update_date text,_parent_auri text,_ordinal_number text,_top_level_auri text,value text)',
+          `INSERT INTO plant27_2021_gtrts_compost_compost_month 
+(_uri, _creator_uri_user, _creation_date, _last_update_uri_user, _last_update_date, _parent_auri, _ordinal_number, _top_level_auri, value) 
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
+`,
           [
             plant27_2021_gtrts_compost_compost_month._uri || null,
             plant27_2021_gtrts_compost_compost_month._creator_uri_user || null,
@@ -40139,7 +40152,10 @@ export const plant27_2021_location_data_ca_tloc_ad_upzilla_create =
       database.transaction(tx => {
         // Insert plant27_2021_location_data_ca_tloc_ad_upzilla
         tx.executeSql(
-          'INSERT INTO plant27_2021_location_data_ca_tloc_ad_upzilla (_uri text,_creator_uri_user text,_creation_date text,_last_update_uri_user text,_last_update_date text,_parent_auri text,_ordinal_number text,_top_level_auri text,value text)',
+          `INSERT INTO plant27_2021_location_data_ca_tloc_ad_upzilla 
+(_uri, _creator_uri_user, _creation_date, _last_update_uri_user, _last_update_date, _parent_auri, _ordinal_number, _top_level_auri, value) 
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
+`,
           [
             plant27_2021_location_data_ca_tloc_ad_upzilla._uri || null,
             plant27_2021_location_data_ca_tloc_ad_upzilla._creator_uri_user ||
@@ -40158,7 +40174,7 @@ export const plant27_2021_location_data_ca_tloc_ad_upzilla_create =
             plant27_2021_location_data_ca_tloc_ad_upzilla.value || null,
           ],
           (tx, results) => {
-            console.log('Data inserted successfully:', results);
+            console.log('Data inserted successfully: upazila', results);
             resolve(results);
           },
           (tx, error) => {

@@ -1,6 +1,6 @@
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
-import {LogBox} from 'react-native';
+import {Alert, LogBox} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import SplashScreen from './screens/splashScreen';
 import OnboardingScreen from './screens/onboarding/onboardingScreen';
@@ -73,6 +73,7 @@ import TabViewExample from './screens/tabview_dashboard/tabview_dash';
 import beatDashboard from './screens/beat/beatDashboard';
 import InterventionDashboar from './screens/intervention/interventionDashboar';
 import consult from './screens/consult/consultDashboard';
+import NetInfo from '@react-native-community/netinfo'
 
 import {
   gener43_2021_core_api,
@@ -105,6 +106,7 @@ import {
   jur_fd_ecozones_list,
   jur_fd_ranges_api,
   jur_fd_ranges_list,
+  months_api,
   mouza_types_api,
   mouza_types_list,
   natural_issues_api,
@@ -113,15 +115,21 @@ import {
   plant27_2021_filling_month_api,
   plant27_2021_gr_regen_api,
   plant27_2021_gregen_spp_regen_api,
+  plant27_2021_gtrts_climber_cutting_climber_month_api,
   plant27_2021_gtrts_community_protection_api,
+  plant27_2021_gtrts_compost_compost_month_api,
   plant27_2021_gtrts_vacancy_filling_api,
   plant27_2021_gtrts_weeding_api,
+  plant27_2021_location_data_ca_tloc_ad_upzilla_api,
   plant27_2021_location_data_m_sh1_api,
   plant27_2021_planting_plan_gplanting_gspp_api,
   plant27_2021_rphotoextra_api,
   plant27_2021_s_site_api,
   plant27_2021_weeding_month_api,
+  users_api,
 } from './database/sqlDatabase';
+
+import {GlobalStateProvider} from './hooks/globalStateContext';
 
 LogBox.ignoreAllLogs();
 
@@ -149,6 +157,8 @@ const App = () => {
         await mouza_types_api();
       await natural_issues_api();
       await human_issues_api();
+      await months_api();
+      await users_api();
     };
     callCreateApi();
   }, []);
@@ -352,9 +362,6 @@ const App = () => {
     }
   }, []);
 
-
-
-
   useEffect(() => {
     try {
       console.log('useEffect is being called');
@@ -394,9 +401,6 @@ const App = () => {
       console.log('Error in useEffect:', error);
     }
   }, []);
-
-
-
 
   useEffect(() => {
     try {
@@ -698,6 +702,74 @@ const App = () => {
     }
   }, []);
 
+  useEffect(() => {
+    try {
+      console.log('useEffect is being called');
+      const plant27_2021_location_data_ca_tloc_ad_upzilla_api_func =
+        async () => {
+          console.log(
+            'plant27_2021_location_data_ca_tloc_ad_upzilla_api has been called',
+          );
+          try {
+            await plant27_2021_location_data_ca_tloc_ad_upzilla_api();
+          } catch (err) {
+            console.log(
+              'Error fetching plant27_2021_location_data_ca_tloc_ad_upzilla_api API data:',
+              err,
+            );
+          }
+        };
+      plant27_2021_location_data_ca_tloc_ad_upzilla_api_func();
+    } catch (error) {
+      console.log('Error in useEffect:', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      console.log('useEffect is being called');
+      const plant27_2021_gtrts_compost_compost_month_api_func = async () => {
+        console.log(
+          'plant27_2021_gtrts_compost_compost_month_api has been called',
+        );
+        try {
+          await plant27_2021_gtrts_compost_compost_month_api();
+        } catch (err) {
+          console.log(
+            'Error fetching plant27_2021_gtrts_compost_compost_month_api API data:',
+            err,
+          );
+        }
+      };
+      plant27_2021_gtrts_compost_compost_month_api_func();
+    } catch (error) {
+      console.log('Error in useEffect:', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      console.log('useEffect is being called');
+      const plant27_2021_gtrts_climber_cutting_climber_month_api_func =
+        async () => {
+          console.log(
+            'plant27_2021_gtrts_climber_cutting_climber_month_api has been called',
+          );
+          try {
+            await plant27_2021_gtrts_climber_cutting_climber_month_api();
+          } catch (err) {
+            console.log(
+              'Error fetching plant27_2021_gtrts_climber_cutting_climber_month_api API data:',
+              err,
+            );
+          }
+        };
+      plant27_2021_gtrts_climber_cutting_climber_month_api_func();
+    } catch (error) {
+      console.log('Error in useEffect:', error);
+    }
+  }, []);
+
   // useEffect(() => {
   //   try {
   //     console.log('useEffect is being called');
@@ -752,8 +824,10 @@ const App = () => {
   //   return unsubscribe;
   // }, []);
 
+
   const [userId, setUserId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isConnected,setIsConnected]=useState(false);
 
   // useEffect(() => {
   //   const fetchUserId = async () => {
@@ -783,222 +857,246 @@ const App = () => {
     fetchUserId();
   }, []);
 
+  useEffect(()=>{
+    const internet=NetInfo.addEventListener((state)=>{
+      setIsConnected(state.isConnected);
+      if(!state.isConnected){
+        showAlert();
+      }
+    })
+    return ()=>{
+      internet();
+    }
+  },[])
+
+  const showAlert = () => {
+    Alert.alert(
+      'Internet Connection',
+      'You are offline. Some features may not be available.',
+    );
+  };
+
   if (isLoading) {
     return null; // Optionally, you can return a loading spinner or splash screen here
   }
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-          ...TransitionPresets.SlideFromRightIOS,
-        }}
-        initialRouteName={userId ? 'Profile' : 'Splash'}>
-        <Stack.Screen name="Splash" component={SplashScreen} />
-        <Stack.Screen name="Onboarding" component={OnboardingScreen} />
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Register" component={RegisterScreen} />
-        <Stack.Screen name="Verification" component={VerificationScreen} />
-        <Stack.Screen name="BottomTabBar" component={BottomTabBarScreen} />
-        <Stack.Screen name="TaskDetail" component={TaskDetailScreen} />
-        <Stack.Screen name="InviteMember" component={InviteMemberScreen} />
-        <Stack.Screen name="AddNewTask" component={AddNewTaskScreen} />
-        <Stack.Screen name="Notification" component={NotificationScreen} />
-        <Stack.Screen name="Search" component={SearchScreen} />
-        <Stack.Screen name="ProjectDetail" component={ProjectDetailScreen} />
-        <Stack.Screen name="Chat" component={ChatScreen} />
-        <Stack.Screen name="EditProfile" component={EditProfileScreen} />
-        <Stack.Screen name="Team" component={TeamScreen} />
-        <Stack.Screen name="CreateTeam" component={CreateTeamScreen} />
-        <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicyScreen} />
-        <Stack.Screen name="Profile" component={ProfileScreen} />
-        <Stack.Screen name="Image" component={ImageScreen} />
-
-        <Stack.Screen
-          name="TermsAndConditions"
-          component={TermsAndConditionsScreen}
-        />
-        <Stack.Screen name="Faq" component={FaqScreen} />
-        <Stack.Screen
-          name="mobile_allowance"
-          component={Mobile_allowance_all}
-        />
-        <Stack.Screen
-          name="transport_allowance"
-          component={Transport_allowance_all}
-        />
-
-        <Stack.Screen name="office_visit" component={Ofiice_visit_all} />
-        <Stack.Screen name="notification" component={NotificationScreen} />
-        <Stack.Screen name="geo_location" component={Geo_location} />
-        <Stack.Screen name="geo_location_map" component={geo_location_map} />
-        <Stack.Screen
-          name="geo_location_live_map"
-          component={geo_location_live_map}
-        />
-        <Stack.Screen name="profile_update" component={Profile_updates} />
-        <Stack.Screen name="payment_history" component={Payment_history} />
-        <Stack.Screen name="change_password" component={Change_password} />
-        <Stack.Screen name="remarks" component={Remarks} />
-        <Stack.Screen name="add_person" component={Add_person} />
-        <Stack.Screen name="add_person_create" component={Add_person_create} />
-        <Stack.Screen name="weeklyAllowance" component={weeklyAllowance} />
-        <Stack.Screen
-          name="mobile_allowance_create"
-          component={Mobile_allowance_create}
-        />
-
-        <Stack.Screen
-          name="transport_allowance_create"
-          component={TransportAllowanceCreate}
-        />
-        <Stack.Screen
-          name="transport_allowance_edit"
-          component={Transport_allowance_edit}
-        />
-        <Stack.Screen
-          name="office_visit_create"
-          component={office_visit_create}
-        />
-
-        <Stack.Screen
-          name="locationTrackingFunc"
-          component={locationTrackingFunc}
-        />
-
-        <Stack.Screen name="attendance" component={attendance} />
-        <Stack.Screen name="salary" component={salary} />
-        <Stack.Screen name="parentAttendance" component={parentAttendance} />
-        <Stack.Screen name="report" component={report} />
-        <Stack.Screen name="leave" component={leave_application_list} />
-        <Stack.Screen
-          name="leave_create"
-          component={leave_application_create}
-        />
-
-        <Stack.Screen
-          name="beatOne"
-          component={beatOne}
-          options={{
-            title: 'Beat Information',
-            headerTitleStyle: {
-              fontSize: 24, // Adjust the font size as needed
-            },
+    <GlobalStateProvider>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+            ...TransitionPresets.SlideFromRightIOS,
           }}
-        />
-        <Stack.Screen
-          name="beatTwo"
-          component={beatTwo}
-          options={{title: 'Beat Information'}}
-        />
-        <Stack.Screen
-          name="beatThree"
-          component={beatThree}
-          options={{title: 'Beat Information'}}
-        />
-        <Stack.Screen
-          name="beatFour"
-          component={beatFour}
-          options={{title: 'Beat Information'}}
-        />
+          initialRouteName={userId ? 'Profile' : 'Splash'}>
+          <Stack.Screen name="Splash" component={SplashScreen} />
+          <Stack.Screen name="Onboarding" component={OnboardingScreen} />
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Register" component={RegisterScreen} />
+          <Stack.Screen name="Verification" component={VerificationScreen} />
+          <Stack.Screen name="BottomTabBar" component={BottomTabBarScreen} />
+          <Stack.Screen name="TaskDetail" component={TaskDetailScreen} />
+          <Stack.Screen name="InviteMember" component={InviteMemberScreen} />
+          <Stack.Screen name="AddNewTask" component={AddNewTaskScreen} />
+          <Stack.Screen name="Notification" component={NotificationScreen} />
+          <Stack.Screen name="Search" component={SearchScreen} />
+          <Stack.Screen name="ProjectDetail" component={ProjectDetailScreen} />
+          <Stack.Screen name="Chat" component={ChatScreen} />
+          <Stack.Screen name="EditProfile" component={EditProfileScreen} />
+          <Stack.Screen name="Team" component={TeamScreen} />
+          <Stack.Screen name="CreateTeam" component={CreateTeamScreen} />
+          <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicyScreen} />
+          <Stack.Screen name="Profile" component={ProfileScreen} />
+          <Stack.Screen name="Image" component={ImageScreen} />
 
-        <Stack.Screen
-          name="interventionOne"
-          component={interventionOne}
-          options={{title: 'Intervention Planning'}}
-        />
+          <Stack.Screen
+            name="TermsAndConditions"
+            component={TermsAndConditionsScreen}
+          />
+          <Stack.Screen name="Faq" component={FaqScreen} />
+          <Stack.Screen
+            name="mobile_allowance"
+            component={Mobile_allowance_all}
+          />
+          <Stack.Screen
+            name="transport_allowance"
+            component={Transport_allowance_all}
+          />
 
-        <Stack.Screen
-          name="interventionTwo"
-          component={interventionTwo}
-          options={{title: 'Intervention Planning'}}
-        />
+          <Stack.Screen name="office_visit" component={Ofiice_visit_all} />
+          <Stack.Screen name="notification" component={NotificationScreen} />
+          <Stack.Screen name="geo_location" component={Geo_location} />
+          <Stack.Screen name="geo_location_map" component={geo_location_map} />
+          <Stack.Screen
+            name="geo_location_live_map"
+            component={geo_location_live_map}
+          />
+          <Stack.Screen name="profile_update" component={Profile_updates} />
+          <Stack.Screen name="payment_history" component={Payment_history} />
+          <Stack.Screen name="change_password" component={Change_password} />
+          <Stack.Screen name="remarks" component={Remarks} />
+          <Stack.Screen name="add_person" component={Add_person} />
+          <Stack.Screen
+            name="add_person_create"
+            component={Add_person_create}
+          />
+          <Stack.Screen name="weeklyAllowance" component={weeklyAllowance} />
+          <Stack.Screen
+            name="mobile_allowance_create"
+            component={Mobile_allowance_create}
+          />
 
-        <Stack.Screen
-          name="interventionThree"
-          component={interventionThree}
-          options={{title: 'Intervention Planning'}}
-        />
+          <Stack.Screen
+            name="transport_allowance_create"
+            component={TransportAllowanceCreate}
+          />
+          <Stack.Screen
+            name="transport_allowance_edit"
+            component={Transport_allowance_edit}
+          />
+          <Stack.Screen
+            name="office_visit_create"
+            component={office_visit_create}
+          />
 
-        <Stack.Screen
-          name="interventionFour"
-          component={interventionFour}
-          options={{title: 'Intervention Planning'}}
-        />
+          <Stack.Screen
+            name="locationTrackingFunc"
+            component={locationTrackingFunc}
+          />
 
-        <Stack.Screen
-          name="interventionFive"
-          component={interventionFive}
-          options={{title: 'Intervention Planning'}}
-        />
+          <Stack.Screen name="attendance" component={attendance} />
+          <Stack.Screen name="salary" component={salary} />
+          <Stack.Screen name="parentAttendance" component={parentAttendance} />
+          <Stack.Screen name="report" component={report} />
+          <Stack.Screen name="leave" component={leave_application_list} />
+          <Stack.Screen
+            name="leave_create"
+            component={leave_application_create}
+          />
 
-        <Stack.Screen
-          name="interventionSix"
-          component={interventionSix}
-          options={{title: 'Intervention Planning'}}
-        />
+          <Stack.Screen
+            name="beatOne"
+            component={beatOne}
+            options={{
+              title: 'Beat Information',
+              headerTitleStyle: {
+                fontSize: 24, // Adjust the font size as needed
+              },
+            }}
+          />
+          <Stack.Screen
+            name="beatTwo"
+            component={beatTwo}
+            options={{title: 'Beat Information'}}
+          />
+          <Stack.Screen
+            name="beatThree"
+            component={beatThree}
+            options={{title: 'Beat Information'}}
+          />
+          <Stack.Screen
+            name="beatFour"
+            component={beatFour}
+            options={{title: 'Beat Information'}}
+          />
 
-        <Stack.Screen
-          name="interventionSeven"
-          component={interventionSeven}
-          options={{title: 'Intervention Planning'}}
-        />
+          <Stack.Screen
+            name="interventionOne"
+            component={interventionOne}
+            options={{title: 'Intervention Planning'}}
+          />
 
-        <Stack.Screen
-          name="interventionEight"
-          component={interventionEight}
-          options={{title: 'Intervention Planning'}}
-        />
+          <Stack.Screen
+            name="interventionTwo"
+            component={interventionTwo}
+            options={{title: 'Intervention Planning'}}
+          />
 
-        <Stack.Screen
-          name="communityconsultOne"
-          component={consultOne}
-          options={{title: 'Community Consult'}}
-        />
+          <Stack.Screen
+            name="interventionThree"
+            component={interventionThree}
+            options={{title: 'Intervention Planning'}}
+          />
 
-        <Stack.Screen
-          name="communityconsultTwo"
-          component={consultTwo}
-          options={{title: 'Community Consult'}}
-        />
+          <Stack.Screen
+            name="interventionFour"
+            component={interventionFour}
+            options={{title: 'Intervention Planning'}}
+          />
 
-        <Stack.Screen
-          name="communityconsultThree"
-          component={consultThree}
-          options={{title: 'Community Consult'}}
-        />
+          <Stack.Screen
+            name="interventionFive"
+            component={interventionFive}
+            options={{title: 'Intervention Planning'}}
+          />
 
-        <Stack.Screen
-          name="database_update"
-          component={database_update}
-          options={{title: 'Database Update'}}
-        />
+          <Stack.Screen
+            name="interventionSix"
+            component={interventionSix}
+            options={{title: 'Intervention Planning'}}
+          />
 
-        <Stack.Screen
-          name="tabview_dashboard"
-          component={TabViewExample}
-          options={{title: 'Database Update'}}
-        />
+          <Stack.Screen
+            name="interventionSeven"
+            component={interventionSeven}
+            options={{title: 'Intervention Planning'}}
+          />
 
-        <Stack.Screen
-          name="beat_dashboard"
-          component={beatDashboard}
-          options={{title: 'Beat Dashboard'}}
-        />
+          <Stack.Screen
+            name="interventionEight"
+            component={interventionEight}
+            options={{title: 'Intervention Planning'}}
+          />
 
-        <Stack.Screen
-          name="InterventionDashboar"
-          component={InterventionDashboar}
-          options={{title: 'Intervention Dashboard'}}
-        />
+          <Stack.Screen
+            name="communityconsultOne"
+            component={consultOne}
+            options={{title: 'Community Consult'}}
+          />
 
-        <Stack.Screen
-          name="consultDashboard"
-          component={consult}
-          options={{title: 'Consult Dashboard'}}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+          <Stack.Screen
+            name="communityconsultTwo"
+            component={consultTwo}
+            options={{title: 'Community Consult'}}
+          />
+
+          <Stack.Screen
+            name="communityconsultThree"
+            component={consultThree}
+            options={{title: 'Community Consult'}}
+          />
+
+          <Stack.Screen
+            name="database_update"
+            component={database_update}
+            options={{title: 'Database Update'}}
+          />
+
+          <Stack.Screen
+            name="tabview_dashboard"
+            component={TabViewExample}
+            options={{title: 'Database Update'}}
+          />
+
+          <Stack.Screen
+            name="beat_dashboard"
+            component={beatDashboard}
+            options={{title: 'Beat Dashboard'}}
+          />
+
+          <Stack.Screen
+            name="InterventionDashboar"
+            component={InterventionDashboar}
+            options={{title: 'Intervention Dashboard'}}
+          />
+
+          <Stack.Screen
+            name="consultDashboard"
+            component={consult}
+            options={{title: 'Consult Dashboard'}}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </GlobalStateProvider>
   );
 };
 

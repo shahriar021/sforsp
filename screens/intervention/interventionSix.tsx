@@ -23,6 +23,7 @@ import {
   yes_no_lists_api,
   yes_no_lists_list,
 } from '../../database/sqlDatabase';
+import { useGlobalState } from '../../hooks/globalStateContext';
 
 const interventionSix = () => {
   const [dis_nursery, setDisNursery] = useState([]);
@@ -53,6 +54,7 @@ const interventionSix = () => {
   const [selectedyes_no_lists11, setSelectedDyes_no_lists11] = useState(null);
   const [selectedyes_no_lists12, setSelectedDyes_no_lists12] = useState(null);
 
+  const {isSelected} = useGlobalState()
   const navigation = useNavigation();
   const route = useRoute();
   const {uuid} = route.params;

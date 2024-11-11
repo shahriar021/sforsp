@@ -45,6 +45,7 @@ import {
 } from '../../database/sqlDatabase';
 import useUUID from '../../hooks/useUUID';
 import useCreateUri from '../../hooks/useCreatUri';
+import useInternetConnection from '../../hooks/useInternetConnection';
 
 const beatOne = () => {
   const [uuidadd2, setuuidadd2] = useState('');
@@ -91,9 +92,12 @@ const beatOne = () => {
   const [survey_type, setsurvey_type] = useState(null);
   const [oridianl, setoridianl] = useState(0);
 
+  setTimeout(() => setShowPicker(false), 0);
+
   // ------------------------------
   const [gener43_2021_core_listdata, setgener43_2021_core_list] = useState([]);
-
+  const isConnected = useInternetConnection();
+  console.log(isConnected ? 'online in beat one' : 'offline in beat one');
   const navigation = useNavigation();
   //create useruri
   const uri = useCreateUri();
@@ -212,6 +216,18 @@ const beatOne = () => {
   console.log(newUUID, 'page -add new');
 
   console.log(oridianl, 'ordinal');
+
+  const handleValueChange = (event, newDate) => {
+    // When user selects a date
+    if (newDate) {
+      const formattedDate = `${newDate.getFullYear()}-${String(
+        newDate.getMonth() + 1,
+      ).padStart(2, '0')}-07`; // Formats as yyyy-mm-07 (sets the day as 07)
+      setInputValue1(formattedDate);
+      // TODO: Save `formattedDate` to the database as needed
+    }
+    setShowPicker(false); // Hide the picker after selection
+  };
 
   // const {md5} = useUUID();
   // const uuid = md5;
@@ -452,15 +468,15 @@ const beatOne = () => {
     survey();
   }, []);
 
-  // useEffect(() => {
-  //   const gener43_2021_core_list_funct = async () => {
-  //     const data = await gener43_2021_core_list();
-  //     setgener43_2021_core_list(data);
-  //   };
-  //   gener43_2021_core_list_funct();
-  // }, []);
+  useEffect(() => {
+    const gener43_2021_core_list_funct = async () => {
+      const data = await gener43_2021_core_list();
+      setgener43_2021_core_list(data);
+    };
+    gener43_2021_core_list_funct();
+  }, []);
 
-  // console.log(gener43_2021_core_listdata, 'new data');
+  console.log(gener43_2021_core_listdata, 'new data');
 
   const beat_one_submit = async () => {
     // console.log(
@@ -556,7 +572,7 @@ const beatOne = () => {
         <Text style={styles.label}>
           1a. Information Collection date (তথ্য সংগ্রহের তারিখ):
         </Text>
-        <TouchableOpacity onPress={showDatePicker}>
+        {/* <TouchableOpacity onPress={showDatePicker}>
           <TextInput
             style={styles.input}
             value={GUSER_DCOLLECTION_RAW}
@@ -574,6 +590,22 @@ const beatOne = () => {
             minimumDate={new Date()}
             maximumDate={new Date(2025, 5)}
             locale="en"
+          />
+        )} */}
+
+        <TouchableOpacity onPress={() => setShowPicker(true)}>
+          <Text style={styles.input}>
+            {GUSER_DCOLLECTION_RAW || 'Select date'}
+          </Text>
+        </TouchableOpacity>
+
+        {showPicker && (
+          <MonthPicker
+            onChange={handleValueChange}
+            value={new Date()} // default value for picker, can be adjusted
+            minimumDate={new Date(2000, 0)} // optional
+            maximumDate={new Date(2030, 11)} // optional
+            mode="short" // or "full"
           />
         )}
 
@@ -1004,14 +1036,35 @@ const beatOne = () => {
                     style={{
                       display: 'flex',
                       flexDirection: 'row',
-                      justifyContent: 'center',
+                      justifyContent: 'space-between',
                       margin: 5,
                     }}>
-                    <Button title="Save" onPress={addNewGenerateNewUUID} />
-                    <Button
-                      title="Close"
-                      onPress={() => setModalVisible(false)}
-                    />
+                    <TouchableOpacity
+                      style={{
+                        flex: 1,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        margin: 5,
+                        padding: 10,
+                        backgroundColor: '#007AFF', // Default iOS button color. Use '#2196F3' for Android.
+                        borderRadius: 5,
+                      }}
+                      onPress={addNewGenerateNewUUID}>
+                      <Text style={{color: 'white'}}>Save</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={{
+                        flex: 1,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        margin: 5,
+                        padding: 10,
+                        backgroundColor: '#007AFF', // Same default color as above
+                        borderRadius: 5,
+                      }}
+                      onPress={() => setModalVisible(false)}>
+                      <Text style={{color: 'white'}}>Close</Text>
+                    </TouchableOpacity>
                   </View>
                 </ScrollView>
               </View>

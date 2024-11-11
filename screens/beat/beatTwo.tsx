@@ -277,6 +277,36 @@ const beatTwo = () => {
     }
   };
 
+  const addNewSaveTwo = async () => {
+    const newGeneratedUUID = generateUUID(); // Generate a new UUID
+    setNewUUID(newGeneratedUUID); // If you need it later in the state, set it
+    const updatedOrdinalNumber = oridianl + 1; // Increment the value directly here
+    setoridianl(updatedOrdinalNumber);
+
+    const dataToInsertadd = {
+      _uri: newGeneratedUUID, // Use the freshly generated UUID
+      _creator_uri_user: uri,
+      _parent_auri: uId,
+      _top_level_auri: uId,
+      _creation_date: getCurrentDateandTime(),
+      _last_update_date: getCurrentDateandTime(),
+      natissues: selectedNaturalIssue,
+      nat_level: selectedRank,
+
+      _ordinal_number: updatedOrdinalNumber,
+    };
+
+    console.log(dataToInsertadd, 'datato insert');
+
+    try {
+      await gener43_2021_gnatissues_create(dataToInsertadd);
+
+      console.log('All data inserted successfully');
+    } catch (error) {
+      console.error('Failed to insert data:', error.message || error);
+    }
+  };
+
   const beatTwosubmit = async () => {
     const newGeneratedUUID = generateUUID(); // Generate a new UUID
     setNewUUID(newGeneratedUUID); // If you need it later in the state, set it
@@ -372,16 +402,14 @@ const beatTwo = () => {
       _ordinal_number: updatedOrdinalNumber,
     };
 
-    
-
     // console.log('Data to insert:', dataToInsertimageOne);
 
     try {
       await gener43_2021_core_update(uId, dataToInsert);
-      await gener43_2021_xpic_beat_index_blb_create(dataToInsertimageOne);
-      await gener43_2021_xpic_beat_index_bn_create(dataToInsertimageTwo);
-      await gener43_2021_xpic_beat_index_ref_create(dataToInsertimageThree);
-     
+      // await gener43_2021_xpic_beat_index_blb_create(dataToInsertimageOne);
+      // await gener43_2021_xpic_beat_index_bn_create(dataToInsertimageTwo);
+      // await gener43_2021_xpic_beat_index_ref_create(dataToInsertimageThree);
+
       console.log('All data inserted successfully');
     } catch (error) {
       console.error('Failed to insert data:', error.message || error); // Log the error message
@@ -872,7 +900,7 @@ const beatTwo = () => {
                   />
 
                   {/* Close Button */}
-                  <View
+                  {/* <View
                     style={{
                       display: 'flex',
                       flexDirection: 'row',
@@ -884,6 +912,40 @@ const beatTwo = () => {
                       title="Close"
                       onPress={() => setModalVisible(false)}
                     />
+                  </View> */}
+                  <View
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      margin: 5,
+                    }}>
+                    <TouchableOpacity
+                      style={{
+                        flex: 1,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        margin: 5,
+                        padding: 10,
+                        backgroundColor: '#007AFF', // Default iOS button color. Use '#2196F3' for Android.
+                        borderRadius: 5,
+                      }}
+                      onPress={addNewSaveOne}>
+                      <Text style={{color: 'white'}}>Save</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={{
+                        flex: 1,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        margin: 5,
+                        padding: 10,
+                        backgroundColor: '#007AFF', // Same default color as above
+                        borderRadius: 5,
+                      }}
+                      onPress={() => setModalVisible(false)}>
+                      <Text style={{color: 'white'}}>Close</Text>
+                    </TouchableOpacity>
                   </View>
                 </ScrollView>
               </View>
@@ -1074,7 +1136,7 @@ const beatTwo = () => {
                     placeholderTextColor="black"
                   />
 
-                  <View
+                  {/* <View
                     style={{
                       display: 'flex',
                       flexDirection: 'row',
@@ -1086,6 +1148,40 @@ const beatTwo = () => {
                       title="Close"
                       onPress={() => setModalVisible2(false)}
                     />
+                  </View> */}
+                  <View
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      margin: 5,
+                    }}>
+                    <TouchableOpacity
+                      style={{
+                        flex: 1,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        margin: 5,
+                        padding: 10,
+                        backgroundColor: '#007AFF', // Default iOS button color. Use '#2196F3' for Android.
+                        borderRadius: 5,
+                      }}
+                      onPress={addNewSaveTwo}>
+                      <Text style={{color: 'white'}}>Save</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={{
+                        flex: 1,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        margin: 5,
+                        padding: 10,
+                        backgroundColor: '#007AFF', // Same default color as above
+                        borderRadius: 5,
+                      }}
+                      onPress={() => setModalVisible(false)}>
+                      <Text style={{color: 'white'}}>Close</Text>
+                    </TouchableOpacity>
                   </View>
                 </ScrollView>
               </View>

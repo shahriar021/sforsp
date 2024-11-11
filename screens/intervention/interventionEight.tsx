@@ -23,7 +23,9 @@ import {
   months_list,
   plant27_2021_community_month_create,
   plant27_2021_core_update8,
+  plant27_2021_gtrts_climber_cutting_climber_month_create,
   plant27_2021_gtrts_community_protection_create,
+  plant27_2021_gtrts_compost_compost_month_create,
 } from '../../database/sqlDatabase';
 import MonthPicker from 'react-native-month-year-picker';
 import {getCurrentDateandTime} from '../../hooks/dateUtils';
@@ -161,7 +163,7 @@ const interventionEight = () => {
 
         // const jsonData = await response.json();
         // console.log(jsonData, 'fetched jsonData'); // Log the fetched data
-        await months_api();
+        //await months_api();
         const data = await months_list();
         setMonths(data); // Update state with the fetched data
       } catch (error) {
@@ -221,6 +223,8 @@ const interventionEight = () => {
   };
 
   const interventionEight = async () => {
+    const newGeneratedUUID = generateUUID(); // Generate a new UUID
+    setNewUUID(newGeneratedUUID);
     console.log(
       inputValue1,
       inputValue2,
@@ -230,6 +234,7 @@ const interventionEight = () => {
       selectedMonths2,
       selectedMonths3,
       selectedMonths4,
+      'eight',
     );
 
     const dataToInsert = {
@@ -243,8 +248,34 @@ const interventionEight = () => {
       // NURSERY_OTHERS_INFO_CARETAKER_INFO_CARETAKER_NID: inputValue3,
     };
 
+    const dataToInsertcompostMonth = {
+      _uri: newGeneratedUUID,
+      _creator_uri_user: uri,
+      _parent_auri: initialUUID,
+      _top_level_auri: initialUUID,
+      _creation_date: getCurrentDateandTime(),
+      _last_update_date: getCurrentDateandTime(),
+      value: selectedMonths1,
+    };
+
+    const dataToInsertcompostClimberMonth = {
+      _uri: newGeneratedUUID,
+      _creator_uri_user: uri,
+      _parent_auri: initialUUID,
+      _top_level_auri: initialUUID,
+      _creation_date: getCurrentDateandTime(),
+      _last_update_date: getCurrentDateandTime(),
+      value: selectedMonths2,
+    };
+
     try {
-      await plant27_2021_core_update8(uid, dataToInsert);
+      //await plant27_2021_core_update8(dataToInsert);
+      await plant27_2021_gtrts_compost_compost_month_create(
+        dataToInsertcompostMonth,
+      );
+      await plant27_2021_gtrts_climber_cutting_climber_month_create(
+        dataToInsertcompostClimberMonth,
+      );
       console.log('All data updated successfully');
     } catch (error) {
       console.error('Failed to updated data:', error.message || error); // Log the error message
@@ -467,14 +498,35 @@ const interventionEight = () => {
                       style={{
                         display: 'flex',
                         flexDirection: 'row',
-                        justifyContent: 'center',
+                        justifyContent: 'space-between',
                         margin: 5,
                       }}>
-                      <Button title="Save" onPress={addNew} />
-                      <Button
-                        title="Close"
-                        onPress={() => setModalVisible(false)}
-                      />
+                      <TouchableOpacity
+                        style={{
+                          flex: 1,
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          margin: 5,
+                          padding: 10,
+                          backgroundColor: '#007AFF', // Default iOS button color. Use '#2196F3' for Android.
+                          borderRadius: 5,
+                        }}
+                        onPress={addNew}>
+                        <Text style={{color: 'white'}}>Save</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={{
+                          flex: 1,
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          margin: 5,
+                          padding: 10,
+                          backgroundColor: '#007AFF', // Same default color as above
+                          borderRadius: 5,
+                        }}
+                        onPress={() => setModalVisible(false)}>
+                        <Text style={{color: 'white'}}>Close</Text>
+                      </TouchableOpacity>
                     </View>
                   </View>
                 </ScrollView>

@@ -548,6 +548,8 @@ import {ExitToast} from '../../components/exitToast';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {SERVER_IP_ADDRESS} from '@env';
 import {liveApi, serverApi} from '../../constants/server_api';
+import {usersListAll} from '../../backend/model/Admin/user_model/user_model';
+import {users_list} from '../../database/sqlDatabase';
 
 const LoginScreen = ({navigation}) => {
   useEffect(() => {
@@ -670,140 +672,192 @@ const LoginScreen = ({navigation}) => {
   //   }
   // };
 
+  // const handleLogin = async () => {
+  //   // navigation.push('Profile');
+
+  //   if (email === '' || password === '') {
+  //     ToastAndroid.show('Please enter email and password', ToastAndroid.SHORT);
+  //     return;
+  //   }
+
+  //   const loginDb = {
+  //     email,
+  //     password,
+  //   };
+
+  //   console.log(loginDb, 'hellow..');
+
+  //   navigation.push('Profile');
+
+  //   try {
+  //     console.log(serverApi);
+  //     const response = await fetch(`http://192.168.0.187:5000/login_user`, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(loginDb),
+  //     });
+
+  //     const data = await response.json();
+
+  //     const token = await AsyncStorage.getItem('notificationToken');
+  //     console.log(token, 'token in login page..');
+
+  //     const showToastSuccess = () => {
+  //       ToastAndroid.show('Log in successful!', ToastAndroid.SHORT);
+  //     };
+
+  //     const showToastInvalidPassword = () => {
+  //       ToastAndroid.show('Invalid password!', ToastAndroid.SHORT);
+  //     };
+
+  //     if (response.ok) {
+  //       // Handle successful login
+  //       // showToastSuccess();
+  //       navigation.push('tabview_dashboard');
+  //       console.log(
+  //         'Login successful:',
+  //         data.userId,
+  //         data.userEmail,
+  //         data.full_name,
+  //         data.userMobile,
+  //       );
+
+  //       const uuid = data.userId.toString();
+
+  //       await AsyncStorage.setItem('userId', uuid);
+  //       await AsyncStorage.setItem('uuid', uuid);
+
+  //       console.log('User ID:', uuid);
+
+  //       const userTokenRes = await fetch(`${liveApi}/user_token/${uuid}`, {
+  //         method: 'POST',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //         },
+  //         body: JSON.stringify({token}),
+  //       });
+
+  //       const userTokenData = await userTokenRes.json();
+  //       console.log(userTokenData, 'userTokenres..');
+
+  //       navigation.push('Profile');
+  //     } else if (response.status === 400) {
+  //       showToastInvalidPassword();
+  //       console.log('Invalid password.');
+  //     } else {
+  //       // Handle unsuccessful login
+  //       console.error('Login failed:', response);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error during login:', error);
+  //   }
+
+  //   // useEffect(() => {
+  //   //   const getLogin = async () => {
+  //   //     try {
+  //   //       const response = await fetch(`http://192.168.0.196:5000/login_user`, {
+  //   //         method: 'POST',
+  //   //         headers: {
+  //   //           'Content-Type': 'application/json',
+  //   //         },
+  //   //         body: JSON.stringify(loginDb),
+  //   //       });
+  //   //       const data = await response.json();
+  //   //       const token = await AsyncStorage.getItem('notificationToken');
+  //   //       console.log(token, 'token in login page..');
+  //   //       const showToastSuccess = () => {
+  //   //         ToastAndroid.show('Log in successful!', ToastAndroid.SHORT);
+  //   //       };
+  //   //       const showToastInvalidPassword = () => {
+  //   //         ToastAndroid.show('Invalid password!', ToastAndroid.SHORT);
+  //   //       };
+  //   //       if (response.ok) {
+  //   //         // Handle successful login
+  //   //         showToastSuccess();
+  //   //         console.log('Login successful:', data.userId);
+  //   //         const uuid = data.userId.toString();
+  //   //         await AsyncStorage.setItem('userId', uuid);
+  //   //         await AsyncStorage.setItem('uuid', uuid);
+  //   //         console.log('User ID:', uuid);
+  //   //         navigation.push('Profile');
+  //   //         const userTokenRes = await fetch(
+  //   //           `http://192.168.0.113:5000/user_token/${uuid}`,
+  //   //           {
+  //   //             method: 'POST',
+  //   //             headers: {
+  //   //               'Content-Type': 'application/json',
+  //   //             },
+  //   //             body: JSON.stringify({token}),
+  //   //           },
+  //   //         );
+  //   //         const userTokenData = await userTokenRes.json();
+  //   //         console.log(userTokenData, 'userTokenres..');
+  //   //       } else if (response.status === 400) {
+  //   //         showToastInvalidPassword();
+  //   //         console.log('Invalid password.');
+  //   //       } else {
+  //   //         // Handle unsuccessful login
+  //   //         console.error('Login failed:', response);
+  //   //       }
+  //   //     } catch (error) {
+  //   //       console.error('Error during login:', error);
+  //   //     }
+  //   //   };
+  //   //   getLogin();
+  //   // }, []);
+  // };
+
   const handleLogin = async () => {
-    // navigation.push('Profile');
     navigation.push('tabview_dashboard');
-    if (email === '' || password === '') {
-      ToastAndroid.show('Please enter email and password', ToastAndroid.SHORT);
-      return;
-    }
+    // if (email === '' || password === '') {
+    //   ToastAndroid.show('Please enter email and password', ToastAndroid.SHORT);
+    //   return;
+    // }
 
-    const loginDb = {
-      email,
-      password,
-    };
+    // const formData = new FormData();
+    // formData.append('email', email);
+    // formData.append('password', password);
 
-    console.log(loginDb, 'hellow..');
+    // try {
+    //   const response = await fetch(
+    //     'https://ssp.urbanitsolution.com/api/users?token=15694294d23a00f6852b5465cbe141f5aba0ff44',
+    //     {
+    //       method: 'POST',
+    //       body: formData,
+    //     },
+    //   );
 
-    navigation.push('Profile');
+    //   console.log('Response:', response);
 
-    try {
-      console.log(serverApi);
-      const response = await fetch(`http://192.168.0.187:5000/login_user`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(loginDb),
-      });
+    //   if (!response.ok) {
+    //     throw new Error(`HTTP error! status: ${response.status}`);
+    //   }
 
-      const data = await response.json();
+    //   const data = await response.json();
+    //   console.log('Parsed Response Data:', data);
 
-      const token = await AsyncStorage.getItem('notificationToken');
-      console.log(token, 'token in login page..');
+    //   // Check if the response contains any user data
+    //   if (Array.isArray(data) && data.length > 0) {
+    //     const user = data[0]; // Access the first user object from the array
 
-      const showToastSuccess = () => {
-        ToastAndroid.show('Log in successful!', ToastAndroid.SHORT);
-      };
-
-      const showToastInvalidPassword = () => {
-        ToastAndroid.show('Invalid password!', ToastAndroid.SHORT);
-      };
-
-      if (response.ok) {
-        // Handle successful login
-        // showToastSuccess();
-        console.log(
-          'Login successful:',
-          data.userId,
-          data.userEmail,
-          data.full_name,
-          data.userMobile,
-        );
-
-        const uuid = data.userId.toString();
-
-        await AsyncStorage.setItem('userId', uuid);
-        await AsyncStorage.setItem('uuid', uuid);
-
-        console.log('User ID:', uuid);
-
-        const userTokenRes = await fetch(`${liveApi}/user_token/${uuid}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({token}),
-        });
-
-        const userTokenData = await userTokenRes.json();
-        console.log(userTokenData, 'userTokenres..');
-
-        navigation.push('Profile');
-      } else if (response.status === 400) {
-        showToastInvalidPassword();
-        console.log('Invalid password.');
-      } else {
-        // Handle unsuccessful login
-        console.error('Login failed:', response);
-      }
-    } catch (error) {
-      console.error('Error during login:', error);
-    }
-
-    // useEffect(() => {
-    //   const getLogin = async () => {
-    //     try {
-    //       const response = await fetch(`http://192.168.0.196:5000/login_user`, {
-    //         method: 'POST',
-    //         headers: {
-    //           'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify(loginDb),
-    //       });
-    //       const data = await response.json();
-    //       const token = await AsyncStorage.getItem('notificationToken');
-    //       console.log(token, 'token in login page..');
-    //       const showToastSuccess = () => {
-    //         ToastAndroid.show('Log in successful!', ToastAndroid.SHORT);
-    //       };
-    //       const showToastInvalidPassword = () => {
-    //         ToastAndroid.show('Invalid password!', ToastAndroid.SHORT);
-    //       };
-    //       if (response.ok) {
-    //         // Handle successful login
-    //         showToastSuccess();
-    //         console.log('Login successful:', data.userId);
-    //         const uuid = data.userId.toString();
-    //         await AsyncStorage.setItem('userId', uuid);
-    //         await AsyncStorage.setItem('uuid', uuid);
-    //         console.log('User ID:', uuid);
-    //         navigation.push('Profile');
-    //         const userTokenRes = await fetch(
-    //           `http://192.168.0.113:5000/user_token/${uuid}`,
-    //           {
-    //             method: 'POST',
-    //             headers: {
-    //               'Content-Type': 'application/json',
-    //             },
-    //             body: JSON.stringify({token}),
-    //           },
-    //         );
-    //         const userTokenData = await userTokenRes.json();
-    //         console.log(userTokenData, 'userTokenres..');
-    //       } else if (response.status === 400) {
-    //         showToastInvalidPassword();
-    //         console.log('Invalid password.');
-    //       } else {
-    //         // Handle unsuccessful login
-    //         console.error('Login failed:', response);
-    //       }
-    //     } catch (error) {
-    //       console.error('Error during login:', error);
+    //     // Check if the email and password match
+    //     if (user.email === email && password) {
+    //       console.log('Login successful:', user);
+    //       navigation.push('tabview_dashboard');
+    //     } else {
+    //       console.log('Login failed: Invalid email or password');
+    //       ToastAndroid.show('Invalid email or password', ToastAndroid.SHORT);
     //     }
-    //   };
-    //   getLogin();
-    // }, []);
+    //   } else {
+    //     console.log('Login failed: No user found');
+    //     ToastAndroid.show('No user found', ToastAndroid.SHORT);
+    //   }
+    // } catch (error) {
+    //   console.error('Error during login:', error);
+    //   ToastAndroid.show('Login failed. Please try again.', ToastAndroid.SHORT);
+    // }
   };
 
   const phoneInput = useRef();
