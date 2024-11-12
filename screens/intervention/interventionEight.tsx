@@ -22,6 +22,7 @@ import {
   months_api,
   months_list,
   plant27_2021_community_month_create,
+  plant27_2021_core_list,
   plant27_2021_core_update8,
   plant27_2021_gtrts_climber_cutting_climber_month_create,
   plant27_2021_gtrts_community_protection_create,
@@ -57,11 +58,13 @@ const interventionEight = () => {
   const [showPicker3, setShowPicker3] = useState(false);
   const [showPicker4, setShowPicker4] = useState(false);
   const [showPicker5, setShowPicker5] = useState(false);
+  const [plant27Dat, setPlant27Dat] = useState([]);
 
   const {initialUUID, generateUUID} = useUUID();
   const [newUUID, setNewUUID] = useState('');
   const [oridianl, setoridianl] = useState(0);
   const uri = useCreateUri();
+  console.log(uri, 'uri...........................');
 
   const navigation = useNavigation();
   const route = useRoute();
@@ -279,6 +282,404 @@ const interventionEight = () => {
       console.log('All data updated successfully');
     } catch (error) {
       console.error('Failed to updated data:', error.message || error); // Log the error message
+    }
+  };
+
+  useEffect(() => {
+    const plant27_2021_core_list_funct = async () => {
+      const data = await plant27_2021_core_list();
+      setPlant27Dat(data);
+    };
+    plant27_2021_core_list_funct();
+  }, []);
+
+  console.log(plant27Dat, 'new data');
+
+  function getCurrentDateandTimeMain() {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+
+    // Format: YYYY-MM-DD HH:mm:ss (no milliseconds)
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  }
+
+  // const interventionSync = async () => {
+  //   const datelala = getCurrentDateandTimeMain();
+
+  //   const lastData = plant27Dat[plant27Dat.length - 1];
+
+  //   // Ensure lastData is not empty
+  //   if (!lastData) {
+  //     console.error('No data available in plant27Dat.');
+  //     return;
+  //   }
+
+  //   const formData = new FormData();
+
+  //   // Append values to formData
+  //   formData.append('_uri', lastData._uri);
+  //   formData.append('_creator_uri_user', uri);
+  //   formData.append('_creation_date', datelala);
+  //   formData.append('_last_update_date', datelala);
+  //   formData.append('_model_version', lastData._model_version);
+  //   formData.append('_ui_version', lastData._ui_version);
+  //   formData.append('_is_complete', lastData._is_complete);
+  //   formData.append('_submission_date', lastData._submission_date);
+  //   formData.append(
+  //     '_marked_as_complete_date',
+  //     lastData._marked_as_complete_date,
+  //   );
+  //   formData.append(
+  //     'land_statistics_beat_land_bio_other_plant_ha',
+  //     lastData.land_statistics_beat_land_bio_other_plant_ha,
+  //   );
+  //   formData.append(
+  //     'guser_tloc_fd_beat_point_lng',
+  //     lastData.guser_tloc_fd_beat_point_lng,
+  //   );
+  //   formData.append('fbli_fa_tloc_fd_beat', lastData.fbli_fa_tloc_fd_beat);
+  //   formData.append(
+  //     'logistics3_countryboat_condition',
+  //     lastData.logistics3_countryboat_condition,
+  //   );
+  //   formData.append(
+  //     'logistics4_gfirearms_303rifle',
+  //     lastData.logistics4_gfirearms_303rifle,
+  //   );
+  //   formData.append(
+  //     'land_statistics_beat_mgt_approach_other_pa_area_ha',
+  //     lastData.land_statistics_beat_mgt_approach_other_pa_area_ha,
+  //   );
+  //   formData.append(
+  //     'logistics4_others_water_tra',
+  //     lastData.logistics4_others_water_tra,
+  //   );
+  //   formData.append('bo_info_bo_cell', lastData.bo_info_bo_cell);
+  //   formData.append(
+  //     'logistics3_tvessel_condition',
+  //     lastData.logistics3_tvessel_condition,
+  //   );
+  //   formData.append('ro_info_ro_cell', lastData.ro_info_ro_cell);
+  //   formData.append(
+  //     'logistics4_tfirearms_chineserifle_avail',
+  //     lastData.logistics4_tfirearms_chineserifle_avail,
+  //   );
+  //   formData.append(
+  //     'logistics3_tvessel_avail',
+  //     lastData.logistics3_tvessel_avail,
+  //   );
+  //   formData.append(
+  //     'fbli_fa_tloc_fd_beat_txt',
+  //     lastData.fbli_fa_tloc_fd_beat_txt,
+  //   );
+  //   formData.append(
+  //     'logistics3_speedboat_condition',
+  //     lastData.logistics3_speedboat_condition,
+  //   );
+  //   formData.append(
+  //     'fbli_fa_tloc_fd_division',
+  //     lastData.fbli_fa_tloc_fd_division,
+  //   );
+  //   formData.append(
+  //     'land_transports_bicycle_avail',
+  //     lastData.land_transports_bicycle_avail,
+  //   );
+  //   formData.append(
+  //     'logistics3_others_water_tra_condition',
+  //     lastData.logistics3_others_water_tra_condition,
+  //   );
+  //   formData.append(
+  //     'land_statistics_beat_land_info_vested_forest_ha',
+  //     lastData.land_statistics_beat_land_info_vested_forest_ha,
+  //   );
+  //   formData.append('subscriberid', lastData.subscriberid);
+  //   formData.append('guser_user', lastData.guser_user);
+  //   formData.append('ro_info_name_of_ro', lastData.ro_info_name_of_ro);
+  //   formData.append('fbli_fa_tloc_fd_block', lastData.fbli_fa_tloc_fd_block);
+  //   formData.append('deviceid', lastData.deviceid);
+  //   formData.append(
+  //     'land_transports_motorb_condition',
+  //     lastData.land_transports_motorb_condition,
+  //   );
+  //   formData.append(
+  //     'fbli_generated_note_name_18',
+  //     lastData.fbli_generated_note_name_18,
+  //   );
+  //   formData.append(
+  //     'land_statistics_beat_land_bio_generated_note_name_74',
+  //     lastData.land_statistics_beat_land_bio_generated_note_name_74,
+  //   );
+  //   formData.append(
+  //     'logistics4_chineserifle_condition',
+  //     lastData.logistics4_chineserifle_condition,
+  //   );
+  //   formData.append(
+  //     'logistics3_speedboat_avail',
+  //     lastData.logistics3_speedboat_avail,
+  //   );
+  //   formData.append(
+  //     'land_statistics_beat_mgt_approach_pa_ws_ha',
+  //     lastData.land_statistics_beat_mgt_approach_pa_ws_ha,
+  //   );
+  //   formData.append(
+  //     'logistics4_generated_note_name_152',
+  //     lastData.logistics4_generated_note_name_152,
+  //   );
+  //   formData.append(
+  //     'land_statistics_beat_land_bio_non_pp_ha',
+  //     lastData.land_statistics_beat_land_bio_non_pp_ha,
+  //   );
+  //   formData.append(
+  //     'land_statistics_beat_land_info_section_6_ha',
+  //     lastData.land_statistics_beat_land_info_section_6_ha,
+  //   );
+  //   formData.append('simserial', lastData.simserial);
+  //   formData.append('guser_dcollection_raw', lastData.guser_dcollection_raw);
+  //   formData.append(
+  //     'land_transports_bicycle_condition',
+  //     lastData.land_transports_bicycle_condition,
+  //   );
+  //   formData.append(
+  //     'land_statistics_beat_land_bio_social_accreted_ha',
+  //     lastData.land_statistics_beat_land_bio_social_accreted_ha,
+  //   );
+  //   formData.append(
+  //     'guser_generated_note_name_10',
+  //     lastData.guser_generated_note_name_10,
+  //   );
+  //   formData.append(
+  //     'land_statistics_beat_land_info_other_forestarea_ha',
+  //     lastData.land_statistics_beat_land_info_other_forestarea_ha,
+  //   );
+  //   formData.append('bo_info_bo_nid', lastData.bo_info_bo_nid);
+  //   formData.append(
+  //     'land_transports_gbi_cycle',
+  //     lastData.land_transports_gbi_cycle,
+  //   );
+  //   formData.append(
+  //     'land_transports_bicycle_avail',
+  //     lastData.land_transports_bicycle_avail,
+  //   );
+  //   formData.append(
+  //     'logistics4_others_water_tra_avail',
+  //     lastData.logistics4_others_water_tra_avail,
+  //   );
+  //   formData.append('guser_user', lastData.guser_user);
+
+  //   // Your API call or further processing of formData
+  //   try {
+  //     const response = await fetch(
+  //       'http://192.168.0.187:8000/api/plant27_2021_core_create?token=15694294d23a00f6852b5465cbe141f5aba0ff44',
+  //       {
+  //         method: 'POST',
+  //         body: formData,
+  //         headers: {
+  //           Accept: 'application/json',
+  //         },
+  //       },
+  //     );
+  //     // Handle response
+  //     console.log(await response.json());
+  //   } catch (error) {
+  //     console.error('Error during the API call', error);
+  //   }
+  // };
+
+  const interventionSync = async () => {
+    const datelala = getCurrentDateandTimeMain();
+
+    const lastData = plant27Dat[plant27Dat.length - 1];
+
+    // Ensure lastData is not empty
+    if (!lastData) {
+      console.error('No data available in plant27Dat.');
+      return;
+    }
+
+    const formData = new FormData();
+
+    // Append values to formData
+    formData.append('_uri', lastData._uri);
+    formData.append('_creator_uri_user', uri);
+    console.log(
+      formData.append('_creation_date', getCurrentDateandTimeMain()),
+      'creation date...........',
+    );
+    console.log(
+      formData.append('_last_update_date', getCurrentDateandTimeMain()),
+      'last update date....',
+    );
+    formData.append('_model_version', lastData._model_version);
+    formData.append('_ui_version', lastData._ui_version);
+    formData.append('_is_complete', lastData._is_complete);
+    formData.append('_submission_date', lastData._submission_date);
+    formData.append(
+      '_marked_as_complete_date',
+      lastData._marked_as_complete_date,
+    );
+    formData.append(
+      'land_statistics_beat_land_bio_other_plant_ha',
+      lastData.land_statistics_beat_land_bio_other_plant_ha,
+    );
+    formData.append(
+      'guser_tloc_fd_beat_point_lng',
+      lastData.guser_tloc_fd_beat_point_lng,
+    );
+    formData.append('fbli_fa_tloc_fd_beat', lastData.fbli_fa_tloc_fd_beat);
+    formData.append(
+      'logistics3_countryboat_condition',
+      lastData.logistics3_countryboat_condition,
+    );
+    formData.append(
+      'logistics4_gfirearms_303rifle',
+      lastData.logistics4_gfirearms_303rifle,
+    );
+    formData.append(
+      'land_statistics_beat_mgt_approach_other_pa_area_ha',
+      lastData.land_statistics_beat_mgt_approach_other_pa_area_ha,
+    );
+    formData.append(
+      'logistics4_others_water_tra',
+      lastData.logistics4_others_water_tra,
+    );
+    formData.append('bo_info_bo_cell', lastData.bo_info_bo_cell);
+    formData.append(
+      'logistics3_tvessel_condition',
+      lastData.logistics3_tvessel_condition,
+    );
+    formData.append('ro_info_ro_cell', lastData.ro_info_ro_cell);
+    formData.append(
+      'logistics4_tfirearms_chineserifle_avail',
+      lastData.logistics4_tfirearms_chineserifle_avail,
+    );
+    formData.append(
+      'logistics3_tvessel_avail',
+      lastData.logistics3_tvessel_avail,
+    );
+    formData.append(
+      'fbli_fa_tloc_fd_beat_txt',
+      lastData.fbli_fa_tloc_fd_beat_txt,
+    );
+    formData.append(
+      'logistics3_speedboat_condition',
+      lastData.logistics3_speedboat_condition,
+    );
+    formData.append(
+      'fbli_fa_tloc_fd_division',
+      lastData.fbli_fa_tloc_fd_division,
+    );
+    formData.append(
+      'land_transports_bicycle_avail',
+      lastData.land_transports_bicycle_avail,
+    );
+    formData.append(
+      'logistics3_others_water_tra_condition',
+      lastData.logistics3_others_water_tra_condition,
+    );
+    formData.append(
+      'land_statistics_beat_land_info_vested_forest_ha',
+      lastData.land_statistics_beat_land_info_vested_forest_ha,
+    );
+    formData.append('subscriberid', lastData.subscriberid);
+    formData.append('guser_user', lastData.guser_user);
+    formData.append('ro_info_name_of_ro', lastData.ro_info_name_of_ro);
+    formData.append('fbli_fa_tloc_fd_block', lastData.fbli_fa_tloc_fd_block);
+    formData.append('deviceid', lastData.deviceid);
+    formData.append(
+      'land_transports_motorb_condition',
+      lastData.land_transports_motorb_condition,
+    );
+    formData.append(
+      'fbli_generated_note_name_18',
+      lastData.fbli_generated_note_name_18,
+    );
+    formData.append(
+      'land_statistics_beat_land_bio_generated_note_name_74',
+      lastData.land_statistics_beat_land_bio_generated_note_name_74,
+    );
+    formData.append(
+      'logistics4_chineserifle_condition',
+      lastData.logistics4_chineserifle_condition,
+    );
+    formData.append(
+      'logistics3_speedboat_avail',
+      lastData.logistics3_speedboat_avail,
+    );
+    formData.append(
+      'land_statistics_beat_mgt_approach_pa_ws_ha',
+      lastData.land_statistics_beat_mgt_approach_pa_ws_ha,
+    );
+    formData.append(
+      'logistics4_generated_note_name_152',
+      lastData.logistics4_generated_note_name_152,
+    );
+    formData.append(
+      'land_statistics_beat_land_bio_non_pp_ha',
+      lastData.land_statistics_beat_land_bio_non_pp_ha,
+    );
+    formData.append(
+      'land_statistics_beat_land_info_section_6_ha',
+      lastData.land_statistics_beat_land_info_section_6_ha,
+    );
+    formData.append('simserial', lastData.simserial);
+    formData.append('guser_dcollection_raw', lastData.guser_dcollection_raw);
+    formData.append(
+      'land_transports_bicycle_condition',
+      lastData.land_transports_bicycle_condition,
+    );
+    formData.append(
+      'land_statistics_beat_land_bio_social_accreted_ha',
+      lastData.land_statistics_beat_land_bio_social_accreted_ha,
+    );
+    formData.append(
+      'guser_generated_note_name_10',
+      lastData.guser_generated_note_name_10,
+    );
+    formData.append(
+      'land_statistics_beat_land_info_other_forestarea_ha',
+      lastData.land_statistics_beat_land_info_other_forestarea_ha,
+    );
+    formData.append('bo_info_bo_nid', lastData.bo_info_bo_nid);
+    formData.append(
+      'land_transports_gbi_cycle',
+      lastData.land_transports_gbi_cycle,
+    );
+    formData.append(
+      'land_transports_bicycle_avail',
+      lastData.land_transports_bicycle_avail,
+    );
+    formData.append(
+      'logistics4_others_water_tra_avail',
+      lastData.logistics4_others_water_tra_avail,
+    );
+    formData.append('guser_user', lastData.guser_user);
+
+    // Log formData
+    // for (let [key, value] of formData.entries()) {
+    //   console.log(`${key}: ${value}`);
+    // }
+
+    // Your API call or further processing of formData
+    try {
+      const response = await fetch(
+        'http://192.168.0.187:8000/api/plant27_2021_core_create?token=15694294d23a00f6852b5465cbe141f5aba0ff44',
+        {
+          method: 'POST',
+          body: formData,
+          headers: {
+            Accept: 'application/json',
+          },
+        },
+      );
+      // Handle response
+      console.log(await response.json());
+    } catch (error) {
+      console.error('Error during the API call', error);
     }
   };
 
@@ -607,6 +1008,11 @@ const interventionEight = () => {
             <Text style={styles.buttonText}>Cancel</Text>
           </TouchableOpacity>
         </View>
+        <TouchableOpacity
+          style={styles.addButton}
+          onPress={() => interventionSync()}>
+          <Text style={styles.buttonText}>Sync</Text>
+        </TouchableOpacity>
       </ScrollView>
     </>
   );

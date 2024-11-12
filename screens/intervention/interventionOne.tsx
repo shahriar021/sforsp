@@ -47,6 +47,7 @@ import useUUID from '../../hooks/useUUID';
 import {getCurrentDateandTime} from '../../hooks/dateUtils';
 import useCreateUri from '../../hooks/useCreatUri';
 import {useGlobalState} from '../../hooks/globalStateContext';
+import MonthPicker from 'react-native-month-year-picker';
 
 const interventionOne = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -106,9 +107,20 @@ const interventionOne = () => {
   const {rankOptions, selectedRank, setSelectedRank} = useTrace();
   console.log(rankOptions, '  Rank');
 
-  const {md5} = useUUID();
-  const uuid = md5;
+  const uuid = initialUUID;
   console.log(uuid, 'uuid-page 1');
+
+  const handleValueChange = (event, newDate) => {
+    // When user selects a date
+    if (newDate) {
+      const formattedDate = `${newDate.getFullYear()}-${String(
+        newDate.getMonth() + 1,
+      ).padStart(2, '0')}-07`; // Formats as yyyy-mm-07 (sets the day as 07)
+      setInputValue1(formattedDate);
+      // TODO: Save `formattedDate` to the database as needed
+    }
+    setShowPicker(false); // Hide the picker after selection
+  };
 
   useEffect(() => {
     const forest_landscape = async () => {
@@ -351,10 +363,23 @@ const interventionOne = () => {
     {label: 'Bamboo Forest', value: 'bamboo'},
   ];
 
+  const getCurrentDateandTime = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    const days = now.getDate().toString().padStart(2, '0');
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+    const miliseconds = now.getMilliseconds().toString().padStart(4, '0');
+
+    return `${year}-${month}-${days} ${hours}:${minutes}:${seconds}:${miliseconds}`;
+  };
+
   const interventionOneSubmit = async () => {
     const newGeneratedUUID = generateUUID(); // Generate a new UUID
     setNewUUID(newGeneratedUUID);
-    console.log('Input Values:', uuid);
+    console.log('Input Values:', initialUUID);
     console.log('inputValue1:', inputValue1);
     console.log('inputValue2:', inputValue2);
     console.log('inputValue3:', inputValue3);
@@ -377,7 +402,10 @@ const interventionOne = () => {
     console.log('selectedUpazila:', selectedUpazila);
 
     const dataToInsert = {
-      _uri: uuid,
+      _uri: initialUUID,
+      // _creator_uri_user: uri,
+      _creation_date: getCurrentDateandTime(),
+      // _last_update_date: getCurrentDateandTime(),
       GUSER_DCOLLECTION_RAW: inputValue1,
       GUSER_TUSER: inputValue2,
       GUSER_TUSER_CELL: inputValue3,
@@ -408,6 +436,28 @@ const interventionOne = () => {
       // survey_type: survey_type,
     };
 
+    // const dataToInsert = {
+    //   _uri: initialUUID,
+    //   // _creator_uri_user: uri,
+    //   _creation_date: getCurrentDateandTime(),
+    //   // _last_update_date: getCurrentDateandTime(),
+    //   GUSER_DCOLLECTION_RAW: inputValue1 || null,
+    //   GUSER_TUSER: inputValue2 || null,
+    //   GUSER_TUSER_CELL: inputValue3 || null,
+    //   GUSER_TUSER_EMAIL: inputValue4 || null,
+    //   LOCATION_DATA_ECOZONE: selectedForest || null,
+    //   LOCATION_DATA_FOREST_AD_TLOC_FD_CIR: selectedForestCircle || null,
+    //   LOCATION_DATA_FOREST_AD_TLOC_FD_DIVISION: selectedForestDivision || null,
+    //   LOCATION_DATA_FOREST_AD_TLOC_FD_RANGE: selectedForestrange || null,
+    //   LOCATION_DATA_FOREST_AD_TLOC_FD_BEAT: selectedForestbeat || null,
+    //   LOCATION_DATA_FOREST_AD_TLOC_FD_BLOCK: inputValue5 || null,
+    //   LOCATION_DATA_FOREST_AD_TLOC_FD_CHAR: inputValue6 || null,
+    //   LOCATION_DATA_CA_TLOC_AD_DIVISION: selectedDivision || null,
+    //   LOCATION_DATA_CA_TLOC_AD_DISTRICT: selectedDistrict || null,
+    //   LOCATION_DATA_CA_UNION: inputValue7 || null,
+    //   LOCATION_DATA_CA_VILLAGE: inputValue8 || null,
+    // };
+
     const dataToInsertUpazila = {
       _uri: newGeneratedUUID,
       _creator_uri_user: uri,
@@ -430,6 +480,76 @@ const interventionOne = () => {
 
     navigation.navigate('interventionTwo', {uId: initialUUID});
   };
+
+  // const interventionOneSubmit = async () => {
+  //   const newGeneratedUUID = generateUUID(); // Generate a new UUID
+  //   setNewUUID(newGeneratedUUID);
+  //   console.log('Input Values:', initialUUID); // Make sure initialUUID is set
+  //   console.log('inputValue1:', inputValue1);
+  //   console.log('inputValue2:', inputValue2);
+  //   console.log('inputValue3:', inputValue3);
+  //   console.log('inputValue4:', inputValue4);
+  //   console.log('inputValue5:', inputValue5);
+  //   console.log('inputValue6:', inputValue6);
+  //   console.log('inputValue7:', inputValue7);
+  //   console.log('inputValue8:', inputValue8);
+  //   console.log('inputValue9:', inputValue9);
+
+  //   console.log('\nSelected Values:');
+  //   console.log('selectedForest:', selectedForest);
+  //   console.log('selectedForestCircle:', selectedForestCircle);
+  //   console.log('selectedForestDivision:', selectedForestDivision);
+  //   console.log('selectedForestRange:', selectedForestRange); // Corrected variable name
+  //   console.log('selectedForestBeat:', selectedForestBeat); // Corrected variable name
+  //   console.log('selectedSurvey:', selectedSurvey);
+  //   console.log('selectedDivision:', selectedDivision);
+  //   console.log('selectedDistrict:', selectedDistrict);
+  //   console.log('selectedUpazila:', selectedUpazila);
+
+  //   // Data to insert into the core table
+  //   const dataToInsert = {
+  //     _uri: initialUUID, // Ensure initialUUID is defined and valid
+  //     _creation_date: getCurrentDateandTime(),
+  //     GUSER_DCOLLECTION_RAW: inputValue1 || null,
+  //     GUSER_TUSER: inputValue2 || null,
+  //     GUSER_TUSER_CELL: inputValue3 || null,
+  //     GUSER_TUSER_EMAIL: inputValue4 || null,
+  //     LOCATION_DATA_ECOZONE: selectedForest || null,
+  //     LOCATION_DATA_FOREST_AD_TLOC_FD_CIR: selectedForestCircle || null,
+  //     LOCATION_DATA_FOREST_AD_TLOC_FD_DIVISION: selectedForestDivision || null,
+  //     LOCATION_DATA_FOREST_AD_TLOC_FD_RANGE: selectedForestrange || null,
+  //     LOCATION_DATA_FOREST_AD_TLOC_FD_BEAT: selectedForestbeat || null, // Corrected variable name
+  //     LOCATION_DATA_FOREST_AD_TLOC_FD_BLOCK: inputValue5 || null,
+  //     LOCATION_DATA_FOREST_AD_TLOC_FD_CHAR: inputValue6 || null,
+  //     LOCATION_DATA_CA_TLOC_AD_DIVISION: selectedDivision || null,
+  //     LOCATION_DATA_CA_TLOC_AD_DISTRICT: selectedDistrict || null,
+  //     LOCATION_DATA_CA_UNION: inputValue7 || null,
+  //     LOCATION_DATA_CA_VILLAGE: inputValue8 || null,
+  //   };
+
+  //   // Data to insert for Upazila
+  //   const dataToInsertUpazila = {
+  //     _uri: newGeneratedUUID,
+  //     _creator_uri_user: uri,
+  //     _parent_auri: initialUUID,
+  //     _top_level_auri: initialUUID,
+  //     _creation_date: getCurrentDateandTime(),
+  //     _last_update_date: getCurrentDateandTime(),
+  //     value: selectedUpazila,
+  //   };
+
+  //   try {
+  //     await plant27_2021_core_create(dataToInsert);
+  //     await plant27_2021_location_data_ca_tloc_ad_upzilla_create(
+  //       dataToInsertUpazila,
+  //     );
+  //     console.log('All data inserted successfully');
+  //   } catch (error) {
+  //     console.error('Failed to insert data:', error.message || error);
+  //   }
+
+  //   navigation.navigate('interventionTwo', {uId: initialUUID});
+  // };
 
   const tableData = [];
 
@@ -475,7 +595,7 @@ const interventionOne = () => {
   // }, []);
 
   // setTimeout(() => console.log(testData, 'test data....'), 5000);
-
+  setTimeout(() => setShowPicker(false), 0);
   console.log(selectedForest, 'upokul');
 
   return (
@@ -500,13 +620,27 @@ const interventionOne = () => {
           1a. Information Collection date (তথ্য সংগ্রহের তারিখ):
         </Text>
 
-        <TextInput
+        {/* <TextInput
           style={styles.input}
           value={inputValue1}
           onChangeText={text => setInputValue1(text)}
           placeholderTextColor="black"
           placeholder="select Collection date"
-        />
+        /> */}
+
+        <TouchableOpacity onPress={() => setShowPicker(true)}>
+          <Text style={styles.input}>{inputValue1 || 'Select date'}</Text>
+        </TouchableOpacity>
+
+        {showPicker && (
+          <MonthPicker
+            onChange={handleValueChange}
+            value={new Date()} // default value for picker, can be adjusted
+            minimumDate={new Date(2000, 0)} // optional
+            maximumDate={new Date(2030, 11)} // optional
+            mode="short" // or "full"
+          />
+        )}
 
         <Text style={styles.label}>
           1.b. Name of Beat/Camp/SFPC Officer (বিট/ক্যাম্প/এসএফপিসি কর্মকর্তার

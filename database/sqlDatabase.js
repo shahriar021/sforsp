@@ -14588,31 +14588,140 @@ export const plant27_2021_core_delete = async () => {
 //---------------------------------------------------------//
 // create start
 //---------------------------------------------------------//
+// export const plant27_2021_core_create = plant27_2021_core => {
+//   return new Promise((resolve, reject) => {
+//     database.transaction(tx => {
+//       // Insert plant27_2021_core
+
+//       tx.executeSql(
+//         `INSERT INTO plant27_2021_core (_uri ,creator_uri_user,_creation_date,_last_update_date, GUSER_DCOLLECTION_RAW,
+//       GUSER_TUSER,
+//       GUSER_TUSER_CELL,
+//       GUSER_TUSER_EMAIL,
+//       LOCATION_DATA_ECOZONE,
+//       LOCATION_DATA_FOREST_AD_TLOC_FD_CIR,
+//       LOCATION_DATA_FOREST_AD_TLOC_FD_DIVISION,
+//       LOCATION_DATA_FOREST_AD_TLOC_FD_RANGE,
+//       LOCATION_DATA_FOREST_AD_TLOC_FD_BEAT,
+//       LOCATION_DATA_FOREST_AD_TLOC_FD_BLOCK,
+//       LOCATION_DATA_FOREST_AD_TLOC_FD_CHAR,
+
+//       LOCATION_DATA_CA_TLOC_AD_DIVISION,
+//       LOCATION_DATA_CA_TLOC_AD_DISTRICT,
+//       LOCATION_DATA_CA_UNION,
+//       LOCATION_DATA_CA_VILLAGE
+//       ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+//         [
+//           plant27_2021_core._uri || null,
+//           plant27_2021_core.creator_uri_user || null,
+//           plant27_2021_core._creation_date || null,
+//           plant27_2021_core._last_update_date || null,
+//           plant27_2021_core.GUSER_DCOLLECTION_RAW || null,
+//           plant27_2021_core.GUSER_TUSER || null,
+//           plant27_2021_core.GUSER_TUSER_CELL || null,
+//           plant27_2021_core.GUSER_TUSER_EMAIL || null,
+//           plant27_2021_core.LOCATION_DATA_ECOZONE || null,
+//           plant27_2021_core.LOCATION_DATA_FOREST_AD_TLOC_FD_CIR || null,
+//           plant27_2021_core.LOCATION_DATA_FOREST_AD_TLOC_FD_DIVISION || null,
+//           plant27_2021_core.LOCATION_DATA_FOREST_AD_TLOC_FD_RANGE || null,
+//           plant27_2021_core.LOCATION_DATA_FOREST_AD_TLOC_FD_BEAT || null,
+//           plant27_2021_core.LOCATION_DATA_FOREST_AD_TLOC_FD_BLOCK || null,
+//           plant27_2021_core.LOCATION_DATA_FOREST_AD_TLOC_FD_CHAR || null,
+
+//           plant27_2021_core.LOCATION_DATA_CA_TLOC_AD_DIVISION || null,
+//           plant27_2021_core.LOCATION_DATA_CA_TLOC_AD_DISTRICT || null,
+//           plant27_2021_core.LOCATION_DATA_CA_UNION || null,
+//           plant27_2021_core.LOCATION_DATA_CA_VILLAGE || null,
+//         ],
+//         (tx, results) => {
+//           console.log('Data inserted successfully:', results);
+//           resolve(results);
+//         },
+//         (tx, error) => {
+//           console.error('Error inserting data in intervern one create:', error);
+//           reject(error);
+//         },
+//       );
+//     });
+//   });
+// };
+
+// export const plant27_2021_core_create = plant27_2021_core => {
+//   return new Promise((resolve, reject) => {
+//     database.transaction(tx => {
+//       // Log the values before inserting into the database
+//       console.log('Inserting Data:', plant27_2021_core);
+
+//       tx.executeSql(
+//         `INSERT INTO plant27_2021_core (_uri ,_creation_date, GUSER_DCOLLECTION_RAW,
+//       GUSER_TUSER,
+//       GUSER_TUSER_CELL,
+//       GUSER_TUSER_EMAIL,
+//       LOCATION_DATA_ECOZONE,
+//       LOCATION_DATA_FOREST_AD_TLOC_FD_CIR,
+//       LOCATION_DATA_FOREST_AD_TLOC_FD_DIVISION,
+//       LOCATION_DATA_FOREST_AD_TLOC_FD_RANGE,
+//       LOCATION_DATA_FOREST_AD_TLOC_FD_BEAT,
+//       LOCATION_DATA_FOREST_AD_TLOC_FD_BLOCK,
+//       LOCATION_DATA_FOREST_AD_TLOC_FD_CHAR,
+//       LOCATION_DATA_CA_TLOC_AD_DIVISION,
+//       LOCATION_DATA_CA_TLOC_AD_DISTRICT,
+//       LOCATION_DATA_CA_UNION,
+//       LOCATION_DATA_CA_VILLAGE
+//       ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+//         [
+//           plant27_2021_core._uri || null,
+//           plant27_2021_core._creation_date || null,
+
+//           plant27_2021_core.GUSER_DCOLLECTION_RAW || null,
+//           plant27_2021_core.GUSER_TUSER || null,
+//           plant27_2021_core.GUSER_TUSER_CELL || null,
+//           plant27_2021_core.GUSER_TUSER_EMAIL || null,
+//           plant27_2021_core.LOCATION_DATA_ECOZONE || null,
+//           plant27_2021_core.LOCATION_DATA_FOREST_AD_TLOC_FD_CIR || null,
+//           plant27_2021_core.LOCATION_DATA_FOREST_AD_TLOC_FD_DIVISION || null,
+//           plant27_2021_core.LOCATION_DATA_FOREST_AD_TLOC_FD_RANGE || null,
+//           plant27_2021_core.LOCATION_DATA_FOREST_AD_TLOC_FD_BEAT || null,
+//           plant27_2021_core.LOCATION_DATA_FOREST_AD_TLOC_FD_BLOCK || null,
+//           plant27_2021_core.LOCATION_DATA_FOREST_AD_TLOC_FD_CHAR || null,
+//           plant27_2021_core.LOCATION_DATA_CA_TLOC_AD_DIVISION || null,
+//           plant27_2021_core.LOCATION_DATA_CA_TLOC_AD_DISTRICT || null,
+//           plant27_2021_core.LOCATION_DATA_CA_UNION || null,
+//           plant27_2021_core.LOCATION_DATA_CA_VILLAGE || null,
+//         ],
+//         (tx, results) => {
+//           console.log('Data inserted successfully:', results);
+//           resolve(results);
+//         },
+//         (tx, error) => {
+//           console.error(
+//             'Error inserting data in intervention one create:',
+//             error,
+//           );
+//           reject(error);
+//         },
+//       );
+//     });
+//   });
+// };
+
 export const plant27_2021_core_create = plant27_2021_core => {
   return new Promise((resolve, reject) => {
     database.transaction(tx => {
-      // Insert plant27_2021_core
+      console.log('Inserting Data:', plant27_2021_core);
+
       tx.executeSql(
-        `INSERT INTO plant27_2021_core (_uri , GUSER_DCOLLECTION_RAW,
-      GUSER_TUSER,
-      GUSER_TUSER_CELL,
-      GUSER_TUSER_EMAIL,
-      LOCATION_DATA_ECOZONE,
-      LOCATION_DATA_FOREST_AD_TLOC_FD_CIR,
-      LOCATION_DATA_FOREST_AD_TLOC_FD_DIVISION,
-      LOCATION_DATA_FOREST_AD_TLOC_FD_RANGE,
-      LOCATION_DATA_FOREST_AD_TLOC_FD_BEAT,
-      LOCATION_DATA_FOREST_AD_TLOC_FD_BLOCK,
-      LOCATION_DATA_FOREST_AD_TLOC_FD_CHAR,
-
-
-      LOCATION_DATA_CA_TLOC_AD_DIVISION,
-      LOCATION_DATA_CA_TLOC_AD_DISTRICT,
-      LOCATION_DATA_CA_UNION,
-      LOCATION_DATA_CA_VILLAGE
-      ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+        `INSERT INTO plant27_2021_core (_uri, _creation_date, GUSER_DCOLLECTION_RAW,
+        GUSER_TUSER, GUSER_TUSER_CELL, GUSER_TUSER_EMAIL, LOCATION_DATA_ECOZONE,
+        LOCATION_DATA_FOREST_AD_TLOC_FD_CIR, LOCATION_DATA_FOREST_AD_TLOC_FD_DIVISION,
+        LOCATION_DATA_FOREST_AD_TLOC_FD_RANGE, LOCATION_DATA_FOREST_AD_TLOC_FD_BEAT,
+        LOCATION_DATA_FOREST_AD_TLOC_FD_BLOCK, LOCATION_DATA_FOREST_AD_TLOC_FD_CHAR,
+        LOCATION_DATA_CA_TLOC_AD_DIVISION, LOCATION_DATA_CA_TLOC_AD_DISTRICT,
+        LOCATION_DATA_CA_UNION, LOCATION_DATA_CA_VILLAGE) 
+        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
         [
           plant27_2021_core._uri || null,
+          plant27_2021_core._creation_date || null,
           plant27_2021_core.GUSER_DCOLLECTION_RAW || null,
           plant27_2021_core.GUSER_TUSER || null,
           plant27_2021_core.GUSER_TUSER_CELL || null,
@@ -14624,7 +14733,6 @@ export const plant27_2021_core_create = plant27_2021_core => {
           plant27_2021_core.LOCATION_DATA_FOREST_AD_TLOC_FD_BEAT || null,
           plant27_2021_core.LOCATION_DATA_FOREST_AD_TLOC_FD_BLOCK || null,
           plant27_2021_core.LOCATION_DATA_FOREST_AD_TLOC_FD_CHAR || null,
-
           plant27_2021_core.LOCATION_DATA_CA_TLOC_AD_DIVISION || null,
           plant27_2021_core.LOCATION_DATA_CA_TLOC_AD_DISTRICT || null,
           plant27_2021_core.LOCATION_DATA_CA_UNION || null,
@@ -14635,7 +14743,10 @@ export const plant27_2021_core_create = plant27_2021_core => {
           resolve(results);
         },
         (tx, error) => {
-          console.error('Error inserting data:', error);
+          console.error(
+            'Error inserting data in intervention one create:',
+            error,
+          );
           reject(error);
         },
       );
