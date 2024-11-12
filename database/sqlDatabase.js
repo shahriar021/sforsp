@@ -13490,12 +13490,15 @@ export const gener43_2021_core_create = gener43_2021_core => {
 
         // Insert gener43_2021_core
         tx.executeSql(
-          `INSERT INTO gener43_2021_core (_uri,_creation_date,GUSER_USER,GUSER_USER_CELL,GUSER_BEAT_ADDRESS,GUSER_TLOC_FD_BEAT_POINT_LAT,GUSER_TLOC_FD_BEAT_POINT_LNG,FBLI_TLOC_ECOZONE,FBLI_FA_TLOC_FD_CIR,FBLI_FA_TLOC_FD_DIVISION,FBLI_FA_TLOC_FD_RANGE,FBLI_FA_TLOC_FD_BEAT,FBLI_FA_TLOC_FD_BLOCK,FBLI_FA_TLOC_FD_CHAR,FBLI_CA_TLOC_AD_DIVISION,FBLI_CA_TLOC_AD_DISTRICT,FBLI_CA_UNION)
-           VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+          `INSERT INTO gener43_2021_core (_uri,_creator_uri_user,_creator_uri_user,_last_update_date,_creation_date,GUSER_USER,GUSER_USER_CELL,GUSER_BEAT_ADDRESS,GUSER_TLOC_FD_BEAT_POINT_LAT,GUSER_TLOC_FD_BEAT_POINT_LNG,FBLI_TLOC_ECOZONE,FBLI_FA_TLOC_FD_CIR,FBLI_FA_TLOC_FD_DIVISION,FBLI_FA_TLOC_FD_RANGE,FBLI_FA_TLOC_FD_BEAT,FBLI_FA_TLOC_FD_BLOCK,FBLI_FA_TLOC_FD_CHAR,FBLI_CA_TLOC_AD_DIVISION,FBLI_CA_TLOC_AD_DISTRICT,FBLI_CA_UNION)
+           VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
           [
             gener43_2021_core._uri || null,
-
+            gener43_2021_core._creator_uri_user || null,
             gener43_2021_core._creation_date || null,
+            gener43_2021_core._creator_uri_user || null,
+            gener43_2021_core._last_update_date || null,
+
             gener43_2021_core.GUSER_USER || null,
             gener43_2021_core.GUSER_USER_CELL || null,
             gener43_2021_core.GUSER_BEAT_ADDRESS || null,

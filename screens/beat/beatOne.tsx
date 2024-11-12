@@ -468,15 +468,15 @@ const beatOne = () => {
     survey();
   }, []);
 
-  useEffect(() => {
-    const gener43_2021_core_list_funct = async () => {
-      const data = await gener43_2021_core_list();
-      setgener43_2021_core_list(data);
-    };
-    gener43_2021_core_list_funct();
-  }, []);
+  // useEffect(() => {
+  //   const gener43_2021_core_list_funct = async () => {
+  //     const data = await gener43_2021_core_list();
+  //     setgener43_2021_core_list(data);
+  //   };
+  //   gener43_2021_core_list_funct();
+  // }, []);
 
-  console.log(gener43_2021_core_listdata, 'new data');
+  // console.log(gener43_2021_core_listdata, 'new data');
 
   const beat_one_submit = async () => {
     // console.log(
@@ -503,6 +503,9 @@ const beatOne = () => {
 
     const dataToInsert = {
       _uri: initialUUID,
+      _creator_uri_user: uri,
+      _creation_date: getCurrentDateandTime(),
+      _last_update_date: getCurrentDateandTime(),
       GUSER_DCOLLECTION_RAW: GUSER_DCOLLECTION_RAW,
       GUSER_USER: GUSER_USER,
       GUSER_USER_CELL: GUSER_USER_CELL,
@@ -525,7 +528,7 @@ const beatOne = () => {
       selectedUpazila: selectedUpazila,
       survey_type: survey_type,
     };
-
+    console.log(dataToInsert, 'beat one ....data...');
     const updatedOrdinalNumber = oridianl + 1; // Increment the value directly here
     setoridianl(updatedOrdinalNumber);
 

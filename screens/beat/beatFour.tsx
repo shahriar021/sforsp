@@ -132,6 +132,333 @@ const beatFour = () => {
     setInputValues(prevValues => ({...prevValues, [name]: value}));
   };
 
+  function getCurrentDateandTimeMain() {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+
+    // Format: YYYY-MM-DD HH:mm:ss (no milliseconds)
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  }
+
+  const beatSync = async () => {
+    const datelala = getCurrentDateandTimeMain();
+    // console.log(datelala, 'date,,,,,');
+    // console.log(
+    //   '_uri',
+    //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]._uri,
+    // );
+    // console.log(
+    //   '_creator_uri_user',
+    //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+    //     ._creator_uri_user,
+    // );
+    // console.log(
+    //   '_creation_date',
+    //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+    //     ._creation_date,
+    // );
+    // console.log(
+    //   '_last_update_date',
+    //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+    //     ._last_update_date,
+    // );
+    const formData = new FormData();
+    // formData.append(
+    //   '_uri',
+    //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]._uri,
+    // );
+    // formData.append(
+    //   '_creator_uri_user',
+    //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+    //     ._creator_uri_user,
+    // );
+
+    formData.append(
+      '_uri',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]._uri,
+    );
+    formData.append(
+      '_creator_uri_user',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        ._creator_uri_user,
+    );
+    formData.append('_creation_date', getCurrentDateandTimeMain());
+    formData.append('_last_update_date', getCurrentDateandTimeMain());
+    formData.append(
+      '_model_version',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        ._model_version,
+    );
+    formData.append(
+      '_ui_version',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        ._ui_version,
+    );
+    formData.append(
+      '_is_complete',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        ._is_complete,
+    );
+    formData.append(
+      '_submission_date',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        ._submission_date,
+    );
+    formData.append(
+      '_marked_as_complete_date',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        ._marked_as_complete_date,
+    );
+    formData.append(
+      'land_statistics_beat_land_bio_other_plant_ha',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .land_statistics_beat_land_bio_other_plant_ha,
+    );
+    formData.append(
+      'guser_tloc_fd_beat_point_lng',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .guser_tloc_fd_beat_point_lng,
+    );
+    formData.append(
+      'fbli_fa_tloc_fd_beat',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .fbli_fa_tloc_fd_beat,
+    );
+    formData.append(
+      'logistics3_countryboat_condition',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .logistics3_countryboat_condition,
+    );
+    formData.append(
+      'logistics4_gfirearms_303rifle',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .logistics4_gfirearms_303rifle,
+    );
+    formData.append(
+      'land_statistics_beat_mgt_approach_other_pa_area_ha',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .land_statistics_beat_mgt_approach_other_pa_area_ha,
+    );
+    formData.append(
+      'logistics4_others_water_tra',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .logistics4_others_water_tra,
+    );
+    formData.append(
+      'bo_info_bo_cell',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .bo_info_bo_cell,
+    );
+    formData.append(
+      'logistics3_tvessel_condition',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .logistics3_tvessel_condition,
+    );
+    formData.append(
+      'ro_info_ro_cell',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .ro_info_ro_cell,
+    );
+    formData.append(
+      'logistics4_tfirearms_chineserifle_avail',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .logistics4_tfirearms_chineserifle_avail,
+    );
+    formData.append(
+      'logistics3_tvessel_avail',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .logistics3_tvessel_avail,
+    );
+    formData.append(
+      'fbli_fa_tloc_fd_beat_txt',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .fbli_fa_tloc_fd_beat_txt,
+    );
+    formData.append(
+      'logistics3_speedboat_condition',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .logistics3_speedboat_condition,
+    );
+    formData.append(
+      'fbli_fa_tloc_fd_division',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .fbli_fa_tloc_fd_division,
+    );
+    formData.append(
+      'land_transports_bicycle_avail',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .land_transports_bicycle_avail,
+    );
+    formData.append(
+      'logistics3_others_water_tra_condition',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .logistics3_others_water_tra_condition,
+    );
+    formData.append(
+      'land_statistics_beat_land_info_vested_forest_ha',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .land_statistics_beat_land_info_vested_forest_ha,
+    );
+    formData.append(
+      'subscriberid',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .subscriberid,
+    );
+    formData.append(
+      'guser_user',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .guser_user,
+    );
+    formData.append(
+      'ro_info_name_of_ro',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .ro_info_name_of_ro,
+    );
+    formData.append(
+      'fbli_fa_tloc_fd_block',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .fbli_fa_tloc_fd_block,
+    );
+    formData.append(
+      'deviceid',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .deviceid,
+    );
+    formData.append(
+      'land_transports_motorb_condition',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .land_transports_motorb_condition,
+    );
+    formData.append(
+      'fbli_generated_note_name_18',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .fbli_generated_note_name_18,
+    );
+    formData.append(
+      'land_statistics_beat_land_bio_generated_note_name_74',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .land_statistics_beat_land_bio_generated_note_name_74,
+    );
+    formData.append(
+      'logistics4_chineserifle_condition',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .logistics4_chineserifle_condition,
+    );
+    formData.append(
+      'logistics3_speedboat_avail',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .logistics3_speedboat_avail,
+    );
+    formData.append(
+      'land_statistics_beat_mgt_approach_pa_ws_ha',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .land_statistics_beat_mgt_approach_pa_ws_ha,
+    );
+    formData.append(
+      'logistics4_generated_note_name_152',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .logistics4_generated_note_name_152,
+    );
+    formData.append(
+      'land_statistics_beat_land_bio_non_pp_ha',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .land_statistics_beat_land_bio_non_pp_ha,
+    );
+    formData.append(
+      'land_statistics_beat_land_info_section_6_ha',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .land_statistics_beat_land_info_section_6_ha,
+    );
+    formData.append(
+      'simserial',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .simserial,
+    );
+    formData.append(
+      'guser_dcollection_raw',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .guser_dcollection_raw,
+    );
+    formData.append(
+      'land_transports_bicycle_condition',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .land_transports_bicycle_condition,
+    );
+    formData.append(
+      'land_statistics_beat_land_bio_social_accreted_ha',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .land_statistics_beat_land_bio_social_accreted_ha,
+    );
+    formData.append(
+      'guser_generated_note_name_10',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .guser_generated_note_name_10,
+    );
+    formData.append(
+      'land_statistics_beat_land_info_other_forestarea_ha',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .land_statistics_beat_land_info_other_forestarea_ha,
+    );
+    formData.append(
+      'bo_info_bo_nid',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .bo_info_bo_nid,
+    );
+    formData.append(
+      'land_transports_gbi_cycle',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .land_transports_gbi_cycle,
+    );
+    formData.append(
+      'land_transports_bicycle_avail',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .land_transports_bicycle_avail,
+    );
+    formData.append(
+      'logistics4_others_water_tra_avail',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .logistics4_others_water_tra_avail,
+    );
+    formData.append(
+      'guser_user',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .guser_user,
+    );
+    formData.append(
+      'logistics3_speedboat_avail',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .logistics3_speedboat_avail,
+    );
+    formData.append(
+      'logistics4_others_water_tra_avail_condition',
+      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+        .logistics4_others_water_tra_avail_condition,
+    );
+
+    try {
+      const response = await fetch(
+        'http://192.168.0.187:8000/api/gener43_2021_core_create?token=15694294d23a00f6852b5465cbe141f5aba0ff44',
+        {
+          method: 'POST',
+          body: formData,
+          headers: {
+            Accept: 'application/json',
+          },
+        },
+      );
+
+      const responseData = await response.json();
+      console.log('Response:', responseData);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   const beatFour = async () => {
     // console.log(
     //   inputValues.upzilla,
@@ -155,7 +482,7 @@ const beatFour = () => {
     gener43_2021_core_list_funct();
   }, []);
 
-  console.log(gener43_2021_core_listdata, 'new data');
+  //console.log(gener43_2021_core_listdata, 'new data');
 
   const tableData = [];
 
@@ -522,7 +849,7 @@ const beatFour = () => {
             <Text style={styles.buttonText}>Cancel</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.addButton}>
+        <TouchableOpacity style={styles.addButton} onPress={() => beatSync()}>
           <Text style={styles.buttonText}>Sync</Text>
         </TouchableOpacity>
       </ScrollView>

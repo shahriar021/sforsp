@@ -167,16 +167,16 @@ const App = () => {
     try {
       console.log('useEffect is being called');
       const gener43_2021_core_api_func = async () => {
-        console.log('gener43_2021_core_api_func has been called');
+        console.log('gener43_2021_core_api_func has been called------------------------------------------------------');
         try {
           await gener43_2021_core_api();
         } catch (err) {
-          console.log('Error fetching gener43_2021_core API data:', err);
+          console.log('Error fetching gener43_2021_core API data:-----------------------------------------------------', err);
         }
       };
       gener43_2021_core_api_func();
     } catch (error) {
-      console.log('Error in useEffect:', error);
+      console.log('Error in useEffect:---------------------------------------------------------------------', error);
     }
   }, []);
 
