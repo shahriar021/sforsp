@@ -24606,14 +24606,14 @@ export const gener43_2021_core_test_api = async () => {
 
     await new Promise((resolve, reject) => {
       database.transaction(tx => {
-        tx.executeSql(
-          'DROP TABLE IF EXISTS gener43_2021_core_test',
-          [],
-          () => {
-            console.log('gener43_2021_core_test table dropped successfully');
-          },
-          reject,
-        );
+        // tx.executeSql(
+        //   'DROP TABLE IF EXISTS gener43_2021_core_test',
+        //   [],
+        //   () => {
+        //     console.log('gener43_2021_core_test table dropped successfully');
+        //   },
+        //   reject,
+        // );
 
         tx.executeSql(
           'CREATE TABLE IF NOT EXISTS gener43_2021_core_test (_uri text,_creator_uri_user text,_creation_date text,_last_update_uri_user text,_last_update_date text,_model_version text,_ui_version text,_is_complete text,_submission_date text,_marked_as_complete_date text,land_statistics_beat_land_bio_other_plant_ha text,guser_tloc_fd_beat_point_lng text,fbli_fa_tloc_fd_beat text,logistics3_countryboat_condition text,logistics4_gfirearms_303rifle text,land_statistics_beat_mgt_approach_other_pa_area_ha text,logistics4_others_water_tra text,bo_info_bo_cell text,logistics3_tvessel_condition text,ro_info_ro_cell text,logistics4_tfirearms_chineserifle_avail text,logistics3_tvessel_avail text,fbli_fa_tloc_fd_beat_txt text,logistics3_speedboat_condition text,fbli_fa_tloc_fd_division text,land_transports_bicycle_avail text,logistics3_others_water_tra_condition text,land_statistics_beat_land_info_vested_forest_ha text,subscriberid text,guser_user text,ro_info_name_of_ro text,fbli_fa_tloc_fd_block text,deviceid text,land_transports_motorb_condition text,fbli_generated_note_name_18 text,land_statistics_beat_land_bio_generated_note_name_74 text,logistics4_chineserifle_condition text,logistics3_speedboat_avail text,land_statistics_beat_mgt_approach_pa_ws_ha text,logistics4_generated_note_name_152 text,land_statistics_beat_land_bio_non_pp_ha text,land_statistics_beat_land_info_section_6_ha text,simserial text,guser_dcollection_raw text,land_transports_bicycle_condition text,land_statistics_beat_land_bio_social_accreted_ha text,guser_generated_note_name_10 text,land_statistics_beat_land_info_other_forestarea_ha text,bo_info_bo_nid text,land_transports_gbi_cycle text,land_transports_others_land_tra text,logistics3_gcountry_boat text,logistics4_gfirearms_slr text,fbli_fa_tloc_fd_cir text,land_transports_motorb_avail text,land_transports_others_land_tra_condition text,ro_info_ro_joining_date text,logistics4_others_water_tra_condition text,land_statistics_beat_land_bio_natural_to_dc_ha text,ro_info_ro_rank text,land_transports_others_land_tra_avail text,land_statistics_beat_mgt_approach_pa_safaripark_ha text,bo_info_bo_joining_date text,guser_user_cell text,ro_info_ro_nid text,guser_tloc_fd_beat_point_alt text,land_statistics_beat_land_info_section_4_ha text,guser_tloc_fd_beat_point_lat text,land_statistics_beat_mgt_approach_pa_sbca_ha text,logistics4_rifle303_condition text,guser_dcollection text,end_raw text,bo_info_generated_note_name_106 text,generated_note_name_81 text,ro_info_generated_note_name_97 text,fbli_fa_generated_note_name_21 text,land_transports_generated_note_name_125 text,guser_beat_address text,land_statistics_beat_land_info_aquired_forest_ha text,bo_info_bo_joining_date_raw text,land_statistics_beat_mgt_approach_pa_np_ha text,guser_tloc_fd_beat_point_acc text,logistics3_countryboat_avail text,fbli_ca_tloc_ad_district text,bo_info_name_of_bo text,land_statistics_beat_land_info_generated_note_name_53 text,land_statistics_beat_land_info_reserved_forest_ha text,logistics3_others_water_tra text,fbli_tloc_ecozone text,bo_info_bo_rank text,logistics4_slr_condition text,end text,fbli_fa_tloc_fd_range text,ro_info_ro_joining_date_raw text,phonenumber text,logistics3_trawler text,logistics4_gfirearms_shortgun text,logistics4_shortgun_condition text,start_raw text,land_statistics_total_legal_land_stats text,bo_info_bo_mail text,meta_instance_id text,logistics4_tfirearms_shortgun_avail text,fbli_ca_generated_note_name_33 text,fbli_ca_tloc_ad_division text,land_statistics_beat_mgt_approach_generated_note_name_65 text,logistics4_others_water_tra_avail text,logistics3_gspeed_boat text,logistics4_tfirearms_303rifle_avail text,logistics4_gfirearms_chineserifle text,today text,fbli_fa_tloc_fd_char text,land_transports_gmotorbike text,land_statistics_beat_land_info_protected_forest_ha text,land_statistics_beat_mgt_approach_pa_ecopark_ha text,fbli_fa_tloc_enter_range text,land_statistics_area_sum text,ro_info_ro_mail text,generated_note_name_123 text,start text,fbli_ca_union text,fbli_fa_tloc_enter_div text,today_raw text,generated_note_name_94 text,logistics3_others_water_tra_avail text,generated_note_name_95 text,logistics4_tfirearms_slr_avail text,logistics3_generated_note_name_137 text,project_id text,sort text,last_log_id text,restore_id text,created_at text,created_by text,updated_at text,updated_by text,deleted_at text,deleted_by text,deleted_status text,status text)',
@@ -25068,6 +25068,211 @@ export const gener43_2021_core_test_create = gener43_2021_core_test => {
     });
   });
 };
+// export const gener43_2021_core_test_delete = async (uri) => {
+//   return new Promise((resolve, reject) => {
+//     database.transaction(tx => {
+//       tx.executeSql(
+//         `select * FROM gener43_2021_core_test where uir='$uri'`, // Correct SQL to delete all rows
+//         [],
+//         async (_, resultSet) => {
+//           console.log(
+//             'All data deleted from gener43_2021_core_test:',
+//             resultSet,
+//           );
+
+//           try {
+//             formData2.append('_top_level_auri', initialUUID);
+// 			//const response = await fetch(
+// 		  //   'http://192.168.0.187:8000/api/gener43_2021_core_create?token=15694294d23a00f6852b5465cbe141f5aba0ff44',
+// 		  //   {
+// 		  //     method: 'POST',
+// 		  //     body: formData,
+// 		  //     headers: {
+// 		  //       Accept: 'application/json',
+// 		  //     },
+// 		  //   },
+// 		  // );
+//           } catch (apiError) {
+//             console.error('Error fetching data from API:', apiError);
+//             reject(apiError);
+//           }
+//         },
+//         (_, error) => {
+//           console.error(
+//             `Error deleting data from gener43_2021_core_test`,
+//             error,
+//           );
+//           reject(error); // Reject in case of a SQL error
+//         },
+//       );
+//     });
+//   });
+// };
+function getCurrentDateandTimeMain() {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+  const day = String(date.getDate()).padStart(2, '0');
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  const seconds = String(date.getSeconds()).padStart(2, '0');
+
+  // Format: YYYY-MM-DD HH:mm:ss (no milliseconds)
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
+
+// export const gener43_2021_core_to_live = async uri => {
+//   return new Promise((resolve, reject) => {
+//     console.log('Starting database transaction for URI:', uri);
+
+//     // Begin database transaction
+//     database.transaction(tx => {
+//       console.log('Executing SQL query...');
+
+//       // Execute SQL query to fetch data
+//       tx.executeSql(
+//         `SELECT * FROM gener43_2021_core WHERE _uri = ?`,
+//         [uri], // Use `uri` as a parameter to filter data
+//         async (_, resultSet) => {
+//           // Check if data was retrieved
+//           if (resultSet.rows.length > 0) {
+//             // console.log(`Data found: ${resultSet.rows.length} rows.`);
+//             console.log(`Data found: ${resultSet} rows.`);
+
+//             // Get the first row of data
+//             const dataToSend = resultSet.rows.item(0);
+//             console.log('Data to be sent:', dataToSend._uri);
+//             const dataToInsert = {
+//               _uri: dataToSend._uri,
+//               _creator_uri_user: dataToSend._creator_uri_user,
+//               _creation_date: dataToSend._creation_date,
+//               _last_update_date: getCurrentDateandTimeMain(),
+//             };
+
+//             console.log(dataToInsert, 'dataToInsert');
+//             // console.log(req);
+//             // Prepare request payload
+//             // const requestData = {
+//             //   ...dataToSend,
+//             //   additionalParam: 'value', // Add any other parameters you need
+//             // };
+
+//             //Send data to the API
+//             try {
+//               const response = await fetch(
+//                 'http://192.168.0.187:8000/api/gener43_2021_core_create?token=15694294d23a00f6852b5465cbe141f5aba0ff44',
+//                 {
+//                   method: 'POST',
+//                   // headers: {
+//                   //   Accept: 'application/json',
+//                   //   'Content-Type': 'application/json',
+//                   // },
+//                   // body: JSON.stringify(requestData),
+//                   //body: dataToInsert,
+//                   body: JSON.stringify(dataToInsert),
+//                 },
+//               );
+
+//               // if (!response.ok) {
+//               //   console.error(
+//               //     'API response error:',
+//               //     response.status,
+//               //     response.statusText,
+//               //   );
+//               //   throw new Error(`HTTP error! Status: ${response.status}`);
+//               // }
+
+//               const result = await response.json();
+//               console.log('API response:', response);
+//               resolve(result); // Resolve with API response
+//             } catch (error) {
+//               console.error('Error sending data to API:', error);
+//               reject(error); // Reject on API error
+//             }
+//           } else {
+//             console.error('No data found for the given URI:', uri);
+//             reject(new Error('No data found.'));
+//           }
+//         },
+//         (_, error) => {
+//           console.error('Error executing SQL query:', error);
+//           reject(error); // Reject on SQL query error
+//         },
+//       );
+//     });
+//   });
+// };
+
+export const gener43_2021_core_to_live = async uri => {
+  return new Promise((resolve, reject) => {
+    console.log('Starting database transaction for URI:', uri);
+
+    // Begin database transaction
+    database.transaction(tx => {
+      console.log('Executing SQL query...');
+
+      // Execute SQL query to fetch data
+      tx.executeSql(
+        `SELECT * FROM gener43_2021_core WHERE _uri = ?`,
+        [uri],
+        async (_, resultSet) => {
+          if (resultSet.rows.length > 0) {
+            const dataToSend = resultSet.rows.item(0);
+            console.log('Data to be sent:', dataToSend._uri);
+
+            // Create FormData instance and append data
+            const formData = new FormData();
+            formData.append('_uri', dataToSend._uri);
+            formData.append('_creator_uri_user', dataToSend._creator_uri_user);
+            formData.append('_creation_date', dataToSend._creation_date);
+            formData.append('_last_update_date', getCurrentDateandTimeMain());
+            // Add any other required fields here as needed
+            // Example:
+            // formData.append('additionalParam', 'value');
+
+            console.log('FormData to be sent:', formData);
+
+            // Send data to the API using FormData
+            try {
+              const response = await fetch(
+                'http://192.168.0.187:8000/api/gener43_2021_core_create?token=15694294d23a00f6852b5465cbe141f5aba0ff44',
+                {
+                  method: 'POST',
+                  headers: {
+                    Accept: 'application/json',
+                    // Note: 'Content-Type' should NOT be set when using FormData
+                  },
+                  body: formData,
+                },
+              );
+
+              if (!response.ok) {
+                console.error('API response error:', response.status, response.statusText);
+                throw new Error(`HTTP error! Status: ${response.status}`);
+              }
+
+              const result = await response.json();
+              console.log('API response:', result);
+              resolve(result);
+            } catch (error) {
+              console.error('Error sending data to API:', error);
+              reject(error);
+            }
+          } else {
+            console.error('No data found for the given URI:', uri);
+            reject(new Error('No data found.'));
+          }
+        },
+        (_, error) => {
+          console.error('Error executing SQL query:', error);
+          reject(error);
+        },
+      );
+    });
+  });
+};
+
+
 // create end
 //---------------------------------------------------------//
 //API Start
@@ -27080,7 +27285,7 @@ export const gener43_2021_xpic_beat_index_blb_delete = async () => {
 export const gener43_2021_xpic_beat_index_blb_create =
   gener43_2021_xpic_beat_index_blb => {
     return new Promise((resolve, reject) => {
-      console.log(gener43_2021_xpic_beat_index_blb.value);
+      // console.log(gener43_2021_xpic_beat_index_blb.value);
       database.transaction(tx => {
         // Insert gener43_2021_xpic_beat_index_blb
         tx.executeSql(
@@ -36543,6 +36748,82 @@ export const gener43_2021_overallnotes_ima_ref_create =
 // create end
 //---------------------------------------------------------//
 //API Start
+// export const gener43_2021_xpic_beat_index_bn_api = async () => {
+//   try {
+//     const response = await fetch(
+//       `${baseApi}/gener43_2021_xpic_beat_index_bn?token=${token}`,
+//     );
+//     const data = await response.json();
+//     console.log(
+//       'Total gener43_2021_xpic_beat_index_bn items from API:',
+//       data.length,
+//     );
+
+//     await new Promise((resolve, reject) => {
+//       database.transaction(tx => {
+//         tx.executeSql(
+//           'DROP TABLE IF EXISTS gener43_2021_xpic_beat_index_bn',
+//           [],
+//           () => {
+//             console.log(
+//               'gener43_2021_xpic_beat_index_bn table dropped successfully',
+//             );
+//           },
+//           reject,
+//         );
+
+//         tx.executeSql(
+//           'CREATE TABLE IF NOT EXISTS gener43_2021_xpic_beat_index_bn (_uri text,_creator_uri_user text,_creation_date text,_last_update_uri_user text,_last_update_date text,_parent_auri text,_ordinal_number text,_top_level_auri text,unrooted_file_path text,content_type text,content_length text,content_hash text)',
+//           [],
+//           () => {
+//             console.log(
+//               'gener43_2021_xpic_beat_index_bn table created successfully',
+//             );
+//           },
+//           reject,
+//         );
+
+//         data.forEach(gener43_2021_xpic_beat_index_bn => {
+//           tx.executeSql(
+//             'INSERT INTO gener43_2021_xpic_beat_index_bn VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+//             [
+//               gener43_2021_xpic_beat_index_bn._uri || null,
+//               gener43_2021_xpic_beat_index_bn._creator_uri_user || null,
+//               gener43_2021_xpic_beat_index_bn._creation_date || null,
+//               gener43_2021_xpic_beat_index_bn._last_update_uri_user || null,
+//               gener43_2021_xpic_beat_index_bn._last_update_date || null,
+//               gener43_2021_xpic_beat_index_bn._parent_auri || null,
+//               gener43_2021_xpic_beat_index_bn._ordinal_number || null,
+//               gener43_2021_xpic_beat_index_bn._top_level_auri || null,
+//               gener43_2021_xpic_beat_index_bn.unrooted_file_path || null,
+//               gener43_2021_xpic_beat_index_bn.content_type || null,
+//               gener43_2021_xpic_beat_index_bn.content_length || null,
+//               gener43_2021_xpic_beat_index_bn.content_hash || null,
+//             ],
+//             (_, resultSet) =>
+//               console.log(
+//                 'gener43_2021_xpic_beat_index_bn data inserted successfully',
+//                 resultSet,
+//               ),
+//             (_, error) => {
+//               console.error(
+//                 'Error inserting gener43_2021_xpic_beat_index_bn data',
+//                 error,
+//                 gener43_2021_xpic_beat_index_bn,
+//               );
+//             },
+//           );
+//         });
+//         resolve();
+//       });
+//     });
+//   } catch (error) {
+//     console.error(
+//       'Error fetching gener43_2021_xpic_beat_index_bn data from API',
+//       error,
+//     );
+//   }
+// };
 export const gener43_2021_xpic_beat_index_bn_api = async () => {
   try {
     const response = await fetch(
@@ -36554,8 +36835,10 @@ export const gener43_2021_xpic_beat_index_bn_api = async () => {
       data.length,
     );
 
+    // Start the database transaction
     await new Promise((resolve, reject) => {
       database.transaction(tx => {
+        // Drop the table (comment this out if not required)
         tx.executeSql(
           'DROP TABLE IF EXISTS gener43_2021_xpic_beat_index_bn',
           [],
@@ -36564,9 +36847,13 @@ export const gener43_2021_xpic_beat_index_bn_api = async () => {
               'gener43_2021_xpic_beat_index_bn table dropped successfully',
             );
           },
-          reject,
+          (_, error) => {
+            console.error('Error dropping table:', error);
+            reject(error); // Reject the transaction if dropping the table fails
+          },
         );
 
+        // Create table
         tx.executeSql(
           'CREATE TABLE IF NOT EXISTS gener43_2021_xpic_beat_index_bn (_uri text,_creator_uri_user text,_creation_date text,_last_update_uri_user text,_last_update_date text,_parent_auri text,_ordinal_number text,_top_level_auri text,unrooted_file_path text,content_type text,content_length text,content_hash text)',
           [],
@@ -36575,43 +36862,58 @@ export const gener43_2021_xpic_beat_index_bn_api = async () => {
               'gener43_2021_xpic_beat_index_bn table created successfully',
             );
           },
-          reject,
+          (_, error) => {
+            console.error('Error creating table:', error);
+            reject(error); // Reject the transaction if creating the table fails
+          },
         );
 
-        data.forEach(gener43_2021_xpic_beat_index_bn => {
-          tx.executeSql(
-            'INSERT INTO gener43_2021_xpic_beat_index_bn VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-            [
-              gener43_2021_xpic_beat_index_bn._uri || null,
-              gener43_2021_xpic_beat_index_bn._creator_uri_user || null,
-              gener43_2021_xpic_beat_index_bn._creation_date || null,
-              gener43_2021_xpic_beat_index_bn._last_update_uri_user || null,
-              gener43_2021_xpic_beat_index_bn._last_update_date || null,
-              gener43_2021_xpic_beat_index_bn._parent_auri || null,
-              gener43_2021_xpic_beat_index_bn._ordinal_number || null,
-              gener43_2021_xpic_beat_index_bn._top_level_auri || null,
-              gener43_2021_xpic_beat_index_bn.unrooted_file_path || null,
-              gener43_2021_xpic_beat_index_bn.content_type || null,
-              gener43_2021_xpic_beat_index_bn.content_length || null,
-              gener43_2021_xpic_beat_index_bn.content_hash || null,
-            ],
-            (_, resultSet) =>
-              console.log(
-                'gener43_2021_xpic_beat_index_bn data inserted successfully',
-                resultSet,
-              ),
-            (_, error) => {
-              console.error(
-                'Error inserting gener43_2021_xpic_beat_index_bn data',
-                error,
-                gener43_2021_xpic_beat_index_bn,
-              );
-            },
-          );
+        // Insert data from the API response
+        let insertPromises = data.map(gener43_2021_xpic_beat_index_bn => {
+          return new Promise((resolve, reject) => {
+            tx.executeSql(
+              'INSERT INTO gener43_2021_xpic_beat_index_bn VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+              [
+                gener43_2021_xpic_beat_index_bn._uri || null,
+                gener43_2021_xpic_beat_index_bn._creator_uri_user || null,
+                gener43_2021_xpic_beat_index_bn._creation_date || null,
+                gener43_2021_xpic_beat_index_bn._last_update_uri_user || null,
+                gener43_2021_xpic_beat_index_bn._last_update_date || null,
+                gener43_2021_xpic_beat_index_bn._parent_auri || null,
+                gener43_2021_xpic_beat_index_bn._ordinal_number || null,
+                gener43_2021_xpic_beat_index_bn._top_level_auri || null,
+                gener43_2021_xpic_beat_index_bn.unrooted_file_path || null,
+                gener43_2021_xpic_beat_index_bn.content_type || null,
+                gener43_2021_xpic_beat_index_bn.content_length || null,
+                gener43_2021_xpic_beat_index_bn.content_hash || null,
+              ],
+              (_, resultSet) => {
+                console.log(
+                  'gener43_2021_xpic_beat_index_bn data inserted successfully',
+                  resultSet,
+                );
+                resolve(); // Resolve for this particular insert
+              },
+              (_, error) => {
+                console.error(
+                  'Error inserting gener43_2021_xpic_beat_index_bn data',
+                  error,
+                  gener43_2021_xpic_beat_index_bn,
+                );
+                reject(error); // Reject if any insert fails
+              },
+            );
+          });
         });
-        resolve();
+
+        // Wait for all insert operations to finish
+        Promise.all(insertPromises)
+          .then(() => resolve()) // Resolve the transaction after all inserts are successful
+          .catch(error => reject(error)); // Reject the transaction if any insert fails
       });
     });
+
+    console.log('All data inserted successfully into the database.');
   } catch (error) {
     console.error(
       'Error fetching gener43_2021_xpic_beat_index_bn data from API',
@@ -36619,6 +36921,7 @@ export const gener43_2021_xpic_beat_index_bn_api = async () => {
     );
   }
 };
+
 //API End
 //---------------------------------------------------------//
 // List Start
@@ -36688,13 +36991,48 @@ export const gener43_2021_xpic_beat_index_bn_delete = async () => {
 //---------------------------------------------------------//
 // create start
 //---------------------------------------------------------//
+// export const gener43_2021_xpic_beat_index_bn_create =
+//   gener43_2021_xpic_beat_index_bn => {
+//     return new Promise((resolve, reject) => {
+//       console.log(gener43_2021_xpic_beat_index_bn, 'from backend');
+//       database.transaction(tx => {
+//         // Insert gener43_2021_xpic_beat_index_bn
+//         tx.executeSql(
+//           `INSERT INTO gener43_2021_xpic_beat_index_bn
+// (_uri)
+// VALUES (?);
+// `,
+//           [
+//             gener43_2021_xpic_beat_index_bn._uri || null,
+
+//           ],
+//           (tx, results) => {
+//             console.log('Data inserted successfully:', results);
+//             resolve(results);
+//           },
+//           (tx, error) => {
+//             console.error('Error inserting data in bn:', error);
+//             reject(error);
+//           },
+//         );
+//       });
+//     });
+//   };
+
 export const gener43_2021_xpic_beat_index_bn_create =
   gener43_2021_xpic_beat_index_bn => {
     return new Promise((resolve, reject) => {
+      console.log(gener43_2021_xpic_beat_index_bn, 'from backend');
+
       database.transaction(tx => {
-        // Insert gener43_2021_xpic_beat_index_bn
+        // Insert query with necessary fields
+        console.log('insertion started...');
         tx.executeSql(
-          'INSERT INTO gener43_2021_xpic_beat_index_bn (_uri text,_creator_uri_user text,_creation_date text,_last_update_uri_user text,_last_update_date text,_parent_auri text,_ordinal_number text,_top_level_auri text,unrooted_file_path text,content_type text,content_length text,content_hash text)',
+          `INSERT INTO gener43_2021_xpic_beat_index_bn 
+          (_uri, _creator_uri_user, _creation_date, _last_update_uri_user, _last_update_date, 
+          _parent_auri, _ordinal_number, _top_level_auri, unrooted_file_path, 
+          content_type, content_length, content_hash) 
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
           [
             gener43_2021_xpic_beat_index_bn._uri || null,
             gener43_2021_xpic_beat_index_bn._creator_uri_user || null,
@@ -36714,13 +37052,115 @@ export const gener43_2021_xpic_beat_index_bn_create =
             resolve(results);
           },
           (tx, error) => {
-            console.error('Error inserting data:', error);
+            console.error(
+              'Error inserting data in bn:',
+              error.message || error,
+            );
             reject(error);
           },
         );
       });
     });
   };
+
+// export const gener43_2021_xpic_beat_index_bn_api = async () => {
+//   try {
+//     const response = await fetch(
+//       `${baseApi}/gener43_2021_xpic_beat_index_bn?token=${token}`,
+//     );
+//     const data = await response.json();
+//     console.log(
+//       'Total gener43_2021_xpic_beat_index_bn items from API:',
+//       data.length,
+//     );
+
+//     // Start the database transaction
+//     await new Promise((resolve, reject) => {
+//       database.transaction(tx => {
+//         // Drop the table (comment this out if not required)
+//         tx.executeSql(
+//           'DROP TABLE IF EXISTS gener43_2021_xpic_beat_index_bn',
+//           [],
+//           () => {
+//             console.log(
+//               'gener43_2021_xpic_beat_index_bn table dropped successfully',
+//             );
+//           },
+//           (_, error) => {
+//             console.error('Error dropping table:', error);
+//             reject(error); // Reject the transaction if dropping the table fails
+//           },
+//         );
+
+//         // Create table
+//         tx.executeSql(
+//           'CREATE TABLE IF NOT EXISTS gener43_2021_xpic_beat_index_bn (_uri text,_creator_uri_user text,_creation_date text,_last_update_uri_user text,_last_update_date text,_parent_auri text,_ordinal_number text,_top_level_auri text,unrooted_file_path text,content_type text,content_length text,content_hash text)',
+//           [],
+//           () => {
+//             console.log(
+//               'gener43_2021_xpic_beat_index_bn table created successfully',
+//             );
+//           },
+//           (_, error) => {
+//             console.error('Error creating table:', error);
+//             reject(error); // Reject the transaction if creating the table fails
+//           },
+//         );
+
+//         // Insert data from the API response
+//         let insertPromises = data.map(gener43_2021_xpic_beat_index_bn => {
+//           return new Promise((resolve, reject) => {
+//             tx.executeSql(
+//               'INSERT INTO gener43_2021_xpic_beat_index_bn VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+//               [
+//                 gener43_2021_xpic_beat_index_bn._uri || null,
+//                 gener43_2021_xpic_beat_index_bn._creator_uri_user || null,
+//                 gener43_2021_xpic_beat_index_bn._creation_date || null,
+//                 gener43_2021_xpic_beat_index_bn._last_update_uri_user || null,
+//                 gener43_2021_xpic_beat_index_bn._last_update_date || null,
+//                 gener43_2021_xpic_beat_index_bn._parent_auri || null,
+//                 gener43_2021_xpic_beat_index_bn._ordinal_number || null,
+//                 gener43_2021_xpic_beat_index_bn._top_level_auri || null,
+//                 gener43_2021_xpic_beat_index_bn.unrooted_file_path || null,
+//                 gener43_2021_xpic_beat_index_bn.content_type || null,
+//                 gener43_2021_xpic_beat_index_bn.content_length || null,
+//                 gener43_2021_xpic_beat_index_bn.content_hash || null,
+//               ],
+//               (_, resultSet) => {
+//                 console.log(
+//                   'gener43_2021_xpic_beat_index_bn data inserted successfully',
+//                   resultSet,
+//                 );
+//                 resolve(); // Resolve for this particular insert
+//               },
+//               (_, error) => {
+//                 console.error(
+//                   'Error inserting gener43_2021_xpic_beat_index_bn data',
+//                   error,
+//                   gener43_2021_xpic_beat_index_bn,
+//                 );
+//                 reject(error); // Reject if any insert fails
+//               },
+//             );
+//           });
+//         });
+
+//         // Wait for all insert operations to finish
+//         Promise.all(insertPromises)
+//           .then(() => resolve()) // Resolve the transaction after all inserts are successful
+//           .catch(error => reject(error)); // Reject the transaction if any insert fails
+//       });
+//     });
+
+//     console.log('All data inserted successfully into the database.');
+//   } catch (error) {
+//     console.error(
+//       'Error fetching gener43_2021_xpic_beat_index_bn data from API',
+//       error,
+//     );
+//   }
+// };
+
 // create end
 //---------------------------------------------------------//
 //API Start
@@ -36869,10 +37309,14 @@ export const gener43_2021_xpic_beat_index_ref_delete = async () => {
 export const gener43_2021_xpic_beat_index_ref_create =
   gener43_2021_xpic_beat_index_ref => {
     return new Promise((resolve, reject) => {
+      console.log(gener43_2021_xpic_beat_index_ref, 'ref ');
       database.transaction(tx => {
         // Insert gener43_2021_xpic_beat_index_ref
         tx.executeSql(
-          'INSERT INTO gener43_2021_xpic_beat_index_ref (_uri text,_creator_uri_user text,_creation_date text,_last_update_uri_user text,_last_update_date text,_dom_auri text,_sub_auri text,_top_level_auri text,part text)',
+          `INSERT INTO gener43_2021_xpic_beat_index_ref 
+(_uri, _creator_uri_user, _creation_date, _last_update_uri_user, _last_update_date, _dom_auri, _sub_auri, _top_level_auri, part) 
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
+`,
           [
             gener43_2021_xpic_beat_index_ref._uri || null,
             gener43_2021_xpic_beat_index_ref._creator_uri_user || null,

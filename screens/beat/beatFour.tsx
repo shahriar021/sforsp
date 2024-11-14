@@ -21,6 +21,8 @@ import useUUID from '../../hooks/useUUID';
 import useCreateUri from '../../hooks/useCreatUri';
 import {
   gener43_2021_core_list,
+  gener43_2021_core_to_live,
+  gener43_2021_fbli_m_sh1_list,
   gener43_2021_gvillages_create,
 } from '../../database/sqlDatabase';
 import {getCurrentDateandTime} from '../../hooks/dateUtils';
@@ -57,7 +59,9 @@ const beatFour = () => {
   const [oridianl, setoridianl] = useState(0);
   const {initialUUID, generateUUID} = useUUID();
   const [newUUID, setNewUUID] = useState('');
+  const [fetchagain, setfetchagain] = useState(false);
   const [gener43_2021_core_listdata, setgener43_2021_core_list] = useState([]);
+  const [fbliData, setFbliData] = useState([]);
 
   const navigation = useNavigation();
   const route = useRoute();
@@ -90,6 +94,16 @@ const beatFour = () => {
     {label: 'Coniferous Forest', value: 'coniferous'},
     {label: 'Bamboo Forest', value: 'bamboo'},
   ];
+
+  // useEffect(() => {
+  //   const gener43_2021_core_list_funct = async () => {
+  //     const data = await gener43_2021_core_list();
+  //     setgener43_2021_core_list(data);
+  //   };
+  //   gener43_2021_core_list_funct();
+  // }, []);
+
+  // console.log(gener43_2021_core_listdata, 'new data');
 
   const addNewSave = async () => {
     const newGeneratedUUID = generateUUID(); // Generate a new UUID
@@ -145,318 +159,395 @@ const beatFour = () => {
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   }
 
+  // const beatSynca = async () => {
+  //   // setfetchagain(true);
+  //   //fmetyhod(uri);
+  //   // const datelala = getCurrentDateandTimeMain();
+  //   // // console.log(datelala, 'date,,,,,');
+  //   // // console.log(
+  //   // //   '_uri',
+  //   // //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]._uri,
+  //   // // );
+  //   // // console.log(
+  //   // //   '_creator_uri_user',
+  //   // //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   // //     ._creator_uri_user,
+  //   // // );
+  //   // // console.log(
+  //   // //   '_creation_date',
+  //   // //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   // //     ._creation_date,
+  //   // // );
+  //   // // console.log(
+  //   // //   '_last_update_date',
+  //   // //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   // //     ._last_update_date,
+  //   // // );
+  //   // const formData = new FormData();
+  //   // // formData.append(
+  //   // //   '_uri',
+  //   // //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]._uri,
+  //   // // );
+  //   // // formData.append(
+  //   // //   '_creator_uri_user',
+  //   // //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   // //     ._creator_uri_user,
+  //   // // );
+
+  //   // formData.append(
+  //   //   '_uri',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]._uri,
+  //   // );
+  //   // formData.append(
+  //   //   '_creator_uri_user',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     ._creator_uri_user,
+  //   // );
+  //   // formData.append('_creation_date', getCurrentDateandTimeMain());
+  //   // formData.append('_last_update_date', getCurrentDateandTimeMain());
+  //   // formData.append(
+  //   //   '_model_version',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     ._model_version,
+  //   // );
+  //   // formData.append(
+  //   //   '_ui_version',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     ._ui_version,
+  //   // );
+  //   // formData.append(
+  //   //   '_is_complete',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     ._is_complete,
+  //   // );
+  //   // formData.append(
+  //   //   '_submission_date',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     ._submission_date,
+  //   // );
+  //   // formData.append(
+  //   //   '_marked_as_complete_date',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     ._marked_as_complete_date,
+  //   // );
+  //   // formData.append(
+  //   //   'land_statistics_beat_land_bio_other_plant_ha',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .land_statistics_beat_land_bio_other_plant_ha,
+  //   // );
+  //   // formData.append(
+  //   //   'guser_tloc_fd_beat_point_lng',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .guser_tloc_fd_beat_point_lng,
+  //   // );
+  //   // formData.append(
+  //   //   'fbli_fa_tloc_fd_beat',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .fbli_fa_tloc_fd_beat,
+  //   // );
+  //   // formData.append(
+  //   //   'logistics3_countryboat_condition',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .logistics3_countryboat_condition,
+  //   // );
+  //   // formData.append(
+  //   //   'logistics4_gfirearms_303rifle',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .logistics4_gfirearms_303rifle,
+  //   // );
+  //   // formData.append(
+  //   //   'land_statistics_beat_mgt_approach_other_pa_area_ha',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .land_statistics_beat_mgt_approach_other_pa_area_ha,
+  //   // );
+  //   // formData.append(
+  //   //   'logistics4_others_water_tra',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .logistics4_others_water_tra,
+  //   // );
+  //   // formData.append(
+  //   //   'bo_info_bo_cell',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .bo_info_bo_cell,
+  //   // );
+  //   // formData.append(
+  //   //   'logistics3_tvessel_condition',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .logistics3_tvessel_condition,
+  //   // );
+  //   // formData.append(
+  //   //   'ro_info_ro_cell',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .ro_info_ro_cell,
+  //   // );
+  //   // formData.append(
+  //   //   'logistics4_tfirearms_chineserifle_avail',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .logistics4_tfirearms_chineserifle_avail,
+  //   // );
+  //   // formData.append(
+  //   //   'logistics3_tvessel_avail',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .logistics3_tvessel_avail,
+  //   // );
+  //   // formData.append(
+  //   //   'fbli_fa_tloc_fd_beat_txt',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .fbli_fa_tloc_fd_beat_txt,
+  //   // );
+  //   // formData.append(
+  //   //   'logistics3_speedboat_condition',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .logistics3_speedboat_condition,
+  //   // );
+  //   // formData.append(
+  //   //   'fbli_fa_tloc_fd_division',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .fbli_fa_tloc_fd_division,
+  //   // );
+  //   // formData.append(
+  //   //   'land_transports_bicycle_avail',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .land_transports_bicycle_avail,
+  //   // );
+  //   // formData.append(
+  //   //   'logistics3_others_water_tra_condition',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .logistics3_others_water_tra_condition,
+  //   // );
+  //   // formData.append(
+  //   //   'land_statistics_beat_land_info_vested_forest_ha',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .land_statistics_beat_land_info_vested_forest_ha,
+  //   // );
+  //   // formData.append(
+  //   //   'subscriberid',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .subscriberid,
+  //   // );
+  //   // formData.append(
+  //   //   'guser_user',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .guser_user,
+  //   // );
+  //   // formData.append(
+  //   //   'ro_info_name_of_ro',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .ro_info_name_of_ro,
+  //   // );
+  //   // formData.append(
+  //   //   'fbli_fa_tloc_fd_block',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .fbli_fa_tloc_fd_block,
+  //   // );
+  //   // formData.append(
+  //   //   'deviceid',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .deviceid,
+  //   // );
+  //   // formData.append(
+  //   //   'land_transports_motorb_condition',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .land_transports_motorb_condition,
+  //   // );
+  //   // formData.append(
+  //   //   'fbli_generated_note_name_18',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .fbli_generated_note_name_18,
+  //   // );
+  //   // formData.append(
+  //   //   'land_statistics_beat_land_bio_generated_note_name_74',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .land_statistics_beat_land_bio_generated_note_name_74,
+  //   // );
+  //   // formData.append(
+  //   //   'logistics4_chineserifle_condition',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .logistics4_chineserifle_condition,
+  //   // );
+  //   // formData.append(
+  //   //   'logistics3_speedboat_avail',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .logistics3_speedboat_avail,
+  //   // );
+  //   // formData.append(
+  //   //   'land_statistics_beat_mgt_approach_pa_ws_ha',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .land_statistics_beat_mgt_approach_pa_ws_ha,
+  //   // );
+  //   // formData.append(
+  //   //   'logistics4_generated_note_name_152',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .logistics4_generated_note_name_152,
+  //   // );
+  //   // formData.append(
+  //   //   'land_statistics_beat_land_bio_non_pp_ha',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .land_statistics_beat_land_bio_non_pp_ha,
+  //   // );
+  //   // formData.append(
+  //   //   'land_statistics_beat_land_info_section_6_ha',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .land_statistics_beat_land_info_section_6_ha,
+  //   // );
+  //   // formData.append(
+  //   //   'simserial',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .simserial,
+  //   // );
+  //   // formData.append(
+  //   //   'guser_dcollection_raw',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .guser_dcollection_raw,
+  //   // );
+  //   // formData.append(
+  //   //   'land_transports_bicycle_condition',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .land_transports_bicycle_condition,
+  //   // );
+  //   // formData.append(
+  //   //   'land_statistics_beat_land_bio_social_accreted_ha',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .land_statistics_beat_land_bio_social_accreted_ha,
+  //   // );
+  //   // formData.append(
+  //   //   'guser_generated_note_name_10',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .guser_generated_note_name_10,
+  //   // );
+  //   // formData.append(
+  //   //   'land_statistics_beat_land_info_other_forestarea_ha',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .land_statistics_beat_land_info_other_forestarea_ha,
+  //   // );
+  //   // formData.append(
+  //   //   'bo_info_bo_nid',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .bo_info_bo_nid,
+  //   // );
+  //   // formData.append(
+  //   //   'land_transports_gbi_cycle',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .land_transports_gbi_cycle,
+  //   // );
+  //   // formData.append(
+  //   //   'land_transports_bicycle_avail',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .land_transports_bicycle_avail,
+  //   // );
+  //   // formData.append(
+  //   //   'logistics4_others_water_tra_avail',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .logistics4_others_water_tra_avail,
+  //   // );
+  //   // formData.append(
+  //   //   'guser_user',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .guser_user,
+  //   // );
+  //   // formData.append(
+  //   //   'logistics3_speedboat_avail',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .logistics3_speedboat_avail,
+  //   // );
+  //   // formData.append(
+  //   //   'logistics4_others_water_tra_avail_condition',
+  //   //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
+  //   //     .logistics4_others_water_tra_avail_condition,
+  //   // );
+
+  //   // ------------------------formdata2----------------------------------
+  //   // const formData2 = new FormData();
+  //   //const lastData2 = fbliData[fbliData.length - 1];
+
+  //   // formData2.append('_uri', lastData2._uri);
+  //   // console.log('Appended _uri:', lastData2._uri);
+  //   // formData2.append('_creator_uri_user', uri);
+  //   // console.log(
+  //   //   formData2.append('_creation_date', getCurrentDateandTimeMain()),
+  //   //   'creation date...........',
+  //   // );
+  //   // console.log(
+  //   //   formData2.append('_last_update_date', getCurrentDateandTimeMain()),
+  //   //   'last update date....',
+  //   // );
+  //   // //formData2.append('_parent_auri', initialUUID);
+  //   // formData2.append('_ordinal_number', oridianl);
+  //   // formData2.append('_top_level_auri', initialUUID);
+  //   // formData.append('mouza1', lastData2.mouza1);
+  //   // formData.append('survey_types', lastData2.survey_types);
+  //   // formData.append('others_s_types', lastData2.others_s_types);
+  //   // formData.append('sheet1', lastData2.sheet1);
+  //   // formData.append(
+  //   //   'generated_note_name_40',
+  //   //   lastData2.generated_note_name_40,
+  //   // );
+
+  //   try {
+  //     // const response = await fetch(
+  //     //   'http://192.168.0.187:8000/api/gener43_2021_core_create?token=15694294d23a00f6852b5465cbe141f5aba0ff44',
+  //     //   {
+  //     //     method: 'POST',
+  //     //     body: formData,
+  //     //     headers: {
+  //     //       Accept: 'application/json',
+  //     //     },
+  //     //   },
+  //     // );
+
+  //     // const responseData = await response.json();
+  //     // console.log('Response:', responseData);
+
+  //     // const response2 = await fetch(
+  //     //   'http://192.168.0.187:8000/api/gener43_2021_fbli_m_sh1_create?token=15694294d23a00f6852b5465cbe141f5aba0ff44',
+  //     //   {
+  //     //     method: 'POST',
+  //     //     body: formData2,
+  //     //     headers: {
+  //     //       Accept: 'application/json',
+  //     //     },
+  //     //   },
+  //     // );
+  //     // const result2 = await response2.json();
+  //     // console.log('Second API result:', result2);
+
+  //     // const requestData = {
+  //     //   // _uri: lastData2._uri,
+  //     //   _uri: 'uuid:4fbfaa95-b0b9-9a2f-fbd8-9234b7a8f2629',
+  //     //   _creator_uri_user: uri,
+  //     //   _creation_date: getCurrentDateandTimeMain(),
+  //     //   _last_update_date: getCurrentDateandTimeMain(),
+  //     //   _ordinal_number: 1,
+  //     //   // Add other necessary fields here as well
+  //     // };
+
+  //     // console.log('Request Data:', requestData);
+
+  //     // //Send the request as JSON
+  //     // const response2 = await fetch(
+  //     //   'http://192.168.0.187:8000/api/gener43_2021_fbli_m_sh1_create?token=15694294d23a00f6852b5465cbe141f5aba0ff44',
+  //     //   {
+  //     //     method: 'POST',
+  //     //     headers: {
+  //     //       Accept: 'application/json',
+  //     //       'Content-Type': 'application/json', // Important for sending JSON
+  //     //     },
+  //     //     body: JSON.stringify(requestData), // Convert the object to a JSON string
+  //     //   },
+  //     // );
+
+  //     // const result2 = await response2.json();
+  //     // console.log('Response from API:', result2);
+
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //   }
+  // };
+
   const beatSync = async () => {
-    const datelala = getCurrentDateandTimeMain();
-    // console.log(datelala, 'date,,,,,');
-    // console.log(
-    //   '_uri',
-    //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]._uri,
-    // );
-    // console.log(
-    //   '_creator_uri_user',
-    //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-    //     ._creator_uri_user,
-    // );
-    // console.log(
-    //   '_creation_date',
-    //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-    //     ._creation_date,
-    // );
-    // console.log(
-    //   '_last_update_date',
-    //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-    //     ._last_update_date,
-    // );
-    const formData = new FormData();
-    // formData.append(
-    //   '_uri',
-    //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]._uri,
-    // );
-    // formData.append(
-    //   '_creator_uri_user',
-    //   gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-    //     ._creator_uri_user,
-    // );
-
-    formData.append(
-      '_uri',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]._uri,
-    );
-    formData.append(
-      '_creator_uri_user',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        ._creator_uri_user,
-    );
-    formData.append('_creation_date', getCurrentDateandTimeMain());
-    formData.append('_last_update_date', getCurrentDateandTimeMain());
-    formData.append(
-      '_model_version',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        ._model_version,
-    );
-    formData.append(
-      '_ui_version',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        ._ui_version,
-    );
-    formData.append(
-      '_is_complete',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        ._is_complete,
-    );
-    formData.append(
-      '_submission_date',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        ._submission_date,
-    );
-    formData.append(
-      '_marked_as_complete_date',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        ._marked_as_complete_date,
-    );
-    formData.append(
-      'land_statistics_beat_land_bio_other_plant_ha',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .land_statistics_beat_land_bio_other_plant_ha,
-    );
-    formData.append(
-      'guser_tloc_fd_beat_point_lng',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .guser_tloc_fd_beat_point_lng,
-    );
-    formData.append(
-      'fbli_fa_tloc_fd_beat',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .fbli_fa_tloc_fd_beat,
-    );
-    formData.append(
-      'logistics3_countryboat_condition',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .logistics3_countryboat_condition,
-    );
-    formData.append(
-      'logistics4_gfirearms_303rifle',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .logistics4_gfirearms_303rifle,
-    );
-    formData.append(
-      'land_statistics_beat_mgt_approach_other_pa_area_ha',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .land_statistics_beat_mgt_approach_other_pa_area_ha,
-    );
-    formData.append(
-      'logistics4_others_water_tra',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .logistics4_others_water_tra,
-    );
-    formData.append(
-      'bo_info_bo_cell',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .bo_info_bo_cell,
-    );
-    formData.append(
-      'logistics3_tvessel_condition',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .logistics3_tvessel_condition,
-    );
-    formData.append(
-      'ro_info_ro_cell',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .ro_info_ro_cell,
-    );
-    formData.append(
-      'logistics4_tfirearms_chineserifle_avail',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .logistics4_tfirearms_chineserifle_avail,
-    );
-    formData.append(
-      'logistics3_tvessel_avail',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .logistics3_tvessel_avail,
-    );
-    formData.append(
-      'fbli_fa_tloc_fd_beat_txt',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .fbli_fa_tloc_fd_beat_txt,
-    );
-    formData.append(
-      'logistics3_speedboat_condition',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .logistics3_speedboat_condition,
-    );
-    formData.append(
-      'fbli_fa_tloc_fd_division',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .fbli_fa_tloc_fd_division,
-    );
-    formData.append(
-      'land_transports_bicycle_avail',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .land_transports_bicycle_avail,
-    );
-    formData.append(
-      'logistics3_others_water_tra_condition',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .logistics3_others_water_tra_condition,
-    );
-    formData.append(
-      'land_statistics_beat_land_info_vested_forest_ha',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .land_statistics_beat_land_info_vested_forest_ha,
-    );
-    formData.append(
-      'subscriberid',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .subscriberid,
-    );
-    formData.append(
-      'guser_user',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .guser_user,
-    );
-    formData.append(
-      'ro_info_name_of_ro',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .ro_info_name_of_ro,
-    );
-    formData.append(
-      'fbli_fa_tloc_fd_block',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .fbli_fa_tloc_fd_block,
-    );
-    formData.append(
-      'deviceid',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .deviceid,
-    );
-    formData.append(
-      'land_transports_motorb_condition',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .land_transports_motorb_condition,
-    );
-    formData.append(
-      'fbli_generated_note_name_18',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .fbli_generated_note_name_18,
-    );
-    formData.append(
-      'land_statistics_beat_land_bio_generated_note_name_74',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .land_statistics_beat_land_bio_generated_note_name_74,
-    );
-    formData.append(
-      'logistics4_chineserifle_condition',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .logistics4_chineserifle_condition,
-    );
-    formData.append(
-      'logistics3_speedboat_avail',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .logistics3_speedboat_avail,
-    );
-    formData.append(
-      'land_statistics_beat_mgt_approach_pa_ws_ha',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .land_statistics_beat_mgt_approach_pa_ws_ha,
-    );
-    formData.append(
-      'logistics4_generated_note_name_152',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .logistics4_generated_note_name_152,
-    );
-    formData.append(
-      'land_statistics_beat_land_bio_non_pp_ha',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .land_statistics_beat_land_bio_non_pp_ha,
-    );
-    formData.append(
-      'land_statistics_beat_land_info_section_6_ha',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .land_statistics_beat_land_info_section_6_ha,
-    );
-    formData.append(
-      'simserial',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .simserial,
-    );
-    formData.append(
-      'guser_dcollection_raw',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .guser_dcollection_raw,
-    );
-    formData.append(
-      'land_transports_bicycle_condition',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .land_transports_bicycle_condition,
-    );
-    formData.append(
-      'land_statistics_beat_land_bio_social_accreted_ha',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .land_statistics_beat_land_bio_social_accreted_ha,
-    );
-    formData.append(
-      'guser_generated_note_name_10',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .guser_generated_note_name_10,
-    );
-    formData.append(
-      'land_statistics_beat_land_info_other_forestarea_ha',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .land_statistics_beat_land_info_other_forestarea_ha,
-    );
-    formData.append(
-      'bo_info_bo_nid',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .bo_info_bo_nid,
-    );
-    formData.append(
-      'land_transports_gbi_cycle',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .land_transports_gbi_cycle,
-    );
-    formData.append(
-      'land_transports_bicycle_avail',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .land_transports_bicycle_avail,
-    );
-    formData.append(
-      'logistics4_others_water_tra_avail',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .logistics4_others_water_tra_avail,
-    );
-    formData.append(
-      'guser_user',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .guser_user,
-    );
-    formData.append(
-      'logistics3_speedboat_avail',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .logistics3_speedboat_avail,
-    );
-    formData.append(
-      'logistics4_others_water_tra_avail_condition',
-      gener43_2021_core_listdata[gener43_2021_core_listdata.length - 1]
-        .logistics4_others_water_tra_avail_condition,
-    );
-
-    try {
-      const response = await fetch(
-        'http://192.168.0.187:8000/api/gener43_2021_core_create?token=15694294d23a00f6852b5465cbe141f5aba0ff44',
-        {
-          method: 'POST',
-          body: formData,
-          headers: {
-            Accept: 'application/json',
-          },
-        },
-      );
-
-      const responseData = await response.json();
-      console.log('Response:', responseData);
-    } catch (error) {
-      console.error('Error:', error);
-    }
+    console.log('clicked,,,,,', uId);
+    const u = 'uuid:b8681846-acc1-462e-9212-8d45abe2399e';
+    await gener43_2021_core_to_live(uId);
   };
 
   const beatFour = async () => {
@@ -475,14 +566,14 @@ const beatFour = () => {
   };
 
   useEffect(() => {
-    const gener43_2021_core_list_funct = async () => {
-      const data = await gener43_2021_core_list();
-      setgener43_2021_core_list(data);
+    const fbli = async () => {
+      const data = await gener43_2021_fbli_m_sh1_list();
+      setFbliData(data);
     };
-    gener43_2021_core_list_funct();
+    fbli();
   }, []);
 
-  //console.log(gener43_2021_core_listdata, 'new data');
+  //console.log(fbliData, 'fbli data....');
 
   const tableData = [];
 

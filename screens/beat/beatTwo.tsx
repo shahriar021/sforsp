@@ -149,6 +149,7 @@ const beatTwo = () => {
       // Ensure a file is selected
       if (res && res.length > 0) {
         const fileUri = res[0].uri;
+        console.log(fileUri, 'fileUri');
 
         // Read the file using rn-fetch-blob as base64
         const base64Data = await RNFetchBlob.fs.readFile(fileUri, 'base64');
@@ -310,6 +311,7 @@ const beatTwo = () => {
   const beatTwosubmit = async () => {
     const newGeneratedUUID = generateUUID(); // Generate a new UUID
     setNewUUID(newGeneratedUUID); // If you need it later in the state, set it
+    const subUri = newGeneratedUUID;
     const updatedOrdinalNumber = oridianl + 1; // Increment the value directly here
     setoridianl(updatedOrdinalNumber);
     // Log input values from inputValue1 to inputValue23
@@ -386,9 +388,6 @@ const beatTwo = () => {
       _top_level_auri: uId,
       _creation_date: getCurrentDateandTime(),
       _last_update_date: getCurrentDateandTime(),
-      value: image,
-
-      _ordinal_number: updatedOrdinalNumber,
     };
     const dataToInsertimageThree = {
       _uri: newGeneratedUUID, // Use the freshly generated UUID
@@ -397,18 +396,16 @@ const beatTwo = () => {
       _top_level_auri: uId,
       _creation_date: getCurrentDateandTime(),
       _last_update_date: getCurrentDateandTime(),
-      value: image,
-
-      _ordinal_number: updatedOrdinalNumber,
+      _sub_auri: subUri,
     };
 
-    // console.log('Data to insert:', dataToInsertimageOne);
+    console.log('Data to insert:', dataToInsertimageTwo);
 
     try {
       await gener43_2021_core_update(uId, dataToInsert);
-      // await gener43_2021_xpic_beat_index_blb_create(dataToInsertimageOne);
-      // await gener43_2021_xpic_beat_index_bn_create(dataToInsertimageTwo);
-      // await gener43_2021_xpic_beat_index_ref_create(dataToInsertimageThree);
+      await gener43_2021_xpic_beat_index_blb_create(dataToInsertimageOne);
+      //await gener43_2021_xpic_beat_index_bn_create(dataToInsertimageTwo);
+      await gener43_2021_xpic_beat_index_ref_create(dataToInsertimageThree);
 
       console.log('All data inserted successfully');
     } catch (error) {

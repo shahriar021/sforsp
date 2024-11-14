@@ -24,6 +24,7 @@ import {
   gener43_2021_core_list,
   gener43_2021_fbli_ca_tloc_ad_upzilla_create,
   gener43_2021_fbli_m_sh1_create,
+  gener43_2021_fbli_m_sh1_list,
   jur_ad_districts_api,
   jur_ad_districts_list,
   jur_ad_divisions_api,
@@ -89,6 +90,8 @@ const beatOne = () => {
   const [selectedDistrict, setSelectedDistrict] = useState(null);
   const [selectedUpazila, setSelectedUpazila] = useState(null);
 
+  const [fbliData, setFbliData] = useState([]);
+
   const [survey_type, setsurvey_type] = useState(null);
   const [oridianl, setoridianl] = useState(0);
 
@@ -117,6 +120,16 @@ const beatOne = () => {
     };
     fetchData();
   }, []);
+
+  // useEffect(() => {
+  //   const fbli = async () => {
+  //     const data = await gener43_2021_fbli_m_sh1_list();
+  //     setFbliData(data);
+  //   };
+  //   fbli();
+  // }, []);
+
+  // console.log(fbliData, 'fbli data....');
 
   const onDocumentPress = async () => {
     const res = await DocumentPicker.pick({
@@ -477,6 +490,18 @@ const beatOne = () => {
   // }, []);
 
   // console.log(gener43_2021_core_listdata, 'new data');
+  function getCurrentDateandTimeMain() {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+
+    // Format: YYYY-MM-DD HH:mm:ss (no milliseconds)
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  }
 
   const beat_one_submit = async () => {
     // console.log(
@@ -504,8 +529,8 @@ const beatOne = () => {
     const dataToInsert = {
       _uri: initialUUID,
       _creator_uri_user: uri,
-      _creation_date: getCurrentDateandTime(),
-      _last_update_date: getCurrentDateandTime(),
+      _creation_date: getCurrentDateandTimeMain(),
+      _last_update_date: getCurrentDateandTimeMain(),
       GUSER_DCOLLECTION_RAW: GUSER_DCOLLECTION_RAW,
       GUSER_USER: GUSER_USER,
       GUSER_USER_CELL: GUSER_USER_CELL,
@@ -552,8 +577,81 @@ const beatOne = () => {
       console.error('Failed to insert data:', error.message || error); // Log the error message
     }
 
-    navigation.navigate('beatTwo', {uId: initialUUID});
+    navigation.navigate('beatFour', {uId: initialUUID});
   };
+
+  
+
+  // const addLive = async () => {
+  //   console.log('clicked..');
+  //   const datelala = getCurrentDateandTimeMain();
+
+  //   const lastData = fbliData[fbliData.length - 1];
+
+  //   console.log(lastData, 'last data fbli');
+
+  //   // Ensure lastData is not empty
+  //   if (!lastData) {
+  //     console.error('No data available in plant27Dat.');
+  //     return;
+  //   }
+
+  //   console.log('Before formData creation');
+  //   const formData = new FormData();
+  //   console.log('FormData created successfully');
+  //   // Append values to formData
+  //   formData.append('_uri', newUUID);
+  //   console.log('Appended _uri:', newUUID);
+  //   formData.append('_creator_uri_user', uri);
+  //   console.log(
+  //     formData.append('_creation_date', lastData.getCurrentDateandTimeMain()),
+  //     'creation date...........',
+  //   );
+  //   console.log(
+  //     formData.append(
+  //       '_last_update_date',
+  //       lastData.getCurrentDateandTimeMain(),
+  //     ),
+  //     'last update date....',
+  //   );
+  //   formData.append('_parent_auri', initialUUID);
+  //   formData.append('_ordinal_number', oridianl);
+  //   formData.append('_top_level_auri', initialUUID);
+  //   formData.append('mouza1', lastData.mouza1);
+  //   formData.append('survey_types', lastData.survey_types);
+  //   formData.append('others_s_types', lastData.others_s_types);
+  //   formData.append('sheet1', lastData.sheet1);
+  //   formData.append('generated_note_name_40', lastData.generated_note_name_40);
+
+  //   // Log formData
+  //   // for (let [key, value] of formData.entries()) {
+  //   //   console.log(`${key}: ${value}`);
+  //   // }
+
+  //   // Your API call or further processing of formData
+  //   try {
+  //     const response = await fetch(
+  //       'http://192.168.0.187:8000/api/plant27_2021_core_create?token=15694294d23a00f6852b5465cbe141f5aba0ff44',
+  //       {
+  //         method: 'POST',
+  //         body: formData,
+  //         headers: {
+  //           Accept: 'application/json',
+  //         },
+  //       },
+  //     );
+
+  //     if (!response.ok) {
+  //       console.error(`Error: ${response.status} - ${response.statusText}`);
+  //     }
+
+  //     console.log('Fetch response status:', response.status);
+  //     const result = await response.json();
+  //     console.log('Response JSON:', result);
+  //   } catch (error) {
+  //     console.error('Error during the API call:', error);
+  //   }
+  // };
 
   // console.log('fstDivison:', survey);
   // console.log('Selected Forest division:', selectedDistrict);
@@ -952,15 +1050,15 @@ const beatOne = () => {
             </View>
 
             {/* Data Rows */}
-            {tableData.length > 0 ? (
+            {fbliData.length > 0 ? (
               <FlatList
-                data={tableData}
+                data={fbliData}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({item}) => (
                   <View style={styles.dataRowContainer}>
-                    <Text style={styles.cellContent}>{item.mouzaName}</Text>
-                    <Text style={styles.cellContent}>{item.surveyType}</Text>
-                    <Text style={styles.cellContent}>{item.sheetNumber}</Text>
+                    <Text style={styles.cellContent}>{item.mouza1}</Text>
+                    <Text style={styles.cellContent}>{item.survey_types}</Text>
+                    <Text style={styles.cellContent}>{item.sheet1}</Text>
                     <View style={styles.actionButtons}>
                       <TouchableOpacity style={styles.editButtonStyle}>
                         <Text style={styles.buttonTextStyle}>Edit</Text>
@@ -1069,6 +1167,18 @@ const beatOne = () => {
                       <Text style={{color: 'white'}}>Close</Text>
                     </TouchableOpacity>
                   </View>
+                  <TouchableOpacity
+                    style={{
+                      flex: 1,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      margin: 5,
+                      padding: 10,
+                      backgroundColor: '#007AFF', // Same default color as above
+                      borderRadius: 5,
+                    }}>
+                    <Text style={{color: 'white'}}>Sync</Text>
+                  </TouchableOpacity>
                 </ScrollView>
               </View>
             </View>

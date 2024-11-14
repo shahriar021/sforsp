@@ -293,7 +293,7 @@ const interventionEight = () => {
     plant27_2021_core_list_funct();
   }, []);
 
-  console.log(plant27Dat, 'new data');
+  // console.log(plant27Dat, 'new data');
 
   function getCurrentDateandTimeMain() {
     const date = new Date();
