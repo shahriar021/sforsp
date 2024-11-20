@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -17,7 +17,10 @@ import DocumentPicker from 'react-native-document-picker';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {Colors, CommonStyles, Fonts, Sizes} from '../../constants/styles';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {plant27_2021_gr_regen_create} from '../../database/sqlDatabase';
+import {
+  plant27_2021_gr_regen_create,
+  plant27_2021_gr_regen_list,
+} from '../../database/sqlDatabase';
 import {getCurrentDateandTime} from '../../hooks/dateUtils';
 import useCreateUri from '../../hooks/useCreatUri';
 import useUUID from '../../hooks/useUUID';
@@ -33,6 +36,7 @@ const interventionThree = () => {
   const [inputValue6, setInputValue6] = useState('');
   const [inputValue7, setInputValue7] = useState('');
   const [inputValue8, setInputValue8] = useState('');
+  const [gr_regen, setgr_regen] = useState([]);
   const [showPicker, setShowPicker] = useState(false);
   const [date, setDate] = useState(new Date());
   const [selectedForest, setSelectedForest] = useState(null);
@@ -81,17 +85,17 @@ const interventionThree = () => {
     setoridianl(updatedOrdinalNumber);
 
     const dataToInsertadd = {
-      _uri: newGeneratedUUID, // Use the freshly generated UUID
-      _creator_uri_user: uri,
-      _parent_auri: initialUUID,
-      _top_level_auri: initialUUID,
-      _creation_date: getCurrentDateandTime(),
-      _last_update_date: getCurrentDateandTime(),
-      gregen_gregen_plot_regen_plot_no: inputValue1,
-      gregen_gregen_plot_rsitepoint_lat: inputValue2,
-      gregen_gregen_plot_rsitepoint_lng: inputValue3,
-      gregen_gregen_plot_crown_closure: inputValue4,
-      _ordinal_number: updatedOrdinalNumber,
+      _URI: newGeneratedUUID, // Use the freshly generated UUID
+      _CREATOR_URI_USER: uri,
+      _PARENT_AURI: initialUUID,
+      _TOP_LEVEL_AURI: initialUUID,
+      _CREATION_DATE: getCurrentDateandTime(),
+      _LAST_UPDATE_DATE: getCurrentDateandTime(),
+      GREGEN_GREGEN_PLOT_REGEN_PLOT_NO: inputValue1,
+      GREGEN_GREGEN_PLOT_RSITEPOINT_LAT: inputValue2,
+      GREGEN_GREGEN_PLOT_RSITEPOINT_LNG: inputValue3,
+      GREGEN_GREGEN_PLOT_CROWN_CLOSURE: inputValue4,
+      _ORDINAL_NUMBER: updatedOrdinalNumber,
     };
 
     console.log(dataToInsertadd, 'datato insert');
@@ -119,6 +123,16 @@ const interventionThree = () => {
   };
 
   const tableData = [];
+
+  useEffect(() => {
+    const fbli = async () => {
+      const data = await plant27_2021_gr_regen_list();
+      setgr_regen(data);
+    };
+    fbli();
+  }, []);
+
+  console.log(gr_regen, 'fbli data....');
 
   return (
     <>
@@ -213,23 +227,27 @@ const interventionThree = () => {
             </View>
 
             {/* Data Rows */}
-            {tableData.length > 0 ? (
+            {gr_regen.length > 0 ? (
               <FlatList
-                data={tableData}
+                data={gr_regen}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({item}) => (
                   <View style={styles.dataRowContainer}>
-                    <Text style={styles.cellContent}>{item.plotNo}</Text>
-                    <Text style={styles.cellSeparator}>|</Text>
                     <Text style={styles.cellContent}>
-                      {item.geographicLocation1}
+                      {item.GREGEN_GREGEN_PLOT_REGEN_PLOT_NO}
                     </Text>
                     <Text style={styles.cellSeparator}>|</Text>
                     <Text style={styles.cellContent}>
-                      {item.geographicLocation2}
+                      {item.GREGEN_GREGEN_PLOT_RSITEPOINT_LAT}
                     </Text>
                     <Text style={styles.cellSeparator}>|</Text>
-                    <Text style={styles.cellContent}>{item.crownClosure}</Text>
+                    <Text style={styles.cellContent}>
+                      {item.GREGEN_GREGEN_PLOT_RSITEPOINT_LNG}
+                    </Text>
+                    <Text style={styles.cellSeparator}>|</Text>
+                    <Text style={styles.cellContent}>
+                      {item.GREGEN_GREGEN_PLOT_CROWN_CLOSURE}
+                    </Text>
                   </View>
                 )}
               />
@@ -483,7 +501,7 @@ const styles = StyleSheet.create({
   },
   addButton: {
     marginBottom: 10,
-    borderRadius: 10,
+    borderRadius: 5,
     backgroundColor: '#008CBA', // Set your desired background color
     padding: 10, // Add some padding
   },

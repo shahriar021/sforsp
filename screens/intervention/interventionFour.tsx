@@ -26,7 +26,9 @@ import {
   plant27_2021_core_update2,
   plant27_2021_core_update4,
   plant27_2021_gr_regen_create,
+  plant27_2021_gr_regen_list,
   plant27_2021_gregen_spp_regen_create,
+  plant27_2021_gregen_spp_regen_list,
 } from '../../database/sqlDatabase';
 import {getCurrentDateandTime} from '../../hooks/dateUtils';
 import useUUID from '../../hooks/useUUID';
@@ -68,6 +70,8 @@ const interventionFour = () => {
   const [date, setDate] = useState(new Date());
   const [selectedForest, setSelectedForest] = useState(null);
   const [selectedYears, setSelectedYears] = useState(null);
+  const [sppregen, setsppregen] = useState([]);
+  const [regenList, setregenList] = useState([]);
   const [selectedInterventionList, setselectedInterventionList] =
     useState(null);
 
@@ -200,16 +204,16 @@ const interventionFour = () => {
     setoridianl(updatedOrdinalNumber);
 
     const dataToInsertadd = {
-      _uri: newGeneratedUUID, // Use the freshly generated UUID
-      _creator_uri_user: uri,
-      _parent_auri: uid,
-      _top_level_auri: uid,
-      _creation_date: getCurrentDateandTime(),
-      _last_update_date: getCurrentDateandTime(),
-      rspp_name: inputValue2,
-      rspp_nr_nat: inputValue3,
-      num_trees: inputValue4,
-      _ordinal_number: updatedOrdinalNumber,
+      _URI: newGeneratedUUID, // Use the freshly generated UUID
+      _CREATOR_URI_USER: uri,
+      _PARENT_AURI: uid,
+      _TOP_LEVEL_AURI: uid,
+      _CREATION_DATE: getCurrentDateandTime(),
+      _LAST_UPDATE_DATE: getCurrentDateandTime(),
+      RSPP_NAME: inputValue2,
+      RSPP_NR_NAT: inputValue3,
+      NUM_TREES: inputValue4,
+      _ORDINAL_NUMBER: updatedOrdinalNumber,
     };
 
     console.log(dataToInsertadd, 'datato insert');
@@ -283,17 +287,17 @@ const interventionFour = () => {
 
     // Construct dataToInsertadd to insert into the database
     const dataToInsertadd = {
-      _uri: newGeneratedUUID, // Use the freshly generated UUID
-      _creator_uri_user: uri,
-      _parent_auri: initialUUID,
-      _top_level_auri: initialUUID,
-      _creation_date: getCurrentDateandTime(),
-      _last_update_date: getCurrentDateandTime(),
-      reg_avg_seedling_per_plot: avg,
-      reg_avg_trees_per_ha_per_plot: avg2,
-      reg_avg_trees_per_plot: avg3,
-      reg_avg_seedling_per_ha_per_plot: avg4,
-      _ordinal_number: updatedOrdinalNumber,
+      _URI: newGeneratedUUID, // Use the freshly generated UUID
+      _CREATOR_URI_USER: uri,
+      _PARENT_AURI: initialUUID,
+      _TOP_LEVEL_AURI: initialUUID,
+      _CREATION_DATE: getCurrentDateandTime(),
+      _LAST_UPDATE_DATE: getCurrentDateandTime(),
+      REG_AVG_SEEDLING_PER_PLOT: avg,
+      REG_AVG_TREES_PER_HA_PER_PLOT: avg2,
+      REG_AVG_TREES_PER_PLOT: avg3,
+      REG_AVG_SEEDLING_PER_HA_PER_PLOT: avg4,
+      _ORDINAL_NUMBER: updatedOrdinalNumber,
     };
 
     console.log(dataToInsertadd, 'data to insert');
@@ -347,6 +351,24 @@ const interventionFour = () => {
   };
 
   const tableData = [];
+
+  useEffect(() => {
+    const fbli = async () => {
+      const data = await plant27_2021_gregen_spp_regen_list();
+      setsppregen(data);
+    };
+    fbli();
+  }, []);
+
+  useEffect(() => {
+    const fbli = async () => {
+      const data = await plant27_2021_gr_regen_list();
+      setregenList(data);
+    };
+    fbli();
+  }, []);
+
+  console.log(regenList, 'fbli data....');
 
   return (
     <>
@@ -433,21 +455,19 @@ const interventionFour = () => {
             </View>
 
             {/* Data Rows */}
-            {tableData.length > 0 ? (
+            {sppregen.length > 0 ? (
               <FlatList
-                data={tableData}
+                data={sppregen}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({item}) => (
                   <View style={styles.dataRowContainer}>
                     <Text style={styles.cellContent}>{item.plotNo}</Text>
                     <Text style={styles.cellSeparator}>|</Text>
-                    <Text style={styles.cellContent}>{item.speciesName}</Text>
+                    <Text style={styles.cellContent}>{item.RSPP_NAME}</Text>
                     <Text style={styles.cellSeparator}>|</Text>
-                    <Text style={styles.cellContent}>
-                      {item.numberOfSeedlings}
-                    </Text>
+                    <Text style={styles.cellContent}>{item.RSPP_NR_NAT}</Text>
                     <Text style={styles.cellSeparator}>|</Text>
-                    <Text style={styles.cellContent}>{item.numberOfTrees}</Text>
+                    <Text style={styles.cellContent}>{item.NUM_TREES}</Text>
                   </View>
                 )}
               />
@@ -646,24 +666,26 @@ const interventionFour = () => {
             </View>
 
             {/* Data Rows */}
-            {tableData.length > 0 ? (
+            {regenList.length > 0 ? (
               <FlatList
-                data={tableData}
+                data={regenList}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({item}) => (
                   <View style={styles.dataRowContainer}>
                     <Text style={styles.cellContent}>
-                      {item.seedlingsPerPlot}
+                      {item.REG_AVG_SEEDLING_PER_PLOT}
                     </Text>
                     <Text style={styles.cellSeparator}>|</Text>
                     <Text style={styles.cellContent}>
-                      {item.seedlingsPerHector}
+                      {item.REG_AVG_TREES_PER_HA_PER_PLOT}
                     </Text>
                     <Text style={styles.cellSeparator}>|</Text>
-                    <Text style={styles.cellContent}>{item.treesPerPlot}</Text>
+                    <Text style={styles.cellContent}>
+                      {item.REG_AVG_TREES_PER_PLOT}
+                    </Text>
                     <Text style={styles.cellSeparator}>|</Text>
                     <Text style={styles.cellContent}>
-                      {item.treesPerHector}
+                      {item.REG_AVG_SEEDLING_PER_HA_PER_PLOT}
                     </Text>
                   </View>
                 )}
@@ -1005,7 +1027,7 @@ const styles = StyleSheet.create({
   },
   addButton: {
     marginBottom: 10,
-    borderRadius: 10,
+    borderRadius: 5,
     backgroundColor: '#008CBA', // Set your desired background color
     padding: 10, // Add some padding
   },

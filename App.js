@@ -73,10 +73,10 @@ import TabViewExample from './screens/tabview_dashboard/tabview_dash';
 import beatDashboard from './screens/beat/beatDashboard';
 import InterventionDashboar from './screens/intervention/interventionDashboar';
 import consult from './screens/consult/consultDashboard';
-import NetInfo from '@react-native-community/netinfo'
+import NetInfo from '@react-native-community/netinfo';
 
 import {
-  gener43_2021_core_api,
+  /*gener43_2021_core_api,
   gener43_2021_core_create,
   gener43_2021_fbli_ca_tloc_ad_upzilla_api,
   gener43_2021_fbli_m_sh1_api,
@@ -126,7 +126,8 @@ import {
   plant27_2021_rphotoextra_api,
   plant27_2021_s_site_api,
   plant27_2021_weeding_month_api,
-  users_api,
+  users_api,*/
+  initial_setup,
 } from './database/sqlDatabase';
 
 import {GlobalStateProvider} from './hooks/globalStateContext';
@@ -144,42 +145,50 @@ const App = () => {
   //   }
   //    jur_ad_districts_api();
 
-  useEffect(() => {
-    const callCreateApi = async () => {
-      await jur_ad_districts_api(),
-        await jur_ad_divisions_api(),
-        await jur_ad_upazillas_api(),
-        await jur_fd_beats_api(),
-        await jur_fd_circles_api(),
-        await jur_fd_divisions_api(),
-        await jur_fd_ecozones_api(),
-        await jur_fd_ranges_api(),
-        await mouza_types_api();
-      await natural_issues_api();
-      await human_issues_api();
-      await months_api();
-      await users_api();
-    };
-    callCreateApi();
-  }, []);
+  // useEffect(() => {
+  //   const callCreateApi = async () => {
+  //     await jur_ad_districts_api(),
+  //       await jur_ad_divisions_api(),
+  //       await jur_ad_upazillas_api(),
+  //       await jur_fd_beats_api(),
+  //       await jur_fd_circles_api(),
+  //       await jur_fd_divisions_api(),
+  //       await jur_fd_ecozones_api(),
+  //       await jur_fd_ranges_api(),
+  //       await mouza_types_api();
+  //     await natural_issues_api();
+  //     await human_issues_api();
+  //     await months_api();
+  //     await users_api();
+  //   };
+  //   callCreateApi();
+  // }, []);
 
   useEffect(() => {
     try {
       console.log('useEffect is being called');
-      const gener43_2021_core_api_func = async () => {
-        console.log('gener43_2021_core_api_func has been called------------------------------------------------------');
+      const initial_setup_func = async () => {
+        console.log(
+          'gener43_2021_core_api_func has been called------------------------------------------------------',
+        );
         try {
-          await gener43_2021_core_api();
+          await initial_setup();
         } catch (err) {
-          console.log('Error fetching gener43_2021_core API data:-----------------------------------------------------', err);
+          console.log(
+            'Error fetching gener43_2021_core API data:-----------------------------------------------------',
+            err,
+          );
         }
       };
-      gener43_2021_core_api_func();
+      initial_setup_func();
     } catch (error) {
-      console.log('Error in useEffect:---------------------------------------------------------------------', error);
+      console.log(
+        'Error in useEffect:---------------------------------------------------------------------',
+        error,
+      );
     }
   }, []);
-
+  /*
   useEffect(() => {
     try {
       console.log('useEffect is being called');
@@ -769,6 +778,7 @@ const App = () => {
       console.log('Error in useEffect:', error);
     }
   }, []);
+  */
 
   // useEffect(() => {
   //   try {
@@ -824,10 +834,9 @@ const App = () => {
   //   return unsubscribe;
   // }, []);
 
-
   const [userId, setUserId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [isConnected,setIsConnected]=useState(false);
+  const [isConnected, setIsConnected] = useState(false);
 
   // useEffect(() => {
   //   const fetchUserId = async () => {
@@ -857,17 +866,17 @@ const App = () => {
     fetchUserId();
   }, []);
 
-  useEffect(()=>{
-    const internet=NetInfo.addEventListener((state)=>{
+  useEffect(() => {
+    const internet = NetInfo.addEventListener(state => {
       setIsConnected(state.isConnected);
-      if(!state.isConnected){
+      if (!state.isConnected) {
         showAlert();
       }
-    })
-    return ()=>{
+    });
+    return () => {
       internet();
-    }
-  },[])
+    };
+  }, []);
 
   const showAlert = () => {
     Alert.alert(

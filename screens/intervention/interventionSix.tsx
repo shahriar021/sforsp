@@ -690,7 +690,7 @@ const styles = StyleSheet.create({
   },
   addButton: {
     marginBottom: 10,
-    borderRadius: 10,
+    borderRadius: 5,
     backgroundColor: '#008CBA', // Set your desired background color
     padding: 10, // Add some padding
   },

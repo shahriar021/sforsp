@@ -23,7 +23,10 @@ import {
   gener43_2021_core_list,
   gener43_2021_core_update,
   gener43_2021_fbli_ca_tloc_ad_upzilla_create,
+  gener43_2021_ghumissues_create,
+  gener43_2021_ghumissues_list,
   gener43_2021_gnatissues_create,
+  gener43_2021_gnatissues_list,
   gener43_2021_xpic_beat_index_blb_api,
   gener43_2021_xpic_beat_index_blb_create,
   gener43_2021_xpic_beat_index_bn_create,
@@ -69,6 +72,9 @@ const beatTwo = () => {
   const [inputValue23, setInputValue23] = useState('');
   const [showPicker, setShowPicker] = useState(false);
   const [date, setDate] = useState(new Date());
+
+  const [Gnatissues, setGnatissues] = useState([]);
+  const [Humissues, setHumissues] = useState([]);
   const [selectedForest, setSelectedForest] = useState(null);
 
   const [selectedNaturalIssue, setSelectedNaturalIssue] = useState(null);
@@ -255,16 +261,15 @@ const beatTwo = () => {
     setoridianl(updatedOrdinalNumber);
 
     const dataToInsertadd = {
-      _uri: newGeneratedUUID, // Use the freshly generated UUID
-      _creator_uri_user: uri,
-      _parent_auri: uId,
-      _top_level_auri: uId,
-      _creation_date: getCurrentDateandTime(),
-      _last_update_date: getCurrentDateandTime(),
-      natissues: selectedNaturalIssue,
-      nat_level: selectedRank,
-
-      _ordinal_number: updatedOrdinalNumber,
+      _URI: newGeneratedUUID, // Use the freshly generated UUID
+      _CREATOR_URI_USER: uri,
+      _PARENT_AURI: uId,
+      _TOP_LEVEL_AURI: uId,
+      _CREATION_DATE: getCurrentDateandTime(),
+      _LAST_UPDATE_DATE: getCurrentDateandTime(),
+      NATISSUES: selectedNaturalIssue,
+      NAT_LEVEL: selectedRank,
+      _ORDINAL_NUMBER: updatedOrdinalNumber,
     };
 
     console.log(dataToInsertadd, 'datato insert');
@@ -285,22 +290,21 @@ const beatTwo = () => {
     setoridianl(updatedOrdinalNumber);
 
     const dataToInsertadd = {
-      _uri: newGeneratedUUID, // Use the freshly generated UUID
-      _creator_uri_user: uri,
-      _parent_auri: uId,
-      _top_level_auri: uId,
-      _creation_date: getCurrentDateandTime(),
-      _last_update_date: getCurrentDateandTime(),
-      natissues: selectedNaturalIssue,
-      nat_level: selectedRank,
-
-      _ordinal_number: updatedOrdinalNumber,
+      _URI: newGeneratedUUID, // Use the freshly generated UUID
+      _CREATOR_URI_USER: uri,
+      _PARENT_AURI: uId,
+      _TOP_LEVEL_AURI: uId,
+      _CREATION_DATE: getCurrentDateandTime(),
+      _LAST_UPDATE_DATE: getCurrentDateandTime(),
+      HUMISSUES: selectedHumanIssue,
+      HUM_LEVEL: selectedRank,
+      _ORDINAL_NUMBER: updatedOrdinalNumber,
     };
 
     console.log(dataToInsertadd, 'datato insert');
 
     try {
-      await gener43_2021_gnatissues_create(dataToInsertadd);
+      await gener43_2021_ghumissues_create(dataToInsertadd);
 
       console.log('All data inserted successfully');
     } catch (error) {
@@ -426,6 +430,24 @@ const beatTwo = () => {
   // }, []);
 
   // console.log(gener43_2021_core_listdata, 'new data');
+
+  useEffect(() => {
+    const gnaissu = async () => {
+      const data = await gener43_2021_gnatissues_list();
+      setGnatissues(data);
+    };
+    gnaissu();
+  }, []);
+
+  useEffect(() => {
+    const gnaissu = async () => {
+      const data = await gener43_2021_ghumissues_list();
+      setHumissues(data);
+    };
+    gnaissu();
+  }, []);
+
+  console.log(humanIssue, '-------');
 
   return (
     <>
@@ -812,15 +834,15 @@ const beatTwo = () => {
             </View>
 
             {/* Data Rows */}
-            {tableData.length > 0 ? (
+            {Gnatissues.length > 0 ? (
               <FlatList
-                data={tableData}
+                data={Gnatissues}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({item}) => (
                   <View style={styles.dataRowContainer}>
-                    <Text style={styles.cellContent}>{item.mouzaName}</Text>
-                    <Text style={styles.cellContent}>{item.surveyType}</Text>
-                    <Text style={styles.cellContent}>{item.sheetNumber}</Text>
+                    <Text style={styles.cellContent}>{item.NATISSUES}</Text>
+                    <Text style={styles.cellContent}>{item.NAT_LEVEL}</Text>
+
                     <View style={styles.actionButtons}>
                       <TouchableOpacity style={styles.editButtonStyle}>
                         <Text style={styles.buttonTextStyle}>Edit</Text>
@@ -1045,14 +1067,14 @@ const beatTwo = () => {
             </View>
 
             {/* Data Rows */}
-            {tableData.length > 0 ? (
+            {Humissues.length > 0 ? (
               <FlatList
-                data={tableData}
+                data={Humissues}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({item}) => (
                   <View style={styles.dataRowContainer}>
-                    <Text style={styles.cellContent}>{item.humanIssue}</Text>
-                    <Text style={styles.cellContent}>{item.rank}</Text>
+                    <Text style={styles.cellContent}>{item.HUMISSUES}</Text>
+                    <Text style={styles.cellContent}>{item.HUM_LEVEL}</Text>
                     <View style={styles.actionButtons}>
                       <TouchableOpacity style={styles.editButtonStyle}>
                         <Text style={styles.buttonTextStyle}>Edit</Text>
@@ -1176,7 +1198,7 @@ const beatTwo = () => {
                         backgroundColor: '#007AFF', // Same default color as above
                         borderRadius: 5,
                       }}
-                      onPress={() => setModalVisible(false)}>
+                      onPress={() => setModalVisible2(false)}>
                       <Text style={{color: 'white'}}>Close</Text>
                     </TouchableOpacity>
                   </View>
@@ -1343,7 +1365,7 @@ const styles = StyleSheet.create({
   },
   addButton: {
     marginBottom: 10,
-    borderRadius: 10,
+    borderRadius: 5,
     backgroundColor: '#008CBA', // Set your desired background color
     padding: 10, // Add some padding
   },

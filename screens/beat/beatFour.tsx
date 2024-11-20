@@ -24,6 +24,7 @@ import {
   gener43_2021_core_to_live,
   gener43_2021_fbli_m_sh1_list,
   gener43_2021_gvillages_create,
+  gener43_2021_gvillages_list,
 } from '../../database/sqlDatabase';
 import {getCurrentDateandTime} from '../../hooks/dateUtils';
 
@@ -42,6 +43,7 @@ const beatFour = () => {
   const [showPicker, setShowPicker] = useState(false);
   const [date, setDate] = useState(new Date());
   const [selectedForest, setSelectedForest] = useState(null);
+  const [VillageList, setVillageList] = useState([]);
 
   const [inputValues, setInputValues] = useState({
     upzilla: '',
@@ -114,22 +116,22 @@ const beatFour = () => {
     const currentDate = getCurrentDateandTime();
 
     const dataToInsertadd = {
-      _uri: newGeneratedUUID, // Use the freshly generated UUID
-      _creator_uri_user: uri,
-      _parent_auri: uId,
-      _top_level_auri: uId,
-      _creation_date: currentDate,
-      _last_update_date: currentDate,
-      villa_ad_upzilla: inputValue1,
-      villa_ad_union: inputValue2,
-      tvillage_name: inputValue3,
-      villa_dist: inputValue6,
-      tot_hh: inputValue7,
-      forest_vilgrs: inputValue8,
-      socfor_partic: inputValue9,
-      vsitepoint_lat: inputValue4,
-      vsitepoint_lng: inputValue5,
-      _ordinal_number: updatedOrdinalNumber,
+      _URI: newGeneratedUUID, // Use the freshly generated UUID
+      _CREATOR_URI_USER: uri,
+      _PARENT_AURI: uId,
+      _TOP_LEVEL_AURI: uId,
+      _CREATION_DATE: currentDate,
+      _LAST_UPDATE_DATE: currentDate,
+      VILLA_AD_UPZILLA: inputValue1,
+      VILLA_AD_UNION: inputValue2,
+      TVILLAGE_NAME: inputValue3,
+      VILLA_DIST: inputValue6,
+      TOT_HH: inputValue7,
+      FOREST_VILGRS: inputValue8,
+      SOCFOR_PARTIC: inputValue9,
+      VSITEPOINT_LAT: inputValue4,
+      VSITEPOINT_LNG: inputValue5,
+      _ORDINAL_NUMBER: updatedOrdinalNumber,
     };
 
     console.log(dataToInsertadd, 'datato insert');
@@ -575,6 +577,14 @@ const beatFour = () => {
 
   //console.log(fbliData, 'fbli data....');
 
+  useEffect(() => {
+    const gnaissu = async () => {
+      const data = await gener43_2021_gvillages_list();
+      setVillageList(data);
+    };
+    gnaissu();
+  }, []);
+
   const tableData = [];
 
   return (
@@ -716,40 +726,56 @@ const beatFour = () => {
               <Text style={styles.headerLabel}>
                 Conservation Forum Participants
               </Text>
+              <Text style={styles.headerSeparator}>|</Text>
+              <Text style={styles.headerLabel}>Actions</Text>
             </View>
             <View>
               {/* Data Rows */}
-              {tableData.length > 0 ? (
+              {VillageList.length > 0 ? (
                 <FlatList
-                  data={tableData}
+                  data={VillageList}
                   keyExtractor={(item, index) => index.toString()}
                   renderItem={({item}) => (
                     <View style={styles.dataRowContainer}>
-                      <Text style={styles.cellContent}>{item.upzilla}</Text>
-                      <Text style={styles.cellSeparator}>|</Text>
-                      <Text style={styles.cellContent}>{item.union}</Text>
-                      <Text style={styles.cellSeparator}>|</Text>
-                      <Text style={styles.cellContent}>{item.villages}</Text>
+                      <Text style={styles.cellContent}>
+                        {item.VILLA_AD_UPZILLA}
+                      </Text>
                       <Text style={styles.cellSeparator}>|</Text>
                       <Text style={styles.cellContent}>
+                        {item.VILLA_AD_UNION}
+                      </Text>
+                      <Text style={styles.cellSeparator}>|</Text>
+                      <Text style={styles.cellContent}>
+                        {item.TVILLAGE_NAME}
+                      </Text>
+                      <Text style={styles.cellSeparator}>|</Text>
+                      <Text style={styles.VSITEPOINT_LAT}>
                         {item.location1}, {item.location2}
                       </Text>
                       <Text style={styles.cellSeparator}>|</Text>
-                      <Text style={styles.cellContent}>{item.distance}</Text>
+                      <Text style={styles.cellContent}>{item.VILLA_DIST}</Text>
                       <Text style={styles.cellSeparator}>|</Text>
-                      <Text style={styles.cellContent}>{item.households}</Text>
+                      <Text style={styles.cellContent}>{item.TOT_HH}</Text>
                       <Text style={styles.cellSeparator}>|</Text>
                       <Text style={styles.cellContent}>
-                        {item.forestVillagers}
+                        {item.FOREST_VILGRS}
                       </Text>
                       <Text style={styles.cellSeparator}>|</Text>
                       <Text style={styles.cellContent}>
-                        {item.forestryParticipants}
+                        {item.SOCFOR_PARTIC}
                       </Text>
                       <Text style={styles.cellSeparator}>|</Text>
                       <Text style={styles.cellContent}>
                         {item.conservationForum}
                       </Text>
+                      <View style={styles.actionButtons}>
+                        <TouchableOpacity style={styles.editButtonStyle}>
+                          <Text style={styles.buttonTextStyle}>Edit</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.deleteButtonStyle}>
+                          <Text style={styles.buttonTextStyle}>Delete</Text>
+                        </TouchableOpacity>
+                      </View>
                     </View>
                   )}
                 />
@@ -1081,7 +1107,7 @@ const styles = StyleSheet.create({
   },
   addButton: {
     marginBottom: 10,
-    borderRadius: 10,
+    borderRadius: 5,
     backgroundColor: '#008CBA', // Set your desired background color
     padding: 10, // Add some padding
   },

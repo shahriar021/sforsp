@@ -22,9 +22,13 @@ import {
   months_list,
   plant27_2021_core_update7,
   plant27_2021_filling_month_create,
+  plant27_2021_filling_month_list,
   plant27_2021_gtrts_vacancy_filling_create,
+  plant27_2021_gtrts_vacancy_filling_list,
   plant27_2021_gtrts_weeding_create,
+  plant27_2021_gtrts_weeding_list,
   plant27_2021_weeding_month_create,
+  plant27_2021_weeding_month_list,
 } from '../../database/sqlDatabase';
 import MonthPicker from 'react-native-month-year-picker';
 import useUUID from '../../hooks/useUUID';
@@ -59,6 +63,10 @@ const interventionSeven = () => {
   const [selectedMonths4, setSelectedMonths4] = useState(null);
 
   const [months, setMonths] = useState([]);
+  const [Weeding, setWeeding] = useState([]);
+  const [WeedingMonth, setWeedingMonth] = useState([]);
+  const [gtrtVacancy, setgtrtVacancy] = useState([]);
+  const [FillingMonth, setFillingMonth] = useState([]);
 
   const {initialUUID, generateUUID} = useUUID();
   const [newUUID, setNewUUID] = useState('');
@@ -297,6 +305,46 @@ const interventionSeven = () => {
 
   const tableData = [];
 
+  useEffect(() => {
+    const fbli = async () => {
+      const data = await plant27_2021_gtrts_weeding_list();
+      setWeeding(data);
+    };
+    fbli();
+  }, []);
+
+  // console.log(Weeding, 'Weeding data....');
+
+  useEffect(() => {
+    const fbli = async () => {
+      const data = await plant27_2021_weeding_month_list();
+      setWeedingMonth(data);
+    };
+    fbli();
+  }, []);
+
+  // console.log(WeedingMonth, 'Weeding month data....');
+
+  useEffect(() => {
+    const fbli = async () => {
+      const data = await plant27_2021_gtrts_vacancy_filling_list();
+      setgtrtVacancy(data);
+    };
+    fbli();
+  }, []);
+
+  console.log(gtrtVacancy, 'Weeding data....');
+
+  useEffect(() => {
+    const fbli = async () => {
+      const data = await plant27_2021_filling_month_list();
+      setFillingMonth(data);
+    };
+    fbli();
+  }, []);
+
+  console.log(FillingMonth, 'Weeding month data....');
+
   return (
     <>
       <View style={styles.header}>
@@ -490,19 +538,31 @@ const interventionSeven = () => {
             </View>
 
             {/* Data Rows */}
-            {tableData.length > 0 ? (
+            {Weeding.length > 0 ? (
               <FlatList
-                data={tableData}
+                data={Weeding}
                 keyExtractor={(item, index) => index.toString()}
-                renderItem={({item}) => (
-                  <View style={styles.dataRowContainer}>
-                    <Text style={styles.cellContent}>{item.cycle}</Text>
-                    <Text style={styles.cellSeparator}>|</Text>
-                    <Text style={styles.cellContent}>{item.planYear}</Text>
-                    <Text style={styles.cellSeparator}>|</Text>
-                    <Text style={styles.cellContent}>{item.planMonths}</Text>
-                  </View>
-                )}
+                renderItem={({item, index}) => {
+                  // Access the current `Weeding` item
+                  const planMonth = WeedingMonth[index]
+                    ? WeedingMonth[index].VALUE
+                    : 'N/A'; // Default value if no corresponding planMonth is found
+
+                  return (
+                    <View style={styles.dataRowContainer}>
+                      {/* Using item properties */}
+                      <Text style={styles.cellContent}>
+                        {item.WEEDING_CYCLE}
+                      </Text>
+                      <Text style={styles.cellSeparator}>|</Text>
+                      <Text style={styles.cellContent}>
+                        {item.WEEDING_YEAR}
+                      </Text>
+                      <Text style={styles.cellSeparator}>|</Text>
+                      <Text style={styles.cellContent}>{planMonth}</Text>
+                    </View>
+                  );
+                }}
               />
             ) : (
               <View style={styles.noDataContainer}>
@@ -650,17 +710,22 @@ const interventionSeven = () => {
             </View>
 
             {/* Data Rows */}
-            {tableData.length > 0 ? (
+            {gtrtVacancy.length > 0 ? (
               <FlatList
-                data={tableData}
+                data={gtrtVacancy}
                 keyExtractor={(item, index) => index.toString()}
-                renderItem={({item}) => (
+                renderItem={({item,index}) => {
+                  const planMonth = FillingMonth[index]
+                    ? FillingMonth[index].VALUE
+                    : ' ';
+                  return(
                   <View style={styles.dataRowContainer}>
-                    <Text style={styles.cellContent}>{item.planYear}</Text>
+                    <Text style={styles.cellContent}>{item.FILLING_YEAR}</Text>
                     <Text style={styles.cellSeparator}>|</Text>
-                    <Text style={styles.cellContent}>{item.planMonths}</Text>
+                    <Text style={styles.cellContent}>{planMonth}</Text>
                   </View>
-                )}
+                  )
+                }}
               />
             ) : (
               <View style={styles.noDataContainer}>
@@ -862,7 +927,7 @@ const styles = StyleSheet.create({
   },
   addButton: {
     marginBottom: 10,
-    borderRadius: 10,
+    borderRadius: 5,
     backgroundColor: '#008CBA', // Set your desired background color
     padding: 10, // Add some padding
   },

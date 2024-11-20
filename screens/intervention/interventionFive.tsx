@@ -29,6 +29,7 @@ import {
   month_inun_lists_list,
   plant27_2021_core_update5,
   plant27_2021_planting_plan_gplanting_gspp_create,
+  plant27_2021_planting_plan_gplanting_gspp_list,
   planting_modes_api,
   planting_modes_list,
   repro_types_api,
@@ -41,7 +42,7 @@ import {
 import {getCurrentDateandTime} from '../../hooks/dateUtils';
 import useUUID from '../../hooks/useUUID';
 import useCreateUri from '../../hooks/useCreatUri';
-import { useGlobalState } from '../../hooks/globalStateContext';
+import {useGlobalState} from '../../hooks/globalStateContext';
 
 const interventionFive = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -82,8 +83,9 @@ const interventionFive = () => {
   // const [selectedRepro, setSelectedRepro] = useState(null);
   const [selectedSource, setSelectedSource] = useState(null);
   const [seedlingsRequired, setSeedlingsRequired] = useState('');
+  const [gplanting, setgplanting] = useState([]);
 
-  const {isSelected}=useGlobalState();
+  const {isSelected} = useGlobalState();
 
   const {initialUUID, generateUUID} = useUUID();
   const [newUUID, setNewUUID] = useState('');
@@ -311,17 +313,17 @@ const interventionFive = () => {
     setoridianl(updatedOrdinalNumber);
 
     const dataToInsertadd = {
-      _uri: newGeneratedUUID, // Use the freshly generated UUID
-      _creator_uri_user: uri,
-      _parent_auri: uid,
-      _top_level_auri: uid,
-      _creation_date: getCurrentDateandTime(),
-      _last_update_date: getCurrentDateandTime(),
-      pref_species: inputValue5,
-      pref_repro_type: selectedRepro,
-      pref_source: selectedSource,
-      pref_nrseedlings: seedlingsRequired,
-      _ordinal_number: updatedOrdinalNumber,
+      _URI: newGeneratedUUID, // Use the freshly generated UUID
+      _CREATOR_URI_USER: uri,
+      _PARENT_AURI: uid,
+      _TOP_LEVEL_AURI: uid,
+      _CREATION_DATE: getCurrentDateandTime(),
+      _LAST_UPDATE_DATE: getCurrentDateandTime(),
+      PREF_SPECIES: inputValue5,
+      PREF_REPRO_TYPE: selectedRepro,
+      PREF_SOURCE: selectedSource,
+      PREF_NRSEEDLINGS: seedlingsRequired,
+      _ORDINAL_NUMBER: updatedOrdinalNumber,
     };
 
     console.log(dataToInsertadd, 'datato insert');
@@ -380,6 +382,16 @@ const interventionFive = () => {
 
   const tableData = [];
 
+  useEffect(() => {
+    const fbli = async () => {
+      const data = await plant27_2021_planting_plan_gplanting_gspp_list();
+      setgplanting(data);
+    };
+    fbli();
+  }, []);
+
+  console.log(gplanting, 'fbli data....');
+
   return (
     <>
       <View style={styles.header}>
@@ -389,226 +401,228 @@ const interventionFive = () => {
         <Text style={styles.headerTitle}>Intervention Planning</Text>
       </View>
       <ScrollView style={styles.container}>
-        {isSelected && <View>
-          <Text style={styles.headerLabel}>
-            7. Mangrove Plantation (উপকূলীয় বনায়নের ক্ষেত্রে)
-          </Text>
-          <Text style={styles.label}>For Mangrove Afforestation</Text>
+        {isSelected && (
+          <View>
+            <Text style={styles.headerLabel}>
+              7. Mangrove Plantation (উপকূলীয় বনায়নের ক্ষেত্রে)
+            </Text>
+            <Text style={styles.label}>For Mangrove Afforestation</Text>
 
-          <Text style={styles.label}>
-            7.1.Depth of Clay Layer (cm) (কাদার গভীরতা (সে.মি.)):
-          </Text>
+            <Text style={styles.label}>
+              7.1.Depth of Clay Layer (cm) (কাদার গভীরতা (সে.মি.)):
+            </Text>
 
-          <TextInput
-            style={styles.input}
-            value={inputValue1}
-            onChangeText={text => setInputValue1(text)}
-            placeholderTextColor="black"
-            placeholder="select Depth of Clay Layer"
-          />
+            <TextInput
+              style={styles.input}
+              value={inputValue1}
+              onChangeText={text => setInputValue1(text)}
+              placeholderTextColor="black"
+              placeholder="select Depth of Clay Layer"
+            />
 
-          <Text style={styles.label}>
-            7.2.Existence of indicator species, Uri grass (সূচক প্রজাতি উরিঘাস
-            আছে কি?):
-          </Text>
+            <Text style={styles.label}>
+              7.2.Existence of indicator species, Uri grass (সূচক প্রজাতি উরিঘাস
+              আছে কি?):
+            </Text>
 
-          <TextInput
-            style={styles.input}
-            value={inputValue2}
-            onChangeText={text => setInputValue2(text)}
-            placeholderTextColor="black"
-            placeholder="select Existence of indicator species, Uri grass"
-          />
+            <TextInput
+              style={styles.input}
+              value={inputValue2}
+              onChangeText={text => setInputValue2(text)}
+              placeholderTextColor="black"
+              placeholder="select Existence of indicator species, Uri grass"
+            />
 
-          <Text style={styles.label}>
-            7.3. Level of Inundation (বনায়নের স্থানটির জলমগ্নতার ব্যাপি):
-          </Text>
+            <Text style={styles.label}>
+              7.3. Level of Inundation (বনায়নের স্থানটির জলমগ্নতার ব্যাপি):
+            </Text>
 
-          <Dropdown
-            style={styles.input}
-            data={inundation}
-            labelField="name" // Display the 'name' field in the dropdown
-            valueField="code" // Use the 'id' as the value field
-            placeholder="Select Inundation type"
-            placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
-            selectedTextStyle={{color: 'black', fontSize: 16}}
-            value={selectedInundation}
-            onChange={item => setSelectedInundation(item.code)} // Update the selected value based on 'id'
-            dropdownStyle={{
-              backgroundColor: 'white', // Ensure dropdown has a visible background
-              borderRadius: 8, // Rounded corners for consistency
-            }}
-            itemTextStyle={{
-              color: 'black', // Set item text color to black for visibility
-              fontSize: 16, // Set an appropriate font size
-            }}
-          />
+            <Dropdown
+              style={styles.input}
+              data={inundation}
+              labelField="name" // Display the 'name' field in the dropdown
+              valueField="code" // Use the 'id' as the value field
+              placeholder="Select Inundation type"
+              placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
+              selectedTextStyle={{color: 'black', fontSize: 16}}
+              value={selectedInundation}
+              onChange={item => setSelectedInundation(item.code)} // Update the selected value based on 'id'
+              dropdownStyle={{
+                backgroundColor: 'white', // Ensure dropdown has a visible background
+                borderRadius: 8, // Rounded corners for consistency
+              }}
+              itemTextStyle={{
+                color: 'black', // Set item text color to black for visibility
+                fontSize: 16, // Set an appropriate font size
+              }}
+            />
 
-          <Text style={styles.label}>Mangrove Enrichment</Text>
+            <Text style={styles.label}>Mangrove Enrichment</Text>
 
-          <Text style={styles.label}>
-            7.4. Months of Inundation (বনায়নের স্থানটির জলমগ্নতার স্থায়িত্ব কত
-            মাস?):
-          </Text>
+            <Text style={styles.label}>
+              7.4. Months of Inundation (বনায়নের স্থানটির জলমগ্নতার স্থায়িত্ব কত
+              মাস?):
+            </Text>
 
-          <Dropdown
-            style={styles.input}
-            data={inundationMonth}
-            labelField="name" // Display the 'name' field in the dropdown
-            valueField="code" // Use the 'id' as the value field
-            placeholder="Select Months of Inundation type"
-            placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
-            selectedTextStyle={{color: 'black', fontSize: 16}}
-            value={selectedInundationMonth}
-            onChange={item => setSelectedInundationMonth(item.code)} // Update the selected value based on 'id'
-            dropdownStyle={{
-              backgroundColor: 'white', // Ensure dropdown has a visible background
-              borderRadius: 8, // Rounded corners for consistency
-            }}
-            itemTextStyle={{
-              color: 'black', // Set item text color to black for visibility
-              fontSize: 16, // Set an appropriate font size
-            }}
-          />
+            <Dropdown
+              style={styles.input}
+              data={inundationMonth}
+              labelField="name" // Display the 'name' field in the dropdown
+              valueField="code" // Use the 'id' as the value field
+              placeholder="Select Months of Inundation type"
+              placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
+              selectedTextStyle={{color: 'black', fontSize: 16}}
+              value={selectedInundationMonth}
+              onChange={item => setSelectedInundationMonth(item.code)} // Update the selected value based on 'id'
+              dropdownStyle={{
+                backgroundColor: 'white', // Ensure dropdown has a visible background
+                borderRadius: 8, // Rounded corners for consistency
+              }}
+              itemTextStyle={{
+                color: 'black', // Set item text color to black for visibility
+                fontSize: 16, // Set an appropriate font size
+              }}
+            />
 
-          <Text style={styles.label}>
-            7.5. Age of existing plantation, for mangrove Enrichment Plantation
-            ( প্রস্তাবিত এনরচিমন্টে বনায়নের জায়গায় বনায়ন থাকলে তা কত বছর
-            পূর্বের):
-          </Text>
+            <Text style={styles.label}>
+              7.5. Age of existing plantation, for mangrove Enrichment
+              Plantation ( প্রস্তাবিত এনরচিমন্টে বনায়নের জায়গায় বনায়ন থাকলে তা
+              কত বছর পূর্বের):
+            </Text>
 
-          <Dropdown
-            style={styles.input}
-            data={agePlantation}
-            labelField="name" // Display the 'name' field in the dropdown
-            valueField="code" // Use the 'id' as the value field
-            placeholder="Select agePlantation type"
-            placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
-            selectedTextStyle={{color: 'black', fontSize: 16}}
-            value={selectedAgePlantation}
-            onChange={item => setSelectedAgePlantation(item.code)} // Update the selected value based on 'id'
-            dropdownStyle={{
-              backgroundColor: 'white', // Ensure dropdown has a visible background
-              borderRadius: 8, // Rounded corners for consistency
-            }}
-            itemTextStyle={{
-              color: 'black', // Set item text color to black for visibility
-              fontSize: 16, // Set an appropriate font size
-            }}
-          />
+            <Dropdown
+              style={styles.input}
+              data={agePlantation}
+              labelField="name" // Display the 'name' field in the dropdown
+              valueField="code" // Use the 'id' as the value field
+              placeholder="Select agePlantation type"
+              placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
+              selectedTextStyle={{color: 'black', fontSize: 16}}
+              value={selectedAgePlantation}
+              onChange={item => setSelectedAgePlantation(item.code)} // Update the selected value based on 'id'
+              dropdownStyle={{
+                backgroundColor: 'white', // Ensure dropdown has a visible background
+                borderRadius: 8, // Rounded corners for consistency
+              }}
+              itemTextStyle={{
+                color: 'black', // Set item text color to black for visibility
+                fontSize: 16, // Set an appropriate font size
+              }}
+            />
 
-          <Text style={styles.label}>Optional Information</Text>
+            <Text style={styles.label}>Optional Information</Text>
 
-          <Text style={styles.label}>
-            7.6 Presence of crabs hole/ripple marks (বনায়নের স্থানটিতে কাঁকড়ার
-            গর্ত / রিপল চিহ্ন আছে কি?):
-          </Text>
+            <Text style={styles.label}>
+              7.6 Presence of crabs hole/ripple marks (বনায়নের স্থানটিতে কাঁকড়ার
+              গর্ত / রিপল চিহ্ন আছে কি?):
+            </Text>
 
-          <Dropdown
-            style={styles.input}
-            data={yesNo}
-            labelField="name" // Display the 'name' field in the dropdown
-            valueField="code" // Use the 'id' as the value field
-            placeholder="Select yes No type"
-            placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
-            selectedTextStyle={{color: 'black', fontSize: 16}}
-            value={selectedYesNo}
-            onChange={item => setSelectedYesNo(item.code)} // Update the selected value based on 'id'
-            dropdownStyle={{
-              backgroundColor: 'white', // Ensure dropdown has a visible background
-              borderRadius: 8, // Rounded corners for consistency
-            }}
-            itemTextStyle={{
-              color: 'black', // Set item text color to black for visibility
-              fontSize: 16, // Set an appropriate font size
-            }}
-          />
+            <Dropdown
+              style={styles.input}
+              data={yesNo}
+              labelField="name" // Display the 'name' field in the dropdown
+              valueField="code" // Use the 'id' as the value field
+              placeholder="Select yes No type"
+              placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
+              selectedTextStyle={{color: 'black', fontSize: 16}}
+              value={selectedYesNo}
+              onChange={item => setSelectedYesNo(item.code)} // Update the selected value based on 'id'
+              dropdownStyle={{
+                backgroundColor: 'white', // Ensure dropdown has a visible background
+                borderRadius: 8, // Rounded corners for consistency
+              }}
+              itemTextStyle={{
+                color: 'black', // Set item text color to black for visibility
+                fontSize: 16, // Set an appropriate font size
+              }}
+            />
 
-          <Text style={styles.label}>
-            7.7. Tidal / wave direction (form) (ঢেউ এর দিক):
-          </Text>
+            <Text style={styles.label}>
+              7.7. Tidal / wave direction (form) (ঢেউ এর দিক):
+            </Text>
 
-          <Dropdown
-            style={styles.input}
-            data={directions}
-            labelField="name" // Display the 'name' field in the dropdown
-            valueField="code" // Use the 'id' as the value field
-            placeholder="Select directions type"
-            placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
-            selectedTextStyle={{color: 'black', fontSize: 16}}
-            value={selectedDerectins}
-            onChange={item => setSelectedDerections(item.code)} // Update the selected value based on 'id'
-            dropdownStyle={{
-              backgroundColor: 'white', // Ensure dropdown has a visible background
-              borderRadius: 8, // Rounded corners for consistency
-            }}
-            itemTextStyle={{
-              color: 'black', // Set item text color to black for visibility
-              fontSize: 16, // Set an appropriate font size
-            }}
-          />
+            <Dropdown
+              style={styles.input}
+              data={directions}
+              labelField="name" // Display the 'name' field in the dropdown
+              valueField="code" // Use the 'id' as the value field
+              placeholder="Select directions type"
+              placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
+              selectedTextStyle={{color: 'black', fontSize: 16}}
+              value={selectedDerectins}
+              onChange={item => setSelectedDerections(item.code)} // Update the selected value based on 'id'
+              dropdownStyle={{
+                backgroundColor: 'white', // Ensure dropdown has a visible background
+                borderRadius: 8, // Rounded corners for consistency
+              }}
+              itemTextStyle={{
+                color: 'black', // Set item text color to black for visibility
+                fontSize: 16, // Set an appropriate font size
+              }}
+            />
 
-          <Text style={styles.label}>
-            7.8. Wind Direction (from) (বাতাসের দিক):
-          </Text>
+            <Text style={styles.label}>
+              7.8. Wind Direction (from) (বাতাসের দিক):
+            </Text>
 
-          <Dropdown
-            style={styles.input}
-            data={directions}
-            labelField="name" // Display the 'name' field in the dropdown
-            valueField="code" // Use the 'id' as the value field
-            placeholder="Select directions type"
-            placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
-            selectedTextStyle={{color: 'black', fontSize: 16}}
-            value={selectedDerectinsWind}
-            onChange={item => setSelectedDerectionsWind(item.code)} // Update the selected value based on 'id'
-            dropdownStyle={{
-              backgroundColor: 'white', // Ensure dropdown has a visible background
-              borderRadius: 8, // Rounded corners for consistency
-            }}
-            itemTextStyle={{
-              color: 'black', // Set item text color to black for visibility
-              fontSize: 16, // Set an appropriate font size
-            }}
-          />
+            <Dropdown
+              style={styles.input}
+              data={directions}
+              labelField="name" // Display the 'name' field in the dropdown
+              valueField="code" // Use the 'id' as the value field
+              placeholder="Select directions type"
+              placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
+              selectedTextStyle={{color: 'black', fontSize: 16}}
+              value={selectedDerectinsWind}
+              onChange={item => setSelectedDerectionsWind(item.code)} // Update the selected value based on 'id'
+              dropdownStyle={{
+                backgroundColor: 'white', // Ensure dropdown has a visible background
+                borderRadius: 8, // Rounded corners for consistency
+              }}
+              itemTextStyle={{
+                color: 'black', // Set item text color to black for visibility
+                fontSize: 16, // Set an appropriate font size
+              }}
+            />
 
-          <Text style={styles.label}>
-            7.9. Facing of the Island (বনায়নের স্থান বা দ্বীপটি কোনমূখী):
-          </Text>
+            <Text style={styles.label}>
+              7.9. Facing of the Island (বনায়নের স্থান বা দ্বীপটি কোনমূখী):
+            </Text>
 
-          <TextInput
-            style={styles.input}
-            value={inputValue4}
-            onChangeText={text => setInputValue4(text)}
-            placeholderTextColor="black"
-            placeholder="Facing of the Island"
-          />
+            <TextInput
+              style={styles.input}
+              value={inputValue4}
+              onChangeText={text => setInputValue4(text)}
+              placeholderTextColor="black"
+              placeholder="Facing of the Island"
+            />
 
-          <Text style={styles.label}>
-            7.10. Location of proposed plantation (N/E/S/W) side of the Island
-            (দ্বীপের কোন পার্শ্বে প্রস্তাবিত বনায়ন এলাকার অবস্থান?):
-          </Text>
+            <Text style={styles.label}>
+              7.10. Location of proposed plantation (N/E/S/W) side of the Island
+              (দ্বীপের কোন পার্শ্বে প্রস্তাবিত বনায়ন এলাকার অবস্থান?):
+            </Text>
 
-          <Dropdown
-            style={styles.input}
-            data={directions}
-            labelField="name" // Display the 'name' field in the dropdown
-            valueField="code" // Use the 'id' as the value field
-            placeholder="Select directions type"
-            placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
-            selectedTextStyle={{color: 'black', fontSize: 16}}
-            value={selectedDerectinsAllDirect}
-            onChange={item => setSelectedDerectionsAllDirect(item.code)} // Update the selected value based on 'id'
-            dropdownStyle={{
-              backgroundColor: 'white', // Ensure dropdown has a visible background
-              borderRadius: 8, // Rounded corners for consistency
-            }}
-            itemTextStyle={{
-              color: 'black', // Set item text color to black for visibility
-              fontSize: 16, // Set an appropriate font size
-            }}
-          />
-        </View>}
+            <Dropdown
+              style={styles.input}
+              data={directions}
+              labelField="name" // Display the 'name' field in the dropdown
+              valueField="code" // Use the 'id' as the value field
+              placeholder="Select directions type"
+              placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
+              selectedTextStyle={{color: 'black', fontSize: 16}}
+              value={selectedDerectinsAllDirect}
+              onChange={item => setSelectedDerectionsAllDirect(item.code)} // Update the selected value based on 'id'
+              dropdownStyle={{
+                backgroundColor: 'white', // Ensure dropdown has a visible background
+                borderRadius: 8, // Rounded corners for consistency
+              }}
+              itemTextStyle={{
+                color: 'black', // Set item text color to black for visibility
+                fontSize: 16, // Set an appropriate font size
+              }}
+            />
+          </View>
+        )}
 
         <Text style={styles.label}>8. Planting Plan ( বনায়ন পরিকল্পনা)</Text>
 
@@ -743,22 +757,22 @@ const interventionFive = () => {
             </View>
 
             {/* Data Rows */}
-            {tableData.length > 0 ? (
+            {gplanting.length > 0 ? (
               <FlatList
-                data={tableData}
+                data={gplanting}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({item}) => (
                   <View style={styles.dataRowContainer}>
-                    <Text style={styles.cellContent}>{item.speciesName}</Text>
+                    <Text style={styles.cellContent}>{item.PREF_SPECIES}</Text>
                     <Text style={styles.cellSeparator}>|</Text>
                     <Text style={styles.cellContent}>
-                      {item.reproductiveType}
+                      {item.PREF_REPRO_TYPE}
                     </Text>
                     <Text style={styles.cellSeparator}>|</Text>
-                    <Text style={styles.cellContent}>{item.source}</Text>
+                    <Text style={styles.cellContent}>{item.PREF_SOURCE}</Text>
                     <Text style={styles.cellSeparator}>|</Text>
                     <Text style={styles.cellContent}>
-                      {item.seedlingsRequired}
+                      {item.PREF_NRSEEDLINGS}
                     </Text>
                   </View>
                 )}
@@ -992,7 +1006,7 @@ const styles = StyleSheet.create({
   },
   addButton: {
     marginBottom: 10,
-    borderRadius: 10,
+    borderRadius: 5,
     backgroundColor: '#008CBA', // Set your desired background color
     padding: 10, // Add some padding
   },

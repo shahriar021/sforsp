@@ -25,8 +25,9 @@ import {
   plant27_2021_core_update,
   plant27_2021_rphotoextra_create,
   plant27_2021_s_site_create,
+  plant27_2021_s_site_list,
 } from '../../database/sqlDatabase';
-import { getCurrentDateandTime } from '../../hooks/dateUtils';
+import {getCurrentDateandTime} from '../../hooks/dateUtils';
 import useCreateUri from '../../hooks/useCreatUri';
 import useUUID from '../../hooks/useUUID';
 
@@ -47,6 +48,8 @@ const interventionTwo = () => {
   const [inputValue11, setInputValue11] = useState('');
   const [inputValue12, setInputValue12] = useState('');
   const [inputValue100, setInputValue100] = useState('');
+
+  const [Ssite, setSsite] = useState([]);
   const [showPicker, setShowPicker] = useState(false);
   const [date, setDate] = useState(new Date());
 
@@ -113,28 +116,26 @@ const interventionTwo = () => {
     history();
   }, []);
 
-  const addNewone=async()=>{
-    
-
+  const addNewone = async () => {
     const newGeneratedUUID = generateUUID(); // Generate a new UUID
     setNewUUID(newGeneratedUUID); // If you need it later in the state, set it
     const updatedOrdinalNumber = oridianl + 1; // Increment the value directly here
     setoridianl(updatedOrdinalNumber);
 
     const dataToInsertadd = {
-      _uri: newGeneratedUUID, // Use the freshly generated UUID
-      _creator_uri_user: uri,
-      _parent_auri: uId,
-      _top_level_auri: uId,
-      _creation_date: getCurrentDateandTime(),
-      _last_update_date: getCurrentDateandTime(),
-      tmain_polytype: selectedRank,
-      polytrace: inputValue1,
-      polyline: inputValue2,
-      trace_gpx: inputValue3,
-      totarea_ha: inputValue4,
-      totarea_ac: inputValue5,
-      _ordinal_number: updatedOrdinalNumber,
+      _URI: newGeneratedUUID, // Use the freshly generated UUID
+      _CREATOR_URI_USER: uri,
+      _PARENT_AURI: uId,
+      _TOP_LEVEL_AURI: uId,
+      _CREATION_DATE: getCurrentDateandTime(),
+      _LAST_UPDATE_DATE: getCurrentDateandTime(),
+      TMAIN_POLYTYPE: selectedRank,
+      POLYTRACE: inputValue1,
+      POLYLINE: inputValue2,
+      TRACE_GPX: inputValue3,
+      TOTAREA_HA: inputValue4,
+      TOTAREA_AC: inputValue5,
+      _ORDINAL_NUMBER: updatedOrdinalNumber,
     };
 
     console.log(dataToInsertadd, 'datato insert');
@@ -145,11 +146,9 @@ const interventionTwo = () => {
     } catch (error) {
       console.error('Failed to insert data:', error.message || error);
     }
-  }
+  };
 
-
-  const addNewTwo=async()=>{
-
+  const addNewTwo = async () => {
     const newGeneratedUUID = generateUUID(); // Generate a new UUID
     setNewUUID(newGeneratedUUID); // If you need it later in the state, set it
     const updatedOrdinalNumber = oridianl + 1; // Increment the value directly here
@@ -179,9 +178,7 @@ const interventionTwo = () => {
     } catch (error) {
       console.error('Failed to insert data:', error.message || error);
     }
-  }
-
-
+  };
 
   const interventionTwo = async () => {
     console.log('Input Values:', uId);
@@ -219,10 +216,20 @@ const interventionTwo = () => {
       console.error('Failed to updated data:', error.message || error); // Log the error message
     }
 
-    navigation.navigate('interventionThree',{uuid:uId});
+    navigation.navigate('interventionThree', {uuid: uId});
   };
 
   const tableData = [];
+
+  useEffect(() => {
+    const fbli = async () => {
+      const data = await plant27_2021_s_site_list();
+      setSsite(data);
+    };
+    fbli();
+  }, []);
+
+  // console.log(Ssite, 'fbli data....');
 
   return (
     <>
@@ -349,9 +356,9 @@ const interventionTwo = () => {
               </View>
 
               {/* Data Rows */}
-              {tableData.length > 0 ? (
+              {Ssite.length > 0 ? (
                 <FlatList
-                  data={tableData}
+                  data={Ssite}
                   keyExtractor={(item, index) => index.toString()}
                   renderItem={({item}) => (
                     <View style={styles.dataRowContainer}>
@@ -363,17 +370,13 @@ const interventionTwo = () => {
                         {item.traceShapeGPS}
                       </Text>
                       <Text style={styles.cellSeparator}>|</Text>
-                      <Text style={styles.cellContent}>
-                        {item.traceLineGPS}
-                      </Text>
+                      <Text style={styles.cellContent}>{item.POLYLINE}</Text>
                       <Text style={styles.cellSeparator}>|</Text>
-                      <Text style={styles.cellContent}>
-                        {item.trackGPXName}
-                      </Text>
+                      <Text style={styles.cellContent}>{item.TRACE_GPX}</Text>
                       <Text style={styles.cellSeparator}>|</Text>
-                      <Text style={styles.cellContent}>{item.totalAreaHa}</Text>
+                      <Text style={styles.cellContent}>{item.TOTAREA_HA}</Text>
                       <Text style={styles.cellSeparator}>|</Text>
-                      <Text style={styles.cellContent}>{item.totalAreaAc}</Text>
+                      <Text style={styles.cellContent}>{item.TOTAREA_HA}</Text>
                     </View>
                   )}
                 />
@@ -744,7 +747,7 @@ const interventionTwo = () => {
                           backgroundColor: '#007AFF', // Same default color as above
                           borderRadius: 5,
                         }}
-                        onPress={() => setModalVisible(false)}>
+                        onPress={() => setModalVisible2(false)}>
                         <Text style={{color: 'white'}}>Close</Text>
                       </TouchableOpacity>
                     </View>
@@ -893,7 +896,7 @@ const styles = StyleSheet.create({
 
   addButton: {
     marginBottom: 10,
-    borderRadius: 10,
+    borderRadius: 5,
     backgroundColor: '#008CBA', // Set your desired background color
     padding: 10, // Add some padding
   },

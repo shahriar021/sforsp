@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -21,6 +21,7 @@ import useLogistic from '../../hooks/useLogistic';
 import {
   gener43_2021_core_update2,
   gener43_2021_others_info1_create,
+  gener43_2021_others_info1_list,
 } from '../../database/sqlDatabase';
 import useUUID from '../../hooks/useUUID';
 import {getCurrentDateandTime} from '../../hooks/dateUtils';
@@ -71,6 +72,8 @@ const beatThree = () => {
   const [inputValue17, setInputValue17] = useState('');
   const [inputValue18, setInputValue18] = useState('');
   const [inputValue19, setInputValue19] = useState('');
+
+  const [OthersInfo, setOthersInfo] = useState('');
 
   const [showPicker, setShowPicker] = useState(false);
   const [date, setDate] = useState(new Date());
@@ -139,19 +142,19 @@ const beatThree = () => {
     const currentDate = getCurrentDateandTime();
 
     const dataToInsertadd = {
-      _uri: newGeneratedUUID, // Use the freshly generated UUID
-      _creator_uri_user: uri,
-      _parent_auri: uuid,
-      _top_level_auri: uuid,
-      _creation_date: currentDate,
-      _last_update_date: currentDate,
-      name_of_others: inputValue6c1,
-      others_rank: inputValue6c2,
-      others_joining_date: inputValue6c3,
-      others_cell: inputValue6c4,
-      others_nid: inputValue6c5,
-      others_mail: inputValue6c6,
-      _ordinal_number: updatedOrdinalNumber,
+      _URI: newGeneratedUUID, // Use the freshly generated UUID
+      _CREATOR_URI_USER: uri,
+      _PARENT_AURI: uuid,
+      _TOP_LEVEL_AURI: uuid,
+      _CREATION_DATE: currentDate,
+      _LAST_UPDATE_DATE: currentDate,
+      NAME_OF_OTHERS: inputValue6c1,
+      OTHERS_RANK: inputValue6c2,
+      OTHERS_JOINING_DATE: inputValue6c3,
+      OTHERS_CELL: inputValue6c4,
+      OTHERS_NID: inputValue6c5,
+      OTHERS_MAIL: inputValue6c6,
+      _ORDINAL_NUMBER: updatedOrdinalNumber,
     };
 
     console.log(dataToInsertadd, 'datato insert');
@@ -242,6 +245,14 @@ const beatThree = () => {
     }
     navigation.navigate('beatFour', {uId: uuid});
   };
+
+  useEffect(() => {
+    const gnaissu = async () => {
+      const data = await gener43_2021_others_info1_list();
+      setOthersInfo(data);
+    };
+    gnaissu();
+  }, []);
 
   return (
     <>
@@ -466,27 +477,38 @@ const beatThree = () => {
         <View style={styles.tableContainer}>
           {/* Headers */}
           <View style={styles.headerRowContainer}>
+            <Text style={styles.headerLabel}>Name </Text>
+            <Text style={styles.headerSeparator}>|</Text>
+            <Text style={styles.headerLabel}>Rank</Text>
+            <Text style={styles.headerSeparator}>|</Text>
             <Text style={styles.headerLabel}>
-              Name of Mouza <Text>(মৌজার নাম)</Text>{' '}
+              Joining date of the Range/Beat
             </Text>
             <Text style={styles.headerSeparator}>|</Text>
-            <Text style={styles.headerLabel}>Survey Types (সার্ভের ধরণ)</Text>
+            <Text style={styles.headerLabel}>Mobile Number </Text>
             <Text style={styles.headerSeparator}>|</Text>
-            <Text style={styles.headerLabel}>Sheet Number (সিট নম্বর)</Text>
+            <Text style={styles.headerLabel}>NID</Text>
+            <Text style={styles.headerSeparator}>|</Text>
+            <Text style={styles.headerLabel}>E-Mail</Text>
             <Text style={styles.headerSeparator}>|</Text>
             <Text style={styles.headerLabel}>Actions</Text>
           </View>
 
           {/* Data Rows */}
-          {tableData.length > 0 ? (
+          {OthersInfo.length > 0 ? (
             <FlatList
-              data={tableData}
+              data={OthersInfo}
               keyExtractor={(item, index) => index.toString()}
               renderItem={({item}) => (
                 <View style={styles.dataRowContainer}>
-                  <Text style={styles.cellContent}>{item.mouzaName}</Text>
-                  <Text style={styles.cellContent}>{item.surveyType}</Text>
-                  <Text style={styles.cellContent}>{item.sheetNumber}</Text>
+                  <Text style={styles.cellContent}>{item.NAME_OF_OTHERS}</Text>
+                  <Text style={styles.cellContent}>{item.OTHERS_RANK}</Text>
+                  <Text style={styles.cellContent}>
+                    {item.OTHERS_JOINING_DATE}
+                  </Text>
+                  <Text style={styles.cellContent}>{item.OTHERS_CELL}</Text>
+                  <Text style={styles.cellContent}>{item.OTHERS_NID}</Text>
+                  <Text style={styles.cellContent}>{item.OTHERS_MAIL}</Text>
                   <View style={styles.actionButtons}>
                     <TouchableOpacity style={styles.editButtonStyle}>
                       <Text style={styles.buttonTextStyle}>Edit</Text>
@@ -1166,7 +1188,7 @@ const styles = StyleSheet.create({
   },
   addButton: {
     marginBottom: 10,
-    borderRadius: 10,
+    borderRadius: 5,
     backgroundColor: '#008CBA', // Set your desired background color
     padding: 10, // Add some padding
   },

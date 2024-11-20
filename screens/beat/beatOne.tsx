@@ -18,31 +18,41 @@ import {useNavigation} from '@react-navigation/native';
 import {Colors, CommonStyles, Fonts, Sizes} from '../../constants/styles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {baseApi, token} from '../../constants/base_api';
+//import {forest_type_list} from '../../constants/public_schema';
+
 import MonthPicker from 'react-native-month-year-picker';
 import {
   gener43_2021_core_create,
-  gener43_2021_core_list,
   gener43_2021_fbli_ca_tloc_ad_upzilla_create,
   gener43_2021_fbli_m_sh1_create,
+  gener43_2021_core_list,
   gener43_2021_fbli_m_sh1_list,
-  jur_ad_districts_api,
   jur_ad_districts_list,
-  jur_ad_divisions_api,
   jur_ad_divisions_list,
-  jur_ad_upazillas_api,
   jur_ad_upazillas_list,
-  jur_fd_beats_api,
   jur_fd_beats_list,
-  jur_fd_circles_api,
   jur_fd_circles_list,
-  jur_fd_divisions_api,
   jur_fd_divisions_list,
-  jur_fd_ecozones_api,
   jur_fd_ecozones_list,
-  jur_fd_ranges_api,
   jur_fd_ranges_list,
-  mouza_types_api,
   mouza_types_list,
+  /*jur_ad_districts_api,
+  
+  jur_ad_divisions_api,
+  
+  jur_ad_upazillas_api,
+  
+  jur_fd_beats_api,
+  
+  jur_fd_circles_api,
+  
+  jur_fd_divisions_api,
+  
+  jur_fd_ecozones_api,
+  
+  jur_fd_ranges_api,
+  
+  mouza_types_api,*/
 } from '../../database/sqlDatabase';
 import useUUID from '../../hooks/useUUID';
 import useCreateUri from '../../hooks/useCreatUri';
@@ -121,15 +131,15 @@ const beatOne = () => {
     fetchData();
   }, []);
 
-  // useEffect(() => {
-  //   const fbli = async () => {
-  //     const data = await gener43_2021_fbli_m_sh1_list();
-  //     setFbliData(data);
-  //   };
-  //   fbli();
-  // }, []);
+  useEffect(() => {
+    const fbli = async () => {
+      const data = await gener43_2021_fbli_m_sh1_list();
+      setFbliData(data);
+    };
+    fbli();
+  }, []);
 
-  // console.log(fbliData, 'fbli data....');
+  console.log(fbliData, 'fbli data....');
 
   const onDocumentPress = async () => {
     const res = await DocumentPicker.pick({
@@ -203,16 +213,16 @@ const beatOne = () => {
     setoridianl(updatedOrdinalNumber);
 
     const dataToInsertadd = {
-      _uri: newGeneratedUUID, // Use the freshly generated UUID
-      _creator_uri_user: uri,
-      _parent_auri: initialUUID,
-      _top_level_auri: initialUUID,
-      _creation_date: getCurrentDateandTime(),
-      _last_update_date: getCurrentDateandTime(),
-      mouza1: mouza_name,
-      survey_types: survey_type,
-      sheet1: sheet_number,
-      _ordinal_number: updatedOrdinalNumber,
+      _URI: newGeneratedUUID, // Use the freshly generated UUID
+      _CREATOR_URI_USER: uri,
+      _PARENT_AURI: initialUUID,
+      _TOP_LEVEL_AURI: initialUUID,
+      _CREATION_DATE: getCurrentDateandTime(),
+      _LAST_UPDATE_DATE: getCurrentDateandTime(),
+      MOUZA1: mouza_name,
+      SURVEY_TYPES: survey_type,
+      SHEET1: sheet_number,
+      _ORDINAL_NUMBER: updatedOrdinalNumber,
     };
 
     console.log(dataToInsertadd, 'datato insert');
@@ -569,18 +579,16 @@ const beatOne = () => {
       _ordinal_number: updatedOrdinalNumber,
     };
 
-    try {
-      await gener43_2021_core_create(dataToInsert);
-      await gener43_2021_fbli_ca_tloc_ad_upzilla_create(dataToInserUpazila);
-      console.log('All data inserted successfully');
-    } catch (error) {
-      console.error('Failed to insert data:', error.message || error); // Log the error message
-    }
+    // try {
+    //   await gener43_2021_core_create(dataToInsert);
+    //   await gener43_2021_fbli_ca_tloc_ad_upzilla_create(dataToInserUpazila);
+    //   console.log('All data inserted successfully');
+    // } catch (error) {
+    //   console.error('Failed to insert data:', error.message || error); // Log the error message
+    // }
 
-    navigation.navigate('beatFour', {uId: initialUUID});
+    navigation.navigate('beatTwo', {uId: initialUUID});
   };
-
-  
 
   // const addLive = async () => {
   //   console.log('clicked..');
@@ -1056,9 +1064,9 @@ const beatOne = () => {
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({item}) => (
                   <View style={styles.dataRowContainer}>
-                    <Text style={styles.cellContent}>{item.mouza1}</Text>
-                    <Text style={styles.cellContent}>{item.survey_types}</Text>
-                    <Text style={styles.cellContent}>{item.sheet1}</Text>
+                    <Text style={styles.cellContent}>{item.MOUZA1}</Text>
+                    <Text style={styles.cellContent}>{item.SURVEY_TYPES}</Text>
+                    <Text style={styles.cellContent}>{item.SHEET1}</Text>
                     <View style={styles.actionButtons}>
                       <TouchableOpacity style={styles.editButtonStyle}>
                         <Text style={styles.buttonTextStyle}>Edit</Text>
@@ -1167,18 +1175,6 @@ const beatOne = () => {
                       <Text style={{color: 'white'}}>Close</Text>
                     </TouchableOpacity>
                   </View>
-                  <TouchableOpacity
-                    style={{
-                      flex: 1,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      margin: 5,
-                      padding: 10,
-                      backgroundColor: '#007AFF', // Same default color as above
-                      borderRadius: 5,
-                    }}>
-                    <Text style={{color: 'white'}}>Sync</Text>
-                  </TouchableOpacity>
                 </ScrollView>
               </View>
             </View>
@@ -1379,7 +1375,7 @@ const styles = StyleSheet.create({
   },
   addButton: {
     marginBottom: 10,
-    borderRadius: 10,
+    borderRadius: 5,
     backgroundColor: '#008CBA', // Set your desired background color
     padding: 10, // Add some padding
   },

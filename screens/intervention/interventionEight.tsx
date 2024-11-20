@@ -22,10 +22,12 @@ import {
   months_api,
   months_list,
   plant27_2021_community_month_create,
+  plant27_2021_community_month_list,
   plant27_2021_core_list,
   plant27_2021_core_update8,
   plant27_2021_gtrts_climber_cutting_climber_month_create,
   plant27_2021_gtrts_community_protection_create,
+  plant27_2021_gtrts_community_protection_list,
   plant27_2021_gtrts_compost_compost_month_create,
 } from '../../database/sqlDatabase';
 import MonthPicker from 'react-native-month-year-picker';
@@ -59,6 +61,8 @@ const interventionEight = () => {
   const [showPicker4, setShowPicker4] = useState(false);
   const [showPicker5, setShowPicker5] = useState(false);
   const [plant27Dat, setPlant27Dat] = useState([]);
+  const [gtrtCommun, setgtrtCommun] = useState([]);
+  const [CommungMonth, setCommungMonth] = useState([]);
 
   const {initialUUID, generateUUID} = useUUID();
   const [newUUID, setNewUUID] = useState('');
@@ -184,28 +188,28 @@ const interventionEight = () => {
     setoridianl(updatedOrdinalNumber);
 
     const dataToInsertadd1 = {
-      _uri: newGeneratedUUID, // Use the freshly generated UUID
-      _creator_uri_user: uri,
-      _parent_auri: initialUUID,
-      _top_level_auri: initialUUID,
-      _creation_date: getCurrentDateandTime(),
-      _last_update_date: getCurrentDateandTime(),
+      _URI: newGeneratedUUID, // Use the freshly generated UUID
+      _CREATOR_URI_USER: uri,
+      _PARENT_AURI: initialUUID,
+      _TOP_LEVEL_AURI: initialUUID,
+      _CREATION_DATE: getCurrentDateandTime(),
+      _LAST_UPDATE_DATE: getCurrentDateandTime(),
 
-      community_year: inputValue5,
-      _ordinal_number: updatedOrdinalNumber,
+      COMMUNITY_YEAR: inputValue5,
+      _ORDINAL_NUMBER: updatedOrdinalNumber,
     };
 
     const dataToInsertadd2 = {
-      _uri: newGeneratedUUID, // Use the freshly generated UUID
-      _creator_uri_user: uri,
-      _parent_auri: initialUUID,
-      _top_level_auri: initialUUID,
-      _creation_date: getCurrentDateandTime(),
-      _last_update_date: getCurrentDateandTime(),
-      // value: selectedMonth4,
-      value: selectedMonths3,
+      _URI: newGeneratedUUID, // Use the freshly generated UUID
+      _CREATOR_URI_USER: uri,
+      _PARENT_AURI: initialUUID,
+      _TOP_LEVEL_AURI: initialUUID,
+      _CREATION_DATE: getCurrentDateandTime(),
+      _LAST_UPDATE_DATE: getCurrentDateandTime(),
+      // VALUE: selectedMonth4,
+      VALUE: selectedMonths3,
 
-      _ordinal_number: updatedOrdinalNumber,
+      _ORDINAL_NUMBER: updatedOrdinalNumber,
     };
 
     console.log(dataToInsertadd1, 'datato insert', dataToInsertadd2);
@@ -685,6 +689,26 @@ const interventionEight = () => {
 
   const tableData = [];
 
+  useEffect(() => {
+    const fbli = async () => {
+      const data = await plant27_2021_gtrts_community_protection_list();
+      setgtrtCommun(data);
+    };
+    fbli();
+  }, []);
+
+  console.log(gtrtCommun, 'Weeding data....');
+
+  useEffect(() => {
+    const fbli = async () => {
+      const data = await plant27_2021_community_month_list();
+      setCommungMonth(data);
+    };
+    fbli();
+  }, []);
+
+  console.log(CommungMonth, 'Weeding month data....');
+
   return (
     <>
       <View style={styles.header}>
@@ -823,17 +847,24 @@ const interventionEight = () => {
             </View>
 
             {/* Data Rows */}
-            {tableData.length > 0 ? (
+            {gtrtCommun.length > 0 ? (
               <FlatList
-                data={tableData}
+                data={gtrtCommun}
                 keyExtractor={(item, index) => index.toString()}
-                renderItem={({item}) => (
-                  <View style={styles.dataRowContainer}>
-                    <Text style={styles.cellContent}>{item.planYear}</Text>
-                    <Text style={styles.cellSeparator}>|</Text>
-                    <Text style={styles.cellContent}>{item.planMonths}</Text>
-                  </View>
-                )}
+                renderItem={({item, index}) => {
+                  const planMonth = CommungMonth[index]
+                    ? CommungMonth[index].VALUE
+                    : ' '; // Default value if no corresponding planMonth is found
+                  return (
+                    <View style={styles.dataRowContainer}>
+                      <Text style={styles.cellContent}>
+                        {item.COMMUNITY_YEAR}
+                      </Text>
+                      <Text style={styles.cellSeparator}>|</Text>
+                      <Text style={styles.cellContent}>{planMonth}</Text>
+                    </View>
+                  );
+                }}
               />
             ) : (
               <View style={styles.noDataContainer}>
@@ -1149,7 +1180,7 @@ const styles = StyleSheet.create({
   },
   addButton: {
     marginBottom: 10,
-    borderRadius: 10,
+    borderRadius: 5,
     backgroundColor: '#008CBA', // Set your desired background color
     padding: 10, // Add some padding
   },

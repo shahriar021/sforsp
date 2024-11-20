@@ -90,6 +90,8 @@ const interventionOne = () => {
   const [selectedDivision, setSelectedDivision] = useState(null);
   const [selectedDistrict, setSelectedDistrict] = useState(null);
   const [selectedUpazila, setSelectedUpazila] = useState(null);
+
+  const [Plocatin, setPlocatin] = useState([]);
   const [testData, setTestData] = useState([]);
   const {initialUUID, generateUUID} = useUUID();
   const [newUUID, setNewUUID] = useState('');
@@ -469,10 +471,10 @@ const interventionOne = () => {
     };
 
     try {
-      await plant27_2021_core_create(dataToInsert);
-      await plant27_2021_location_data_ca_tloc_ad_upzilla_create(
-        dataToInsertUpazila,
-      );
+      // await plant27_2021_core_create(dataToInsert);
+      // await plant27_2021_location_data_ca_tloc_ad_upzilla_create(
+      //   dataToInsertUpazila,
+      // );
       console.log('All data inserted successfully');
     } catch (error) {
       console.error('Failed to insert data:', error.message || error); // Log the error message
@@ -560,17 +562,17 @@ const interventionOne = () => {
     setoridianl(updatedOrdinalNumber);
 
     const dataToInsertadd = {
-      _uri: newGeneratedUUID, // Use the freshly generated UUID
-      _creator_uri_user: uri,
-      _parent_auri: initialUUID,
-      _top_level_auri: initialUUID,
-      _creation_date: getCurrentDateandTime(),
-      _last_update_date: getCurrentDateandTime(),
-      mouza1: inputValue10,
-      survey_types: selectedSurvey,
-      sheet1: inputValue11,
-      plot_no: inputValue12,
-      _ordinal_number: updatedOrdinalNumber,
+      _URI: newGeneratedUUID, // Use the freshly generated UUID
+      _CREATOR_URI_USER: uri,
+      _PARENT_AURI: initialUUID,
+      _TOP_LEVEL_AURI: initialUUID,
+      _CREATION_DATE: getCurrentDateandTime(),
+      _LAST_UPDATE_DATE: getCurrentDateandTime(),
+      MOUZA1: inputValue10,
+      SURVEY_TYPES: selectedSurvey,
+      SHEET1: inputValue11,
+      PLOT_NO: inputValue12,
+      _ORDINAL_NUMBER: updatedOrdinalNumber,
     };
 
     console.log(dataToInsertadd, 'datato insert');
@@ -597,6 +599,16 @@ const interventionOne = () => {
   // setTimeout(() => console.log(testData, 'test data....'), 5000);
   setTimeout(() => setShowPicker(false), 0);
   console.log(selectedForest, 'upokul');
+
+  useEffect(() => {
+    const fbli = async () => {
+      const data = await plant27_2021_location_data_m_sh1_list();
+      setPlocatin(data);
+    };
+    fbli();
+  }, []);
+
+  console.log(Plocatin, 'fbli data....');
 
   return (
     <>
@@ -933,19 +945,19 @@ const interventionOne = () => {
           </View>
 
           {/* Data Rows */}
-          {tableData.length > 0 ? (
+          {Plocatin.length > 0 ? (
             <FlatList
-              data={tableData}
+              data={Plocatin}
               keyExtractor={(item, index) => index.toString()}
               renderItem={({item}) => (
                 <View style={styles.dataRowContainer}>
-                  <Text style={styles.cellContent}>{item.mouzaName}</Text>
+                  <Text style={styles.cellContent}>{item.MOUZA1}</Text>
                   <Text style={styles.cellSeparator}>|</Text>
-                  <Text style={styles.cellContent}>{item.surveyType}</Text>
+                  <Text style={styles.cellContent}>{item.survey_types}</Text>
                   <Text style={styles.cellSeparator}>|</Text>
-                  <Text style={styles.cellContent}>{item.sheetNumber}</Text>
+                  <Text style={styles.cellContent}>{item.SHEET1}</Text>
                   <Text style={styles.cellSeparator}>|</Text>
-                  <Text style={styles.cellContent}>{item.plotNumber}</Text>
+                  <Text style={styles.cellContent}>{item.PLOT_NO}</Text>
                 </View>
               )}
             />
@@ -1200,7 +1212,7 @@ const styles = StyleSheet.create({
 
   addButton: {
     marginBottom: 10,
-    borderRadius: 10,
+    borderRadius: 5,
     backgroundColor: '#008CBA', // Set your desired background color
     padding: 10, // Add some padding
   },
