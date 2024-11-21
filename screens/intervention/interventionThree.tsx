@@ -20,10 +20,14 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {
   plant27_2021_gr_regen_create,
   plant27_2021_gr_regen_list,
+  plant27_2021_gregen_gregen_plot_reg_cen_to_e_blb_create,
+  plant27_2021_gregen_gregen_plot_reg_cen_to_e_bn_create,
+  plant27_2021_gregen_gregen_plot_reg_cen_to_e_ref_create,
 } from '../../database/sqlDatabase';
 import {getCurrentDateandTime} from '../../hooks/dateUtils';
 import useCreateUri from '../../hooks/useCreatUri';
 import useUUID from '../../hooks/useUUID';
+import RNFetchBlob from 'rn-fetch-blob';
 
 const interventionThree = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -37,6 +41,10 @@ const interventionThree = () => {
   const [inputValue7, setInputValue7] = useState('');
   const [inputValue8, setInputValue8] = useState('');
   const [gr_regen, setgr_regen] = useState([]);
+  const [image, setImage] = useState([]);
+  const [image2, setImage2] = useState([]);
+  const [image3, setImage3] = useState([]);
+  const [image4, setImage4] = useState([]);
   const [showPicker, setShowPicker] = useState(false);
   const [date, setDate] = useState(new Date());
   const [selectedForest, setSelectedForest] = useState(null);
@@ -53,9 +61,103 @@ const interventionThree = () => {
   console.log(uid, 'uuid in page 3');
 
   const onDocumentPress = async () => {
-    const res = await DocumentPicker.pick({
-      type: ['application/*', 'text/*'], // General MIME types to capture all related formats
-    });
+    try {
+      const res = await DocumentPicker.pick({
+        type: ['application/*', 'text/*', 'image/*'], // MIME types to cover general files
+      });
+
+      // Ensure a file is selected
+      if (res && res.length > 0) {
+        const fileUri = res[0].uri;
+        console.log(fileUri, 'fileUri');
+
+        // Read the file using rn-fetch-blob as base64
+        const base64Data = await RNFetchBlob.fs.readFile(fileUri, 'base64');
+
+        // Create a Blob from Base64 data
+        const blob = RNFetchBlob.base64.decode(base64Data);
+        setImage(blob);
+
+        //console.log('Blob created successfully:', blob);
+      }
+    } catch (error) {
+      console.error('Error picking or creating Blob from file:', error);
+    }
+  };
+
+  const onDocumentPress2 = async () => {
+    try {
+      const res = await DocumentPicker.pick({
+        type: ['application/*', 'text/*', 'image/*'], // MIME types to cover general files
+      });
+
+      // Ensure a file is selected
+      if (res && res.length > 0) {
+        const fileUri = res[0].uri;
+        console.log(fileUri, 'fileUri');
+
+        // Read the file using rn-fetch-blob as base64
+        const base64Data = await RNFetchBlob.fs.readFile(fileUri, 'base64');
+
+        // Create a Blob from Base64 data
+        const blob = RNFetchBlob.base64.decode(base64Data);
+        setImage2(blob);
+
+        //console.log('Blob created successfully:', blob);
+      }
+    } catch (error) {
+      console.error('Error picking or creating Blob from file:', error);
+    }
+  };
+
+  const onDocumentPress3 = async () => {
+    try {
+      const res = await DocumentPicker.pick({
+        type: ['application/*', 'text/*', 'image/*'], // MIME types to cover general files
+      });
+
+      // Ensure a file is selected
+      if (res && res.length > 0) {
+        const fileUri = res[0].uri;
+        console.log(fileUri, 'fileUri');
+
+        // Read the file using rn-fetch-blob as base64
+        const base64Data = await RNFetchBlob.fs.readFile(fileUri, 'base64');
+
+        // Create a Blob from Base64 data
+        const blob = RNFetchBlob.base64.decode(base64Data);
+        setImage3(blob);
+
+        //console.log('Blob created successfully:', blob);
+      }
+    } catch (error) {
+      console.error('Error picking or creating Blob from file:', error);
+    }
+  };
+
+  const onDocumentPress4 = async () => {
+    try {
+      const res = await DocumentPicker.pick({
+        type: ['application/*', 'text/*', 'image/*'], // MIME types to cover general files
+      });
+
+      // Ensure a file is selected
+      if (res && res.length > 0) {
+        const fileUri = res[0].uri;
+        console.log(fileUri, 'fileUri');
+
+        // Read the file using rn-fetch-blob as base64
+        const base64Data = await RNFetchBlob.fs.readFile(fileUri, 'base64');
+
+        // Create a Blob from Base64 data
+        const blob = RNFetchBlob.base64.decode(base64Data);
+        setImage4(blob);
+
+        //console.log('Blob created successfully:', blob);
+      }
+    } catch (error) {
+      console.error('Error picking or creating Blob from file:', error);
+    }
   };
 
   const onChange = (event, selectedDate) => {
@@ -108,17 +210,287 @@ const interventionThree = () => {
     }
   };
 
-  const interventionThree = () => {
-    console.log(
-      console.log('inputValue1:', inputValue1),
-      console.log('inputValue2:', inputValue2),
-      console.log('inputValue3:', inputValue3),
-      console.log('inputValue4:', inputValue4),
-      console.log('inputValue5:', inputValue5),
-      console.log('inputValue6:', inputValue6),
-      console.log('inputValue7:', inputValue7),
-      console.log('inputValue8:', inputValue8),
-    );
+  // const interventionThree = async () => {
+  //   const newGeneratedUUID = generateUUID(); // Generate a new UUID
+  //   setNewUUID(newGeneratedUUID); // If you need it later in the state, set it
+  //   const subUri = newGeneratedUUID;
+  //   const updatedOrdinalNumber = oridianl + 1; // Increment the value directly here
+  //   setoridianl(updatedOrdinalNumber);
+  //   console.log(
+  //     console.log('inputValue1:', inputValue1),
+  //     console.log('inputValue2:', inputValue2),
+  //     console.log('inputValue3:', inputValue3),
+  //     console.log('inputValue4:', inputValue4),
+  //     console.log('inputValue5:', inputValue5),
+  //     console.log('inputValue6:', inputValue6),
+  //     console.log('inputValue7:', inputValue7),
+  //     console.log('inputValue8:', inputValue8),
+  //   );
+  //   const dataToInsertimage1One = {
+  //     _URI: newGeneratedUUID, // Use the freshly generated UUID
+  //     _CREATOR_URI_USER: uri,
+  //     _PARENT_AURI: uid,
+  //     _TOP_LEVEL_AURI: uid,
+  //     _CREATION_DATE: getCurrentDateandTime(),
+  //     _LAST_UPDATE_DATE: getCurrentDateandTime(),
+  //     VALUE: image,
+
+  //     _ORDINAL_NUMBER: updatedOrdinalNumber,
+  //   };
+  //   // const dataToInsertimage1Two = {
+  //   //   _uri: newGeneratedUUID, // Use the freshly generated UUID
+  //   //   _creator_uri_user: uri,
+  //   //   _parent_auri: uId,
+  //   //   _top_level_auri: uId,
+  //   //   _creation_date: getCurrentDateandTime(),
+  //   //   _last_update_date: getCurrentDateandTime(),
+  //   // };
+  //   const dataToInsertimage1Three = {
+  //     _URI: newGeneratedUUID, // Use the freshly generated UUID
+  //     _CREATOR_URI_USER: uri,
+  //     _PARENT_AURI: uid,
+  //     _TOP_LEVEL_AURI: uid,
+  //     _CREATION_DATE: getCurrentDateandTime(),
+  //     _LAST_UPDATE_DATE: getCurrentDateandTime(),
+  //     _SUB_AURI: subUri,
+  //   };
+
+  //   const dataToInsertimage2One = {
+  //     _URI: newGeneratedUUID, // Use the freshly generated UUID
+  //     _CREATOR_URI_USER: uri,
+  //     _PARENT_AURI: uid,
+  //     _TOP_LEVEL_AURI: uid,
+  //     _CREATION_DATE: getCurrentDateandTime(),
+  //     _LAST_UPDATE_DATE: getCurrentDateandTime(),
+  //     VALUE: image,
+
+  //     _ORDINAL_NUMBER: updatedOrdinalNumber,
+  //   };
+  //   // const dataToInsertimage2Two = {
+  //   //   _uri: newGeneratedUUID, // Use the freshly generated UUID
+  //   //   _creator_uri_user: uri,
+  //   //   _parent_auri: uId,
+  //   //   _top_level_auri: uId,
+  //   //   _creation_date: getCurrentDateandTime(),
+  //   //   _last_update_date: getCurrentDateandTime(),
+  //   // };
+  //   const dataToInsertimage2Three = {
+  //     _URI: newGeneratedUUID, // Use the freshly generated UUID
+  //     _CREATOR_URI_USER: uri,
+  //     _PARENT_AURI: uid,
+  //     _TOP_LEVEL_AURI: uid,
+  //     _CREATION_DATE: getCurrentDateandTime(),
+  //     _LAST_UPDATE_DATE: getCurrentDateandTime(),
+  //     _SUB_AURI: subUri,
+  //   };
+
+  //   const dataToInsertimage3One = {
+  //     _URI: newGeneratedUUID, // Use the freshly generated UUID
+  //     _CREATOR_URI_USER: uri,
+  //     _PARENT_AURI: uid,
+  //     _TOP_LEVEL_AURI: uid,
+  //     _CREATION_DATE: getCurrentDateandTime(),
+  //     _LAST_UPDATE_DATE: getCurrentDateandTime(),
+  //     VALUE: image,
+
+  //     _ORDINAL_NUMBER: updatedOrdinalNumber,
+  //   };
+  //   // const dataToInsertimage3Two = {
+  //   //   _uri: newGeneratedUUID, // Use the freshly generated UUID
+  //   //   _creator_uri_user: uri,
+  //   //   _parent_auri: uId,
+  //   //   _top_level_auri: uId,
+  //   //   _creation_date: getCurrentDateandTime(),
+  //   //   _last_update_date: getCurrentDateandTime(),
+  //   // };
+  //   const dataToInsertimage3Three = {
+  //     _URI: newGeneratedUUID, // Use the freshly generated UUID
+  //     _CREATOR_URI_USER: uri,
+  //     _PARENT_AURI: uid,
+  //     _TOP_LEVEL_AURI: uid,
+  //     _CREATION_DATE: getCurrentDateandTime(),
+  //     _LAST_UPDATE_DATE: getCurrentDateandTime(),
+  //     _SUB_AURI: subUri,
+  //   };
+
+  //   const dataToInsertimage4One = {
+  //     _URI: newGeneratedUUID, // Use the freshly generated UUID
+  //     _CREATOR_URI_USER: uri,
+  //     _PARENT_AURI: uid,
+  //     _TOP_LEVEL_AURI: uid,
+  //     _CREATION_DATE: getCurrentDateandTime(),
+  //     _LAST_UPDATE_DATE: getCurrentDateandTime(),
+  //     VALUE: image,
+
+  //     _ORDINAL_NUMBER: updatedOrdinalNumber,
+  //   };
+  //   // const dataToInsertimage4Two = {
+  //   //   _uri: newGeneratedUUID, // Use the freshly generated UUID
+  //   //   _creator_uri_user: uri,
+  //   //   _parent_auri: uId,
+  //   //   _top_level_auri: uId,
+  //   //   _creation_date: getCurrentDateandTime(),
+  //   //   _last_update_date: getCurrentDateandTime(),
+  //   // };
+  //   const dataToInsertimage4Three = {
+  //     _URI: newGeneratedUUID, // Use the freshly generated UUID
+  //     _CREATOR_URI_USER: uri,
+  //     _PARENT_AURI: uid,
+  //     _TOP_LEVEL_AURI: uid,
+  //     _CREATION_DATE: getCurrentDateandTime(),
+  //     _LAST_UPDATE_DATE: getCurrentDateandTime(),
+  //     _SUB_AURI: subUri,
+  //   };
+  //   //console.log(dataToInsertimageOne, 'data to image..');
+  //   try {
+  //     await plant27_2021_gregen_gregen_plot_reg_cen_to_e_blb_create(
+  //       dataToInsertimage1One,
+  //     );
+  //   } catch (error) {
+  //     console.error('Error during imageOne creation:', error);
+  //   }
+  //   try {
+  //     await plant27_2021_gregen_gregen_plot_reg_cen_to_e_ref_create(
+  //       dataToInsertimage1Three,
+  //     );
+  //   } catch (error) {
+  //     console.error('Error during imageThree creation:', error);
+  //   }
+  //   navigation.navigate('interventionFour', {uuid: uid});
+  // };
+  const interventionThree = async () => {
+    const newGeneratedUUID = generateUUID(); // Generate a new UUID
+    setNewUUID(newGeneratedUUID); // Set it to state if needed later
+    const subUri = newGeneratedUUID;
+    const updatedOrdinalNumber = oridianl + 1; // Increment ordinal value
+    setoridianl(updatedOrdinalNumber);
+
+    // Log input values for debugging
+    console.log({
+      inputValue1,
+      inputValue2,
+      inputValue3,
+      inputValue4,
+      inputValue5,
+      inputValue6,
+      inputValue7,
+      inputValue8,
+    });
+
+    // Data objects for all images
+    const dataSets = [
+      // Image 1
+      {
+        one: {
+          _URI: newGeneratedUUID,
+          _CREATOR_URI_USER: uri,
+          _PARENT_AURI: uid,
+          _TOP_LEVEL_AURI: uid,
+          _CREATION_DATE: getCurrentDateandTime(),
+          _LAST_UPDATE_DATE: getCurrentDateandTime(),
+          VALUE: image,
+          _ORDINAL_NUMBER: updatedOrdinalNumber,
+        },
+        three: {
+          _URI: newGeneratedUUID,
+          _CREATOR_URI_USER: uri,
+          _PARENT_AURI: uid,
+          _TOP_LEVEL_AURI: uid,
+          _CREATION_DATE: getCurrentDateandTime(),
+          _LAST_UPDATE_DATE: getCurrentDateandTime(),
+          _SUB_AURI: subUri,
+        },
+      },
+      // Image 2
+      {
+        one: {
+          _URI: newGeneratedUUID,
+          _CREATOR_URI_USER: uri,
+          _PARENT_AURI: uid,
+          _TOP_LEVEL_AURI: uid,
+          _CREATION_DATE: getCurrentDateandTime(),
+          _LAST_UPDATE_DATE: getCurrentDateandTime(),
+          VALUE: image2,
+          _ORDINAL_NUMBER: updatedOrdinalNumber,
+        },
+        three: {
+          _URI: newGeneratedUUID,
+          _CREATOR_URI_USER: uri,
+          _PARENT_AURI: uid,
+          _TOP_LEVEL_AURI: uid,
+          _CREATION_DATE: getCurrentDateandTime(),
+          _LAST_UPDATE_DATE: getCurrentDateandTime(),
+          _SUB_AURI: subUri,
+        },
+      },
+      // Image 3
+      {
+        one: {
+          _URI: newGeneratedUUID,
+          _CREATOR_URI_USER: uri,
+          _PARENT_AURI: uid,
+          _TOP_LEVEL_AURI: uid,
+          _CREATION_DATE: getCurrentDateandTime(),
+          _LAST_UPDATE_DATE: getCurrentDateandTime(),
+          VALUE: image3,
+          _ORDINAL_NUMBER: updatedOrdinalNumber,
+        },
+        three: {
+          _URI: newGeneratedUUID,
+          _CREATOR_URI_USER: uri,
+          _PARENT_AURI: uid,
+          _TOP_LEVEL_AURI: uid,
+          _CREATION_DATE: getCurrentDateandTime(),
+          _LAST_UPDATE_DATE: getCurrentDateandTime(),
+          _SUB_AURI: subUri,
+        },
+      },
+      // Image 4
+      {
+        one: {
+          _URI: newGeneratedUUID,
+          _CREATOR_URI_USER: uri,
+          _PARENT_AURI: uid,
+          _TOP_LEVEL_AURI: uid,
+          _CREATION_DATE: getCurrentDateandTime(),
+          _LAST_UPDATE_DATE: getCurrentDateandTime(),
+          VALUE: image4,
+          _ORDINAL_NUMBER: updatedOrdinalNumber,
+        },
+        three: {
+          _URI: newGeneratedUUID,
+          _CREATOR_URI_USER: uri,
+          _PARENT_AURI: uid,
+          _TOP_LEVEL_AURI: uid,
+          _CREATION_DATE: getCurrentDateandTime(),
+          _LAST_UPDATE_DATE: getCurrentDateandTime(),
+          _SUB_AURI: subUri,
+        },
+      },
+    ];
+
+    // Iterate over each data set and insert the data
+    for (const [index, data] of dataSets.entries()) {
+      try {
+        // Insert data for "one"
+        await plant27_2021_gregen_gregen_plot_reg_cen_to_e_blb_create(data.one);
+        console.log(`Image${index + 1}One inserted successfully`);
+      } catch (error) {
+        console.error(`Error during Image${index + 1}One creation:`, error);
+      }
+
+      try {
+        // Insert data for "three"
+        await plant27_2021_gregen_gregen_plot_reg_cen_to_e_ref_create(
+          data.three,
+        );
+        console.log(`Image${index + 1}Three inserted successfully`);
+      } catch (error) {
+        console.error(`Error during Image${index + 1}Three creation:`, error);
+      }
+    }
+
+    // Navigate to the next screen after all insertions are complete
     navigation.navigate('interventionFour', {uuid: uid});
   };
 
@@ -132,7 +504,7 @@ const interventionThree = () => {
     fbli();
   }, []);
 
-  console.log(gr_regen, 'fbli data....');
+  //console.log(gr_regen, 'fbli data....');
 
   return (
     <>
@@ -356,45 +728,65 @@ const interventionThree = () => {
           </Modal>
         </View>
 
-        <Text style={styles.label}>5.a.3. From Plot center to North</Text>
+        <View style={styles.txtNbutton}>
+          <Text style={styles.label}>5.a.3. From Plot center to North</Text>
 
-        <TextInput
+          {/* <TextInput
           style={styles.input}
           value={inputValue5}
           onChangeText={text => setInputValue5(text)}
           placeholderTextColor="black"
           placeholder="select  From Plot center to North"
-        />
+        /> */}
+          <TouchableOpacity style={styles.addButton} onPress={onDocumentPress}>
+            <Text style={styles.buttonText}>choose file</Text>
+          </TouchableOpacity>
+        </View>
 
-        <Text style={styles.label}>5.a.4. From Plot center to East</Text>
+        <View style={styles.txtNbutton}>
+          <Text style={styles.label}>5.a.4. From Plot center to East</Text>
 
-        <TextInput
+          {/* <TextInput
           style={styles.input}
           value={inputValue6}
           onChangeText={text => setInputValue6(text)}
           placeholderTextColor="black"
           placeholder="select From Plot center to East"
-        />
+        /> */}
+          <TouchableOpacity style={styles.addButton} onPress={onDocumentPress2}>
+            <Text style={styles.buttonText}>choose file</Text>
+          </TouchableOpacity>
+        </View>
 
-        <Text style={styles.label}>5.a.5. From Plot center to South</Text>
+        <View style={styles.txtNbutton}>
+          <Text style={styles.label}>5.a.5. From Plot center to South</Text>
 
-        <TextInput
+          {/* <TextInput
           style={styles.input}
           value={inputValue7}
           onChangeText={text => setInputValue7(text)}
           placeholderTextColor="black"
           placeholder="select From Plot center to South"
-        />
+        /> */}
+          <TouchableOpacity style={styles.addButton} onPress={onDocumentPress3}>
+            <Text style={styles.buttonText}>choose file</Text>
+          </TouchableOpacity>
+        </View>
 
-        <Text style={styles.label}> 5.a.6. From Plot center to West</Text>
+        <View style={styles.txtNbutton}>
+          <Text style={styles.label}> 5.a.6. From Plot center to West</Text>
 
-        <TextInput
+          {/* <TextInput
           style={styles.input}
           value={inputValue8}
           onChangeText={text => setInputValue8(text)}
           placeholderTextColor="black"
           placeholder="select From Plot center to West"
-        />
+        /> */}
+          <TouchableOpacity style={styles.addButton} onPress={onDocumentPress4}>
+            <Text style={styles.buttonText}>choose file</Text>
+          </TouchableOpacity>
+        </View>
 
         <View style={styles.button}>
           <TouchableOpacity

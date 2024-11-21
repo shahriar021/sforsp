@@ -14636,7 +14636,7 @@ export const gener43_2021_overallnotes_ima_blb_create =
             gener43_2021_overallnotes_ima_blb.VALUE || null,
           ],
           (tx, results) => {
-            console.log('Data inserted successfully:', results);
+            console.log('Data inserted successfully in over blb..:', results);
             resolve(results);
           },
           (tx, error) => {
@@ -15634,6 +15634,10 @@ export const plant27_2021_gregen_gregen_plot_reg_cen_to_e_blb_delete =
 //---------------------------------------------------------//
 export const plant27_2021_gregen_gregen_plot_reg_cen_to_e_blb_create =
   plant27_2021_gregen_gregen_plot_reg_cen_to_e_blb => {
+    console.log(
+      plant27_2021_gregen_gregen_plot_reg_cen_to_e_blb.VALUE,
+      'from backend',
+    );
     return new Promise((resolve, reject) => {
       database.transaction(tx => {
         // Insert plant27_2021_gregen_gregen_plot_reg_cen_to_e_blb
@@ -15654,11 +15658,11 @@ export const plant27_2021_gregen_gregen_plot_reg_cen_to_e_blb_create =
             plant27_2021_gregen_gregen_plot_reg_cen_to_e_blb.VALUE || null,
           ],
           (tx, results) => {
-            console.log('Data inserted successfully:', results);
+            console.log('Data inserted successfully: cen blb', results);
             resolve(results);
           },
           (tx, error) => {
-            console.error('Error inserting data:', error);
+            console.error('Error inserting data: cen blb', error);
             reject(error);
           },
         );
@@ -28038,11 +28042,11 @@ export const plant27_2021_gregen_gregen_plot_reg_cen_to_e_bn_create =
               null,
           ],
           (tx, results) => {
-            console.log('Data inserted successfully:', results);
+            console.log('Data inserted successfully: in bn', results);
             resolve(results);
           },
           (tx, error) => {
-            console.error('Error inserting data:', error);
+            console.error('Error inserting data: in bn', error);
             reject(error);
           },
         );
@@ -41241,7 +41245,7 @@ export const gener43_2021_overallnotes_ima_ref_create =
             gener43_2021_overallnotes_ima_ref.PART || null,
           ],
           (tx, results) => {
-            console.log('Data inserted successfully:', results);
+            console.log('Data inserted successfully: in over ref...', results);
             resolve(results);
           },
           (tx, error) => {
@@ -46392,11 +46396,11 @@ export const plant27_2021_overallnotes_ima_blb_create =
             plant27_2021_overallnotes_ima_blb.VALUE || null,
           ],
           (tx, results) => {
-            console.log('Data inserted successfully:', results);
+            console.log('Data inserted successfully: in over blb', results);
             resolve(results);
           },
           (tx, error) => {
-            console.error('Error inserting data:', error);
+            console.error('Error inserting data: in over blb', error);
             reject(error);
           },
         );
@@ -47940,11 +47944,11 @@ export const plant27_2021_xpictureextra_blb_create =
             plant27_2021_xpictureextra_blb.VALUE || null,
           ],
           (tx, results) => {
-            console.log('Data inserted successfully:', results);
+            console.log('Data inserted successfully: in xpic ', results);
             resolve(results);
           },
           (tx, error) => {
-            console.error('Error inserting data:', error);
+            console.error('Error inserting data: in xpic', error);
             reject(error);
           },
         );
@@ -49674,21 +49678,25 @@ export const initial_setup = async () => {
     await gener43_2021_xpic_beat_index_blb_api();
     await gener43_2021_xpic_beat_index_ref_api();
     await plant27_2021_community_month_api();
-		await plant27_2021_core_api();
-		await plant27_2021_filling_month_api();
-		await plant27_2021_gr_regen_api();
-		await plant27_2021_gregen_spp_regen_api();
-		await plant27_2021_gtrts_climber_cutting_climber_month_api();
-		await plant27_2021_gtrts_community_protection_api();
-		await plant27_2021_gtrts_compost_compost_month_api();
-		await plant27_2021_gtrts_vacancy_filling_api();
-		await plant27_2021_gtrts_weeding_api();
-		await plant27_2021_location_data_ca_tloc_ad_upzilla_api();
-		await plant27_2021_location_data_m_sh1_api();
-		await plant27_2021_planting_plan_gplanting_gspp_api();
-		await plant27_2021_rphotoextra_api();
-		await plant27_2021_s_site_api();
-		await plant27_2021_weeding_month_api();
+    await plant27_2021_core_api();
+    await plant27_2021_xpictureextra_blb_api();
+    await plant27_2021_filling_month_api();
+    await plant27_2021_gr_regen_api();
+    await plant27_2021_gregen_spp_regen_api();
+    await plant27_2021_gtrts_climber_cutting_climber_month_api();
+    await plant27_2021_gtrts_community_protection_api();
+    await plant27_2021_gtrts_compost_compost_month_api();
+    await plant27_2021_gtrts_vacancy_filling_api();
+    await plant27_2021_gtrts_weeding_api();
+    await plant27_2021_location_data_ca_tloc_ad_upzilla_api();
+    await plant27_2021_location_data_m_sh1_api();
+    await plant27_2021_planting_plan_gplanting_gspp_api();
+    await plant27_2021_rphotoextra_api();
+    await plant27_2021_s_site_api();
+    await plant27_2021_weeding_month_api();
+
+    await plant27_2021_overallnotes_ima_blb_api();
+    await plant27_2021_gregen_gregen_plot_reg_cen_to_e_blb_api();
     //aggregate schema part end
 
     await jur_ad_districts_list();

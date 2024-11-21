@@ -25,8 +25,11 @@ import {
   gener43_2021_fbli_m_sh1_list,
   gener43_2021_gvillages_create,
   gener43_2021_gvillages_list,
+  gener43_2021_overallnotes_ima_blb_create,
+  gener43_2021_overallnotes_ima_ref_create,
 } from '../../database/sqlDatabase';
 import {getCurrentDateandTime} from '../../hooks/dateUtils';
+import RNFetchBlob from 'rn-fetch-blob';
 
 const beatFour = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -65,6 +68,8 @@ const beatFour = () => {
   const [gener43_2021_core_listdata, setgener43_2021_core_list] = useState([]);
   const [fbliData, setFbliData] = useState([]);
 
+  const [image, setImage] = useState([]);
+
   const navigation = useNavigation();
   const route = useRoute();
   const {uId} = route.params;
@@ -72,9 +77,28 @@ const beatFour = () => {
   const uri = useCreateUri();
 
   const onDocumentPress = async () => {
-    const res = await DocumentPicker.pick({
-      type: ['application/*', 'text/*'], // General MIME types to capture all related formats
-    });
+    try {
+      const res = await DocumentPicker.pick({
+        type: ['application/*', 'text/*', 'image/*'], // MIME types to cover general files
+      });
+
+      // Ensure a file is selected
+      if (res && res.length > 0) {
+        const fileUri = res[0].uri;
+        console.log(fileUri, 'fileUri');
+
+        // Read the file using rn-fetch-blob as base64
+        const base64Data = await RNFetchBlob.fs.readFile(fileUri, 'base64');
+
+        // Create a Blob from Base64 data
+        const blob = RNFetchBlob.base64.decode(base64Data);
+        setImage(blob);
+
+        //console.log('Blob created successfully:', blob);
+      }
+    } catch (error) {
+      console.error('Error picking or creating Blob from file:', error);
+    }
   };
 
   const onChange = (event, selectedDate) => {
@@ -565,6 +589,62 @@ const beatFour = () => {
     //   inputValues.forestryParticipants,
     //   inputValues.conservationParticipants,
     // );
+
+
+    const newGeneratedUUID = generateUUID(); // Generate a new UUID
+    setNewUUID(newGeneratedUUID); // If you need it later in the state, set it
+    const subUri = newGeneratedUUID;
+    const updatedOrdinalNumber = oridianl + 1; // Increment the value directly here
+    setoridianl(updatedOrdinalNumber);
+    // Log input values from inputValue1 to inputValue23
+    // 
+
+    const dataToInsertimageOne = {
+      _uri: newGeneratedUUID, // Use the freshly generated UUID
+      _creator_uri_user: uri,
+      _parent_auri: uId,
+      _top_level_auri: uId,
+      _creation_date: getCurrentDateandTime(),
+      _last_update_date: getCurrentDateandTime(),
+      value: image,
+
+      _ordinal_number: updatedOrdinalNumber,
+    };
+    const dataToInsertimageTwo = {
+      _uri: newGeneratedUUID, // Use the freshly generated UUID
+      _creator_uri_user: uri,
+      _parent_auri: uId,
+      _top_level_auri: uId,
+      _creation_date: getCurrentDateandTime(),
+      _last_update_date: getCurrentDateandTime(),
+    };
+    const dataToInsertimageThree = {
+      _uri: newGeneratedUUID, // Use the freshly generated UUID
+      _creator_uri_user: uri,
+      _parent_auri: uId,
+      _top_level_auri: uId,
+      _creation_date: getCurrentDateandTime(),
+      _last_update_date: getCurrentDateandTime(),
+      _sub_auri: subUri,
+    };
+
+    console.log('Data to insert:', dataToInsertimageOne);
+
+    try {
+      //await gener43_2021_core_update(uId, dataToInsert);
+      await gener43_2021_overallnotes_ima_blb_create(dataToInsertimageOne);
+      //await gener43_2021_xpic_beat_index_bn_create(dataToInsertimageTwo);
+      await gener43_2021_overallnotes_ima_ref_create(dataToInsertimageThree);
+
+      console.log('All data inserted successfully');
+    } catch (error) {
+      console.error('Failed to insert data:', error.message || error); // Log the error message
+    }
+
+
+
+
+
   };
 
   useEffect(() => {
@@ -958,15 +1038,17 @@ const beatFour = () => {
         </View>
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.addButton} onPress={() => beatFour()}>
+          <TouchableOpacity
+            style={styles.addButton1}
+            onPress={() => beatFour()}>
             <Text style={styles.buttonText}>Submit</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.addButton}>
+          <TouchableOpacity style={styles.addButton2}>
             <Text style={styles.buttonText}>Cancel</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.addButton} onPress={() => beatSync()}>
+        <TouchableOpacity style={styles.addButton3} onPress={() => beatSync()}>
           <Text style={styles.buttonText}>Sync</Text>
         </TouchableOpacity>
       </ScrollView>
@@ -1034,7 +1116,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row', // Arrange children in a row
     justifyContent: 'space-around', // Add space between buttons
-    marginBottom: 50,
+    marginBottom: 10,
     margin: 5,
   },
   customButton: {
@@ -1110,6 +1192,15 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: '#008CBA', // Set your desired background color
     padding: 10, // Add some padding
+  },
+  addButton1: {
+    marginBottom: 5,
+    borderRadius: 5,
+    backgroundColor: '#008CBA', // Set your desired background color
+    padding: 10, // Add some padding
+    flex: 1,
+    justifyContent: 'space-between',
+    margin: 5,
   },
   buttonText: {
     color: 'white', // Set the text color
@@ -1203,6 +1294,24 @@ const styles = StyleSheet.create({
     color: 'black',
     marginHorizontal: 8, // Adjusted margin for better spacing
     fontSize: 16, // Increased font size for consistency
+  },
+  addButton2: {
+    marginBottom: 5,
+    borderRadius: 5,
+    backgroundColor: '#FF0000', // Set your desired background color
+    padding: 10, // Add some padding
+    flex: 1,
+    justifyContent: 'space-between',
+    margin: 5,
+  },
+  addButton3: {
+    marginBottom: 30,
+    borderRadius: 5,
+    backgroundColor: '#02590F', // Set your desired background color
+    padding: 10, // Add some padding
+    flex: 1,
+    justifyContent: 'space-between',
+    margin: 5,
   },
 });
 

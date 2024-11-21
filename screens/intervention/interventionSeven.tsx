@@ -333,7 +333,7 @@ const interventionSeven = () => {
     fbli();
   }, []);
 
-  console.log(gtrtVacancy, 'Weeding data....');
+  //console.log(gtrtVacancy, 'Weeding data....');
 
   useEffect(() => {
     const fbli = async () => {
@@ -343,7 +343,7 @@ const interventionSeven = () => {
     fbli();
   }, []);
 
-  console.log(FillingMonth, 'Weeding month data....');
+  //console.log(FillingMonth, 'Weeding month data....');
 
   return (
     <>

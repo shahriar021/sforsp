@@ -26,10 +26,12 @@ import {
   plant27_2021_rphotoextra_create,
   plant27_2021_s_site_create,
   plant27_2021_s_site_list,
+  plant27_2021_xpictureextra_blb_create,
 } from '../../database/sqlDatabase';
 import {getCurrentDateandTime} from '../../hooks/dateUtils';
 import useCreateUri from '../../hooks/useCreatUri';
 import useUUID from '../../hooks/useUUID';
+import RNFetchBlob from 'rn-fetch-blob';
 
 const interventionTwo = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -53,6 +55,8 @@ const interventionTwo = () => {
   const [showPicker, setShowPicker] = useState(false);
   const [date, setDate] = useState(new Date());
 
+  const [image, setImage] = useState([]);
+
   const [selectedForest, setSelectedForest] = useState(null);
   const [selectedHistory, setSelectedHistory] = useState(null);
   const {initialUUID, generateUUID} = useUUID();
@@ -69,9 +73,53 @@ const interventionTwo = () => {
   console.log(uId, 'uuid in page 2');
 
   const onDocumentPress = async () => {
-    const res = await DocumentPicker.pick({
-      type: ['application/*', 'text/*'], // General MIME types to capture all related formats
-    });
+    try {
+      const res = await DocumentPicker.pick({
+        type: ['application/*', 'text/*', 'image/*'], // MIME types to cover general files
+      });
+
+      // Ensure a file is selected
+      if (res && res.length > 0) {
+        const fileUri = res[0].uri;
+        console.log(fileUri, 'fileUri');
+
+        // Read the file using rn-fetch-blob as base64
+        const base64Data = await RNFetchBlob.fs.readFile(fileUri, 'base64');
+
+        // Create a Blob from Base64 data
+        const blob = RNFetchBlob.base64.decode(base64Data);
+        setImage(blob);
+
+        //console.log('Blob created successfully:', blob);
+      }
+    } catch (error) {
+      console.error('Error picking or creating Blob from file:', error);
+    }
+  };
+
+  const onDocumentPress2 = async () => {
+    try {
+      const res = await DocumentPicker.pick({
+        type: ['application/*', 'text/*', 'image/*'], // MIME types to cover general files
+      });
+
+      // Ensure a file is selected
+      if (res && res.length > 0) {
+        const fileUri = res[0].uri;
+        console.log(fileUri, 'fileUri');
+
+        // Read the file using rn-fetch-blob as base64
+        const base64Data = await RNFetchBlob.fs.readFile(fileUri, 'base64');
+
+        // Create a Blob from Base64 data
+        const blob = RNFetchBlob.base64.decode(base64Data);
+        setImage(blob);
+
+        //console.log('Blob created successfully:', blob);
+      }
+    } catch (error) {
+      console.error('Error picking or creating Blob from file:', error);
+    }
   };
 
   const onChange = (event, selectedDate) => {
@@ -181,6 +229,11 @@ const interventionTwo = () => {
   };
 
   const interventionTwo = async () => {
+    const newGeneratedUUID = generateUUID(); // Generate a new UUID
+    setNewUUID(newGeneratedUUID); // If you need it later in the state, set it
+    const subUri = newGeneratedUUID;
+    const updatedOrdinalNumber = oridianl + 1; // Increment the value directly here
+    setoridianl(updatedOrdinalNumber);
     console.log('Input Values:', uId);
     console.log('inputValue1:', inputValue1);
     console.log('inputValue2:', inputValue2);
@@ -209,8 +262,38 @@ const interventionTwo = () => {
       GSITE_HISTORY: selectedHistory,
     };
 
+    const dataToInsertimageOne = {
+      _URI: newGeneratedUUID, // Use the freshly generated UUID
+      _CREATOR_URI_USER: uri,
+      _PARENT_AURI: uId,
+      _TOP_LEVEL_AURI: uId,
+      _CREATION_DATE: getCurrentDateandTime(),
+      _LAST_UPDATE_DATE: getCurrentDateandTime(),
+      VALUE: image,
+
+      _ORDINAL_NUMBER: updatedOrdinalNumber,
+    };
+    const dataToInsertimageTwo = {
+      _uri: newGeneratedUUID, // Use the freshly generated UUID
+      _creator_uri_user: uri,
+      _parent_auri: uId,
+      _top_level_auri: uId,
+      _creation_date: getCurrentDateandTime(),
+      _last_update_date: getCurrentDateandTime(),
+    };
+    const dataToInsertimageThree = {
+      _uri: newGeneratedUUID, // Use the freshly generated UUID
+      _creator_uri_user: uri,
+      _parent_auri: uId,
+      _top_level_auri: uId,
+      _creation_date: getCurrentDateandTime(),
+      _last_update_date: getCurrentDateandTime(),
+      _sub_auri: subUri,
+    };
+
     try {
-      await plant27_2021_core_update(uId, dataToInsert);
+      // await plant27_2021_core_update(uId, dataToInsert);
+      await plant27_2021_xpictureextra_blb_create(dataToInsertimageOne);
       console.log('All data updated successfully');
     } catch (error) {
       console.error('Failed to updated data:', error.message || error); // Log the error message
@@ -558,7 +641,7 @@ const interventionTwo = () => {
         <View style={styles.txtNbutton}>
           <Text style={styles.label}>3.e.1.Take picture of the site:</Text>
 
-          <TouchableOpacity style={styles.addButton} onPress={onDocumentPress}>
+          <TouchableOpacity style={styles.addButton} onPress={onDocumentPress2}>
             <Text style={styles.buttonText}>choose file</Text>
           </TouchableOpacity>
         </View>

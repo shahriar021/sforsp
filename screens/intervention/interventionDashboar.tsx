@@ -326,6 +326,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'left',
     paddingHorizontal: 5,
+    color: 'black',
   },
   row: {
     flexDirection: 'row',
@@ -338,6 +339,7 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: 'left',
     paddingHorizontal: 5,
+    color: 'black',
   },
   buttonContainer: {
     flex: 1,

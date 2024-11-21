@@ -96,6 +96,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontWeight: 'bold',
     textAlign: 'left', // Align header text to the left
+    color: 'black',
   },
   row: {
     flexDirection: 'row',
@@ -103,10 +104,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     borderBottomWidth: 1,
     borderBottomColor: '#ddd',
+    color: 'black',
   },
   cell: {
     flex: 1,
     textAlign: 'left', // Align cell text to the left
+    color: 'black',
   },
 });
 

@@ -608,7 +608,7 @@ const interventionOne = () => {
     fbli();
   }, []);
 
-  console.log(Plocatin, 'fbli data....');
+  //console.log(Plocatin, 'fbli data....');
 
   return (
     <>

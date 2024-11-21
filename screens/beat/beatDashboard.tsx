@@ -143,23 +143,23 @@ const beatDashboard = () => {
         <ScrollView>
           <Collapsible collapsed={isCollapsed}>
             <View style={styles.content}>
-              <Text>
+              <Text style={styles.textColor}>
                 1a. Information Collection date (তথ্য সংগ্রহের তারিখ): 20 May
                 2021
               </Text>
-              <Text>
+              <Text style={styles.textColor}>
                 1.b. Name of Beat/Camp/SFPC Officer (বিট/ক্যাম্প/এসএফপিসি
                 কর্মকর্তার নাম): SAYED Mahamudul haque shiraji
               </Text>
-              <Text>
+              <Text style={styles.textColor}>
                 1.c. Mobile number Beat/Camp/SFPC Officer (বিট/ক্যাম্প/এসএফপিসি
                 কর্মকর্তার মোবাইল নং): 01812346944
               </Text>
-              <Text>
+              <Text style={styles.textColor}>
                 1.d. Address of the Office (Beat/Camp/SFPC)
                 (বিট/ক্যাম্প/এসএফপিসি অফিসের ঠিকানা): Khuthakhali beat office
               </Text>
-              <Text>
+              <Text style={styles.textColor}>
                 1.e. GPS Location of the Beat/Camp/SFPC Office
                 (বিট/ক্যাম্প/এসএফপিসি অফিসের জিপিএস রিডিং):
                 21.6170273833,92.0704978000,-6.00,1.50
@@ -169,9 +169,11 @@ const beatDashboard = () => {
         </ScrollView>
 
         <TouchableOpacity onPress={toggleExpanded2} style={styles.headerb}>
-          <Text style={styles.headerText}>
-            2. Location Data (Beat/Camp/SFPC Information) (এলাকার তথ্য)
-          </Text>
+          <View style={styles.textContainer}>
+            <Text style={styles.headerText}>
+              2. Location Data (Beat/Camp/SFPC Information) (এলাকার তথ্য)
+            </Text>
+          </View>
           {isCollapsed2 ? (
             <AntDesign name="plus" size={24} color="black" />
           ) : (
@@ -930,6 +932,7 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 12,
     fontWeight: 'bold',
+    color: 'black',
   },
   content: {
     padding: 10,
@@ -949,13 +952,12 @@ const styles = StyleSheet.create({
   detailText: {
     fontSize: 14,
     marginLeft: 10,
-    color: '#555',
+    color: 'black',
   },
 
   box: {
     borderWidth: 2,
     borderColor: '#D3D3D3',
-    
   },
   box7: {
     borderWidth: 2,
@@ -983,6 +985,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingVertical: 8,
     flexDirection: 'row',
+    color: 'black',
   },
   tableCell: {
     flex: 1,
@@ -991,6 +994,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: '#ddd',
     textAlign: 'center',
+    color: 'black',
   },
 
   row: {
@@ -1001,6 +1005,7 @@ const styles = StyleSheet.create({
   label: {
     flex: 1,
     fontSize: 16,
+    color: 'black',
   },
   fileButton: {
     flex: 2,
@@ -1027,6 +1032,7 @@ const styles = StyleSheet.create({
   cellText: {
     flex: 1,
     textAlign: 'center',
+    color: 'black',
   },
   cell: {
     flex: 1,
@@ -1037,6 +1043,9 @@ const styles = StyleSheet.create({
     padding: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#ddd',
+  },
+  textColor: {
+    color: 'black',
   },
 });
 

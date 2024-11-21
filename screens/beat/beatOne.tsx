@@ -139,7 +139,7 @@ const beatOne = () => {
     fbli();
   }, []);
 
-  console.log(fbliData, 'fbli data....');
+  //console.log(fbliData, 'fbli data....');
 
   const onDocumentPress = async () => {
     const res = await DocumentPicker.pick({

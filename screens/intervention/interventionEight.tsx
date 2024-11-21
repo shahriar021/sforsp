@@ -29,11 +29,14 @@ import {
   plant27_2021_gtrts_community_protection_create,
   plant27_2021_gtrts_community_protection_list,
   plant27_2021_gtrts_compost_compost_month_create,
+  plant27_2021_overallnotes_ima_blb_create,
+  plant27_2021_overallnotes_ima_ref_create,
 } from '../../database/sqlDatabase';
 import MonthPicker from 'react-native-month-year-picker';
 import {getCurrentDateandTime} from '../../hooks/dateUtils';
 import useUUID from '../../hooks/useUUID';
 import useCreateUri from '../../hooks/useCreatUri';
+import RNFetchBlob from 'rn-fetch-blob';
 
 const interventionEight = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -63,6 +66,7 @@ const interventionEight = () => {
   const [plant27Dat, setPlant27Dat] = useState([]);
   const [gtrtCommun, setgtrtCommun] = useState([]);
   const [CommungMonth, setCommungMonth] = useState([]);
+  const [image, setImage] = useState([]);
 
   const {initialUUID, generateUUID} = useUUID();
   const [newUUID, setNewUUID] = useState('');
@@ -77,9 +81,28 @@ const interventionEight = () => {
   console.log(uid, 'uuid in page 8');
 
   const onDocumentPress = async () => {
-    const res = await DocumentPicker.pick({
-      type: ['application/*', 'text/*'], // General MIME types to capture all related formats
-    });
+    try {
+      const res = await DocumentPicker.pick({
+        type: ['application/*', 'text/*', 'image/*'], // MIME types to cover general files
+      });
+
+      // Ensure a file is selected
+      if (res && res.length > 0) {
+        const fileUri = res[0].uri;
+        console.log(fileUri, 'fileUri');
+
+        // Read the file using rn-fetch-blob as base64
+        const base64Data = await RNFetchBlob.fs.readFile(fileUri, 'base64');
+
+        // Create a Blob from Base64 data
+        const blob = RNFetchBlob.base64.decode(base64Data);
+        setImage(blob);
+
+        //console.log('Blob created successfully:', blob);
+      }
+    } catch (error) {
+      console.error('Error picking or creating Blob from file:', error);
+    }
   };
 
   // const onChange = (event, selectedDate) => {
@@ -231,6 +254,10 @@ const interventionEight = () => {
 
   const interventionEight = async () => {
     const newGeneratedUUID = generateUUID(); // Generate a new UUID
+    setNewUUID(newGeneratedUUID); // If you need it later in the state, set it
+    const subUri = newGeneratedUUID;
+    const updatedOrdinalNumber = oridianl + 1; // Increment the value directly here
+    setoridianl(updatedOrdinalNumber);
     setNewUUID(newGeneratedUUID);
     console.log(
       inputValue1,
@@ -275,14 +302,47 @@ const interventionEight = () => {
       value: selectedMonths2,
     };
 
+    const dataToInsertimageOne = {
+      _URI: newGeneratedUUID, // Use the freshly generated UUID
+      _CREATOR_URI_USER: uri,
+      _PARENT_AURI: uId,
+      _TOP_LEVEL_AURI: uId,
+      _CREATION_DATE: getCurrentDateandTime(),
+      _LAST_UPDATE_DATE: getCurrentDateandTime(),
+      VALUE: image,
+
+      _ORDINAL_NUMBER: updatedOrdinalNumber,
+    };
+    const dataToInsertimageTwo = {
+      _uri: newGeneratedUUID, // Use the freshly generated UUID
+      _creator_uri_user: uri,
+      _parent_auri: uId,
+      _top_level_auri: uId,
+      _creation_date: getCurrentDateandTime(),
+      _last_update_date: getCurrentDateandTime(),
+    };
+    const dataToInsertimageThree = {
+      _uri: newGeneratedUUID, // Use the freshly generated UUID
+      _creator_uri_user: uri,
+      _parent_auri: uId,
+      _top_level_auri: uId,
+      _creation_date: getCurrentDateandTime(),
+      _last_update_date: getCurrentDateandTime(),
+      _sub_auri: subUri,
+    };
+
     try {
       //await plant27_2021_core_update8(dataToInsert);
-      await plant27_2021_gtrts_compost_compost_month_create(
-        dataToInsertcompostMonth,
-      );
-      await plant27_2021_gtrts_climber_cutting_climber_month_create(
-        dataToInsertcompostClimberMonth,
-      );
+      // await plant27_2021_gtrts_compost_compost_month_create(
+      //   dataToInsertcompostMonth,
+      // );
+      // await plant27_2021_gtrts_climber_cutting_climber_month_create(
+      //   dataToInsertcompostClimberMonth,
+      // );
+      console.log(dataToInsertimageOne, 'data to image');
+      await plant27_2021_overallnotes_ima_blb_create(dataToInsertimageOne);
+      await plant27_2021_overallnotes_ima_ref_create(dataToInsertimageThree);
+
       console.log('All data updated successfully');
     } catch (error) {
       console.error('Failed to updated data:', error.message || error); // Log the error message
@@ -697,7 +757,7 @@ const interventionEight = () => {
     fbli();
   }, []);
 
-  console.log(gtrtCommun, 'Weeding data....');
+  //console.log(gtrtCommun, 'Weeding data....');
 
   useEffect(() => {
     const fbli = async () => {
@@ -707,7 +767,7 @@ const interventionEight = () => {
     fbli();
   }, []);
 
-  console.log(CommungMonth, 'Weeding month data....');
+  // console.log(CommungMonth, 'Weeding month data....');
 
   return (
     <>
@@ -1030,17 +1090,17 @@ const interventionEight = () => {
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity
-            style={styles.addButton}
+            style={styles.addButton1}
             onPress={() => interventionEight()}>
             <Text style={styles.buttonText}>Submit</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.addButton}>
+          <TouchableOpacity style={styles.addButton2}>
             <Text style={styles.buttonText}>Cancel</Text>
           </TouchableOpacity>
         </View>
         <TouchableOpacity
-          style={styles.addButton}
+          style={styles.addButton3}
           onPress={() => interventionSync()}>
           <Text style={styles.buttonText}>Sync</Text>
         </TouchableOpacity>
@@ -1175,7 +1235,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row', // Arrange children in a row
     justifyContent: 'space-around', // Add space between buttons
-    marginBottom: 50,
+    marginBottom: 5,
     margin: 5,
   },
   addButton: {
@@ -1258,6 +1318,33 @@ const styles = StyleSheet.create({
     color: 'black',
     marginHorizontal: 8, // Adjusted margin for better spacing
     fontSize: 16, // Increased font size for consistency
+  },
+  addButton1: {
+    marginBottom: 5,
+    borderRadius: 5,
+    backgroundColor: '#008CBA', // Set your desired background color
+    padding: 10, // Add some padding
+    flex: 1,
+    justifyContent: 'space-between',
+    margin: 5,
+  },
+  addButton2: {
+    marginBottom: 5,
+    borderRadius: 5,
+    backgroundColor: '#FF0000', // Set your desired background color
+    padding: 10, // Add some padding
+    flex: 1,
+    justifyContent: 'space-between',
+    margin: 5,
+  },
+  addButton3: {
+    marginBottom: 30,
+    borderRadius: 5,
+    backgroundColor: '#02590F', // Set your desired background color
+    padding: 10, // Add some padding
+    flex: 1,
+    justifyContent: 'space-between',
+    margin: 5,
   },
 });
 
