@@ -19,6 +19,7 @@ import {Colors, CommonStyles, Sizes} from '../../constants/styles';
 import Icon from 'react-native-vector-icons/Ionicons';
 import useLogistic from '../../hooks/useLogistic';
 import {
+  gener43_2021_core_list,
   gener43_2021_core_update2,
   gener43_2021_others_info1_create,
   gener43_2021_others_info1_list,
@@ -26,6 +27,7 @@ import {
 import useUUID from '../../hooks/useUUID';
 import {getCurrentDateandTime} from '../../hooks/dateUtils';
 import useCreateUri from '../../hooks/useCreatUri';
+import MonthPicker from 'react-native-month-year-picker';
 
 const beatThree = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -101,13 +103,13 @@ const beatThree = () => {
     });
   };
 
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShowPicker(Platform.OS === 'ios'); // Hide the picker after selection (Android closes automatically)
-    setDate(currentDate);
-    const formattedDate = `${currentDate.toLocaleDateString()} ${currentDate.toLocaleTimeString()}`;
-    setInputValue1(formattedDate); // Update TextInput with selected date and time
-  };
+  // const onChange = (event, selectedDate) => {
+  //   const currentDate = selectedDate || date;
+  //   setShowPicker(Platform.OS === 'ios'); // Hide the picker after selection (Android closes automatically)
+  //   setDate(currentDate);
+  //   const formattedDate = `${currentDate.toLocaleDateString()} ${currentDate.toLocaleTimeString()}`;
+  //   setInputValue100(formattedDate); // Update TextInput with selected date and time
+  // };
 
   const showDatePicker = () => {
     setShowPicker(true); // Show the DateTimePicker when the TextInput is pressed
@@ -129,6 +131,18 @@ const beatThree = () => {
 
   const handleInputChange = (field, value) => {
     setInputValue(prevValue => ({...prevValue, [field]: value}));
+  };
+
+  const handleValueChange = (event, newDate) => {
+    // When user selects a date
+    if (newDate) {
+      const formattedDate = `${newDate.getFullYear()}-${String(
+        newDate.getMonth() + 1,
+      ).padStart(2, '0')}-07`; // Formats as yyyy-mm-07 (sets the day as 07)
+      setInputValue3(formattedDate);
+      // TODO: Save `formattedDate` to the database as needed
+    }
+    setShowPicker(false); // Hide the picker after selection
   };
 
   const tableData = [];
@@ -236,10 +250,12 @@ const beatThree = () => {
       LOGISTICS4_OTHERS_WATER_TRA_AVAIL: selectedLogistic11,
       LOGISTICS4_OTHERS_WATER_TRA_CONDITION: selectedLogistic11,
     };
-
+    console.log(dataToInsert, 'in three..');
     try {
       await gener43_2021_core_update2(uuid, dataToInsert);
       console.log('All data inserted successfully');
+
+      await gener43_2021_core_list(uuid);
     } catch (error) {
       console.error('Failed to insert data:', error.message || error); // Log the error message
     }
@@ -293,12 +309,25 @@ const beatThree = () => {
           />
 
           <Text style={styles.label}>Joining date of the Range/Beat::</Text>
-          <TextInput
+          {/* <TextInput
             style={styles.input}
             placeholder="Type here"
             value={inputValue3}
             onChangeText={text => setInputValue3(text)}
-          />
+          /> */}
+          <TouchableOpacity onPress={() => setShowPicker(true)}>
+            <Text style={styles.input}>{inputValue3 || 'Select date'}</Text>
+          </TouchableOpacity>
+
+          {showPicker && (
+            <MonthPicker
+              onChange={handleValueChange}
+              value={new Date()} // default value for picker, can be adjusted
+              minimumDate={new Date(2000, 0)} // optional
+              maximumDate={new Date(2030, 11)} // optional
+              mode="short" // or "full"
+            />
+          )}
 
           <Text style={styles.label}>Mobile Number::</Text>
           <TextInput

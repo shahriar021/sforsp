@@ -61,3 +61,4 @@ const requestLocationPermission = async () => {
 // requestLocationPermission();
 
 AppRegistry.registerComponent(appName, () => App);
+console.disableYellowBox = true;

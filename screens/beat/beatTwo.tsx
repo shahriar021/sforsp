@@ -406,7 +406,7 @@ const beatTwo = () => {
     console.log('Data to insert:', dataToInsertimageTwo);
 
     try {
-      //await gener43_2021_core_update(uId, dataToInsert);
+      await gener43_2021_core_update(uId, dataToInsert);
       await gener43_2021_xpic_beat_index_blb_create(dataToInsertimageOne);
       //await gener43_2021_xpic_beat_index_bn_create(dataToInsertimageTwo);
       await gener43_2021_xpic_beat_index_ref_create(dataToInsertimageThree);

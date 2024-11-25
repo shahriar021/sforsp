@@ -537,10 +537,10 @@ const beatOne = () => {
     // );
 
     const dataToInsert = {
-      _uri: initialUUID,
-      _creator_uri_user: uri,
-      _creation_date: getCurrentDateandTimeMain(),
-      _last_update_date: getCurrentDateandTimeMain(),
+      _URI: initialUUID,
+      _CREATOR_URI_USER: uri,
+      _CREATION_DATE: getCurrentDateandTimeMain(),
+      _LAST_UPDATE_DATE: getCurrentDateandTimeMain(),
       GUSER_DCOLLECTION_RAW: GUSER_DCOLLECTION_RAW,
       GUSER_USER: GUSER_USER,
       GUSER_USER_CELL: GUSER_USER_CELL,
@@ -548,9 +548,8 @@ const beatOne = () => {
       GUSER_TLOC_FD_BEAT_POINT_LAT: GUSER_TLOC_FD_BEAT_POINT_LAT,
       GUSER_TLOC_FD_BEAT_POINT_LNG: GUSER_TLOC_FD_BEAT_POINT_LNG,
       FBLI_FA_TLOC_FD_BLOCK: FBLI_FA_TLOC_FD_BLOCK,
-      mouza_name: mouza_name,
-      sheet_number: sheet_number,
-
+      // MOUZA_NAME: mouza_name,
+      // SHEET_NUMBER: sheet_number,
       FBLI_TLOC_ECOZONE: selectedForest,
       FBLI_FA_TLOC_FD_CIR: selectedForestCircle,
       FBLI_FA_TLOC_FD_DIVISION: selectedForestDivision,
@@ -559,9 +558,8 @@ const beatOne = () => {
       FBLI_CA_TLOC_AD_DIVISION: selectedDivision,
       FBLI_CA_TLOC_AD_DISTRICT: selectedDistrict,
       FBLI_CA_UNION: FBLI_CA_UNION,
-
-      selectedUpazila: selectedUpazila,
-      survey_type: survey_type,
+      // SELECTED_UPAZILA: selectedUpazila,
+      // SURVEY_TYPE: survey_type,
     };
     console.log(dataToInsert, 'beat one ....data...');
     const updatedOrdinalNumber = oridianl + 1; // Increment the value directly here
@@ -579,90 +577,17 @@ const beatOne = () => {
       _ordinal_number: updatedOrdinalNumber,
     };
 
-    // try {
-    //   await gener43_2021_core_create(dataToInsert);
-    //   await gener43_2021_fbli_ca_tloc_ad_upzilla_create(dataToInserUpazila);
-    //   console.log('All data inserted successfully');
-    // } catch (error) {
-    //   console.error('Failed to insert data:', error.message || error); // Log the error message
-    // }
+    try {
+      await gener43_2021_core_create(dataToInsert);
+      await gener43_2021_fbli_ca_tloc_ad_upzilla_create(dataToInserUpazila);
+      console.log('All data inserted successfully');
+    } catch (error) {
+      console.error('Failed to insert data:', error.message || error); // Log the error message
+    }
 
     navigation.navigate('beatTwo', {uId: initialUUID});
   };
 
-  // const addLive = async () => {
-  //   console.log('clicked..');
-  //   const datelala = getCurrentDateandTimeMain();
-
-  //   const lastData = fbliData[fbliData.length - 1];
-
-  //   console.log(lastData, 'last data fbli');
-
-  //   // Ensure lastData is not empty
-  //   if (!lastData) {
-  //     console.error('No data available in plant27Dat.');
-  //     return;
-  //   }
-
-  //   console.log('Before formData creation');
-  //   const formData = new FormData();
-  //   console.log('FormData created successfully');
-  //   // Append values to formData
-  //   formData.append('_uri', newUUID);
-  //   console.log('Appended _uri:', newUUID);
-  //   formData.append('_creator_uri_user', uri);
-  //   console.log(
-  //     formData.append('_creation_date', lastData.getCurrentDateandTimeMain()),
-  //     'creation date...........',
-  //   );
-  //   console.log(
-  //     formData.append(
-  //       '_last_update_date',
-  //       lastData.getCurrentDateandTimeMain(),
-  //     ),
-  //     'last update date....',
-  //   );
-  //   formData.append('_parent_auri', initialUUID);
-  //   formData.append('_ordinal_number', oridianl);
-  //   formData.append('_top_level_auri', initialUUID);
-  //   formData.append('mouza1', lastData.mouza1);
-  //   formData.append('survey_types', lastData.survey_types);
-  //   formData.append('others_s_types', lastData.others_s_types);
-  //   formData.append('sheet1', lastData.sheet1);
-  //   formData.append('generated_note_name_40', lastData.generated_note_name_40);
-
-  //   // Log formData
-  //   // for (let [key, value] of formData.entries()) {
-  //   //   console.log(`${key}: ${value}`);
-  //   // }
-
-  //   // Your API call or further processing of formData
-  //   try {
-  //     const response = await fetch(
-  //       'http://192.168.0.187:8000/api/plant27_2021_core_create?token=15694294d23a00f6852b5465cbe141f5aba0ff44',
-  //       {
-  //         method: 'POST',
-  //         body: formData,
-  //         headers: {
-  //           Accept: 'application/json',
-  //         },
-  //       },
-  //     );
-
-  //     if (!response.ok) {
-  //       console.error(`Error: ${response.status} - ${response.statusText}`);
-  //     }
-
-  //     console.log('Fetch response status:', response.status);
-  //     const result = await response.json();
-  //     console.log('Response JSON:', result);
-  //   } catch (error) {
-  //     console.error('Error during the API call:', error);
-  //   }
-  // };
-
-  // console.log('fstDivison:', survey);
-  // console.log('Selected Forest division:', selectedDistrict);
   const tableData = [];
 
   return (

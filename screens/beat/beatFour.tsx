@@ -21,6 +21,7 @@ import useUUID from '../../hooks/useUUID';
 import useCreateUri from '../../hooks/useCreatUri';
 import {
   gener43_2021_core_list,
+  gener43_2021_core_sync,
   gener43_2021_core_to_live,
   gener43_2021_fbli_m_sh1_list,
   gener43_2021_gvillages_create,
@@ -572,8 +573,8 @@ const beatFour = () => {
 
   const beatSync = async () => {
     console.log('clicked,,,,,', uId);
-    const u = 'uuid:b8681846-acc1-462e-9212-8d45abe2399e';
-    await gener43_2021_core_to_live(uId);
+
+    await gener43_2021_core_sync(uId);
   };
 
   const beatFour = async () => {
@@ -590,14 +591,13 @@ const beatFour = () => {
     //   inputValues.conservationParticipants,
     // );
 
-
     const newGeneratedUUID = generateUUID(); // Generate a new UUID
     setNewUUID(newGeneratedUUID); // If you need it later in the state, set it
     const subUri = newGeneratedUUID;
     const updatedOrdinalNumber = oridianl + 1; // Increment the value directly here
     setoridianl(updatedOrdinalNumber);
     // Log input values from inputValue1 to inputValue23
-    // 
+    //
 
     const dataToInsertimageOne = {
       _uri: newGeneratedUUID, // Use the freshly generated UUID
@@ -640,11 +640,6 @@ const beatFour = () => {
     } catch (error) {
       console.error('Failed to insert data:', error.message || error); // Log the error message
     }
-
-
-
-
-
   };
 
   useEffect(() => {
