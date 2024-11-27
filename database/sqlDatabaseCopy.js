@@ -2,8 +2,6 @@ import SQLite from 'react-native-sqlite-storage';
 import {baseApi, token} from '../constants/base_api';
 import {database} from './db';
 import {getCurrentDateandTime} from '../hooks/dateUtils';
-import { useEffect, useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // const database = SQLite.openDatabase(
 //   {
@@ -15,7 +13,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 //   },
 //   error => console.error('Error opening database', error),
 // );
-
 //API Start
 export const aspects_api = async () => {
   try {
@@ -13996,7 +13993,7 @@ export const gener43_2021_core_delete = async () => {
 //     });
 //   });
 // };
-export const gener43_2021_core_create = (gener43_2021_core) => {
+export const gener43_2021_core_create = gener43_2021_core => {
   return new Promise((resolve, reject) => {
     console.log('Starting database transaction...');
     database.transaction(
@@ -14020,8 +14017,8 @@ export const gener43_2021_core_create = (gener43_2021_core) => {
 
         // Insert gener43_2021_core
         tx.executeSql(
-          `INSERT INTO gener43_2021_core (_URI,_CREATOR_URI_USER,_CREATION_DATE,_LAST_UPDATE_DATE,_LAST_UPDATE_URI_USER,GUSER_DCOLLECTION_RAW,GUSER_USER,GUSER_USER_CELL,GUSER_BEAT_ADDRESS,GUSER_TLOC_FD_BEAT_POINT_LAT,GUSER_TLOC_FD_BEAT_POINT_LNG,FBLI_TLOC_ECOZONE,FBLI_FA_TLOC_FD_CIR,FBLI_FA_TLOC_FD_DIVISION,FBLI_FA_TLOC_FD_RANGE,FBLI_FA_TLOC_FD_BEAT,FBLI_FA_TLOC_FD_BLOCK,FBLI_FA_TLOC_FD_CHAR,FBLI_CA_TLOC_AD_DIVISION,FBLI_CA_TLOC_AD_DISTRICT,FBLI_CA_UNION,CREATED_BY,UPDATED_BY)
-           VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+          `INSERT INTO gener43_2021_core (_URI,_CREATOR_URI_USER,_CREATION_DATE,_LAST_UPDATE_DATE,_LAST_UPDATE_URI_USER,GUSER_DCOLLECTION_RAW,GUSER_USER,GUSER_USER_CELL,GUSER_BEAT_ADDRESS,GUSER_TLOC_FD_BEAT_POINT_LAT,GUSER_TLOC_FD_BEAT_POINT_LNG,FBLI_TLOC_ECOZONE,FBLI_FA_TLOC_FD_CIR,FBLI_FA_TLOC_FD_DIVISION,FBLI_FA_TLOC_FD_RANGE,FBLI_FA_TLOC_FD_BEAT,FBLI_FA_TLOC_FD_BLOCK,FBLI_FA_TLOC_FD_CHAR,FBLI_CA_TLOC_AD_DIVISION,FBLI_CA_TLOC_AD_DISTRICT,FBLI_CA_UNION)
+           VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
           [
             gener43_2021_core._URI || '',
             gener43_2021_core._CREATOR_URI_USER || '',
@@ -14044,9 +14041,6 @@ export const gener43_2021_core_create = (gener43_2021_core) => {
             gener43_2021_core.FBLI_CA_TLOC_AD_DIVISION || '',
             gener43_2021_core.FBLI_CA_TLOC_AD_DISTRICT || '',
             gener43_2021_core.FBLI_CA_UNION || '',
-            gener43_2021_core.CREATED_BY || '',
-              
-              gener43_2021_core.UPDATED_BY || '',
           ],
 
           (tx, results) => {
@@ -14087,8 +14081,6 @@ export const gener43_2021_core_update = (uuid, updatedValues) => {
              LAND_STATISTICS_BEAT_LAND_INFO_PROTECTED_FOREST_HA=?,
              LAND_STATISTICS_BEAT_LAND_INFO_VESTED_FOREST_HA=?,
              LAND_STATISTICS_BEAT_LAND_INFO_AQUIRED_FOREST_HA=?,
-             LAND_STATISTICS_BEAT_LAND_INFO_OTHER_FORESTAREA_HA=?,
-             LAND_STATISTICS_TOTAL_LEGAL_LAND_STATS=?,
 
              LAND_STATISTICS_BEAT_MGT_APPROACH_PA_WS_HA=?,
              LAND_STATISTICS_BEAT_MGT_APPROACH_PA_NP_HA=?,
@@ -14116,15 +14108,6 @@ export const gener43_2021_core_update = (uuid, updatedValues) => {
             updatedValues.LAND_STATISTICS_BEAT_LAND_INFO_VESTED_FOREST_HA || '',
             updatedValues.LAND_STATISTICS_BEAT_LAND_INFO_AQUIRED_FOREST_HA ||
               '',
-              updatedValues.LAND_STATISTICS_BEAT_LAND_INFO_OTHER_FORESTAREA_HA ||
-              '',
-              updatedValues.LAND_STATISTICS_TOTAL_LEGAL_LAND_STATS ||
-              '',
-
-
-
-
-
 
             updatedValues.LAND_STATISTICS_BEAT_MGT_APPROACH_PA_WS_HA || '',
             updatedValues.LAND_STATISTICS_BEAT_MGT_APPROACH_PA_NP_HA || '',
@@ -14134,9 +14117,6 @@ export const gener43_2021_core_update = (uuid, updatedValues) => {
             updatedValues.LAND_STATISTICS_BEAT_MGT_APPROACH_PA_SBCA_HA || '',
             updatedValues.LAND_STATISTICS_BEAT_MGT_APPROACH_OTHER_PA_AREA_HA ||
               '',
-
-
-
 
             updatedValues.LAND_STATISTICS_BEAT_LAND_BIO_NATURAL_TO_DC_HA || '',
             updatedValues.LAND_STATISTICS_BEAT_LAND_BIO_SOCIAL_ACCRETED_HA ||
@@ -52233,885 +52213,739 @@ export const gener43_2021_core_sync = async uri => {
             console.log('Data to be sent:', row);
 
             // Create FormData instance and append data
-            // const formData = new FormData();
-            // formData.append('_URI', row._URI);
-            // formData.append('_CREATOR_URI_USER', row._CREATOR_URI_USER);
-            // formData.append('_CREATION_DATE', getCurrentDateandTimeMain());
-            // formData.append('_LAST_UPDATE_URI_USER', row._LAST_UPDATE_URI_USER);
-            // formData.append('_LAST_UPDATE_DATE', getCurrentDateandTimeMain());
-            // formData.append('GUSER_DCOLLECTION_RAW', row.GUSER_DCOLLECTION_RAW);
-            // formData.append('GUSER_USER', row.GUSER_USER);
-            // formData.append(
-            //   'GUSER_TLOC_FD_BEAT_POINT_LNG',
-            //   row.GUSER_TLOC_FD_BEAT_POINT_LNG,
-            // );
-            // row.GUSER_TLOC_FD_BEAT_POINT_LAT != ''
-            //   ? formData.append(
-            //       'GUSER_TLOC_FD_BEAT_POINT_LAT',
-            //       row.GUSER_TLOC_FD_BEAT_POINT_LAT,
-            //     )
-            //   : '';
-            // /*formData.append('FBLI_FA_TLOC_FD_BEAT', row.FBLI_FA_TLOC_FD_BEAT);
-            // formData.append(
-            //   'FBLI_FA_TLOC_FD_DIVISION',
-            //   row.FBLI_FA_TLOC_FD_DIVISION,
-            // );
-            // formData.append('FBLI_FA_TLOC_FD_BLOCK', row.FBLI_FA_TLOC_FD_BLOCK);
-            // formData.append('FBLI_FA_TLOC_FD_CIR', row.FBLI_FA_TLOC_FD_CIR);
-
-            // formData.append('GUSER_USER_CELL', row.GUSER_USER_CELL);
-            // formData.append(
-            //   'FBLI_CA_TLOC_AD_DISTRICT',
-            //   row.FBLI_CA_TLOC_AD_DISTRICT,
-            // );
-            // formData.append(
-            //   'FBLI_CA_TLOC_AD_DIVISION',
-            //   row.FBLI_CA_TLOC_AD_DIVISION,
-            // );*/
-            // row.FBLI_FA_TLOC_FD_BEAT != ''
-            //   ? formData.append(
-            //       'FBLI_FA_TLOC_FD_BEAT',
-            //       row.FBLI_FA_TLOC_FD_BEAT,
-            //     )
-            //   : '';
-            // row.FBLI_FA_TLOC_FD_DIVISION != ''
-            //   ? formData.append(
-            //       'FBLI_FA_TLOC_FD_DIVISION',
-            //       row.FBLI_FA_TLOC_FD_DIVISION,
-            //     )
-            //   : '';
-            // row.FBLI_FA_TLOC_FD_BLOCK != ''
-            //   ? formData.append(
-            //       'FBLI_FA_TLOC_FD_BLOCK',
-            //       row.FBLI_FA_TLOC_FD_BLOCK,
-            //     )
-            //   : '';
-            // row.FBLI_FA_TLOC_FD_CIR != ''
-            //   ? formData.append('FBLI_FA_TLOC_FD_CIR', row.FBLI_FA_TLOC_FD_CIR)
-            //   : '';
-            // row.GUSER_USER_CELL != ''
-            //   ? formData.append('GUSER_USER_CELL', row.GUSER_USER_CELL)
-            //   : '';
-            // row.FBLI_CA_TLOC_AD_DISTRICT != ''
-            //   ? formData.append(
-            //       'FBLI_CA_TLOC_AD_DISTRICT',
-            //       row.FBLI_CA_TLOC_AD_DISTRICT,
-            //     )
-            //   : '';
-            // row.FBLI_CA_TLOC_AD_DIVISION != ''
-            //   ? formData.append(
-            //       'FBLI_CA_TLOC_AD_DIVISION',
-            //       row.FBLI_CA_TLOC_AD_DIVISION,
-            //     )
-            //   : '';
-
-            // row.GUSER_BEAT_ADDRESS != ''
-            //   ? formData.append('GUSER_BEAT_ADDRESS', row.GUSER_BEAT_ADDRESS)
-            //   : '';
-            // row.FBLI_TLOC_ECOZONE != ''
-            //   ? formData.append('FBLI_TLOC_ECOZONE', row.FBLI_TLOC_ECOZONE)
-            //   : '';
-            // row.FBLI_FA_TLOC_FD_RANGE != ''
-            //   ? formData.append(
-            //       'FBLI_FA_TLOC_FD_RANGE',
-            //       row.FBLI_FA_TLOC_FD_RANGE,
-            //     )
-            //   : '';
-            // row.FBLI_CA_UNION != ''
-            //   ? formData.append('FBLI_CA_UNION', row.FBLI_CA_UNION)
-            //   : '';
-            // row.LAND_STATISTICS_BEAT_LAND_INFO_RESERVED_FOREST_HA != ''
-            //   ? formData.append(
-            //       'LAND_STATISTICS_BEAT_LAND_INFO_RESERVED_FOREST_HA',
-            //       row.LAND_STATISTICS_BEAT_LAND_INFO_RESERVED_FOREST_HA,
-            //     )
-            //   : '';
-
-            // row.RO_INFO_NAME_OF_RO != ''
-            //   ? formData.append('RO_INFO_NAME_OF_RO', row.RO_INFO_NAME_OF_RO)
-            //   : '';
-            // row.RO_INFO_RO_CELL != ''
-            //   ? formData.append('RO_INFO_RO_CELL', row.RO_INFO_RO_CELL)
-            //   : '';
-            // row.RO_INFO_RO_JOINING_DATE_RAW != ''
-            //   ? formData.append(
-            //       'RO_INFO_RO_JOINING_DATE_RAW',
-            //       row.RO_INFO_RO_JOINING_DATE_RAW,
-            //     )
-            //   : '';
-            // row.RO_INFO_RO_MAIL != ''
-            //   ? formData.append('RO_INFO_RO_MAIL', row.RO_INFO_RO_MAIL)
-            //   : '';
-            // row.RO_INFO_RO_NID != ''
-            //   ? formData.append('RO_INFO_RO_NID', row.RO_INFO_RO_NID)
-            //   : '';
-            // row.RO_INFO_RO_RANK != ''
-            //   ? formData.append('RO_INFO_RO_RANK', row.RO_INFO_RO_RANK)
-            //   : '';
-            // row.BO_INFO_BO_JOINING_DATE_RAW != ''
-            //   ? formData.append(
-            //       'BO_INFO_BO_JOINING_DATE_RAW',
-            //       row.BO_INFO_BO_JOINING_DATE_RAW,
-            //     )
-            //   : '';
-            // row.BO_INFO_NAME_OF_BO != ''
-            //   ? formData.append('BO_INFO_NAME_OF_BO', row.BO_INFO_NAME_OF_BO)
-            //   : '';
-            // row.BO_INFO_BO_MAIL != ''
-            //   ? formData.append('BO_INFO_BO_MAIL', row.BO_INFO_BO_MAIL)
-            //   : '';
-            // row.BO_INFO_BO_RANK != ''
-            //   ? formData.append('BO_INFO_BO_RANK', row.BO_INFO_BO_RANK)
-            //   : '';
-            // row.BO_INFO_BO_CELL != ''
-            //   ? formData.append('BO_INFO_BO_CELL', row.BO_INFO_BO_CELL)
-            //   : '';
-            // row.BO_INFO_BO_NID != ''
-            //   ? formData.append('BO_INFO_BO_NID', row.BO_INFO_BO_NID)
-            //   : '';
-
-            // /*formData.append(
-            //   'LAND_TRANSPORTS_MOTORB_CONDITION',
-            //   row.LAND_TRANSPORTS_MOTORB_CONDITION,
-            // );
-            // // formData.append(
-            // //   'LAND_TRANSPORTS_BICYCLE_AVAIL',
-            // //   row.LAND_TRANSPORTS_BICYCLE_AVAIL,
-            // // );
-
-            // formData.append(
-            //   'LAND_TRANSPORTS_BICYCLE_CONDITION',
-            //   row.LAND_TRANSPORTS_BICYCLE_CONDITION,
-            // );
-
-            // // formData.append(
-            // //   'LAND_TRANSPORTS_MOTORB_AVAIL',
-            // //   row.LAND_TRANSPORTS_MOTORB_AVAIL,
-            // // );
-            // formData.append(
-            //   'LAND_TRANSPORTS_OTHERS_LAND_TRA_CONDITION',
-            //   row.LAND_TRANSPORTS_OTHERS_LAND_TRA_CONDITION,
-            // );
-
-            // // formData.append(
-            // //   'LOGISTICS3_TVESSEL_CONDITION',
-            // //   row.LOGISTICS3_TVESSEL_CONDITION,
-            // // );
-
-            // // formData.append(
-            // //   'LOGISTICS3_COUNTRYBOAT_CONDITION',
-            // //   row.LOGISTICS3_COUNTRYBOAT_CONDITION,
-            // // );
-
-            // // formData.append(
-            // //   'LOGISTICS3_TVESSEL_AVAIL',
-            // //   row.LOGISTICS3_TVESSEL_AVAIL,
-            // // );
-
-            // // formData.append(
-            // //   'LOGISTICS3_OTHERS_WATER_TRA_CONDITION',
-            // //   row.LOGISTICS3_OTHERS_WATER_TRA_CONDITION,
-            // // );
-
-            // // formData.append(
-            // //   'LOGISTICS3_COUNTRYBOAT_AVAIL',
-            // //   row.LOGISTICS3_COUNTRYBOAT_AVAIL,
-            // // );
-
-            // // formData.append(
-            // //   'LOGISTICS3_SPEEDBOAT_CONDITION',
-            // //   row.LOGISTICS3_SPEEDBOAT_CONDITION,
-            // // );
-
-            // // formData.append(
-            // //   'LOGISTICS3_SPEEDBOAT_AVAIL',
-            // //   row.LOGISTICS3_SPEEDBOAT_AVAIL,
-            // // );
-
-            // // formData.append(
-            // //   'LOGISTICS3_OTHERS_WATER_TRA_AVAIL',
-            // //   row.LOGISTICS3_OTHERS_WATER_TRA_AVAIL,
-            // // );
-            // // formData.append(
-            // //   'LAND_TRANSPORTS_OTHERS_LAND_TRA_AVAIL',
-            // //   row.LAND_TRANSPORTS_OTHERS_LAND_TRA_AVAIL,
-            // // );
-
-            // // -----------
-
-            // // formData.append(
-            // //   'LAND_TRANSPORTS_OTHERS_LAND_TRA',
-            // //   row.LAND_TRANSPORTS_OTHERS_LAND_TRA,
-            // // );
-            // // formData.append('_MODEL_VERSION', row._MODEL_VERSION);
-            // // formData.append('_UI_VERSION', row._UI_VERSION);
-            // // formData.append('_IS_COMPLETE', row._IS_COMPLETE);
-            // // formData.append('_SUBMISSION_DATE', getCurrentDateandTimeMain());
-            // // formData.append(
-            // //   '_MARKED_AS_COMPLETE_DATE',
-            // //   getCurrentDateandTimeMain(),
-            // // );
-            // // formData.append(
-            // //   'LAND_STATISTICS_BEAT_LAND_BIO_OTHER_PLANT_HA',
-            // //   row.LAND_STATISTICS_BEAT_LAND_BIO_OTHER_PLANT_HA,
-            // // );
-
-            // // formData.append(
-            // //   'LOGISTICS4_GFIREARMS_303RIFLE',
-            // //   row.LOGISTICS4_GFIREARMS_303RIFLE,
-            // // );
-            // // formData.append(
-            // //   'LAND_STATISTICS_BEAT_MGT_APPROACH_OTHER_PA_AREA_HA',
-            // //   row.LAND_STATISTICS_BEAT_MGT_APPROACH_OTHER_PA_AREA_HA,
-            // // );
-            // // formData.append(
-            // //   'LOGISTICS4_OTHERS_WATER_TRA',
-            // //   row.LOGISTICS4_OTHERS_WATER_TRA,
-            // // );*/
-            // row.LAND_TRANSPORTS_MOTORB_CONDITION != ''
-            //   ? formData.append(
-            //       'LAND_TRANSPORTS_MOTORB_CONDITION',
-            //       row.LAND_TRANSPORTS_MOTORB_CONDITION,
-            //     )
-            //   : '';
-            // row.LAND_TRANSPORTS_BICYCLE_AVAIL != ''
-            //   ? formData.append(
-            //       'LAND_TRANSPORTS_BICYCLE_AVAIL',
-            //       row.LAND_TRANSPORTS_BICYCLE_AVAIL,
-            //     )
-            //   : '';
-            // row.LAND_TRANSPORTS_BICYCLE_CONDITION != ''
-            //   ? formData.append(
-            //       'LAND_TRANSPORTS_BICYCLE_CONDITION',
-            //       row.LAND_TRANSPORTS_BICYCLE_CONDITION,
-            //     )
-            //   : '';
-            // row.LAND_TRANSPORTS_MOTORB_AVAIL != ''
-            //   ? formData.append(
-            //       'LAND_TRANSPORTS_MOTORB_AVAIL',
-            //       row.LAND_TRANSPORTS_MOTORB_AVAIL,
-            //     )
-            //   : '';
-            // row.LAND_TRANSPORTS_OTHERS_LAND_TRA_CONDITION != ''
-            //   ? formData.append(
-            //       'LAND_TRANSPORTS_OTHERS_LAND_TRA_CONDITION',
-            //       row.LAND_TRANSPORTS_OTHERS_LAND_TRA_CONDITION,
-            //     )
-            //   : '';
-            // row.LOGISTICS3_TVESSEL_CONDITION != ''
-            //   ? formData.append(
-            //       'LOGISTICS3_TVESSEL_CONDITION',
-            //       row.LOGISTICS3_TVESSEL_CONDITION,
-            //     )
-            //   : '';
-            // row.LOGISTICS3_COUNTRYBOAT_CONDITION != ''
-            //   ? formData.append(
-            //       'LOGISTICS3_COUNTRYBOAT_CONDITION',
-            //       row.LOGISTICS3_COUNTRYBOAT_CONDITION,
-            //     )
-            //   : '';
-            // row.LOGISTICS3_TVESSEL_AVAIL != ''
-            //   ? formData.append(
-            //       'LOGISTICS3_TVESSEL_AVAIL',
-            //       row.LOGISTICS3_TVESSEL_AVAIL,
-            //     )
-            //   : '';
-            // row.LOGISTICS3_OTHERS_WATER_TRA_CONDITION != ''
-            //   ? formData.append(
-            //       'LOGISTICS3_OTHERS_WATER_TRA_CONDITION',
-            //       row.LOGISTICS3_OTHERS_WATER_TRA_CONDITION,
-            //     )
-            //   : '';
-            // row.LOGISTICS3_COUNTRYBOAT_AVAIL != ''
-            //   ? formData.append(
-            //       'LOGISTICS3_COUNTRYBOAT_AVAIL',
-            //       row.LOGISTICS3_COUNTRYBOAT_AVAIL,
-            //     )
-            //   : '';
-            // row.LOGISTICS3_SPEEDBOAT_CONDITION != ''
-            //   ? formData.append(
-            //       'LOGISTICS3_SPEEDBOAT_CONDITION',
-            //       row.LOGISTICS3_SPEEDBOAT_CONDITION,
-            //     )
-            //   : '';
-            // row.LOGISTICS3_SPEEDBOAT_AVAIL != ''
-            //   ? formData.append(
-            //       'LOGISTICS3_SPEEDBOAT_AVAIL',
-            //       row.LOGISTICS3_SPEEDBOAT_AVAIL,
-            //     )
-            //   : '';
-            // row.LOGISTICS3_OTHERS_WATER_TRA_AVAIL != ''
-            //   ? formData.append(
-            //       'LOGISTICS3_OTHERS_WATER_TRA_AVAIL',
-            //       row.LOGISTICS3_OTHERS_WATER_TRA_AVAIL,
-            //     )
-            //   : '';
-            // row.LAND_TRANSPORTS_OTHERS_LAND_TRA_AVAIL != ''
-            //   ? formData.append(
-            //       'LAND_TRANSPORTS_OTHERS_LAND_TRA_AVAIL',
-            //       row.LAND_TRANSPORTS_OTHERS_LAND_TRA_AVAIL,
-            //     )
-            //   : '';
-            // row.LAND_TRANSPORTS_OTHERS_LAND_TRA != ''
-            //   ? formData.append(
-            //       'LAND_TRANSPORTS_OTHERS_LAND_TRA',
-            //       row.LAND_TRANSPORTS_OTHERS_LAND_TRA,
-            //     )
-            //   : '';
-            // row._MODEL_VERSION != ''
-            //   ? formData.append('_MODEL_VERSION', row._MODEL_VERSION)
-            //   : '';
-            // row._UI_VERSION != ''
-            //   ? formData.append('_UI_VERSION', row._UI_VERSION)
-            //   : '';
-            // row._IS_COMPLETE != ''
-            //   ? formData.append('_IS_COMPLETE', row._IS_COMPLETE)
-            //   : '';
-            // row._SUBMISSION_DATE != ''
-            //   ? formData.append('_SUBMISSION_DATE', getCurrentDateandTimeMain())
-            //   : '';
-            // row._MARKED_AS_COMPLETE_DATE != ''
-            //   ? formData.append(
-            //       '_MARKED_AS_COMPLETE_DATE',
-            //       getCurrentDateandTimeMain(),
-            //     )
-            //   : '';
-            // row.LAND_STATISTICS_BEAT_LAND_BIO_OTHER_PLANT_HA != ''
-            //   ? formData.append(
-            //       'LAND_STATISTICS_BEAT_LAND_BIO_OTHER_PLANT_HA',
-            //       row.LAND_STATISTICS_BEAT_LAND_BIO_OTHER_PLANT_HA,
-            //     )
-            //   : '';
-            // row.LOGISTICS4_GFIREARMS_303RIFLE != ''
-            //   ? formData.append(
-            //       'LOGISTICS4_GFIREARMS_303RIFLE',
-            //       row.LOGISTICS4_GFIREARMS_303RIFLE,
-            //     )
-            //   : '';
-            // row.LAND_STATISTICS_BEAT_MGT_APPROACH_OTHER_PA_AREA_HA != ''
-            //   ? formData.append(
-            //       'LAND_STATISTICS_BEAT_MGT_APPROACH_OTHER_PA_AREA_HA',
-            //       row.LAND_STATISTICS_BEAT_MGT_APPROACH_OTHER_PA_AREA_HA,
-            //     )
-            //   : '';
-            // row.LOGISTICS4_OTHERS_WATER_TRA != ''
-            //   ? formData.append(
-            //       'LOGISTICS4_OTHERS_WATER_TRA',
-            //       row.LOGISTICS4_OTHERS_WATER_TRA,
-            //     )
-            //   : '';
-
-            // row.LOGISTICS4_OTHERS_WATER_TRA_CONDITION != ''
-            //   ? formData.append(
-            //       'LOGISTICS4_OTHERS_WATER_TRA_CONDITION',
-            //       row.LOGISTICS4_OTHERS_WATER_TRA_CONDITION,
-            //     )
-            //   : '';
-            // row.LOGISTICS4_SHORTGUN_CONDITION != ''
-            //   ? formData.append(
-            //       'LOGISTICS4_SHORTGUN_CONDITION',
-            //       row.LOGISTICS4_SHORTGUN_CONDITION,
-            //     )
-            //   : '';
-            // row.LOGISTICS4_TFIREARMS_CHINESERIFLE_AVAIL != ''
-            //   ? formData.append(
-            //       'LOGISTICS4_TFIREARMS_CHINESERIFLE_AVAIL',
-            //       row.LOGISTICS4_TFIREARMS_CHINESERIFLE_AVAIL,
-            //     )
-            //   : '';
-            // row.LOGISTICS4_CHINESERIFLE_CONDITION != ''
-            //   ? formData.append(
-            //       'LOGISTICS4_CHINESERIFLE_CONDITION',
-            //       row.LOGISTICS4_CHINESERIFLE_CONDITION,
-            //     )
-            //   : '';
-            // row.LOGISTICS4_SLR_CONDITION != ''
-            //   ? formData.append(
-            //       'LOGISTICS4_SLR_CONDITION',
-            //       row.LOGISTICS4_SLR_CONDITION,
-            //     )
-            //   : '';
-            // row.LOGISTICS4_RIFLE303_CONDITION != ''
-            //   ? formData.append(
-            //       'LOGISTICS4_RIFLE303_CONDITION',
-            //       row.LOGISTICS4_RIFLE303_CONDITION,
-            //     )
-            //   : '';
-            // row.LOGISTICS4_OTHERS_WATER_TRA_AVAIL != ''
-            //   ? formData.append(
-            //       'LOGISTICS4_OTHERS_WATER_TRA_AVAIL',
-            //       row.LOGISTICS4_OTHERS_WATER_TRA_AVAIL,
-            //     )
-            //   : '';
-            // row.LOGISTICS4_TFIREARMS_303RIFLE_AVAIL != ''
-            //   ? formData.append(
-            //       'LOGISTICS4_TFIREARMS_303RIFLE_AVAIL',
-            //       row.LOGISTICS4_TFIREARMS_303RIFLE_AVAIL,
-            //     )
-            //   : '';
-            // row.LOGISTICS4_TFIREARMS_SHORTGUN_AVAIL != ''
-            //   ? formData.append(
-            //       'LOGISTICS4_TFIREARMS_SHORTGUN_AVAIL',
-            //       row.LOGISTICS4_TFIREARMS_SHORTGUN_AVAIL,
-            //     )
-            //   : '';
-            // row.LOGISTICS4_TFIREARMS_SLR_AVAIL != ''
-            //   ? formData.append(
-            //       'LOGISTICS4_TFIREARMS_SLR_AVAIL',
-            //       row.LOGISTICS4_TFIREARMS_SLR_AVAIL,
-            //     )
-            //   : '';
-
-            // /*formData.append(
-            //   'LOGISTICS4_OTHERS_WATER_TRA_CONDITION',
-            //   row.LOGISTICS4_OTHERS_WATER_TRA_CONDITION,
-            // );
-
-            // formData.append(
-            //   'LOGISTICS4_SHORTGUN_CONDITION',
-            //   row.LOGISTICS4_SHORTGUN_CONDITION,
-            // );
-
-            // formData.append(
-            //   'LOGISTICS4_TFIREARMS_CHINESERIFLE_AVAIL',
-            //   row.LOGISTICS4_TFIREARMS_CHINESERIFLE_AVAIL,
-            // );
-
-            // formData.append(
-            //   'LOGISTICS4_CHINESERIFLE_CONDITION',
-            //   row.LOGISTICS4_CHINESERIFLE_CONDITION,
-            // );
-
-            // formData.append(
-            //   'LOGISTICS4_SLR_CONDITION',
-            //   row.LOGISTICS4_SLR_CONDITION,
-            // );
-
-            // formData.append(
-            //   'LOGISTICS4_RIFLE303_CONDITION',
-            //   row.LOGISTICS4_RIFLE303_CONDITION,
-            // );
-
-            // formData.append(
-            //   'LOGISTICS4_OTHERS_WATER_TRA_AVAIL',
-            //   row.LOGISTICS4_OTHERS_WATER_TRA_AVAIL,
-            // );
-
-            // formData.append(
-            //   'LOGISTICS4_TFIREARMS_303RIFLE_AVAIL',
-            //   row.LOGISTICS4_TFIREARMS_303RIFLE_AVAIL,
-            // );
-
-            // formData.append(
-            //   'LOGISTICS4_TFIREARMS_SHORTGUN_AVAIL',
-            //   row.LOGISTICS4_TFIREARMS_SHORTGUN_AVAIL,
-            // );
-
-            // formData.append(
-            //   'LOGISTICS4_TFIREARMS_SLR_AVAIL',
-            //   row.LOGISTICS4_TFIREARMS_SLR_AVAIL,
-            // );*/
-
-            // // formData.append(
-            // //   'FBLI_FA_TLOC_FD_BEAT_TXT',
-            // //   row.FBLI_FA_TLOC_FD_BEAT_TXT,
-            // // );
-
-            // // formData.append(
-            // //   'LAND_STATISTICS_BEAT_LAND_INFO_VESTED_FOREST_HA',
-            // //   row.LAND_STATISTICS_BEAT_LAND_INFO_VESTED_FOREST_HA,
-            // // );
-            // // formData.append('SUBSCRIBERID', row.SUBSCRIBERID);
-
-            // // formData.append('DEVICEID', row.DEVICEID);
-
-            // // formData.append(
-            // //   'FBLI_GENERATED_NOTE_NAME_18',
-            // //   row.FBLI_GENERATED_NOTE_NAME_18,
-            // // );
-            // // formData.append(
-            // //   'LAND_STATISTICS_BEAT_LAND_BIO_GENERATED_NOTE_NAME_74',
-            // //   row.LAND_STATISTICS_BEAT_LAND_BIO_GENERATED_NOTE_NAME_74,
-            // // );
-
-            // // formData.append(
-            // //   'LAND_STATISTICS_BEAT_MGT_APPROACH_PA_WS_HA',
-            // //   row.LAND_STATISTICS_BEAT_MGT_APPROACH_PA_WS_HA,
-            // // );
-            // // formData.append(
-            // //   'LOGISTICS4_GENERATED_NOTE_NAME_152',
-            // //   row.LOGISTICS4_GENERATED_NOTE_NAME_152,
-            // // );
-            // // formData.append(
-            // //   'LAND_STATISTICS_BEAT_LAND_BIO_NON_PP_HA',
-            // //   row.LAND_STATISTICS_BEAT_LAND_BIO_NON_PP_HA,
-            // // );
-            // // formData.append(
-            // //   'LAND_STATISTICS_BEAT_LAND_INFO_SECTION_6_HA',
-            // //   row.LAND_STATISTICS_BEAT_LAND_INFO_SECTION_6_HA,
-            // // );
-            // // formData.append('SIMSERIAL', row.SIMSERIAL);
-
-            // // formData.append(
-            // //   'LAND_STATISTICS_BEAT_LAND_BIO_SOCIAL_ACCRETED_HA',
-            // //   row.LAND_STATISTICS_BEAT_LAND_BIO_SOCIAL_ACCRETED_HA,
-            // // );
-            // // formData.append(
-            // //   'GUSER_GENERATED_NOTE_NAME_10',
-            // //   row.GUSER_GENERATED_NOTE_NAME_10,
-            // // );
-            // // formData.append(
-            // //   'LAND_STATISTICS_BEAT_LAND_INFO_OTHER_FORESTAREA_HA',
-            // //   row.LAND_STATISTICS_BEAT_LAND_INFO_OTHER_FORESTAREA_HA,
-            // // );
-
-            // // formData.append(
-            // //   'LAND_TRANSPORTS_GBI_CYCLE',
-            // //   row.LAND_TRANSPORTS_GBI_CYCLE,
-            // // );
-
-            // // formData.append(
-            // //   'LOGISTICS3_GCOUNTRY_BOAT',
-            // //   row.LOGISTICS3_GCOUNTRY_BOAT,
-            // // );
-            // // formData.append(
-            // //   'LOGISTICS4_GFIREARMS_SLR',
-            // //   row.LOGISTICS4_GFIREARMS_SLR,
-            // // );
-
-            // // formData.append(
-            // //   'LAND_STATISTICS_BEAT_LAND_BIO_NATURAL_TO_DC_HA',
-            // //   row.LAND_STATISTICS_BEAT_LAND_BIO_NATURAL_TO_DC_HA,
-            // // );
-
-            // // formData.append(
-            // //   'LAND_STATISTICS_BEAT_MGT_APPROACH_PA_SAFARIPARK_HA',
-            // //   row.LAND_STATISTICS_BEAT_MGT_APPROACH_PA_SAFARIPARK_HA,
-            // // );
-            // // formData.append(
-            // //   'BO_INFO_BO_JOINING_DATE',
-            // //   row.BO_INFO_BO_JOINING_DATE,
-            // // );
-
-            // // formData.append(
-            // //   'GUSER_TLOC_FD_BEAT_POINT_ALT',
-            // //   row.GUSER_TLOC_FD_BEAT_POINT_ALT,
-            // // );
-            // // formData.append(
-            // //   'LAND_STATISTICS_BEAT_LAND_INFO_SECTION_4_HA',
-            // //   row.LAND_STATISTICS_BEAT_LAND_INFO_SECTION_4_HA,
-            // // );
-
-            // // formData.append(
-            // //   'LAND_STATISTICS_BEAT_MGT_APPROACH_PA_SBCA_HA',
-            // //   row.LAND_STATISTICS_BEAT_MGT_APPROACH_PA_SBCA_HA,
-            // // );
-
-            // // formData.append('GUSER_DCOLLECTION', row.GUSER_DCOLLECTION);
-            // // formData.append('END_RAW', row.END_RAW);
-            // // formData.append(
-            // //   'BO_INFO_GENERATED_NOTE_NAME_106',
-            // //   row.BO_INFO_GENERATED_NOTE_NAME_106,
-            // // );
-            // // formData.append(
-            // //   'GENERATED_NOTE_NAME_81',
-            // //   row.GENERATED_NOTE_NAME_81,
-            // // );
-            // // formData.append(
-            // //   'RO_INFO_GENERATED_NOTE_NAME_97',
-            // //   row.RO_INFO_GENERATED_NOTE_NAME_97,
-            // // );
-            // // formData.append(
-            // //   'FBLI_FA_GENERATED_NOTE_NAME_21',
-            // //   row.FBLI_FA_GENERATED_NOTE_NAME_21,
-            // // );
-            // // formData.append(
-            // //   'LAND_TRANSPORTS_GENERATED_NOTE_NAME_125',
-            // //   row.LAND_TRANSPORTS_GENERATED_NOTE_NAME_125,
-            // // );
-
-            // // formData.append(
-            // //   'LAND_STATISTICS_BEAT_LAND_INFO_AQUIRED_FOREST_HA',
-            // //   row.LAND_STATISTICS_BEAT_LAND_INFO_AQUIRED_FOREST_HA,
-            // // );
-
-            // // formData.append(
-            // //   'LAND_STATISTICS_BEAT_MGT_APPROACH_PA_NP_HA',
-            // //   row.LAND_STATISTICS_BEAT_MGT_APPROACH_PA_NP_HA,
-            // // );
-            // // formData.append(
-            // //   'GUSER_TLOC_FD_BEAT_POINT_ACC',
-            // //   row.GUSER_TLOC_FD_BEAT_POINT_ACC,
-            // // );
-
-            // // formData.append(
-            // //   'LAND_STATISTICS_BEAT_LAND_INFO_GENERATED_NOTE_NAME_53',
-            // //   row.LAND_STATISTICS_BEAT_LAND_INFO_GENERATED_NOTE_NAME_53,
-            // // );
-
-            // // formData.append(
-            // //   'LOGISTICS3_OTHERS_WATER_TRA',
-            // //   row.LOGISTICS3_OTHERS_WATER_TRA,
-            // // );
-
-            // // formData.append('END', row.END);
-
-            // // formData.append(
-            // //   'RO_INFO_RO_JOINING_DATE_RAW',
-            // //   row.RO_INFO_RO_JOINING_DATE_RAW,
-            // // );
-            // // formData.append('PHONENUMBER', row.PHONENUMBER);
-            // // formData.append('LOGISTICS3_TRAWLER', row.LOGISTICS3_TRAWLER);
-            // // formData.append(
-            // //   'LOGISTICS4_GFIREARMS_SHORTGUN',
-            // //   row.LOGISTICS4_GFIREARMS_SHORTGUN,
-            // // );
-
-            // // formData.append('START_RAW', row.START_RAW);
-            // // formData.append(
-            // //   'LAND_STATISTICS_TOTAL_LEGAL_LAND_STATS',
-            // //   row.LAND_STATISTICS_TOTAL_LEGAL_LAND_STATS,
-            // // );
-
-            // // formData.append('META_INSTANCE_ID', row.META_INSTANCE_ID);
-
-            // // formData.append(
-            // //   'FBLI_CA_GENERATED_NOTE_NAME_33',
-            // //   row.FBLI_CA_GENERATED_NOTE_NAME_33,
-            // // );
-
-            // // formData.append(
-            // //   'LAND_STATISTICS_BEAT_MGT_APPROACH_GENERATED_NOTE_NAME_65',
-            // //   row.LAND_STATISTICS_BEAT_MGT_APPROACH_GENERATED_NOTE_NAME_65,
-            // // );
-
-            // // formData.append(
-            // //   'LOGISTICS3_GSPEED_BOAT',
-            // //   row.LOGISTICS3_GSPEED_BOAT,
-            // // );
-
-            // // formData.append(
-            // //   'LOGISTICS4_GFIREARMS_CHINESERIFLE',
-            // //   row.LOGISTICS4_GFIREARMS_CHINESERIFLE,
-            // // );
-            // // formData.append('TODAY', row.TODAY);
-            // // formData.append('FBLI_FA_TLOC_FD_CHAR', row.FBLI_FA_TLOC_FD_CHAR);
-            // // formData.append(
-            // //   'LAND_TRANSPORTS_GMOTORBIKE',
-            // //   row.LAND_TRANSPORTS_GMOTORBIKE,
-            // // );
-            // // formData.append(
-            // //   'LAND_STATISTICS_BEAT_LAND_INFO_PROTECTED_FOREST_HA',
-            // //   row.LAND_STATISTICS_BEAT_LAND_INFO_PROTECTED_FOREST_HA,
-            // // );
-            // // formData.append(
-            // //   'LAND_STATISTICS_BEAT_MGT_APPROACH_PA_ECOPARK_HA',
-            // //   row.LAND_STATISTICS_BEAT_MGT_APPROACH_PA_ECOPARK_HA,
-            // // );
-            // // formData.append(
-            // //   'FBLI_FA_TLOC_ENTER_RANGE',
-            // //   row.FBLI_FA_TLOC_ENTER_RANGE,
-            // // );
-            // // formData.append(
-            // //   'LAND_STATISTICS_AREA_SUM',
-            // //   row.LAND_STATISTICS_AREA_SUM,
-            // // );
-
-            // // formData.append(
-            // //   'GENERATED_NOTE_NAME_123',
-            // //   row.GENERATED_NOTE_NAME_123,
-            // // );
-            // // formData.append('START', row.START);
-
-            // // formData.append(
-            // //   'FBLI_FA_TLOC_ENTER_DIV',
-            // //   row.FBLI_FA_TLOC_ENTER_DIV,
-            // // );
-            // // formData.append('TODAY_RAW', row.TODAY_RAW);
-            // // formData.append(
-            // //   'GENERATED_NOTE_NAME_94',
-            // //   row.GENERATED_NOTE_NAME_94,
-            // // );
-
-            // // formData.append(
-            // //   'GENERATED_NOTE_NAME_95',
-            // //   row.GENERATED_NOTE_NAME_95,
-            // // );
-
-            // // formData.append(
-            // //   'LOGISTICS3_GENERATED_NOTE_NAME_137',
-            // //   row.LOGISTICS3_GENERATED_NOTE_NAME_137,
-            // // );
-            // // formData.append('project_id', row.project_id);
-            // // formData.append('sort', row.sort);
-            // // formData.append('last_log_id', row.last_log_id);
-            // // formData.append('restore_id', row.restore_id);
-            // // formData.append('created_at', getCurrentDateandTimeMain());
-            // // formData.append('created_by', row.created_by);
-            // // formData.append('updated_at', getCurrentDateandTimeMain());
-            // // formData.append('updated_by', row.updated_by);
-            // // formData.append('deleted_at', getCurrentDateandTimeMain());
-            // // formData.append('deleted_by', row.deleted_by);
-            // // formData.append('deleted_status', row.deleted_status);
-            // // formData.append('status', true);
-            // // formData.append(
-            // //   'LAND_STATISTICS_BEAT_LAND_BIO_SOCIAL_ACCRETED_SKM',
-            // //   row.LAND_STATISTICS_BEAT_LAND_BIO_SOCIAL_ACCRETED_SKM,
-            // // );
-            // // formData.append(
-            // //   'LAND_STATISTICS_BEAT_LAND_BIO_NON_PP_SKM',
-            // //   row.LAND_STATISTICS_BEAT_LAND_BIO_NON_PP_SKM,
-            // // );
-            // // formData.append(
-            // //   'LAND_STATISTICS_BEAT_LAND_BIO_OTHER_PLANT_SKM',
-            // //   row.LAND_STATISTICS_BEAT_LAND_BIO_OTHER_PLANT_SKM,
-            // // );
-
             const formData = new FormData();
-             //sync data here
-			(row._URI != '' ) ? formData.append('_URI', row._URI) : '';
-(row._CREATOR_URI_USER != '' ) ? formData.append('_CREATOR_URI_USER', row._CREATOR_URI_USER) : '';
-(row._CREATION_DATE != '' ) ? formData.append('_CREATION_DATE', row._CREATION_DATE) : '';
-(row._LAST_UPDATE_URI_USER != '' ) ? formData.append('_LAST_UPDATE_URI_USER', row._LAST_UPDATE_URI_USER) : '';
-(row._LAST_UPDATE_DATE != '' ) ? formData.append('_LAST_UPDATE_DATE', row._LAST_UPDATE_DATE) : '';
-(row._MODEL_VERSION != '' ) ? formData.append('_MODEL_VERSION', row._MODEL_VERSION) : '';
-(row._UI_VERSION != '' ) ? formData.append('_UI_VERSION', row._UI_VERSION) : '';
-(row._IS_COMPLETE != '' ) ? formData.append('_IS_COMPLETE', row._IS_COMPLETE) : '';
-(row._SUBMISSION_DATE != '' ) ? formData.append('_SUBMISSION_DATE', row._SUBMISSION_DATE) : '';
-(row._MARKED_AS_COMPLETE_DATE != '' ) ? formData.append('_MARKED_AS_COMPLETE_DATE', row._MARKED_AS_COMPLETE_DATE) : '';
-(row.LAND_STATISTICS_BEAT_LAND_BIO_OTHER_PLANT_HA != '' ) ? formData.append('LAND_STATISTICS_BEAT_LAND_BIO_OTHER_PLANT_HA', row.LAND_STATISTICS_BEAT_LAND_BIO_OTHER_PLANT_HA) : '';
-(row.GUSER_TLOC_FD_BEAT_POINT_LNG != '' ) ? formData.append('GUSER_TLOC_FD_BEAT_POINT_LNG', row.GUSER_TLOC_FD_BEAT_POINT_LNG) : '';
-(row.FBLI_FA_TLOC_FD_BEAT != '' ) ? formData.append('FBLI_FA_TLOC_FD_BEAT', row.FBLI_FA_TLOC_FD_BEAT) : '';
-(row.LOGISTICS3_COUNTRYBOAT_CONDITION != '' ) ? formData.append('LOGISTICS3_COUNTRYBOAT_CONDITION', row.LOGISTICS3_COUNTRYBOAT_CONDITION) : '';
-(row.LOGISTICS4_GFIREARMS_303RIFLE != '' ) ? formData.append('LOGISTICS4_GFIREARMS_303RIFLE', row.LOGISTICS4_GFIREARMS_303RIFLE) : '';
-(row.LAND_STATISTICS_BEAT_MGT_APPROACH_OTHER_PA_AREA_HA != '' ) ? formData.append('LAND_STATISTICS_BEAT_MGT_APPROACH_OTHER_PA_AREA_HA', row.LAND_STATISTICS_BEAT_MGT_APPROACH_OTHER_PA_AREA_HA) : '';
-(row.LOGISTICS4_OTHERS_WATER_TRA != '' ) ? formData.append('LOGISTICS4_OTHERS_WATER_TRA', row.LOGISTICS4_OTHERS_WATER_TRA) : '';
-(row.BO_INFO_BO_CELL != '' ) ? formData.append('BO_INFO_BO_CELL', row.BO_INFO_BO_CELL) : '';
-(row.LOGISTICS3_TVESSEL_CONDITION != '' ) ? formData.append('LOGISTICS3_TVESSEL_CONDITION', row.LOGISTICS3_TVESSEL_CONDITION) : '';
-(row.RO_INFO_RO_CELL != '' ) ? formData.append('RO_INFO_RO_CELL', row.RO_INFO_RO_CELL) : '';
-(row.LOGISTICS4_TFIREARMS_CHINESERIFLE_AVAIL != '' ) ? formData.append('LOGISTICS4_TFIREARMS_CHINESERIFLE_AVAIL', row.LOGISTICS4_TFIREARMS_CHINESERIFLE_AVAIL) : '';
-(row.LOGISTICS3_TVESSEL_AVAIL != '' ) ? formData.append('LOGISTICS3_TVESSEL_AVAIL', row.LOGISTICS3_TVESSEL_AVAIL) : '';
-(row.FBLI_FA_TLOC_FD_BEAT_TXT != '' ) ? formData.append('FBLI_FA_TLOC_FD_BEAT_TXT', row.FBLI_FA_TLOC_FD_BEAT_TXT) : '';
-(row.LOGISTICS3_SPEEDBOAT_CONDITION != '' ) ? formData.append('LOGISTICS3_SPEEDBOAT_CONDITION', row.LOGISTICS3_SPEEDBOAT_CONDITION) : '';
-(row.FBLI_FA_TLOC_FD_DIVISION != '' ) ? formData.append('FBLI_FA_TLOC_FD_DIVISION', row.FBLI_FA_TLOC_FD_DIVISION) : '';
-(row.LAND_TRANSPORTS_BICYCLE_AVAIL != '' ) ? formData.append('LAND_TRANSPORTS_BICYCLE_AVAIL', row.LAND_TRANSPORTS_BICYCLE_AVAIL) : '';
-(row.LOGISTICS3_OTHERS_WATER_TRA_CONDITION != '' ) ? formData.append('LOGISTICS3_OTHERS_WATER_TRA_CONDITION', row.LOGISTICS3_OTHERS_WATER_TRA_CONDITION) : '';
-(row.LAND_STATISTICS_BEAT_LAND_INFO_VESTED_FOREST_HA != '' ) ? formData.append('LAND_STATISTICS_BEAT_LAND_INFO_VESTED_FOREST_HA', row.LAND_STATISTICS_BEAT_LAND_INFO_VESTED_FOREST_HA) : '';
-(row.SUBSCRIBERID != '' ) ? formData.append('SUBSCRIBERID', row.SUBSCRIBERID) : '';
-(row.GUSER_USER != '' ) ? formData.append('GUSER_USER', row.GUSER_USER) : '';
-(row.RO_INFO_NAME_OF_RO != '' ) ? formData.append('RO_INFO_NAME_OF_RO', row.RO_INFO_NAME_OF_RO) : '';
-(row.FBLI_FA_TLOC_FD_BLOCK != '' ) ? formData.append('FBLI_FA_TLOC_FD_BLOCK', row.FBLI_FA_TLOC_FD_BLOCK) : '';
-(row.DEVICEID != '' ) ? formData.append('DEVICEID', row.DEVICEID) : '';
-(row.LAND_TRANSPORTS_MOTORB_CONDITION != '' ) ? formData.append('LAND_TRANSPORTS_MOTORB_CONDITION', row.LAND_TRANSPORTS_MOTORB_CONDITION) : '';
-(row.FBLI_GENERATED_NOTE_NAME_18 != '' ) ? formData.append('FBLI_GENERATED_NOTE_NAME_18', row.FBLI_GENERATED_NOTE_NAME_18) : '';
-(row.LAND_STATISTICS_BEAT_LAND_BIO_GENERATED_NOTE_NAME_74 != '' ) ? formData.append('LAND_STATISTICS_BEAT_LAND_BIO_GENERATED_NOTE_NAME_74', row.LAND_STATISTICS_BEAT_LAND_BIO_GENERATED_NOTE_NAME_74) : '';
-(row.LOGISTICS4_CHINESERIFLE_CONDITION != '' ) ? formData.append('LOGISTICS4_CHINESERIFLE_CONDITION', row.LOGISTICS4_CHINESERIFLE_CONDITION) : '';
-(row.LOGISTICS3_SPEEDBOAT_AVAIL != '' ) ? formData.append('LOGISTICS3_SPEEDBOAT_AVAIL', row.LOGISTICS3_SPEEDBOAT_AVAIL) : '';
-(row.LAND_STATISTICS_BEAT_MGT_APPROACH_PA_WS_HA != '' ) ? formData.append('LAND_STATISTICS_BEAT_MGT_APPROACH_PA_WS_HA', row.LAND_STATISTICS_BEAT_MGT_APPROACH_PA_WS_HA) : '';
-(row.LOGISTICS4_GENERATED_NOTE_NAME_152 != '' ) ? formData.append('LOGISTICS4_GENERATED_NOTE_NAME_152', row.LOGISTICS4_GENERATED_NOTE_NAME_152) : '';
-(row.LAND_STATISTICS_BEAT_LAND_BIO_NON_PP_HA != '' ) ? formData.append('LAND_STATISTICS_BEAT_LAND_BIO_NON_PP_HA', row.LAND_STATISTICS_BEAT_LAND_BIO_NON_PP_HA) : '';
-(row.LAND_STATISTICS_BEAT_LAND_INFO_SECTION_6_HA != '' ) ? formData.append('LAND_STATISTICS_BEAT_LAND_INFO_SECTION_6_HA', row.LAND_STATISTICS_BEAT_LAND_INFO_SECTION_6_HA) : '';
-(row.SIMSERIAL != '' ) ? formData.append('SIMSERIAL', row.SIMSERIAL) : '';
-(row.GUSER_DCOLLECTION_RAW != '' ) ? formData.append('GUSER_DCOLLECTION_RAW', row.GUSER_DCOLLECTION_RAW) : '';
-(row.LAND_TRANSPORTS_BICYCLE_CONDITION != '' ) ? formData.append('LAND_TRANSPORTS_BICYCLE_CONDITION', row.LAND_TRANSPORTS_BICYCLE_CONDITION) : '';
-(row.LAND_STATISTICS_BEAT_LAND_BIO_SOCIAL_ACCRETED_HA != '' ) ? formData.append('LAND_STATISTICS_BEAT_LAND_BIO_SOCIAL_ACCRETED_HA', row.LAND_STATISTICS_BEAT_LAND_BIO_SOCIAL_ACCRETED_HA) : '';
-(row.GUSER_GENERATED_NOTE_NAME_10 != '' ) ? formData.append('GUSER_GENERATED_NOTE_NAME_10', row.GUSER_GENERATED_NOTE_NAME_10) : '';
-(row.LAND_STATISTICS_BEAT_LAND_INFO_OTHER_FORESTAREA_HA != '' ) ? formData.append('LAND_STATISTICS_BEAT_LAND_INFO_OTHER_FORESTAREA_HA', row.LAND_STATISTICS_BEAT_LAND_INFO_OTHER_FORESTAREA_HA) : '';
-(row.BO_INFO_BO_NID != '' ) ? formData.append('BO_INFO_BO_NID', row.BO_INFO_BO_NID) : '';
-(row.LAND_TRANSPORTS_GBI_CYCLE != '' ) ? formData.append('LAND_TRANSPORTS_GBI_CYCLE', row.LAND_TRANSPORTS_GBI_CYCLE) : '';
-(row.LAND_TRANSPORTS_OTHERS_LAND_TRA != '' ) ? formData.append('LAND_TRANSPORTS_OTHERS_LAND_TRA', row.LAND_TRANSPORTS_OTHERS_LAND_TRA) : '';
-(row.LOGISTICS3_GCOUNTRY_BOAT != '' ) ? formData.append('LOGISTICS3_GCOUNTRY_BOAT', row.LOGISTICS3_GCOUNTRY_BOAT) : '';
-(row.LOGISTICS4_GFIREARMS_SLR != '' ) ? formData.append('LOGISTICS4_GFIREARMS_SLR', row.LOGISTICS4_GFIREARMS_SLR) : '';
-(row.FBLI_FA_TLOC_FD_CIR != '' ) ? formData.append('FBLI_FA_TLOC_FD_CIR', row.FBLI_FA_TLOC_FD_CIR) : '';
-(row.LAND_TRANSPORTS_MOTORB_AVAIL != '' ) ? formData.append('LAND_TRANSPORTS_MOTORB_AVAIL', row.LAND_TRANSPORTS_MOTORB_AVAIL) : '';
-(row.LAND_TRANSPORTS_OTHERS_LAND_TRA_CONDITION != '' ) ? formData.append('LAND_TRANSPORTS_OTHERS_LAND_TRA_CONDITION', row.LAND_TRANSPORTS_OTHERS_LAND_TRA_CONDITION) : '';
-(row.RO_INFO_RO_JOINING_DATE != '' ) ? formData.append('RO_INFO_RO_JOINING_DATE', row.RO_INFO_RO_JOINING_DATE) : '';
-(row.LOGISTICS4_OTHERS_WATER_TRA_CONDITION != '' ) ? formData.append('LOGISTICS4_OTHERS_WATER_TRA_CONDITION', row.LOGISTICS4_OTHERS_WATER_TRA_CONDITION) : '';
-(row.LAND_STATISTICS_BEAT_LAND_BIO_NATURAL_TO_DC_HA != '' ) ? formData.append('LAND_STATISTICS_BEAT_LAND_BIO_NATURAL_TO_DC_HA', row.LAND_STATISTICS_BEAT_LAND_BIO_NATURAL_TO_DC_HA) : '';
-(row.RO_INFO_RO_RANK != '' ) ? formData.append('RO_INFO_RO_RANK', row.RO_INFO_RO_RANK) : '';
-(row.LAND_TRANSPORTS_OTHERS_LAND_TRA_AVAIL != '' ) ? formData.append('LAND_TRANSPORTS_OTHERS_LAND_TRA_AVAIL', row.LAND_TRANSPORTS_OTHERS_LAND_TRA_AVAIL) : '';
-(row.LAND_STATISTICS_BEAT_MGT_APPROACH_PA_SAFARIPARK_HA != '' ) ? formData.append('LAND_STATISTICS_BEAT_MGT_APPROACH_PA_SAFARIPARK_HA', row.LAND_STATISTICS_BEAT_MGT_APPROACH_PA_SAFARIPARK_HA) : '';
-(row.BO_INFO_BO_JOINING_DATE != '' ) ? formData.append('BO_INFO_BO_JOINING_DATE', row.BO_INFO_BO_JOINING_DATE) : '';
-(row.GUSER_USER_CELL != '' ) ? formData.append('GUSER_USER_CELL', row.GUSER_USER_CELL) : '';
-(row.RO_INFO_RO_NID != '' ) ? formData.append('RO_INFO_RO_NID', row.RO_INFO_RO_NID) : '';
-(row.GUSER_TLOC_FD_BEAT_POINT_ALT != '' ) ? formData.append('GUSER_TLOC_FD_BEAT_POINT_ALT', row.GUSER_TLOC_FD_BEAT_POINT_ALT) : '';
-(row.LAND_STATISTICS_BEAT_LAND_INFO_SECTION_4_HA != '' ) ? formData.append('LAND_STATISTICS_BEAT_LAND_INFO_SECTION_4_HA', row.LAND_STATISTICS_BEAT_LAND_INFO_SECTION_4_HA) : '';
-(row.GUSER_TLOC_FD_BEAT_POINT_LAT != '' ) ? formData.append('GUSER_TLOC_FD_BEAT_POINT_LAT', row.GUSER_TLOC_FD_BEAT_POINT_LAT) : '';
-(row.LAND_STATISTICS_BEAT_MGT_APPROACH_PA_SBCA_HA != '' ) ? formData.append('LAND_STATISTICS_BEAT_MGT_APPROACH_PA_SBCA_HA', row.LAND_STATISTICS_BEAT_MGT_APPROACH_PA_SBCA_HA) : '';
-(row.LOGISTICS4_RIFLE303_CONDITION != '' ) ? formData.append('LOGISTICS4_RIFLE303_CONDITION', row.LOGISTICS4_RIFLE303_CONDITION) : '';
-(row.GUSER_DCOLLECTION != '' ) ? formData.append('GUSER_DCOLLECTION', row.GUSER_DCOLLECTION) : '';
-(row.END_RAW != '' ) ? formData.append('END_RAW', row.END_RAW) : '';
-(row.BO_INFO_GENERATED_NOTE_NAME_106 != '' ) ? formData.append('BO_INFO_GENERATED_NOTE_NAME_106', row.BO_INFO_GENERATED_NOTE_NAME_106) : '';
-(row.GENERATED_NOTE_NAME_81 != '' ) ? formData.append('GENERATED_NOTE_NAME_81', row.GENERATED_NOTE_NAME_81) : '';
-(row.RO_INFO_GENERATED_NOTE_NAME_97 != '' ) ? formData.append('RO_INFO_GENERATED_NOTE_NAME_97', row.RO_INFO_GENERATED_NOTE_NAME_97) : '';
-(row.FBLI_FA_GENERATED_NOTE_NAME_21 != '' ) ? formData.append('FBLI_FA_GENERATED_NOTE_NAME_21', row.FBLI_FA_GENERATED_NOTE_NAME_21) : '';
-(row.LAND_TRANSPORTS_GENERATED_NOTE_NAME_125 != '' ) ? formData.append('LAND_TRANSPORTS_GENERATED_NOTE_NAME_125', row.LAND_TRANSPORTS_GENERATED_NOTE_NAME_125) : '';
-(row.GUSER_BEAT_ADDRESS != '' ) ? formData.append('GUSER_BEAT_ADDRESS', row.GUSER_BEAT_ADDRESS) : '';
-(row.LAND_STATISTICS_BEAT_LAND_INFO_AQUIRED_FOREST_HA != '' ) ? formData.append('LAND_STATISTICS_BEAT_LAND_INFO_AQUIRED_FOREST_HA', row.LAND_STATISTICS_BEAT_LAND_INFO_AQUIRED_FOREST_HA) : '';
-(row.BO_INFO_BO_JOINING_DATE_RAW != '' ) ? formData.append('BO_INFO_BO_JOINING_DATE_RAW', row.BO_INFO_BO_JOINING_DATE_RAW) : '';
-(row.LAND_STATISTICS_BEAT_MGT_APPROACH_PA_NP_HA != '' ) ? formData.append('LAND_STATISTICS_BEAT_MGT_APPROACH_PA_NP_HA', row.LAND_STATISTICS_BEAT_MGT_APPROACH_PA_NP_HA) : '';
-(row.GUSER_TLOC_FD_BEAT_POINT_ACC != '' ) ? formData.append('GUSER_TLOC_FD_BEAT_POINT_ACC', row.GUSER_TLOC_FD_BEAT_POINT_ACC) : '';
-(row.LOGISTICS3_COUNTRYBOAT_AVAIL != '' ) ? formData.append('LOGISTICS3_COUNTRYBOAT_AVAIL', row.LOGISTICS3_COUNTRYBOAT_AVAIL) : '';
-(row.FBLI_CA_TLOC_AD_DISTRICT != '' ) ? formData.append('FBLI_CA_TLOC_AD_DISTRICT', row.FBLI_CA_TLOC_AD_DISTRICT) : '';
-(row.BO_INFO_NAME_OF_BO != '' ) ? formData.append('BO_INFO_NAME_OF_BO', row.BO_INFO_NAME_OF_BO) : '';
-(row.LAND_STATISTICS_BEAT_LAND_INFO_GENERATED_NOTE_NAME_53 != '' ) ? formData.append('LAND_STATISTICS_BEAT_LAND_INFO_GENERATED_NOTE_NAME_53', row.LAND_STATISTICS_BEAT_LAND_INFO_GENERATED_NOTE_NAME_53) : '';
-(row.LAND_STATISTICS_BEAT_LAND_INFO_RESERVED_FOREST_HA != '' ) ? formData.append('LAND_STATISTICS_BEAT_LAND_INFO_RESERVED_FOREST_HA', row.LAND_STATISTICS_BEAT_LAND_INFO_RESERVED_FOREST_HA) : '';
-(row.LOGISTICS3_OTHERS_WATER_TRA != '' ) ? formData.append('LOGISTICS3_OTHERS_WATER_TRA', row.LOGISTICS3_OTHERS_WATER_TRA) : '';
-(row.FBLI_TLOC_ECOZONE != '' ) ? formData.append('FBLI_TLOC_ECOZONE', row.FBLI_TLOC_ECOZONE) : '';
-(row.BO_INFO_BO_RANK != '' ) ? formData.append('BO_INFO_BO_RANK', row.BO_INFO_BO_RANK) : '';
-(row.LOGISTICS4_SLR_CONDITION != '' ) ? formData.append('LOGISTICS4_SLR_CONDITION', row.LOGISTICS4_SLR_CONDITION) : '';
-(row.END != '' ) ? formData.append('END', row.END) : '';
-(row.FBLI_FA_TLOC_FD_RANGE != '' ) ? formData.append('FBLI_FA_TLOC_FD_RANGE', row.FBLI_FA_TLOC_FD_RANGE) : '';
-(row.RO_INFO_RO_JOINING_DATE_RAW != '' ) ? formData.append('RO_INFO_RO_JOINING_DATE_RAW', row.RO_INFO_RO_JOINING_DATE_RAW) : '';
-(row.PHONENUMBER != '' ) ? formData.append('PHONENUMBER', row.PHONENUMBER) : '';
-(row.LOGISTICS3_TRAWLER != '' ) ? formData.append('LOGISTICS3_TRAWLER', row.LOGISTICS3_TRAWLER) : '';
-(row.LOGISTICS4_GFIREARMS_SHORTGUN != '' ) ? formData.append('LOGISTICS4_GFIREARMS_SHORTGUN', row.LOGISTICS4_GFIREARMS_SHORTGUN) : '';
-(row.LOGISTICS4_SHORTGUN_CONDITION != '' ) ? formData.append('LOGISTICS4_SHORTGUN_CONDITION', row.LOGISTICS4_SHORTGUN_CONDITION) : '';
-(row.START_RAW != '' ) ? formData.append('START_RAW', row.START_RAW) : '';
-(row.LAND_STATISTICS_TOTAL_LEGAL_LAND_STATS != '' ) ? formData.append('LAND_STATISTICS_TOTAL_LEGAL_LAND_STATS', row.LAND_STATISTICS_TOTAL_LEGAL_LAND_STATS) : '';
-(row.BO_INFO_BO_MAIL != '' ) ? formData.append('BO_INFO_BO_MAIL', row.BO_INFO_BO_MAIL) : '';
-(row.META_INSTANCE_ID != '' ) ? formData.append('META_INSTANCE_ID', row.META_INSTANCE_ID) : '';
-(row.LOGISTICS4_TFIREARMS_SHORTGUN_AVAIL != '' ) ? formData.append('LOGISTICS4_TFIREARMS_SHORTGUN_AVAIL', row.LOGISTICS4_TFIREARMS_SHORTGUN_AVAIL) : '';
-(row.FBLI_CA_GENERATED_NOTE_NAME_33 != '' ) ? formData.append('FBLI_CA_GENERATED_NOTE_NAME_33', row.FBLI_CA_GENERATED_NOTE_NAME_33) : '';
-(row.FBLI_CA_TLOC_AD_DIVISION != '' ) ? formData.append('FBLI_CA_TLOC_AD_DIVISION', row.FBLI_CA_TLOC_AD_DIVISION) : '';
-(row.LAND_STATISTICS_BEAT_MGT_APPROACH_GENERATED_NOTE_NAME_65 != '' ) ? formData.append('LAND_STATISTICS_BEAT_MGT_APPROACH_GENERATED_NOTE_NAME_65', row.LAND_STATISTICS_BEAT_MGT_APPROACH_GENERATED_NOTE_NAME_65) : '';
-(row.LOGISTICS4_OTHERS_WATER_TRA_AVAIL != '' ) ? formData.append('LOGISTICS4_OTHERS_WATER_TRA_AVAIL', row.LOGISTICS4_OTHERS_WATER_TRA_AVAIL) : '';
-(row.LOGISTICS3_GSPEED_BOAT != '' ) ? formData.append('LOGISTICS3_GSPEED_BOAT', row.LOGISTICS3_GSPEED_BOAT) : '';
-(row.LOGISTICS4_TFIREARMS_303RIFLE_AVAIL != '' ) ? formData.append('LOGISTICS4_TFIREARMS_303RIFLE_AVAIL', row.LOGISTICS4_TFIREARMS_303RIFLE_AVAIL) : '';
-(row.LOGISTICS4_GFIREARMS_CHINESERIFLE != '' ) ? formData.append('LOGISTICS4_GFIREARMS_CHINESERIFLE', row.LOGISTICS4_GFIREARMS_CHINESERIFLE) : '';
-(row.TODAY != '' ) ? formData.append('TODAY', row.TODAY) : '';
-(row.FBLI_FA_TLOC_FD_CHAR != '' ) ? formData.append('FBLI_FA_TLOC_FD_CHAR', row.FBLI_FA_TLOC_FD_CHAR) : '';
-(row.LAND_TRANSPORTS_GMOTORBIKE != '' ) ? formData.append('LAND_TRANSPORTS_GMOTORBIKE', row.LAND_TRANSPORTS_GMOTORBIKE) : '';
-(row.LAND_STATISTICS_BEAT_LAND_INFO_PROTECTED_FOREST_HA != '' ) ? formData.append('LAND_STATISTICS_BEAT_LAND_INFO_PROTECTED_FOREST_HA', row.LAND_STATISTICS_BEAT_LAND_INFO_PROTECTED_FOREST_HA) : '';
-(row.LAND_STATISTICS_BEAT_MGT_APPROACH_PA_ECOPARK_HA != '' ) ? formData.append('LAND_STATISTICS_BEAT_MGT_APPROACH_PA_ECOPARK_HA', row.LAND_STATISTICS_BEAT_MGT_APPROACH_PA_ECOPARK_HA) : '';
-(row.FBLI_FA_TLOC_ENTER_RANGE != '' ) ? formData.append('FBLI_FA_TLOC_ENTER_RANGE', row.FBLI_FA_TLOC_ENTER_RANGE) : '';
-(row.LAND_STATISTICS_AREA_SUM != '' ) ? formData.append('LAND_STATISTICS_AREA_SUM', row.LAND_STATISTICS_AREA_SUM) : '';
-(row.RO_INFO_RO_MAIL != '' ) ? formData.append('RO_INFO_RO_MAIL', row.RO_INFO_RO_MAIL) : '';
-(row.GENERATED_NOTE_NAME_123 != '' ) ? formData.append('GENERATED_NOTE_NAME_123', row.GENERATED_NOTE_NAME_123) : '';
-(row.START != '' ) ? formData.append('START', row.START) : '';
-(row.FBLI_CA_UNION != '' ) ? formData.append('FBLI_CA_UNION', row.FBLI_CA_UNION) : '';
-(row.FBLI_FA_TLOC_ENTER_DIV != '' ) ? formData.append('FBLI_FA_TLOC_ENTER_DIV', row.FBLI_FA_TLOC_ENTER_DIV) : '';
-(row.TODAY_RAW != '' ) ? formData.append('TODAY_RAW', row.TODAY_RAW) : '';
-(row.GENERATED_NOTE_NAME_94 != '' ) ? formData.append('GENERATED_NOTE_NAME_94', row.GENERATED_NOTE_NAME_94) : '';
-(row.LOGISTICS3_OTHERS_WATER_TRA_AVAIL != '' ) ? formData.append('LOGISTICS3_OTHERS_WATER_TRA_AVAIL', row.LOGISTICS3_OTHERS_WATER_TRA_AVAIL) : '';
-(row.GENERATED_NOTE_NAME_95 != '' ) ? formData.append('GENERATED_NOTE_NAME_95', row.GENERATED_NOTE_NAME_95) : '';
-(row.LOGISTICS4_TFIREARMS_SLR_AVAIL != '' ) ? formData.append('LOGISTICS4_TFIREARMS_SLR_AVAIL', row.LOGISTICS4_TFIREARMS_SLR_AVAIL) : '';
-(row.LOGISTICS3_GENERATED_NOTE_NAME_137 != '' ) ? formData.append('LOGISTICS3_GENERATED_NOTE_NAME_137', row.LOGISTICS3_GENERATED_NOTE_NAME_137) : '';
-(row.project_id != '' ) ? formData.append('project_id', row.project_id) : '';
-(row.sort != '' ) ? formData.append('sort', row.sort) : '';
-(row.last_log_id != '' ) ? formData.append('last_log_id', row.last_log_id) : '';
-(row.restore_id != '' ) ? formData.append('restore_id', row.restore_id) : '';
-(row.created_at != '' ) ? formData.append('created_at', row.created_at) : '';
-(row.created_by != '' ) ? formData.append('created_by', row.created_by) : '';
-(row.updated_at != '' ) ? formData.append('updated_at', row.updated_at) : '';
-(row.updated_by != '' ) ? formData.append('updated_by', row.updated_by) : '';
-(row.deleted_at != '' ) ? formData.append('deleted_at', row.deleted_at) : '';
-(row.deleted_by != '' ) ? formData.append('deleted_by', row.deleted_by) : '';
-(row.deleted_status != '' ) ? formData.append('deleted_status', row.deleted_status) : '';
-(row.status != '' ) ? formData.append('status', row.status) : '';
-(row.LAND_STATISTICS_BEAT_LAND_BIO_SOCIAL_ACCRETED_SKM != '' ) ? formData.append('LAND_STATISTICS_BEAT_LAND_BIO_SOCIAL_ACCRETED_SKM', row.LAND_STATISTICS_BEAT_LAND_BIO_SOCIAL_ACCRETED_SKM) : '';
-(row.LAND_STATISTICS_BEAT_LAND_BIO_NON_PP_SKM != '' ) ? formData.append('LAND_STATISTICS_BEAT_LAND_BIO_NON_PP_SKM', row.LAND_STATISTICS_BEAT_LAND_BIO_NON_PP_SKM) : '';
-(row.LAND_STATISTICS_BEAT_LAND_BIO_OTHER_PLANT_SKM != '' ) ? formData.append('LAND_STATISTICS_BEAT_LAND_BIO_OTHER_PLANT_SKM', row.LAND_STATISTICS_BEAT_LAND_BIO_OTHER_PLANT_SKM) : '';
+            formData.append('_URI', row._URI);
+            formData.append('_CREATOR_URI_USER', row._CREATOR_URI_USER);
+            formData.append('_CREATION_DATE', getCurrentDateandTimeMain());
+            formData.append('_LAST_UPDATE_URI_USER', row._LAST_UPDATE_URI_USER);
+            formData.append('_LAST_UPDATE_DATE', getCurrentDateandTimeMain());
+            formData.append('GUSER_DCOLLECTION_RAW', row.GUSER_DCOLLECTION_RAW);
+            formData.append('GUSER_USER', row.GUSER_USER);
+            formData.append(
+              'GUSER_TLOC_FD_BEAT_POINT_LNG',
+              row.GUSER_TLOC_FD_BEAT_POINT_LNG,
+            );
+            row.GUSER_TLOC_FD_BEAT_POINT_LAT != ''
+              ? formData.append(
+                  'GUSER_TLOC_FD_BEAT_POINT_LAT',
+                  row.GUSER_TLOC_FD_BEAT_POINT_LAT,
+                )
+              : '';
+            /*formData.append('FBLI_FA_TLOC_FD_BEAT', row.FBLI_FA_TLOC_FD_BEAT);
+            formData.append(
+              'FBLI_FA_TLOC_FD_DIVISION',
+              row.FBLI_FA_TLOC_FD_DIVISION,
+            );
+            formData.append('FBLI_FA_TLOC_FD_BLOCK', row.FBLI_FA_TLOC_FD_BLOCK);
+            formData.append('FBLI_FA_TLOC_FD_CIR', row.FBLI_FA_TLOC_FD_CIR);
+
+            formData.append('GUSER_USER_CELL', row.GUSER_USER_CELL);
+            formData.append(
+              'FBLI_CA_TLOC_AD_DISTRICT',
+              row.FBLI_CA_TLOC_AD_DISTRICT,
+            );
+            formData.append(
+              'FBLI_CA_TLOC_AD_DIVISION',
+              row.FBLI_CA_TLOC_AD_DIVISION,
+            );*/
+            row.FBLI_FA_TLOC_FD_BEAT != ''
+              ? formData.append(
+                  'FBLI_FA_TLOC_FD_BEAT',
+                  row.FBLI_FA_TLOC_FD_BEAT,
+                )
+              : '';
+            row.FBLI_FA_TLOC_FD_DIVISION != ''
+              ? formData.append(
+                  'FBLI_FA_TLOC_FD_DIVISION',
+                  row.FBLI_FA_TLOC_FD_DIVISION,
+                )
+              : '';
+            row.FBLI_FA_TLOC_FD_BLOCK != ''
+              ? formData.append(
+                  'FBLI_FA_TLOC_FD_BLOCK',
+                  row.FBLI_FA_TLOC_FD_BLOCK,
+                )
+              : '';
+            row.FBLI_FA_TLOC_FD_CIR != ''
+              ? formData.append('FBLI_FA_TLOC_FD_CIR', row.FBLI_FA_TLOC_FD_CIR)
+              : '';
+            row.GUSER_USER_CELL != ''
+              ? formData.append('GUSER_USER_CELL', row.GUSER_USER_CELL)
+              : '';
+            row.FBLI_CA_TLOC_AD_DISTRICT != ''
+              ? formData.append(
+                  'FBLI_CA_TLOC_AD_DISTRICT',
+                  row.FBLI_CA_TLOC_AD_DISTRICT,
+                )
+              : '';
+            row.FBLI_CA_TLOC_AD_DIVISION != ''
+              ? formData.append(
+                  'FBLI_CA_TLOC_AD_DIVISION',
+                  row.FBLI_CA_TLOC_AD_DIVISION,
+                )
+              : '';
+
+            row.GUSER_BEAT_ADDRESS != ''
+              ? formData.append('GUSER_BEAT_ADDRESS', row.GUSER_BEAT_ADDRESS)
+              : '';
+            row.FBLI_TLOC_ECOZONE != ''
+              ? formData.append('FBLI_TLOC_ECOZONE', row.FBLI_TLOC_ECOZONE)
+              : '';
+            row.FBLI_FA_TLOC_FD_RANGE != ''
+              ? formData.append(
+                  'FBLI_FA_TLOC_FD_RANGE',
+                  row.FBLI_FA_TLOC_FD_RANGE,
+                )
+              : '';
+            row.FBLI_CA_UNION != ''
+              ? formData.append('FBLI_CA_UNION', row.FBLI_CA_UNION)
+              : '';
+            row.LAND_STATISTICS_BEAT_LAND_INFO_RESERVED_FOREST_HA != ''
+              ? formData.append(
+                  'LAND_STATISTICS_BEAT_LAND_INFO_RESERVED_FOREST_HA',
+                  row.LAND_STATISTICS_BEAT_LAND_INFO_RESERVED_FOREST_HA,
+                )
+              : '';
+
+            row.RO_INFO_NAME_OF_RO != ''
+              ? formData.append('RO_INFO_NAME_OF_RO', row.RO_INFO_NAME_OF_RO)
+              : '';
+            row.RO_INFO_RO_CELL != ''
+              ? formData.append('RO_INFO_RO_CELL', row.RO_INFO_RO_CELL)
+              : '';
+            row.RO_INFO_RO_JOINING_DATE_RAW != ''
+              ? formData.append(
+                  'RO_INFO_RO_JOINING_DATE_RAW',
+                  row.RO_INFO_RO_JOINING_DATE_RAW,
+                )
+              : '';
+            row.RO_INFO_RO_MAIL != ''
+              ? formData.append('RO_INFO_RO_MAIL', row.RO_INFO_RO_MAIL)
+              : '';
+            row.RO_INFO_RO_NID != ''
+              ? formData.append('RO_INFO_RO_NID', row.RO_INFO_RO_NID)
+              : '';
+            row.RO_INFO_RO_RANK != ''
+              ? formData.append('RO_INFO_RO_RANK', row.RO_INFO_RO_RANK)
+              : '';
+            row.BO_INFO_BO_JOINING_DATE_RAW != ''
+              ? formData.append(
+                  'BO_INFO_BO_JOINING_DATE_RAW',
+                  row.BO_INFO_BO_JOINING_DATE_RAW,
+                )
+              : '';
+            row.BO_INFO_NAME_OF_BO != ''
+              ? formData.append('BO_INFO_NAME_OF_BO', row.BO_INFO_NAME_OF_BO)
+              : '';
+            row.BO_INFO_BO_MAIL != ''
+              ? formData.append('BO_INFO_BO_MAIL', row.BO_INFO_BO_MAIL)
+              : '';
+            row.BO_INFO_BO_RANK != ''
+              ? formData.append('BO_INFO_BO_RANK', row.BO_INFO_BO_RANK)
+              : '';
+            row.BO_INFO_BO_CELL != ''
+              ? formData.append('BO_INFO_BO_CELL', row.BO_INFO_BO_CELL)
+              : '';
+            row.BO_INFO_BO_NID != ''
+              ? formData.append('BO_INFO_BO_NID', row.BO_INFO_BO_NID)
+              : '';
+
+            /*formData.append(
+              'LAND_TRANSPORTS_MOTORB_CONDITION',
+              row.LAND_TRANSPORTS_MOTORB_CONDITION,
+            );
+            // formData.append(
+            //   'LAND_TRANSPORTS_BICYCLE_AVAIL',
+            //   row.LAND_TRANSPORTS_BICYCLE_AVAIL,
+            // );
+
+            formData.append(
+              'LAND_TRANSPORTS_BICYCLE_CONDITION',
+              row.LAND_TRANSPORTS_BICYCLE_CONDITION,
+            );
+
+            // formData.append(
+            //   'LAND_TRANSPORTS_MOTORB_AVAIL',
+            //   row.LAND_TRANSPORTS_MOTORB_AVAIL,
+            // );
+            formData.append(
+              'LAND_TRANSPORTS_OTHERS_LAND_TRA_CONDITION',
+              row.LAND_TRANSPORTS_OTHERS_LAND_TRA_CONDITION,
+            );
+
+            // formData.append(
+            //   'LOGISTICS3_TVESSEL_CONDITION',
+            //   row.LOGISTICS3_TVESSEL_CONDITION,
+            // );
+
+            // formData.append(
+            //   'LOGISTICS3_COUNTRYBOAT_CONDITION',
+            //   row.LOGISTICS3_COUNTRYBOAT_CONDITION,
+            // );
+
+            // formData.append(
+            //   'LOGISTICS3_TVESSEL_AVAIL',
+            //   row.LOGISTICS3_TVESSEL_AVAIL,
+            // );
+
+            // formData.append(
+            //   'LOGISTICS3_OTHERS_WATER_TRA_CONDITION',
+            //   row.LOGISTICS3_OTHERS_WATER_TRA_CONDITION,
+            // );
+
+            // formData.append(
+            //   'LOGISTICS3_COUNTRYBOAT_AVAIL',
+            //   row.LOGISTICS3_COUNTRYBOAT_AVAIL,
+            // );
+
+            // formData.append(
+            //   'LOGISTICS3_SPEEDBOAT_CONDITION',
+            //   row.LOGISTICS3_SPEEDBOAT_CONDITION,
+            // );
+
+            // formData.append(
+            //   'LOGISTICS3_SPEEDBOAT_AVAIL',
+            //   row.LOGISTICS3_SPEEDBOAT_AVAIL,
+            // );
+
+            // formData.append(
+            //   'LOGISTICS3_OTHERS_WATER_TRA_AVAIL',
+            //   row.LOGISTICS3_OTHERS_WATER_TRA_AVAIL,
+            // );
+            // formData.append(
+            //   'LAND_TRANSPORTS_OTHERS_LAND_TRA_AVAIL',
+            //   row.LAND_TRANSPORTS_OTHERS_LAND_TRA_AVAIL,
+            // );
+
+            // -----------
+
+            // formData.append(
+            //   'LAND_TRANSPORTS_OTHERS_LAND_TRA',
+            //   row.LAND_TRANSPORTS_OTHERS_LAND_TRA,
+            // );
+            // formData.append('_MODEL_VERSION', row._MODEL_VERSION);
+            // formData.append('_UI_VERSION', row._UI_VERSION);
+            // formData.append('_IS_COMPLETE', row._IS_COMPLETE);
+            // formData.append('_SUBMISSION_DATE', getCurrentDateandTimeMain());
+            // formData.append(
+            //   '_MARKED_AS_COMPLETE_DATE',
+            //   getCurrentDateandTimeMain(),
+            // );
+            // formData.append(
+            //   'LAND_STATISTICS_BEAT_LAND_BIO_OTHER_PLANT_HA',
+            //   row.LAND_STATISTICS_BEAT_LAND_BIO_OTHER_PLANT_HA,
+            // );
+
+            // formData.append(
+            //   'LOGISTICS4_GFIREARMS_303RIFLE',
+            //   row.LOGISTICS4_GFIREARMS_303RIFLE,
+            // );
+            // formData.append(
+            //   'LAND_STATISTICS_BEAT_MGT_APPROACH_OTHER_PA_AREA_HA',
+            //   row.LAND_STATISTICS_BEAT_MGT_APPROACH_OTHER_PA_AREA_HA,
+            // );
+            // formData.append(
+            //   'LOGISTICS4_OTHERS_WATER_TRA',
+            //   row.LOGISTICS4_OTHERS_WATER_TRA,
+            // );*/
+            row.LAND_TRANSPORTS_MOTORB_CONDITION != ''
+              ? formData.append(
+                  'LAND_TRANSPORTS_MOTORB_CONDITION',
+                  row.LAND_TRANSPORTS_MOTORB_CONDITION,
+                )
+              : '';
+            row.LAND_TRANSPORTS_BICYCLE_AVAIL != ''
+              ? formData.append(
+                  'LAND_TRANSPORTS_BICYCLE_AVAIL',
+                  row.LAND_TRANSPORTS_BICYCLE_AVAIL,
+                )
+              : '';
+            row.LAND_TRANSPORTS_BICYCLE_CONDITION != ''
+              ? formData.append(
+                  'LAND_TRANSPORTS_BICYCLE_CONDITION',
+                  row.LAND_TRANSPORTS_BICYCLE_CONDITION,
+                )
+              : '';
+            row.LAND_TRANSPORTS_MOTORB_AVAIL != ''
+              ? formData.append(
+                  'LAND_TRANSPORTS_MOTORB_AVAIL',
+                  row.LAND_TRANSPORTS_MOTORB_AVAIL,
+                )
+              : '';
+            row.LAND_TRANSPORTS_OTHERS_LAND_TRA_CONDITION != ''
+              ? formData.append(
+                  'LAND_TRANSPORTS_OTHERS_LAND_TRA_CONDITION',
+                  row.LAND_TRANSPORTS_OTHERS_LAND_TRA_CONDITION,
+                )
+              : '';
+            row.LOGISTICS3_TVESSEL_CONDITION != ''
+              ? formData.append(
+                  'LOGISTICS3_TVESSEL_CONDITION',
+                  row.LOGISTICS3_TVESSEL_CONDITION,
+                )
+              : '';
+            row.LOGISTICS3_COUNTRYBOAT_CONDITION != ''
+              ? formData.append(
+                  'LOGISTICS3_COUNTRYBOAT_CONDITION',
+                  row.LOGISTICS3_COUNTRYBOAT_CONDITION,
+                )
+              : '';
+            row.LOGISTICS3_TVESSEL_AVAIL != ''
+              ? formData.append(
+                  'LOGISTICS3_TVESSEL_AVAIL',
+                  row.LOGISTICS3_TVESSEL_AVAIL,
+                )
+              : '';
+            row.LOGISTICS3_OTHERS_WATER_TRA_CONDITION != ''
+              ? formData.append(
+                  'LOGISTICS3_OTHERS_WATER_TRA_CONDITION',
+                  row.LOGISTICS3_OTHERS_WATER_TRA_CONDITION,
+                )
+              : '';
+            row.LOGISTICS3_COUNTRYBOAT_AVAIL != ''
+              ? formData.append(
+                  'LOGISTICS3_COUNTRYBOAT_AVAIL',
+                  row.LOGISTICS3_COUNTRYBOAT_AVAIL,
+                )
+              : '';
+            row.LOGISTICS3_SPEEDBOAT_CONDITION != ''
+              ? formData.append(
+                  'LOGISTICS3_SPEEDBOAT_CONDITION',
+                  row.LOGISTICS3_SPEEDBOAT_CONDITION,
+                )
+              : '';
+            row.LOGISTICS3_SPEEDBOAT_AVAIL != ''
+              ? formData.append(
+                  'LOGISTICS3_SPEEDBOAT_AVAIL',
+                  row.LOGISTICS3_SPEEDBOAT_AVAIL,
+                )
+              : '';
+            row.LOGISTICS3_OTHERS_WATER_TRA_AVAIL != ''
+              ? formData.append(
+                  'LOGISTICS3_OTHERS_WATER_TRA_AVAIL',
+                  row.LOGISTICS3_OTHERS_WATER_TRA_AVAIL,
+                )
+              : '';
+            row.LAND_TRANSPORTS_OTHERS_LAND_TRA_AVAIL != ''
+              ? formData.append(
+                  'LAND_TRANSPORTS_OTHERS_LAND_TRA_AVAIL',
+                  row.LAND_TRANSPORTS_OTHERS_LAND_TRA_AVAIL,
+                )
+              : '';
+            row.LAND_TRANSPORTS_OTHERS_LAND_TRA != ''
+              ? formData.append(
+                  'LAND_TRANSPORTS_OTHERS_LAND_TRA',
+                  row.LAND_TRANSPORTS_OTHERS_LAND_TRA,
+                )
+              : '';
+            row._MODEL_VERSION != ''
+              ? formData.append('_MODEL_VERSION', row._MODEL_VERSION)
+              : '';
+            row._UI_VERSION != ''
+              ? formData.append('_UI_VERSION', row._UI_VERSION)
+              : '';
+            row._IS_COMPLETE != ''
+              ? formData.append('_IS_COMPLETE', row._IS_COMPLETE)
+              : '';
+            row._SUBMISSION_DATE != ''
+              ? formData.append('_SUBMISSION_DATE', getCurrentDateandTimeMain())
+              : '';
+            row._MARKED_AS_COMPLETE_DATE != ''
+              ? formData.append(
+                  '_MARKED_AS_COMPLETE_DATE',
+                  getCurrentDateandTimeMain(),
+                )
+              : '';
+            row.LAND_STATISTICS_BEAT_LAND_BIO_OTHER_PLANT_HA != ''
+              ? formData.append(
+                  'LAND_STATISTICS_BEAT_LAND_BIO_OTHER_PLANT_HA',
+                  row.LAND_STATISTICS_BEAT_LAND_BIO_OTHER_PLANT_HA,
+                )
+              : '';
+            row.LOGISTICS4_GFIREARMS_303RIFLE != ''
+              ? formData.append(
+                  'LOGISTICS4_GFIREARMS_303RIFLE',
+                  row.LOGISTICS4_GFIREARMS_303RIFLE,
+                )
+              : '';
+            row.LAND_STATISTICS_BEAT_MGT_APPROACH_OTHER_PA_AREA_HA != ''
+              ? formData.append(
+                  'LAND_STATISTICS_BEAT_MGT_APPROACH_OTHER_PA_AREA_HA',
+                  row.LAND_STATISTICS_BEAT_MGT_APPROACH_OTHER_PA_AREA_HA,
+                )
+              : '';
+            row.LOGISTICS4_OTHERS_WATER_TRA != ''
+              ? formData.append(
+                  'LOGISTICS4_OTHERS_WATER_TRA',
+                  row.LOGISTICS4_OTHERS_WATER_TRA,
+                )
+              : '';
+
+            row.LOGISTICS4_OTHERS_WATER_TRA_CONDITION != ''
+              ? formData.append(
+                  'LOGISTICS4_OTHERS_WATER_TRA_CONDITION',
+                  row.LOGISTICS4_OTHERS_WATER_TRA_CONDITION,
+                )
+              : '';
+            row.LOGISTICS4_SHORTGUN_CONDITION != ''
+              ? formData.append(
+                  'LOGISTICS4_SHORTGUN_CONDITION',
+                  row.LOGISTICS4_SHORTGUN_CONDITION,
+                )
+              : '';
+            row.LOGISTICS4_TFIREARMS_CHINESERIFLE_AVAIL != ''
+              ? formData.append(
+                  'LOGISTICS4_TFIREARMS_CHINESERIFLE_AVAIL',
+                  row.LOGISTICS4_TFIREARMS_CHINESERIFLE_AVAIL,
+                )
+              : '';
+            row.LOGISTICS4_CHINESERIFLE_CONDITION != ''
+              ? formData.append(
+                  'LOGISTICS4_CHINESERIFLE_CONDITION',
+                  row.LOGISTICS4_CHINESERIFLE_CONDITION,
+                )
+              : '';
+            row.LOGISTICS4_SLR_CONDITION != ''
+              ? formData.append(
+                  'LOGISTICS4_SLR_CONDITION',
+                  row.LOGISTICS4_SLR_CONDITION,
+                )
+              : '';
+            row.LOGISTICS4_RIFLE303_CONDITION != ''
+              ? formData.append(
+                  'LOGISTICS4_RIFLE303_CONDITION',
+                  row.LOGISTICS4_RIFLE303_CONDITION,
+                )
+              : '';
+            row.LOGISTICS4_OTHERS_WATER_TRA_AVAIL != ''
+              ? formData.append(
+                  'LOGISTICS4_OTHERS_WATER_TRA_AVAIL',
+                  row.LOGISTICS4_OTHERS_WATER_TRA_AVAIL,
+                )
+              : '';
+            row.LOGISTICS4_TFIREARMS_303RIFLE_AVAIL != ''
+              ? formData.append(
+                  'LOGISTICS4_TFIREARMS_303RIFLE_AVAIL',
+                  row.LOGISTICS4_TFIREARMS_303RIFLE_AVAIL,
+                )
+              : '';
+            row.LOGISTICS4_TFIREARMS_SHORTGUN_AVAIL != ''
+              ? formData.append(
+                  'LOGISTICS4_TFIREARMS_SHORTGUN_AVAIL',
+                  row.LOGISTICS4_TFIREARMS_SHORTGUN_AVAIL,
+                )
+              : '';
+            row.LOGISTICS4_TFIREARMS_SLR_AVAIL != ''
+              ? formData.append(
+                  'LOGISTICS4_TFIREARMS_SLR_AVAIL',
+                  row.LOGISTICS4_TFIREARMS_SLR_AVAIL,
+                )
+              : '';
+
+            /*formData.append(
+              'LOGISTICS4_OTHERS_WATER_TRA_CONDITION',
+              row.LOGISTICS4_OTHERS_WATER_TRA_CONDITION,
+            );
+
+            formData.append(
+              'LOGISTICS4_SHORTGUN_CONDITION',
+              row.LOGISTICS4_SHORTGUN_CONDITION,
+            );
+
+            formData.append(
+              'LOGISTICS4_TFIREARMS_CHINESERIFLE_AVAIL',
+              row.LOGISTICS4_TFIREARMS_CHINESERIFLE_AVAIL,
+            );
+
+            formData.append(
+              'LOGISTICS4_CHINESERIFLE_CONDITION',
+              row.LOGISTICS4_CHINESERIFLE_CONDITION,
+            );
+
+            formData.append(
+              'LOGISTICS4_SLR_CONDITION',
+              row.LOGISTICS4_SLR_CONDITION,
+            );
+
+            formData.append(
+              'LOGISTICS4_RIFLE303_CONDITION',
+              row.LOGISTICS4_RIFLE303_CONDITION,
+            );
+
+            formData.append(
+              'LOGISTICS4_OTHERS_WATER_TRA_AVAIL',
+              row.LOGISTICS4_OTHERS_WATER_TRA_AVAIL,
+            );
+
+            formData.append(
+              'LOGISTICS4_TFIREARMS_303RIFLE_AVAIL',
+              row.LOGISTICS4_TFIREARMS_303RIFLE_AVAIL,
+            );
+
+            formData.append(
+              'LOGISTICS4_TFIREARMS_SHORTGUN_AVAIL',
+              row.LOGISTICS4_TFIREARMS_SHORTGUN_AVAIL,
+            );
+
+            formData.append(
+              'LOGISTICS4_TFIREARMS_SLR_AVAIL',
+              row.LOGISTICS4_TFIREARMS_SLR_AVAIL,
+            );*/
+
+            // formData.append(
+            //   'FBLI_FA_TLOC_FD_BEAT_TXT',
+            //   row.FBLI_FA_TLOC_FD_BEAT_TXT,
+            // );
+
+            // formData.append(
+            //   'LAND_STATISTICS_BEAT_LAND_INFO_VESTED_FOREST_HA',
+            //   row.LAND_STATISTICS_BEAT_LAND_INFO_VESTED_FOREST_HA,
+            // );
+            // formData.append('SUBSCRIBERID', row.SUBSCRIBERID);
+
+            // formData.append('DEVICEID', row.DEVICEID);
+
+            // formData.append(
+            //   'FBLI_GENERATED_NOTE_NAME_18',
+            //   row.FBLI_GENERATED_NOTE_NAME_18,
+            // );
+            // formData.append(
+            //   'LAND_STATISTICS_BEAT_LAND_BIO_GENERATED_NOTE_NAME_74',
+            //   row.LAND_STATISTICS_BEAT_LAND_BIO_GENERATED_NOTE_NAME_74,
+            // );
+
+            // formData.append(
+            //   'LAND_STATISTICS_BEAT_MGT_APPROACH_PA_WS_HA',
+            //   row.LAND_STATISTICS_BEAT_MGT_APPROACH_PA_WS_HA,
+            // );
+            // formData.append(
+            //   'LOGISTICS4_GENERATED_NOTE_NAME_152',
+            //   row.LOGISTICS4_GENERATED_NOTE_NAME_152,
+            // );
+            // formData.append(
+            //   'LAND_STATISTICS_BEAT_LAND_BIO_NON_PP_HA',
+            //   row.LAND_STATISTICS_BEAT_LAND_BIO_NON_PP_HA,
+            // );
+            // formData.append(
+            //   'LAND_STATISTICS_BEAT_LAND_INFO_SECTION_6_HA',
+            //   row.LAND_STATISTICS_BEAT_LAND_INFO_SECTION_6_HA,
+            // );
+            // formData.append('SIMSERIAL', row.SIMSERIAL);
+
+            // formData.append(
+            //   'LAND_STATISTICS_BEAT_LAND_BIO_SOCIAL_ACCRETED_HA',
+            //   row.LAND_STATISTICS_BEAT_LAND_BIO_SOCIAL_ACCRETED_HA,
+            // );
+            // formData.append(
+            //   'GUSER_GENERATED_NOTE_NAME_10',
+            //   row.GUSER_GENERATED_NOTE_NAME_10,
+            // );
+            // formData.append(
+            //   'LAND_STATISTICS_BEAT_LAND_INFO_OTHER_FORESTAREA_HA',
+            //   row.LAND_STATISTICS_BEAT_LAND_INFO_OTHER_FORESTAREA_HA,
+            // );
+
+            // formData.append(
+            //   'LAND_TRANSPORTS_GBI_CYCLE',
+            //   row.LAND_TRANSPORTS_GBI_CYCLE,
+            // );
+
+            // formData.append(
+            //   'LOGISTICS3_GCOUNTRY_BOAT',
+            //   row.LOGISTICS3_GCOUNTRY_BOAT,
+            // );
+            // formData.append(
+            //   'LOGISTICS4_GFIREARMS_SLR',
+            //   row.LOGISTICS4_GFIREARMS_SLR,
+            // );
+
+            // formData.append(
+            //   'LAND_STATISTICS_BEAT_LAND_BIO_NATURAL_TO_DC_HA',
+            //   row.LAND_STATISTICS_BEAT_LAND_BIO_NATURAL_TO_DC_HA,
+            // );
+
+            // formData.append(
+            //   'LAND_STATISTICS_BEAT_MGT_APPROACH_PA_SAFARIPARK_HA',
+            //   row.LAND_STATISTICS_BEAT_MGT_APPROACH_PA_SAFARIPARK_HA,
+            // );
+            // formData.append(
+            //   'BO_INFO_BO_JOINING_DATE',
+            //   row.BO_INFO_BO_JOINING_DATE,
+            // );
+
+            // formData.append(
+            //   'GUSER_TLOC_FD_BEAT_POINT_ALT',
+            //   row.GUSER_TLOC_FD_BEAT_POINT_ALT,
+            // );
+            // formData.append(
+            //   'LAND_STATISTICS_BEAT_LAND_INFO_SECTION_4_HA',
+            //   row.LAND_STATISTICS_BEAT_LAND_INFO_SECTION_4_HA,
+            // );
+
+            // formData.append(
+            //   'LAND_STATISTICS_BEAT_MGT_APPROACH_PA_SBCA_HA',
+            //   row.LAND_STATISTICS_BEAT_MGT_APPROACH_PA_SBCA_HA,
+            // );
+
+            // formData.append('GUSER_DCOLLECTION', row.GUSER_DCOLLECTION);
+            // formData.append('END_RAW', row.END_RAW);
+            // formData.append(
+            //   'BO_INFO_GENERATED_NOTE_NAME_106',
+            //   row.BO_INFO_GENERATED_NOTE_NAME_106,
+            // );
+            // formData.append(
+            //   'GENERATED_NOTE_NAME_81',
+            //   row.GENERATED_NOTE_NAME_81,
+            // );
+            // formData.append(
+            //   'RO_INFO_GENERATED_NOTE_NAME_97',
+            //   row.RO_INFO_GENERATED_NOTE_NAME_97,
+            // );
+            // formData.append(
+            //   'FBLI_FA_GENERATED_NOTE_NAME_21',
+            //   row.FBLI_FA_GENERATED_NOTE_NAME_21,
+            // );
+            // formData.append(
+            //   'LAND_TRANSPORTS_GENERATED_NOTE_NAME_125',
+            //   row.LAND_TRANSPORTS_GENERATED_NOTE_NAME_125,
+            // );
+
+            // formData.append(
+            //   'LAND_STATISTICS_BEAT_LAND_INFO_AQUIRED_FOREST_HA',
+            //   row.LAND_STATISTICS_BEAT_LAND_INFO_AQUIRED_FOREST_HA,
+            // );
+
+            // formData.append(
+            //   'LAND_STATISTICS_BEAT_MGT_APPROACH_PA_NP_HA',
+            //   row.LAND_STATISTICS_BEAT_MGT_APPROACH_PA_NP_HA,
+            // );
+            // formData.append(
+            //   'GUSER_TLOC_FD_BEAT_POINT_ACC',
+            //   row.GUSER_TLOC_FD_BEAT_POINT_ACC,
+            // );
+
+            // formData.append(
+            //   'LAND_STATISTICS_BEAT_LAND_INFO_GENERATED_NOTE_NAME_53',
+            //   row.LAND_STATISTICS_BEAT_LAND_INFO_GENERATED_NOTE_NAME_53,
+            // );
+
+            // formData.append(
+            //   'LOGISTICS3_OTHERS_WATER_TRA',
+            //   row.LOGISTICS3_OTHERS_WATER_TRA,
+            // );
+
+            // formData.append('END', row.END);
+
+            // formData.append(
+            //   'RO_INFO_RO_JOINING_DATE_RAW',
+            //   row.RO_INFO_RO_JOINING_DATE_RAW,
+            // );
+            // formData.append('PHONENUMBER', row.PHONENUMBER);
+            // formData.append('LOGISTICS3_TRAWLER', row.LOGISTICS3_TRAWLER);
+            // formData.append(
+            //   'LOGISTICS4_GFIREARMS_SHORTGUN',
+            //   row.LOGISTICS4_GFIREARMS_SHORTGUN,
+            // );
+
+            // formData.append('START_RAW', row.START_RAW);
+            // formData.append(
+            //   'LAND_STATISTICS_TOTAL_LEGAL_LAND_STATS',
+            //   row.LAND_STATISTICS_TOTAL_LEGAL_LAND_STATS,
+            // );
+
+            // formData.append('META_INSTANCE_ID', row.META_INSTANCE_ID);
+
+            // formData.append(
+            //   'FBLI_CA_GENERATED_NOTE_NAME_33',
+            //   row.FBLI_CA_GENERATED_NOTE_NAME_33,
+            // );
+
+            // formData.append(
+            //   'LAND_STATISTICS_BEAT_MGT_APPROACH_GENERATED_NOTE_NAME_65',
+            //   row.LAND_STATISTICS_BEAT_MGT_APPROACH_GENERATED_NOTE_NAME_65,
+            // );
+
+            // formData.append(
+            //   'LOGISTICS3_GSPEED_BOAT',
+            //   row.LOGISTICS3_GSPEED_BOAT,
+            // );
+
+            // formData.append(
+            //   'LOGISTICS4_GFIREARMS_CHINESERIFLE',
+            //   row.LOGISTICS4_GFIREARMS_CHINESERIFLE,
+            // );
+            // formData.append('TODAY', row.TODAY);
+            // formData.append('FBLI_FA_TLOC_FD_CHAR', row.FBLI_FA_TLOC_FD_CHAR);
+            // formData.append(
+            //   'LAND_TRANSPORTS_GMOTORBIKE',
+            //   row.LAND_TRANSPORTS_GMOTORBIKE,
+            // );
+            // formData.append(
+            //   'LAND_STATISTICS_BEAT_LAND_INFO_PROTECTED_FOREST_HA',
+            //   row.LAND_STATISTICS_BEAT_LAND_INFO_PROTECTED_FOREST_HA,
+            // );
+            // formData.append(
+            //   'LAND_STATISTICS_BEAT_MGT_APPROACH_PA_ECOPARK_HA',
+            //   row.LAND_STATISTICS_BEAT_MGT_APPROACH_PA_ECOPARK_HA,
+            // );
+            // formData.append(
+            //   'FBLI_FA_TLOC_ENTER_RANGE',
+            //   row.FBLI_FA_TLOC_ENTER_RANGE,
+            // );
+            // formData.append(
+            //   'LAND_STATISTICS_AREA_SUM',
+            //   row.LAND_STATISTICS_AREA_SUM,
+            // );
+
+            // formData.append(
+            //   'GENERATED_NOTE_NAME_123',
+            //   row.GENERATED_NOTE_NAME_123,
+            // );
+            // formData.append('START', row.START);
+
+            // formData.append(
+            //   'FBLI_FA_TLOC_ENTER_DIV',
+            //   row.FBLI_FA_TLOC_ENTER_DIV,
+            // );
+            // formData.append('TODAY_RAW', row.TODAY_RAW);
+            // formData.append(
+            //   'GENERATED_NOTE_NAME_94',
+            //   row.GENERATED_NOTE_NAME_94,
+            // );
+
+            // formData.append(
+            //   'GENERATED_NOTE_NAME_95',
+            //   row.GENERATED_NOTE_NAME_95,
+            // );
+
+            // formData.append(
+            //   'LOGISTICS3_GENERATED_NOTE_NAME_137',
+            //   row.LOGISTICS3_GENERATED_NOTE_NAME_137,
+            // );
+            // formData.append('project_id', row.project_id);
+            // formData.append('sort', row.sort);
+            // formData.append('last_log_id', row.last_log_id);
+            // formData.append('restore_id', row.restore_id);
+            // formData.append('created_at', getCurrentDateandTimeMain());
+            // formData.append('created_by', row.created_by);
+            // formData.append('updated_at', getCurrentDateandTimeMain());
+            // formData.append('updated_by', row.updated_by);
+            // formData.append('deleted_at', getCurrentDateandTimeMain());
+            // formData.append('deleted_by', row.deleted_by);
+            // formData.append('deleted_status', row.deleted_status);
+            // formData.append('status', true);
+            // formData.append(
+            //   'LAND_STATISTICS_BEAT_LAND_BIO_SOCIAL_ACCRETED_SKM',
+            //   row.LAND_STATISTICS_BEAT_LAND_BIO_SOCIAL_ACCRETED_SKM,
+            // );
+            // formData.append(
+            //   'LAND_STATISTICS_BEAT_LAND_BIO_NON_PP_SKM',
+            //   row.LAND_STATISTICS_BEAT_LAND_BIO_NON_PP_SKM,
+            // );
+            // formData.append(
+            //   'LAND_STATISTICS_BEAT_LAND_BIO_OTHER_PLANT_SKM',
+            //   row.LAND_STATISTICS_BEAT_LAND_BIO_OTHER_PLANT_SKM,
+            // );
 
             console.log('FormData to be sent:', formData._parts);
             formData._parts.forEach((value, key) => {
@@ -64095,12 +63929,12 @@ export const gener43_2021_fbli_m_sh1_sync = async uri => {
 
       // Execute SQL query to fetch data
       tx.executeSql(
-        `SELECT * FROM GENER43_2021_FBLI_M_SH1 WHERE _PARENT_AURI =? OR _TOP_LEVEL_AURI = ?`,
+        `SELECT * FROM GENER43_2021_FBLI_M_SH1 WHERE _URI = ?`,
         [uri],
         async (_, resultSet) => {
           if (resultSet.rows.length > 0) {
             const row = resultSet.rows.item(0);
-            console.log('Data to be sent: for add new one', row._URI);
+            console.log('Data to be sent:', row._URI);
 
             // Create FormData instance and append data
             const formData = new FormData();

@@ -854,7 +854,7 @@ const App = () => {
   useEffect(() => {
     const fetchUserId = async () => {
       try {
-        const userId = await AsyncStorage.getItem('userId');
+        const userId = await AsyncStorage.getItem('userID');
         setUserId(userId);
         setIsLoading(false); // Set loading to false after fetching userId
         console.log(userId, 'app..');

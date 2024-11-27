@@ -24,6 +24,7 @@ import {
   gener43_2021_core_sync,
   gener43_2021_core_to_live,
   gener43_2021_fbli_m_sh1_list,
+  gener43_2021_fbli_m_sh1_sync,
   gener43_2021_gvillages_create,
   gener43_2021_gvillages_list,
   gener43_2021_overallnotes_ima_blb_create,
@@ -575,6 +576,7 @@ const beatFour = () => {
     console.log('clicked,,,,,', uId);
 
     await gener43_2021_core_sync(uId);
+    await gener43_2021_fbli_m_sh1_sync(uId);
   };
 
   const beatFour = async () => {

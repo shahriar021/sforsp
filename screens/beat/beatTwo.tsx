@@ -75,10 +75,10 @@ const beatTwo = () => {
 
   const [Gnatissues, setGnatissues] = useState([]);
   const [Humissues, setHumissues] = useState([]);
-  const [selectedForest, setSelectedForest] = useState(null);
+  const [selectedForest, setSelectedForest] = useState('');
 
-  const [selectedNaturalIssue, setSelectedNaturalIssue] = useState(null);
-  const [selectedHumanIssue, setSelectedHumanIssue] = useState(null);
+  const [selectedNaturalIssue, setSelectedNaturalIssue] = useState('');
+  const [selectedHumanIssue, setSelectedHumanIssue] = useState('');
 
   const [image, setImage] = useState([]);
 
@@ -362,16 +362,16 @@ const beatTwo = () => {
       LAND_STATISTICS_BEAT_MGT_APPROACH_PA_NP_HA: inputValue11,
       LAND_STATISTICS_BEAT_MGT_APPROACH_PA_ECOPARK_HA: inputValue12,
       LAND_STATISTICS_BEAT_MGT_APPROACH_PA_SAFARIPARK_HA: inputValue13,
-      LAND_STATISTICS_BEAT_MGT_APPROACH_PA_SBCA_HA: inputValue13,
-      LAND_STATISTICS_BEAT_MGT_APPROACH_OTHER_PA_AREA_HA: inputValue13,
+      LAND_STATISTICS_BEAT_MGT_APPROACH_PA_SBCA_HA: inputValue14,
+      LAND_STATISTICS_BEAT_MGT_APPROACH_OTHER_PA_AREA_HA: inputValue15,
 
-      LAND_STATISTICS_BEAT_LAND_BIO_NATURAL_TO_DC_HA: inputValue14,
-      LAND_STATISTICS_BEAT_LAND_BIO_SOCIAL_ACCRETED_HA: inputValue15,
-      LAND_STATISTICS_BEAT_LAND_BIO_SOCIAL_ACCRETED_SKM: inputValue16,
-      LAND_STATISTICS_BEAT_LAND_BIO_NON_PP_HA: inputValue17,
-      LAND_STATISTICS_BEAT_LAND_BIO_NON_PP_SKM: inputValue18,
-      LAND_STATISTICS_BEAT_LAND_BIO_OTHER_PLANT_HA: inputValue19,
-      LAND_STATISTICS_BEAT_LAND_BIO_OTHER_PLANT_SKM: inputValue20,
+      LAND_STATISTICS_BEAT_LAND_BIO_NATURAL_TO_DC_HA: inputValue16,
+      LAND_STATISTICS_BEAT_LAND_BIO_SOCIAL_ACCRETED_HA: inputValue17,
+      LAND_STATISTICS_BEAT_LAND_BIO_SOCIAL_ACCRETED_SKM: inputValue18,
+      LAND_STATISTICS_BEAT_LAND_BIO_NON_PP_HA: inputValue19,
+      LAND_STATISTICS_BEAT_LAND_BIO_NON_PP_SKM: inputValue20,
+      LAND_STATISTICS_BEAT_LAND_BIO_OTHER_PLANT_HA: inputValue21,
+      LAND_STATISTICS_BEAT_LAND_BIO_OTHER_PLANT_SKM: inputValue22,
     };
 
     const dataToInsertimageOne = {

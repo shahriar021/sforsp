@@ -78,6 +78,7 @@ const beatThree = () => {
   const [OthersInfo, setOthersInfo] = useState('');
 
   const [showPicker, setShowPicker] = useState(false);
+  const [showPicker2, setShowPicker2] = useState(false);
   const [date, setDate] = useState(new Date());
   const [selectedForest, setSelectedForest] = useState(null);
 
@@ -143,6 +144,18 @@ const beatThree = () => {
       // TODO: Save `formattedDate` to the database as needed
     }
     setShowPicker(false); // Hide the picker after selection
+  };
+
+  const handleValueChange2 = (event, newDate) => {
+    // When user selects a date
+    if (newDate) {
+      const formattedDate = `${newDate.getFullYear()}-${String(
+        newDate.getMonth() + 1,
+      ).padStart(2, '0')}-07`; // Formats as yyyy-mm-07 (sets the day as 07)
+      setInputValue6b3(formattedDate);
+      // TODO: Save `formattedDate` to the database as needed
+    }
+    setShowPicker2(false); // Hide the picker after selection
   };
 
   const tableData = [];
@@ -223,6 +236,7 @@ const beatThree = () => {
       BO_INFO_BO_CELL: inputValue6b3,
       BO_INFO_BO_NID: inputValue6b4,
       BO_INFO_BO_MAIL: inputValue6b5,
+      
       LAND_TRANSPORTS_MOTORB_AVAIL: inputValue7,
       LAND_TRANSPORTS_MOTORB_CONDITION: selectedLogistic1,
       LAND_TRANSPORTS_BICYCLE_AVAIL: inputValue8,
@@ -245,10 +259,10 @@ const beatThree = () => {
       LOGISTICS4_SLR_CONDITION: selectedLogistic9,
       LOGISTICS4_TFIREARMS_SHORTGUN_AVAIL: inputValue16,
       LOGISTICS4_SHORTGUN_CONDITION: selectedLogistic10,
-      LOGISTICS4_TFIREARMS_CHINESERIFLE_AVAIL: inputValue17,
+      LOGISTICS4_TFIREARMS_CHINESERIFLE_AVAIL: inputValue18,
       LOGISTICS4_CHINESERIFLE_CONDITION: selectedLogistic11,
-      LOGISTICS4_OTHERS_WATER_TRA_AVAIL: selectedLogistic11,
-      LOGISTICS4_OTHERS_WATER_TRA_CONDITION: selectedLogistic11,
+      LOGISTICS4_OTHERS_WATER_TRA_AVAIL: inputValue19,
+      LOGISTICS4_OTHERS_WATER_TRA_CONDITION: selectedLogistic12,
     };
     console.log(dataToInsert, 'in three..');
     try {
@@ -374,12 +388,26 @@ const beatThree = () => {
           />
 
           <Text style={styles.label}>Joining date of the Range/Beat::</Text>
-          <TextInput
+          {/* <TextInput
             style={styles.input}
             placeholder="Type here"
             value={inputValue6b3}
             onChangeText={text => setInputValue6b3(text)}
-          />
+          /> */}
+
+          <TouchableOpacity onPress={() => setShowPicker2(true)}>
+            <Text style={styles.input}>{inputValue6b3 || 'Select date'}</Text>
+          </TouchableOpacity>
+
+          {showPicker2 && (
+            <MonthPicker
+              onChange={handleValueChange2}
+              value={new Date()} // default value for picker, can be adjusted
+              minimumDate={new Date(2000, 0)} // optional
+              maximumDate={new Date(2030, 11)} // optional
+              mode="short" // or "full"
+            />
+          )}
 
           <Text style={styles.label}>Mobile Number::</Text>
           <TextInput
@@ -995,7 +1023,7 @@ const beatThree = () => {
           placeholder="Type here Short Gun"
           value={inputValue16}
           keyboardType="numeric"
-          onChangeText={text => setInputValue17(text)}
+          onChangeText={text => setInputValue16(text)}
           placeholderTextColor="black"
         />
         <Dropdown

@@ -810,54 +810,55 @@ const LoginScreen = ({navigation}) => {
   // };
 
   const handleLogin = async () => {
-    navigation.push('tabview_dashboard');
-    // if (email === '' || password === '') {
-    //   ToastAndroid.show('Please enter email and password', ToastAndroid.SHORT);
-    //   return;
-    // }
+    //navigation.push('tabview_dashboard');
+    if (email === '' || password === '') {
+      ToastAndroid.show('Please enter email and password', ToastAndroid.SHORT);
+      return;
+    }
 
-    // const formData = new FormData();
-    // formData.append('email', email);
-    // formData.append('password', password);
+    const formData = new FormData();
+    formData.append('email', email);
+    formData.append('password', password);
 
-    // try {
-    //   const response = await fetch(
-    //     'https://ssp.urbanitsolution.com/api/users?token=15694294d23a00f6852b5465cbe141f5aba0ff44',
-    //     {
-    //       method: 'POST',
-    //       body: formData,
-    //     },
-    //   );
+    try {
+      const response = await fetch(
+        'https://ssp.urbanitsolution.com/api/users?token=15694294d23a00f6852b5465cbe141f5aba0ff44',
+        {
+          method: 'POST',
+          body: formData,
+        },
+      );
 
-    //   console.log('Response:', response);
+      console.log('Response:', response);
 
-    //   if (!response.ok) {
-    //     throw new Error(`HTTP error! status: ${response.status}`);
-    //   }
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
-    //   const data = await response.json();
-    //   console.log('Parsed Response Data:', data);
+      const data = await response.json();
+      console.log('Parsed Response Data:', data);
 
-    //   // Check if the response contains any user data
-    //   if (Array.isArray(data) && data.length > 0) {
-    //     const user = data[0]; // Access the first user object from the array
+      // Check if the response contains any user data
+      if (Array.isArray(data) && data.length > 0) {
+        const user = data[0]; // Access the first user object from the array
 
-    //     // Check if the email and password match
-    //     if (user.email === email && password) {
-    //       console.log('Login successful:', user);
-    //       navigation.push('tabview_dashboard');
-    //     } else {
-    //       console.log('Login failed: Invalid email or password');
-    //       ToastAndroid.show('Invalid email or password', ToastAndroid.SHORT);
-    //     }
-    //   } else {
-    //     console.log('Login failed: No user found');
-    //     ToastAndroid.show('No user found', ToastAndroid.SHORT);
-    //   }
-    // } catch (error) {
-    //   console.error('Error during login:', error);
-    //   ToastAndroid.show('Login failed. Please try again.', ToastAndroid.SHORT);
-    // }
+        // Check if the email and password match
+        if (user.email === email && password) {
+          console.log('Login successful:', user.id);
+          await AsyncStorage.setItem('userID', user.id.toString());
+          navigation.push('tabview_dashboard');
+        } else {
+          console.log('Login failed: Invalid email or password');
+          ToastAndroid.show('Invalid email or password', ToastAndroid.SHORT);
+        }
+      } else {
+        console.log('Login failed: No user found');
+        ToastAndroid.show('No user found', ToastAndroid.SHORT);
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
+      ToastAndroid.show('Login failed. Please try again.', ToastAndroid.SHORT);
+    }
   };
 
   const phoneInput = useRef();

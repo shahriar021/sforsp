@@ -57,6 +57,7 @@ import {
 import useUUID from '../../hooks/useUUID';
 import useCreateUri from '../../hooks/useCreatUri';
 import useInternetConnection from '../../hooks/useInternetConnection';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const beatOne = () => {
   const [uuidadd2, setuuidadd2] = useState('');
@@ -90,15 +91,16 @@ const beatOne = () => {
   const [showPicker, setShowPicker] = useState(false);
   const [date, setDate] = useState(new Date());
 
-  const [selectedForest, setSelectedForest] = useState(null);
-  const [selectedForestCircle, setSelectedForestCircle] = useState(null);
-  const [selectedForestDivision, setSelectedForestDivision] = useState(null);
-  const [selectedForestrange, setSelectedForestRange] = useState(null);
-  const [selectedForestbeat, setSelectedForestBeat] = useState(null);
+  const [selectedForest, setSelectedForest] = useState('');
+  const [selectedForestCircle, setSelectedForestCircle] = useState('');
+  const [selectedForestDivision, setSelectedForestDivision] = useState('');
+  const [selectedForestrange, setSelectedForestRange] = useState('');
+  const [selectedForestbeat, setSelectedForestBeat] = useState('');
+  const [selectedDivision, setSelectedDivision] = useState('');
+  const [selectedDistrict, setSelectedDistrict] = useState('');
+  const [selectedUpazila, setSelectedUpazila] = useState('');
 
-  const [selectedDivision, setSelectedDivision] = useState(null);
-  const [selectedDistrict, setSelectedDistrict] = useState(null);
-  const [selectedUpazila, setSelectedUpazila] = useState(null);
+   const [userId, setUserId] = useState('');
 
   const [fbliData, setFbliData] = useState([]);
 
@@ -116,6 +118,17 @@ const beatOne = () => {
   const uri = useCreateUri();
   console.log(uri, 'user creation....');
 
+
+ 
+  useEffect(() => {
+    const getuserId = async () => {
+      const data = await AsyncStorage.getItem('userID');
+      setUserId(data);
+      
+    };
+    getuserId();
+  }, []);
+  console.log(userId, 'user id in dashboard....');
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -145,14 +158,6 @@ const beatOne = () => {
     const res = await DocumentPicker.pick({
       type: ['application/*', 'text/*'], // General MIME types to capture all related formats
     });
-  };
-
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShowPicker(Platform.OS === 'ios'); // Hide the picker after selection (Android closes automatically)
-    setDate(currentDate);
-    const formattedDate = `${currentDate.toLocaleDateString()} `;
-    setInputValue1(formattedDate); // Update TextInput with selected date and time
   };
 
   const showDatePicker = () => {
@@ -513,34 +518,37 @@ const beatOne = () => {
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   }
 
+  
+
   const beat_one_submit = async () => {
-    // console.log(
-    //   GUSER_DCOLLECTION_RAW,
-    //   GUSER_USER,
-    //   GUSER_USER_CELL,
-    //   GUSER_BEAT_ADDRESS,
-    //   GUSER_TLOC_FD_BEAT_POINT_LAT,
-    //   GUSER_TLOC_FD_BEAT_POINT_LNG,
-    //   FBLI_FA_TLOC_FD_BLOCK,
-    //   mouza_name,
-    //   sheet_number,
-    //   selectedForest,
-    //   selectedForestCircle,
-    //   selectedForestDivision,
-    //   selectedForestrange,
-    //   selectedForestbeat,
-    //   selectedDistrict,
-    //   selectedUpazila,
-    //   survey_type,
-    //   md5,
-    //   'uuid is here.......',
-    // );
+    console.log(
+      GUSER_DCOLLECTION_RAW,
+      GUSER_USER,
+      GUSER_USER_CELL,
+      GUSER_BEAT_ADDRESS,
+      GUSER_TLOC_FD_BEAT_POINT_LAT,
+      GUSER_TLOC_FD_BEAT_POINT_LNG,
+      FBLI_FA_TLOC_FD_BLOCK,
+      mouza_name,
+      sheet_number,
+      selectedForest,
+      selectedForestCircle,
+      selectedForestDivision,
+      selectedForestrange,
+      selectedForestbeat,
+      selectedDistrict,
+      selectedUpazila,
+      //survey_type,
+      //md5,
+      'uuid is here.......',
+    );
 
     const dataToInsert = {
       _URI: initialUUID,
       _CREATOR_URI_USER: uri,
       _CREATION_DATE: getCurrentDateandTimeMain(),
       _LAST_UPDATE_DATE: getCurrentDateandTimeMain(),
+      _LAST_UPDATE_URI_USER: uri,
       GUSER_DCOLLECTION_RAW: GUSER_DCOLLECTION_RAW,
       GUSER_USER: GUSER_USER,
       GUSER_USER_CELL: GUSER_USER_CELL,
@@ -560,6 +568,8 @@ const beatOne = () => {
       FBLI_CA_UNION: FBLI_CA_UNION,
       // SELECTED_UPAZILA: selectedUpazila,
       // SURVEY_TYPE: survey_type,
+      CREATED_BY: userId,
+      UPDATED_BY: userId,
     };
     console.log(dataToInsert, 'beat one ....data...');
     const updatedOrdinalNumber = oridianl + 1; // Increment the value directly here
@@ -710,12 +720,12 @@ const beatOne = () => {
           style={styles.input}
           data={fstLnd}
           labelField="name" // Display the 'name' field in the dropdown
-          valueField="id" // Use the 'id' as the value field
+          valueField="code" // Use the 'id' as the value field
           placeholder="Select forest type"
           placeholderStyle={{color: 'black', fontSize: 16}} // Placeholder font size
           selectedTextStyle={{color: 'black', fontSize: 16}}
           value={selectedForest}
-          onChange={item => setSelectedForest(item.value)} // Update the selected value based on 'id'
+          onChange={item => setSelectedForest(item.code)} // Update the selected value based on 'id'
           dropdownStyle={{
             backgroundColor: 'white', // Ensure dropdown has a visible background
             borderRadius: 8, // Rounded corners for consistency
