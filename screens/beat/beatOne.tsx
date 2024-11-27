@@ -222,8 +222,9 @@ const beatOne = () => {
       _CREATOR_URI_USER: uri,
       _PARENT_AURI: initialUUID,
       _TOP_LEVEL_AURI: initialUUID,
-      _CREATION_DATE: getCurrentDateandTime(),
-      _LAST_UPDATE_DATE: getCurrentDateandTime(),
+      _CREATION_DATE: getCurrentDateandTimeMain(),
+      _LAST_UPDATE_DATE: getCurrentDateandTimeMain(),
+      _LAST_UPDATE_URI_USER: uri,
       MOUZA1: mouza_name,
       SURVEY_TYPES: survey_type,
       SHEET1: sheet_number,
@@ -234,6 +235,7 @@ const beatOne = () => {
 
     try {
       await gener43_2021_fbli_m_sh1_create(dataToInsertadd);
+      
       console.log('All data inserted successfully');
     } catch (error) {
       console.error('Failed to insert data:', error.message || error);

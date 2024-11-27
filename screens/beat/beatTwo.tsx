@@ -40,6 +40,7 @@ import useUUID from '../../hooks/useUUID';
 import useCreateUri from '../../hooks/useCreatUri';
 import RNFS from 'react-native-fs';
 import RNFetchBlob from 'rn-fetch-blob';
+import { getCurrentDateandTimeMain } from '../../hooks/dateUtils';
 
 const beatTwo = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -265,8 +266,8 @@ const beatTwo = () => {
       _CREATOR_URI_USER: uri,
       _PARENT_AURI: uId,
       _TOP_LEVEL_AURI: uId,
-      _CREATION_DATE: getCurrentDateandTime(),
-      _LAST_UPDATE_DATE: getCurrentDateandTime(),
+      _CREATION_DATE: getCurrentDateandTimeMain(),
+      _LAST_UPDATE_DATE: getCurrentDateandTimeMain(),
       NATISSUES: selectedNaturalIssue,
       NAT_LEVEL: selectedRank,
       _ORDINAL_NUMBER: updatedOrdinalNumber,

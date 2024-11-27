@@ -25,6 +25,7 @@ import {
   gener43_2021_core_to_live,
   gener43_2021_fbli_m_sh1_list,
   gener43_2021_fbli_m_sh1_sync,
+  gener43_2021_gnatissues_sync,
   gener43_2021_gvillages_create,
   gener43_2021_gvillages_list,
   gener43_2021_overallnotes_ima_blb_create,
@@ -575,8 +576,23 @@ const beatFour = () => {
   const beatSync = async () => {
     console.log('clicked,,,,,', uId);
 
-    await gener43_2021_core_sync(uId);
-    await gener43_2021_fbli_m_sh1_sync(uId);
+    try {
+      await gener43_2021_core_sync(uId);
+    } catch (error) {
+      console.error('Error in gener43_2021_core_sync:', error);
+    }
+
+    try {
+      await gener43_2021_fbli_m_sh1_sync(uId);
+    } catch (error) {
+      console.error('Error in gener43_2021_fbli_m_sh1_sync:', error);
+    }
+
+    try {
+      await gener43_2021_gnatissues_sync(uId);
+    } catch (error) {
+      console.error('Error in gener43_2021_gnatissues_sync:', error);
+    }
   };
 
   const beatFour = async () => {

@@ -64100,7 +64100,7 @@ export const gener43_2021_fbli_m_sh1_sync = async uri => {
         async (_, resultSet) => {
           if (resultSet.rows.length > 0) {
             const row = resultSet.rows.item(0);
-            console.log('Data to be sent: for add new one', row._URI);
+            console.log('Data to be sent: for add new one', row);
 
             // Create FormData instance and append data
             const formData = new FormData();
@@ -64116,16 +64116,16 @@ export const gener43_2021_fbli_m_sh1_sync = async uri => {
             formData.append('SURVEY_TYPES', row.SURVEY_TYPES);
             formData.append('OTHERS_S_TYPES', row.OTHERS_S_TYPES);
             formData.append('SHEET1', row.SHEET1);
-            formData.append(
-              'GENERATED_NOTE_NAME_40',
-              row.GENERATED_NOTE_NAME_40,
-            );
+            // formData.append(
+            //   'GENERATED_NOTE_NAME_40',
+            //   row.GENERATED_NOTE_NAME_40,
+            // );
 
             console.log('FormData to be sent:', formData);
             // Send data to the API using FormData
             try {
               const response = await fetch(
-                `${baseApi}/gener43_2021_fbli_m_sh1?token=${token}`,
+                `${baseApi}/gener43_2021_fbli_m_sh1_create?token=${token}`,
                 {
                   method: 'POST',
                   headers: {
@@ -64153,7 +64153,7 @@ export const gener43_2021_fbli_m_sh1_sync = async uri => {
               reject(error);
             }
           } else {
-            console.error('No data found for the given URI:', uri);
+            console.error('No data found for the given URI:for fbli', uri);
             reject(new Error('No data found.'));
           }
         },
@@ -73809,12 +73809,12 @@ export const gener43_2021_gnatissues_sync = async uri => {
 
       // Execute SQL query to fetch data
       tx.executeSql(
-        `SELECT * FROM GENER43_2021_GNATISSUES WHERE _URI = ?`,
+        `SELECT * FROM GENER43_2021_GNATISSUES WHERE _PARENT_AURI =? OR _TOP_LEVEL_AURI = ?`,
         [uri],
         async (_, resultSet) => {
           if (resultSet.rows.length > 0) {
             const row = resultSet.rows.item(0);
-            console.log('Data to be sent:', row._URI);
+            console.log('Data to be sent:in add 2', row);
 
             // Create FormData instance and append data
             const formData = new FormData();
@@ -73828,17 +73828,17 @@ export const gener43_2021_gnatissues_sync = async uri => {
             formData.append('_TOP_LEVEL_AURI', row._TOP_LEVEL_AURI);
             formData.append('NATISSUES', row.NATISSUES);
             formData.append('NAT_LEVEL', row.NAT_LEVEL);
-            formData.append(
-              'GENERATED_NOTE_NAME_83',
-              row.GENERATED_NOTE_NAME_83,
-            );
+            // formData.append(
+            //   'GENERATED_NOTE_NAME_83',
+            //   row.GENERATED_NOTE_NAME_83,
+            // );
             formData.append('NAT_OTHER', row.NAT_OTHER);
 
             console.log('FormData to be sent:', formData);
             // Send data to the API using FormData
             try {
               const response = await fetch(
-                `${baseApi}/gener43_2021_gnatissues?token=${token}`,
+                `${baseApi}/gener43_2021_gnatissues_create?token=${token}`,
                 {
                   method: 'POST',
                   headers: {
@@ -73866,7 +73866,7 @@ export const gener43_2021_gnatissues_sync = async uri => {
               reject(error);
             }
           } else {
-            console.error('No data found for the given URI:', uri);
+            console.error('No data found for the given URI: for natissue..', uri);
             reject(new Error('No data found.'));
           }
         },
