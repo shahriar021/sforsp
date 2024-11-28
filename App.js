@@ -17,13 +17,13 @@ import ProjectDetailScreen from './screens/projectDetail/projectDetailScreen';
 import ChatScreen from './screens/chat/chatScreen';
 import EditProfileScreen from './screens/editProfile/editProfileScreen';
 import TeamScreen from './screens/team/teamScreen';
-import CreateTeamScreen from './screens/createTeam/createTeamScreen';
+
 import PrivacyPolicyScreen from './screens/privacyPolicy/privacyPolicyScreen';
-import TermsAndConditionsScreen from './screens/termsAndConditions/termsAndConditionsScreen';
-import FaqScreen from './screens/faq/faqScreen';
+
+
 import Mobile_allowance_all from './screens/mobile_allowance/mobile_allowance_all';
-import Transport_allowance_all from './screens/transport_allowance/transport_allowance_all';
-import Ofiice_visit_all from './screens/office_visit/ofiice_visit_all';
+
+
 import Geo_location from './screens/geo_location/geo_location';
 import Profile_updates from './screens/profile_updates/profile_updates';
 import Payment_history from './screens/payment_history/payment_history';
@@ -33,10 +33,9 @@ import Add_person from './screens/add_person/add_person';
 import Add_person_create from './screens/add_person/add_person_create';
 import Mobile_allowance_create from './screens/mobile_allowance/mobile_allowance_create';
 import ProfileScreen from './screens/profile/profileScreen';
-import TransportAllowanceCreate from './screens/transport_allowance/transport_allowance_create';
-import Transport_allowance_edit from './screens/transport_allowance/transport_allowance_edit';
 
-import office_visit_create from './screens/office_visit/office_visit_create';
+
+
 
 import messaging from '@react-native-firebase/messaging';
 import RemoteNotification from './screens/notification/RemoteNotification';
@@ -46,8 +45,8 @@ import geo_location_live_map from './screens/geo_location/geo_location_live_map'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ImageScreen from './screens/profile/imageScreen';
 import attendance from './screens/attendance/attendance';
-import salary from './screens/salary/salary';
-import weeklyAllowance from './screens/weeklyAllowance/weeklyAllowance';
+
+
 import parentAttendance from './screens/attendance/parentAttendance';
 import report from './screens/attendance/report';
 import ProjectScreen from './screens/attendance/attendance';
@@ -76,57 +75,7 @@ import consult from './screens/consult/consultDashboard';
 import NetInfo from '@react-native-community/netinfo';
 
 import {
-  /*gener43_2021_core_api,
-  gener43_2021_core_create,
-  gener43_2021_fbli_ca_tloc_ad_upzilla_api,
-  gener43_2021_fbli_m_sh1_api,
-  gener43_2021_ghumissues_api,
-  gener43_2021_gnatissues_api,
-  gener43_2021_gvillages_api,
-  gener43_2021_others_info1_api,
-  gener43_2021_overallnotes_ima_blb_api,
-  gener43_2021_overallnotes_ima_bn_api,
-  gener43_2021_overallnotes_ima_ref_api,
-  gener43_2021_xpic_beat_index_blb_api,
-  gener43_2021_xpic_beat_index_ref_api,
-  human_issues_api,
-  jur_ad_districts_api,
-  jur_ad_districts_list,
-  jur_ad_divisions_api,
-  jur_ad_divisions_list,
-  jur_ad_upazillas_api,
-  jur_ad_upazillas_list,
-  jur_fd_beats_api,
-  jur_fd_beats_list,
-  jur_fd_circles_api,
-  jur_fd_circles_list,
-  jur_fd_divisions_api,
-  jur_fd_divisions_list,
-  jur_fd_ecozones_api,
-  jur_fd_ecozones_list,
-  jur_fd_ranges_api,
-  jur_fd_ranges_list,
-  months_api,
-  mouza_types_api,
-  mouza_types_list,
-  natural_issues_api,
-  plant27_2021_community_month_api,
-  plant27_2021_core_api,
-  plant27_2021_filling_month_api,
-  plant27_2021_gr_regen_api,
-  plant27_2021_gregen_spp_regen_api,
-  plant27_2021_gtrts_climber_cutting_climber_month_api,
-  plant27_2021_gtrts_community_protection_api,
-  plant27_2021_gtrts_compost_compost_month_api,
-  plant27_2021_gtrts_vacancy_filling_api,
-  plant27_2021_gtrts_weeding_api,
-  plant27_2021_location_data_ca_tloc_ad_upzilla_api,
-  plant27_2021_location_data_m_sh1_api,
-  plant27_2021_planting_plan_gplanting_gspp_api,
-  plant27_2021_rphotoextra_api,
-  plant27_2021_s_site_api,
-  plant27_2021_weeding_month_api,
-  users_api,*/
+  
   initial_setup,
 } from './database/sqlDatabase';
 
@@ -188,614 +137,7 @@ const App = () => {
       );
     }
   }, []);
-  /*
-  useEffect(() => {
-    try {
-      console.log('useEffect is being called');
-      const ggener43_2021_fbli_m_sh1_api_func = async () => {
-        console.log('ggener43_2021_fbli_m_sh1_api_func has been called');
-        try {
-          await gener43_2021_fbli_m_sh1_api();
-        } catch (err) {
-          console.log(
-            'Error fetching gener43_2021_fbli_m_sh1_api API data:',
-            err,
-          );
-        }
-      };
-      ggener43_2021_fbli_m_sh1_api_func();
-    } catch (error) {
-      console.log('Error in useEffect:', error);
-    }
-  }, []);
-
-  useEffect(() => {
-    try {
-      console.log('useEffect is being called');
-      const gener43_2021_gnatissues_api_func = async () => {
-        console.log('ggener43_2021_fbli_m_sh1_api_func has been called');
-        try {
-          await gener43_2021_gnatissues_api();
-        } catch (err) {
-          console.log(
-            'Error fetching gener43_2021_fbli_m_sh1_api API data:',
-            err,
-          );
-        }
-      };
-      gener43_2021_gnatissues_api_func();
-    } catch (error) {
-      console.log('Error in useEffect:', error);
-    }
-  }, []);
-
-  useEffect(() => {
-    try {
-      console.log('useEffect is being called');
-      const gener43_2021_ghumissues_api_func = async () => {
-        console.log('gener43_2021_ghumissues_api has been called');
-        try {
-          await gener43_2021_ghumissues_api();
-        } catch (err) {
-          console.log(
-            'Error fetching gener43_2021_ghumissues_api API data:',
-            err,
-          );
-        }
-      };
-      gener43_2021_ghumissues_api_func();
-    } catch (error) {
-      console.log('Error in useEffect:', error);
-    }
-  }, []);
-
-  useEffect(() => {
-    try {
-      console.log('useEffect is being called');
-      const gener43_2021_others_info1_api_func = async () => {
-        console.log('gener43_2021_others_info1_api_func has been called');
-        try {
-          await gener43_2021_others_info1_api();
-        } catch (err) {
-          console.log(
-            'Error fetching gener43_2021_others_info1_api_func API data:',
-            err,
-          );
-        }
-      };
-      gener43_2021_others_info1_api_func();
-    } catch (error) {
-      console.log('Error in useEffect:', error);
-    }
-  }, []);
-
-  useEffect(() => {
-    try {
-      console.log('useEffect is being called');
-      const gener43_2021_gvillages_api_func = async () => {
-        console.log('gener43_2021_gvillages_api_func has been called');
-        try {
-          await gener43_2021_gvillages_api();
-        } catch (err) {
-          console.log(
-            'Error fetching gener43_2021_gvillages_api_func API data:',
-            err,
-          );
-        }
-      };
-      gener43_2021_gvillages_api_func();
-    } catch (error) {
-      console.log('Error in useEffect:', error);
-    }
-  }, []);
-
-  useEffect(() => {
-    try {
-      console.log('useEffect is being called');
-      const gener43_2021_xpic_beat_index_blb_api_func = async () => {
-        console.log('gener43_2021_xpic_beat_index_blb_api has been called');
-        try {
-          await gener43_2021_xpic_beat_index_blb_api();
-        } catch (err) {
-          console.log(
-            'Error fetching gener43_2021_xpic_beat_index_blb_api API data:',
-            err,
-          );
-        }
-      };
-      gener43_2021_xpic_beat_index_blb_api_func();
-    } catch (error) {
-      console.log('Error in useEffect:', error);
-    }
-  }, []);
-
-  useEffect(() => {
-    try {
-      console.log('useEffect is being called');
-      const gener43_2021_xpic_beat_index_bn_api_func = async () => {
-        console.log('gener43_2021_xpic_beat_index_bn_api_func has been called');
-        try {
-          await gener43_2021_xpic_beat_index_bn_api();
-        } catch (err) {
-          console.log(
-            'Error fetching gener43_2021_xpic_beat_index_bn_api_func API data:',
-            err,
-          );
-        }
-      };
-      gener43_2021_xpic_beat_index_bn_api_func();
-    } catch (error) {
-      console.log('Error in useEffect:', error);
-    }
-  }, []);
-
-  useEffect(() => {
-    try {
-      console.log('useEffect is being called');
-      const gener43_2021_xpic_beat_index_ref_api_func = async () => {
-        console.log(
-          'gener43_2021_xpic_beat_index_ref_api_func has been called',
-        );
-        try {
-          await gener43_2021_xpic_beat_index_ref_api();
-        } catch (err) {
-          console.log(
-            'Error fetching gener43_2021_xpic_beat_index_ref_api_func API data:',
-            err,
-          );
-        }
-      };
-      gener43_2021_xpic_beat_index_ref_api_func();
-    } catch (error) {
-      console.log('Error in useEffect:', error);
-    }
-  }, []);
-
-  useEffect(() => {
-    try {
-      console.log('useEffect is being called');
-      const gener43_2021_fbli_ca_tloc_ad_upzilla_api_func = async () => {
-        console.log('gener43_2021_fbli_ca_tloc_ad_upzilla_api has been called');
-        try {
-          await gener43_2021_fbli_ca_tloc_ad_upzilla_api();
-        } catch (err) {
-          console.log(
-            'Error fetching gener43_2021_fbli_ca_tloc_ad_upzilla_api_func API data:',
-            err,
-          );
-        }
-      };
-      gener43_2021_fbli_ca_tloc_ad_upzilla_api_func();
-    } catch (error) {
-      console.log('Error in useEffect:', error);
-    }
-  }, []);
-
-  useEffect(() => {
-    try {
-      console.log('useEffect is being called');
-      const gener43_2021_overallnotes_ima_blb_api_func = async () => {
-        console.log('gener43_2021_overallnotes_ima_blb_api has been called');
-        try {
-          await gener43_2021_overallnotes_ima_blb_api();
-        } catch (err) {
-          console.log(
-            'Error fetching gener43_2021_overallnotes_ima_blb_api API data:',
-            err,
-          );
-        }
-      };
-      gener43_2021_overallnotes_ima_blb_api_func();
-    } catch (error) {
-      console.log('Error in useEffect:', error);
-    }
-  }, []);
-
-  useEffect(() => {
-    try {
-      console.log('useEffect is being called');
-      const gener43_2021_overallnotes_ima_bn_api_func = async () => {
-        console.log('gener43_2021_overallnotes_ima_bn_api has been called');
-        try {
-          await gener43_2021_overallnotes_ima_bn_api();
-        } catch (err) {
-          console.log(
-            'Error fetching gener43_2021_overallnotes_ima_bn_api API data:',
-            err,
-          );
-        }
-      };
-      gener43_2021_overallnotes_ima_bn_api_func();
-    } catch (error) {
-      console.log('Error in useEffect:', error);
-    }
-  }, []);
-
-  useEffect(() => {
-    try {
-      console.log('useEffect is being called');
-      const gener43_2021_overallnotes_ima_ref_api_func = async () => {
-        console.log('gener43_2021_overallnotes_ima_ref_api has been called');
-        try {
-          await gener43_2021_overallnotes_ima_ref_api();
-        } catch (err) {
-          console.log(
-            'Error fetching gener43_2021_overallnotes_ima_ref_api API data:',
-            err,
-          );
-        }
-      };
-      gener43_2021_overallnotes_ima_ref_api_func();
-    } catch (error) {
-      console.log('Error in useEffect:', error);
-    }
-  }, []);
-
-  // ------------------------------------gen-------------------------------------
-
-  useEffect(() => {
-    try {
-      console.log('useEffect is being called');
-      const plant27_2021_core_api_func = async () => {
-        console.log('plant27_2021_core_api_func has been called');
-        try {
-          await plant27_2021_core_api();
-        } catch (err) {
-          console.log('Error fetching plant27_2021_core API data:', err);
-        }
-      };
-      plant27_2021_core_api_func();
-    } catch (error) {
-      console.log('Error in useEffect:', error);
-    }
-  }, []);
-
-  useEffect(() => {
-    try {
-      console.log('useEffect is being called');
-      const plant27_2021_location_data_m_sh1_api_func = async () => {
-        console.log(
-          'plant27_2021_location_data_m_sh1_api_func has been called',
-        );
-        try {
-          await plant27_2021_location_data_m_sh1_api();
-        } catch (err) {
-          console.log(
-            'Error fetching plant27_2021_location_data_m_sh1_api_func API data:',
-            err,
-          );
-        }
-      };
-      plant27_2021_location_data_m_sh1_api_func();
-    } catch (error) {
-      console.log('Error in useEffect:', error);
-    }
-  }, []);
-
-  useEffect(() => {
-    try {
-      console.log('useEffect is being called');
-      const plant27_2021_location_data_m_sh1_api_func = async () => {
-        console.log('plant27_2021_s_site_api has been called');
-        try {
-          await plant27_2021_s_site_api();
-        } catch (err) {
-          console.log('Error fetching plant27_2021_s_site_api API data:', err);
-        }
-      };
-      plant27_2021_location_data_m_sh1_api_func();
-    } catch (error) {
-      console.log('Error in useEffect:', error);
-    }
-  }, []);
-
-  useEffect(() => {
-    try {
-      console.log('useEffect is being called');
-      const plant27_2021_rphotoextra_api_func = async () => {
-        console.log('plant27_2021_rphotoextra_api has been called');
-        try {
-          await plant27_2021_rphotoextra_api();
-        } catch (err) {
-          console.log(
-            'Error fetching plant27_2021_rphotoextra_api API data:',
-            err,
-          );
-        }
-      };
-      plant27_2021_rphotoextra_api_func();
-    } catch (error) {
-      console.log('Error in useEffect:', error);
-    }
-  }, []);
-
-  useEffect(() => {
-    try {
-      console.log('useEffect is being called');
-      const plant27_2021_gr_regen_api_func = async () => {
-        console.log('plant27_2021_gr_regen_api has been called');
-        try {
-          await plant27_2021_gr_regen_api();
-        } catch (err) {
-          console.log(
-            'Error fetching plant27_2021_gr_regen_api API data:',
-            err,
-          );
-        }
-      };
-      plant27_2021_gr_regen_api_func();
-    } catch (error) {
-      console.log('Error in useEffect:', error);
-    }
-  }, []);
-
-  useEffect(() => {
-    try {
-      console.log('useEffect is being called');
-      const plant27_2021_gregen_spp_regen_api_func = async () => {
-        console.log('plant27_2021_gregen_spp_regen_api has been called');
-        try {
-          await plant27_2021_gregen_spp_regen_api();
-        } catch (err) {
-          console.log(
-            'Error fetching plant27_2021_gregen_spp_regen_api API data:',
-            err,
-          );
-        }
-      };
-      plant27_2021_gregen_spp_regen_api_func();
-    } catch (error) {
-      console.log('Error in useEffect:', error);
-    }
-  }, []);
-
-  useEffect(() => {
-    try {
-      console.log('useEffect is being called');
-      const plant27_2021_planting_plan_gplanting_gspp_api_func = async () => {
-        console.log(
-          'plant27_2021_planting_plan_gplanting_gspp_api has been called',
-        );
-        try {
-          await plant27_2021_planting_plan_gplanting_gspp_api();
-        } catch (err) {
-          console.log(
-            'Error fetching plant27_2021_planting_plan_gplanting_gspp_api API data:',
-            err,
-          );
-        }
-      };
-      plant27_2021_planting_plan_gplanting_gspp_api_func();
-    } catch (error) {
-      console.log('Error in useEffect:', error);
-    }
-  }, []);
-
-  useEffect(() => {
-    try {
-      console.log('useEffect is being called');
-      const plant27_2021_gtrts_weeding_api_func = async () => {
-        console.log('plant27_2021_gtrts_weeding_api has been called');
-        try {
-          await plant27_2021_gtrts_weeding_api();
-        } catch (err) {
-          console.log(
-            'Error fetching plant27_2021_gtrts_weeding_api API data:',
-            err,
-          );
-        }
-      };
-      plant27_2021_gtrts_weeding_api_func();
-    } catch (error) {
-      console.log('Error in useEffect:', error);
-    }
-  }, []);
-
-  useEffect(() => {
-    try {
-      console.log('useEffect is being called');
-      const plant27_2021_gtrts_weeding_api_func = async () => {
-        console.log('plant27_2021_gtrts_weeding_api has been called');
-        try {
-          await plant27_2021_gtrts_weeding_api();
-        } catch (err) {
-          console.log(
-            'Error fetching plant27_2021_gtrts_weeding_api API data:',
-            err,
-          );
-        }
-      };
-      plant27_2021_gtrts_weeding_api_func();
-    } catch (error) {
-      console.log('Error in useEffect:', error);
-    }
-  }, []);
-
-  useEffect(() => {
-    try {
-      console.log('useEffect is being called');
-      const plant27_2021_weeding_month_api_func = async () => {
-        console.log('plant27_2021_weeding_month_api has been called');
-        try {
-          await plant27_2021_weeding_month_api();
-        } catch (err) {
-          console.log(
-            'Error fetching plant27_2021_weeding_month_api API data:',
-            err,
-          );
-        }
-      };
-      plant27_2021_weeding_month_api_func();
-    } catch (error) {
-      console.log('Error in useEffect:', error);
-    }
-  }, []);
-
-  useEffect(() => {
-    try {
-      console.log('useEffect is being called');
-      const plant27_2021_weeding_month_api_func = async () => {
-        console.log('plant27_2021_weeding_month_api has been called');
-        try {
-          await plant27_2021_gtrts_vacancy_filling_api();
-        } catch (err) {
-          console.log(
-            'Error fetching plant27_2021_weeding_month_api API data:',
-            err,
-          );
-        }
-      };
-      plant27_2021_weeding_month_api_func();
-    } catch (error) {
-      console.log('Error in useEffect:', error);
-    }
-  }, []);
-
-  useEffect(() => {
-    try {
-      console.log('useEffect is being called');
-      const plant27_2021_filling_month_api_func = async () => {
-        console.log('plant27_2021_filling_month_api has been called');
-        try {
-          await plant27_2021_filling_month_api();
-        } catch (err) {
-          console.log(
-            'Error fetching plant27_2021_filling_month_api API data:',
-            err,
-          );
-        }
-      };
-      plant27_2021_filling_month_api_func();
-    } catch (error) {
-      console.log('Error in useEffect:', error);
-    }
-  }, []);
-
-  useEffect(() => {
-    try {
-      console.log('useEffect is being called');
-      const plant27_2021_filling_month_api_func = async () => {
-        console.log('plant27_2021_filling_month_api has been called');
-        try {
-          await plant27_2021_gtrts_community_protection_api();
-        } catch (err) {
-          console.log(
-            'Error fetching plant27_2021_filling_month_api API data:',
-            err,
-          );
-        }
-      };
-      plant27_2021_filling_month_api_func();
-    } catch (error) {
-      console.log('Error in useEffect:', error);
-    }
-  }, []);
-
-  useEffect(() => {
-    try {
-      console.log('useEffect is being called');
-      const plant27_2021_filling_month_api_func = async () => {
-        console.log('plant27_2021_filling_month_api has been called');
-        try {
-          await plant27_2021_community_month_api();
-        } catch (err) {
-          console.log(
-            'Error fetching plant27_2021_filling_month_api API data:',
-            err,
-          );
-        }
-      };
-      plant27_2021_filling_month_api_func();
-    } catch (error) {
-      console.log('Error in useEffect:', error);
-    }
-  }, []);
-
-  useEffect(() => {
-    try {
-      console.log('useEffect is being called');
-      const plant27_2021_location_data_ca_tloc_ad_upzilla_api_func =
-        async () => {
-          console.log(
-            'plant27_2021_location_data_ca_tloc_ad_upzilla_api has been called',
-          );
-          try {
-            await plant27_2021_location_data_ca_tloc_ad_upzilla_api();
-          } catch (err) {
-            console.log(
-              'Error fetching plant27_2021_location_data_ca_tloc_ad_upzilla_api API data:',
-              err,
-            );
-          }
-        };
-      plant27_2021_location_data_ca_tloc_ad_upzilla_api_func();
-    } catch (error) {
-      console.log('Error in useEffect:', error);
-    }
-  }, []);
-
-  useEffect(() => {
-    try {
-      console.log('useEffect is being called');
-      const plant27_2021_gtrts_compost_compost_month_api_func = async () => {
-        console.log(
-          'plant27_2021_gtrts_compost_compost_month_api has been called',
-        );
-        try {
-          await plant27_2021_gtrts_compost_compost_month_api();
-        } catch (err) {
-          console.log(
-            'Error fetching plant27_2021_gtrts_compost_compost_month_api API data:',
-            err,
-          );
-        }
-      };
-      plant27_2021_gtrts_compost_compost_month_api_func();
-    } catch (error) {
-      console.log('Error in useEffect:', error);
-    }
-  }, []);
-
-  useEffect(() => {
-    try {
-      console.log('useEffect is being called');
-      const plant27_2021_gtrts_climber_cutting_climber_month_api_func =
-        async () => {
-          console.log(
-            'plant27_2021_gtrts_climber_cutting_climber_month_api has been called',
-          );
-          try {
-            await plant27_2021_gtrts_climber_cutting_climber_month_api();
-          } catch (err) {
-            console.log(
-              'Error fetching plant27_2021_gtrts_climber_cutting_climber_month_api API data:',
-              err,
-            );
-          }
-        };
-      plant27_2021_gtrts_climber_cutting_climber_month_api_func();
-    } catch (error) {
-      console.log('Error in useEffect:', error);
-    }
-  }, []);
-  */
-
-  // useEffect(() => {
-  //   try {
-  //     console.log('useEffect is being called');
-  //     const plant27_2021_core_api_func = async () => {
-  //       console.log('plant27_2021_core_api_func has been called');
-  //       try {
-  //         await natural_issues_api();
-  //       } catch (err) {
-  //         console.log('Error fetching plant27_2021_core API data:', err);
-  //       }
-  //     };
-  //     plant27_2021_core_api_func();
-  //   } catch (error) {
-  //     console.log('Error in useEffect:', error);
-  //   }
-  // }, []);
+  
 
   // useEffect(() => {
   //   // Request permission to receive notifications
@@ -912,26 +254,20 @@ const App = () => {
           <Stack.Screen name="Chat" component={ChatScreen} />
           <Stack.Screen name="EditProfile" component={EditProfileScreen} />
           <Stack.Screen name="Team" component={TeamScreen} />
-          <Stack.Screen name="CreateTeam" component={CreateTeamScreen} />
+         
           <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicyScreen} />
           <Stack.Screen name="Profile" component={ProfileScreen} />
           <Stack.Screen name="Image" component={ImageScreen} />
 
-          <Stack.Screen
-            name="TermsAndConditions"
-            component={TermsAndConditionsScreen}
-          />
-          <Stack.Screen name="Faq" component={FaqScreen} />
+         
+         
           <Stack.Screen
             name="mobile_allowance"
             component={Mobile_allowance_all}
           />
-          <Stack.Screen
-            name="transport_allowance"
-            component={Transport_allowance_all}
-          />
+          
 
-          <Stack.Screen name="office_visit" component={Ofiice_visit_all} />
+         
           <Stack.Screen name="notification" component={NotificationScreen} />
           <Stack.Screen name="geo_location" component={Geo_location} />
           <Stack.Screen name="geo_location_map" component={geo_location_map} />
@@ -948,24 +284,15 @@ const App = () => {
             name="add_person_create"
             component={Add_person_create}
           />
-          <Stack.Screen name="weeklyAllowance" component={weeklyAllowance} />
+          
           <Stack.Screen
             name="mobile_allowance_create"
             component={Mobile_allowance_create}
           />
 
-          <Stack.Screen
-            name="transport_allowance_create"
-            component={TransportAllowanceCreate}
-          />
-          <Stack.Screen
-            name="transport_allowance_edit"
-            component={Transport_allowance_edit}
-          />
-          <Stack.Screen
-            name="office_visit_create"
-            component={office_visit_create}
-          />
+          
+          
+         
 
           <Stack.Screen
             name="locationTrackingFunc"
@@ -973,7 +300,7 @@ const App = () => {
           />
 
           <Stack.Screen name="attendance" component={attendance} />
-          <Stack.Screen name="salary" component={salary} />
+          
           <Stack.Screen name="parentAttendance" component={parentAttendance} />
           <Stack.Screen name="report" component={report} />
           <Stack.Screen name="leave" component={leave_application_list} />

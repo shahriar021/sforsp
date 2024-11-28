@@ -25,7 +25,7 @@ import {
   gener43_2021_others_info1_list,
 } from '../../database/sqlDatabase';
 import useUUID from '../../hooks/useUUID';
-import {getCurrentDateandTime} from '../../hooks/dateUtils';
+import {getCurrentDateandTime, getCurrentDateandTimeMain} from '../../hooks/dateUtils';
 import useCreateUri from '../../hooks/useCreatUri';
 import MonthPicker from 'react-native-month-year-picker';
 
@@ -79,6 +79,7 @@ const beatThree = () => {
 
   const [showPicker, setShowPicker] = useState(false);
   const [showPicker2, setShowPicker2] = useState(false);
+  const [showPicker3, setShowPicker3] = useState(false);
   const [date, setDate] = useState(new Date());
   const [selectedForest, setSelectedForest] = useState(null);
 
@@ -158,6 +159,18 @@ const beatThree = () => {
     setShowPicker2(false); // Hide the picker after selection
   };
 
+  const handleValueChange3 = (event, newDate) => {
+    // When user selects a date
+    if (newDate) {
+      const formattedDate = `${newDate.getFullYear()}-${String(
+        newDate.getMonth() + 1,
+      ).padStart(2, '0')}-07`; // Formats as yyyy-mm-07 (sets the day as 07)
+      setInputValue6c3(formattedDate);
+      // TODO: Save `formattedDate` to the database as needed
+    }
+    setShowPicker3(false); // Hide the picker after selection
+  };
+
   const tableData = [];
 
   const addnewsave = async () => {
@@ -166,7 +179,7 @@ const beatThree = () => {
     const updatedOrdinalNumber = oridianl + 1; // Increment the value directly here
     setoridianl(updatedOrdinalNumber);
 
-    const currentDate = getCurrentDateandTime();
+    const currentDate = getCurrentDateandTimeMain();
 
     const dataToInsertadd = {
       _URI: newGeneratedUUID, // Use the freshly generated UUID
@@ -175,9 +188,10 @@ const beatThree = () => {
       _TOP_LEVEL_AURI: uuid,
       _CREATION_DATE: currentDate,
       _LAST_UPDATE_DATE: currentDate,
+      _LAST_UPDATE_URI_USER:uri,
       NAME_OF_OTHERS: inputValue6c1,
       OTHERS_RANK: inputValue6c2,
-      OTHERS_JOINING_DATE: inputValue6c3,
+      OTHERS_JOINING_DATE_RAW: inputValue6c3,
       OTHERS_CELL: inputValue6c4,
       OTHERS_NID: inputValue6c5,
       OTHERS_MAIL: inputValue6c6,
@@ -189,6 +203,7 @@ const beatThree = () => {
     try {
       await gener43_2021_others_info1_create(dataToInsertadd);
       console.log('All data inserted successfully');
+      setModalVisible(false)
     } catch (error) {
       console.error('Failed to insert data:', error.message || error);
     }
@@ -278,7 +293,7 @@ const beatThree = () => {
 
   useEffect(() => {
     const gnaissu = async () => {
-      const data = await gener43_2021_others_info1_list();
+      const data = await gener43_2021_others_info1_list(uuid);
       setOthersInfo(data);
     };
     gnaissu();
@@ -672,13 +687,22 @@ const beatThree = () => {
                 <Text style={styles.label}>
                   Joining date of the Range/Beat:
                 </Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Enter joining date"
-                  value={inputValue6c3}
-                  onChangeText={text => setInputValue6c3(text)}
-                  placeholderTextColor="black"
-                />
+                
+                 <TouchableOpacity onPress={() => setShowPicker3(true)}>
+          <Text style={styles.input}>
+            {inputValue6c3 || 'Select date'}
+          </Text>
+        </TouchableOpacity>
+
+        {showPicker3 && (
+          <MonthPicker
+            onChange={handleValueChange3}
+            value={new Date()} // default value for picker, can be adjusted
+            minimumDate={new Date(2000, 0)} // optional
+            maximumDate={new Date(2030, 11)} // optional
+            mode="short" // or "full"
+          />
+        )}
 
                 <Text style={styles.label}>Mobile Number:</Text>
                 <TextInput
@@ -734,7 +758,7 @@ const beatThree = () => {
                       justifyContent: 'center',
                       margin: 5,
                       padding: 10,
-                      backgroundColor: '#007AFF', // Same default color as above
+                      backgroundColor: 'red', // Same default color as above
                       borderRadius: 5,
                     }}
                     onPress={() => setModalVisible(false)}>

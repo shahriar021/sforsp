@@ -14637,12 +14637,12 @@ export const gener43_2021_others_info1_api2 = async () => {
 //---------------------------------------------------------//
 // List Start
 
-export const gener43_2021_others_info1_list = async () => {
+export const gener43_2021_others_info1_list = async (uri) => {
   return new Promise((resolve, reject) => {
     database.transaction(tx => {
       tx.executeSql(
-        `SELECT * FROM gener43_2021_others_info1`, // Query the gener43_2021_others_info1 table
-        [],
+        `SELECT * FROM gener43_2021_others_info1 WHERE _PARENT_AURI =? OR _TOP_LEVEL_AURI = ?`, // Query the gener43_2021_others_info1 table
+        [uri],
         (_, resultSet) => {
           console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
@@ -27778,12 +27778,12 @@ export const gener43_2021_fbli_m_sh1_api2 = async () => {
 //---------------------------------------------------------//
 // List Start
 
-export const gener43_2021_fbli_m_sh1_list = async () => {
+export const gener43_2021_fbli_m_sh1_list = async (uri) => {
   return new Promise((resolve, reject) => {
     database.transaction(tx => {
       tx.executeSql(
-        `SELECT * FROM gener43_2021_fbli_m_sh1`, // Query the gener43_2021_fbli_m_sh1 table
-        [],
+        `SELECT * FROM gener43_2021_fbli_m_sh1 WHERE _PARENT_AURI =? OR _TOP_LEVEL_AURI = ?`, // Query the gener43_2021_fbli_m_sh1 table
+        [uri],
         (_, resultSet) => {
           console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
@@ -40577,12 +40577,12 @@ export const gener43_2021_ghumissues_api2 = async () => {
 //---------------------------------------------------------//
 // List Start
 
-export const gener43_2021_ghumissues_list = async () => {
+export const gener43_2021_ghumissues_list = async (uri) => {
   return new Promise((resolve, reject) => {
     database.transaction(tx => {
       tx.executeSql(
-        `SELECT * FROM gener43_2021_ghumissues`, // Query the gener43_2021_ghumissues table
-        [],
+        `SELECT * FROM gener43_2021_ghumissues WHERE _PARENT_AURI =? OR _TOP_LEVEL_AURI = ?`, // Query the gener43_2021_ghumissues table
+        [uri],
         (_, resultSet) => {
           console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
@@ -40788,12 +40788,12 @@ export const gener43_2021_gnatissues_api2 = async () => {
 //---------------------------------------------------------//
 // List Start
 
-export const gener43_2021_gnatissues_list = async () => {
+export const gener43_2021_gnatissues_list = async (uri) => {
   return new Promise((resolve, reject) => {
     database.transaction(tx => {
       tx.executeSql(
-        `SELECT * FROM gener43_2021_gnatissues`, // Query the gener43_2021_gnatissues table
-        [],
+        `SELECT * FROM gener43_2021_gnatissues WHERE _PARENT_AURI =? OR _TOP_LEVEL_AURI = ?`, // Query the gener43_2021_gnatissues table
+        [uri],
         (_, resultSet) => {
           console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
@@ -41005,12 +41005,12 @@ export const gener43_2021_gvillages_api2 = async () => {
 //---------------------------------------------------------//
 // List Start
 
-export const gener43_2021_gvillages_list = async () => {
+export const gener43_2021_gvillages_list = async (uri) => {
   return new Promise((resolve, reject) => {
     database.transaction(tx => {
       tx.executeSql(
-        `SELECT * FROM gener43_2021_gvillages`, // Query the gener43_2021_gvillages table
-        [],
+        `SELECT * FROM gener43_2021_gvillages WHERE _PARENT_AURI =? OR _TOP_LEVEL_AURI = ?`, // Query the gener43_2021_gvillages table
+        [uri],
         (_, resultSet) => {
           console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
@@ -53748,12 +53748,12 @@ export const gener43_2021_others_info1_sync = async uri => {
 
       // Execute SQL query to fetch data
       tx.executeSql(
-        `SELECT * FROM GENER43_2021_OTHERS_INFO1 WHERE _URI = ?`,
+        `SELECT * FROM GENER43_2021_OTHERS_INFO1 WHERE _PARENT_AURI =? OR _TOP_LEVEL_AURI = ?`,
         [uri],
         async (_, resultSet) => {
           if (resultSet.rows.length > 0) {
             const row = resultSet.rows.item(0);
-            console.log('Data to be sent:', row._URI);
+            console.log('Data to be sent: in others info', row);
 
             // Create FormData instance and append data
             const formData = new FormData();
@@ -53765,10 +53765,10 @@ export const gener43_2021_others_info1_sync = async uri => {
             formData.append('_PARENT_AURI', row._PARENT_AURI);
             formData.append('_ORDINAL_NUMBER', row._ORDINAL_NUMBER);
             formData.append('_TOP_LEVEL_AURI', row._TOP_LEVEL_AURI);
-            formData.append(
-              'GENERATED_NOTE_NAME_115',
-              row.GENERATED_NOTE_NAME_115,
-            );
+            // formData.append(
+            //   'GENERATED_NOTE_NAME_115',
+            //   row.GENERATED_NOTE_NAME_115,
+            // );
             formData.append('OTHERS_JOINING_DATE', row.OTHERS_JOINING_DATE);
             formData.append('OTHERS_NID', row.OTHERS_NID);
             formData.append('OTHERS_RANK', row.OTHERS_RANK);
@@ -53784,7 +53784,7 @@ export const gener43_2021_others_info1_sync = async uri => {
             // Send data to the API using FormData
             try {
               const response = await fetch(
-                `${baseApi}/gener43_2021_others_info1?token=${token}`,
+                `${baseApi}/gener43_2021_others_info1_create?token=${token}`,
                 {
                   method: 'POST',
                   headers: {
@@ -53831,51 +53831,52 @@ export const gener43_2021_others_info1_sync2 = async uri => {
   return new Promise((resolve, reject) => {
     database.transaction(tx => {
       tx.executeSql(
-        `SELECT * FROM GENER43_2021_OTHERS_INFO1`, // Query the aspects table
-        [],
+        `SELECT * FROM GENER43_2021_OTHERS_INFO1 WHERE _PARENT_AURI =? OR _TOP_LEVEL_AURI = ?`, // Query the aspects table
+        [uri],
         async (_, resultSet) => {
-          //console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
+          
           const formData = new FormData();
-
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
             data.push(row);
-            formData.append('_URI', row._URI);
-            formData.append('_CREATOR_URI_USER', row._CREATOR_URI_USER);
-            formData.append('_CREATION_DATE', row._CREATION_DATE);
-            formData.append('_LAST_UPDATE_URI_USER', row._LAST_UPDATE_URI_USER);
-            formData.append('_LAST_UPDATE_DATE', row._LAST_UPDATE_DATE);
-            formData.append('_PARENT_AURI', row._PARENT_AURI);
-            formData.append('_ORDINAL_NUMBER', row._ORDINAL_NUMBER);
-            formData.append('_TOP_LEVEL_AURI', row._TOP_LEVEL_AURI);
-            formData.append(
-              'GENERATED_NOTE_NAME_115',
-              row.GENERATED_NOTE_NAME_115,
-            );
-            formData.append('OTHERS_JOINING_DATE', row.OTHERS_JOINING_DATE);
-            formData.append('OTHERS_NID', row.OTHERS_NID);
-            formData.append('OTHERS_RANK', row.OTHERS_RANK);
-            formData.append('OTHERS_CELL', row.OTHERS_CELL);
-            formData.append('NAME_OF_OTHERS', row.NAME_OF_OTHERS);
-            formData.append(
-              'OTHERS_JOINING_DATE_RAW',
-              row.OTHERS_JOINING_DATE_RAW,
-            );
-            formData.append('OTHERS_MAIL', row.OTHERS_MAIL);
+            
+            formData.append('_URI[]', row._URI);
+            formData.append('_CREATOR_URI_USER[]', row._CREATOR_URI_USER);
+            formData.append('_CREATION_DATE[]', row._CREATION_DATE);
+            formData.append('_LAST_UPDATE_URI_USER[]', row._LAST_UPDATE_URI_USER);
+            formData.append('_LAST_UPDATE_DATE[]', row._LAST_UPDATE_DATE);
+            formData.append('_ORDINAL_NUMBER[]', row._ORDINAL_NUMBER);
+            formData.append('_PARENT_AURI[]', row._PARENT_AURI);
+            formData.append('_TOP_LEVEL_AURI[]', row._TOP_LEVEL_AURI);
+            formData.append('GENERATED_NOTE_NAME_115[]',row.GENERATED_NOTE_NAME_115);
+            formData.append('OTHERS_JOINING_DATE[]', row.OTHERS_JOINING_DATE);
+            formData.append('OTHERS_NID[]', row.OTHERS_NID);
+            formData.append('OTHERS_RANK[]', row.OTHERS_RANK);
+            formData.append('OTHERS_CELL[]', row.OTHERS_CELL);
+            formData.append('NAME_OF_OTHERS[]', row.NAME_OF_OTHERS);
+            formData.append('OTHERS_JOINING_DATE_RAW[]',row.OTHERS_JOINING_DATE_RAW);
+            formData.append('OTHERS_MAIL[]', row.OTHERS_MAIL);
+            
           }
-          const response = await fetch(
-            `${baseApi}/gener43_2021_others_info1?token=${token}`,
-            {
-              method: 'POST',
-              headers: {
-                Accept: 'application/json',
-                // Note: 'Content-Type' should NOT be set when using FormData
-              },
-              body: formData,
-            },
-          );
+          
           resolve(data);
+          
+          const response2 = await fetch(
+              `${baseApi}/gener43_2021_others_info1_create?token=${token}`,
+              {
+                method: 'POST',
+                headers: {
+                  Accept: 'application/json',
+                  // Note: 'Content-Type' should NOT be set when using FormData
+                },
+                body: formData,
+              },
+            );
+            
+          const result = await response2.json();
+          console.log('API response2:', result);
         },
         (_, error) => {
           console.error(`Error querying aspects`, error);
@@ -64104,22 +64105,19 @@ export const gener43_2021_fbli_m_sh1_sync = async uri => {
 
             // Create FormData instance and append data
             const formData = new FormData();
-            formData.append('_URI', row._URI);
-            formData.append('_CREATOR_URI_USER', row._CREATOR_URI_USER);
-            formData.append('_CREATION_DATE', row._CREATION_DATE);
-            formData.append('_LAST_UPDATE_URI_USER', row._LAST_UPDATE_URI_USER);
-            formData.append('_LAST_UPDATE_DATE', row._LAST_UPDATE_DATE);
-            formData.append('_PARENT_AURI', row._PARENT_AURI);
-            formData.append('_ORDINAL_NUMBER', row._ORDINAL_NUMBER);
-            formData.append('_TOP_LEVEL_AURI', row._TOP_LEVEL_AURI);
-            formData.append('MOUZA1', row.MOUZA1);
-            formData.append('SURVEY_TYPES', row.SURVEY_TYPES);
-            formData.append('OTHERS_S_TYPES', row.OTHERS_S_TYPES);
-            formData.append('SHEET1', row.SHEET1);
-            // formData.append(
-            //   'GENERATED_NOTE_NAME_40',
-            //   row.GENERATED_NOTE_NAME_40,
-            // );
+            (row._URI != '' ) ? formData.append('_URI[]', row._URI) : '';
+            (row._CREATOR_URI_USER != '' ) ? formData.append('_CREATOR_URI_USER[]', row._CREATOR_URI_USER) : '';
+            (row._CREATION_DATE != '' ) ? formData.append('_CREATION_DATE[]', row._CREATION_DATE) : '';
+            (row._LAST_UPDATE_URI_USER != '' ) ? formData.append('_LAST_UPDATE_URI_USER[]', row._LAST_UPDATE_URI_USER) : '';
+            (row._LAST_UPDATE_DATE != '' ) ? formData.append('_LAST_UPDATE_DATE[]', row._LAST_UPDATE_DATE) : '';
+            (row._PARENT_AURI != '' ) ? formData.append('_PARENT_AURI[]', row._PARENT_AURI) : '';
+            (row._ORDINAL_NUMBER != '' ) ? formData.append('_ORDINAL_NUMBER[]', row._ORDINAL_NUMBER) : '';
+            (row._TOP_LEVEL_AURI != '' ) ? formData.append('_TOP_LEVEL_AURI[]', row._TOP_LEVEL_AURI) : '';
+            (row.MOUZA1 != '' ) ? formData.append('MOUZA1[]', row.MOUZA1) : '';
+            (row.SURVEY_TYPES != '' ) ? formData.append('SURVEY_TYPES[]', row.SURVEY_TYPES) : '';
+            (row.OTHERS_S_TYPES != '' ) ? formData.append('OTHERS_S_TYPES[]', row.OTHERS_S_TYPES) : '';
+            (row.SHEET1 != '' ) ? formData.append('SHEET1[]', row.SHEET1) : '';
+            (row.GENERATED_NOTE_NAME_40 != '' ) ? formData.append('GENERATED_NOTE_NAME_40[]', row.GENERATED_NOTE_NAME_40) : '';
 
             console.log('FormData to be sent:', formData);
             // Send data to the API using FormData
@@ -64172,45 +64170,46 @@ export const gener43_2021_fbli_m_sh1_sync2 = async uri => {
   return new Promise((resolve, reject) => {
     database.transaction(tx => {
       tx.executeSql(
-        `SELECT * FROM GENER43_2021_FBLI_M_SH1`, // Query the aspects table
-        [],
+        `SELECT * FROM GENER43_2021_FBLI_M_SH1 WHERE _PARENT_AURI =? OR _TOP_LEVEL_AURI = ?`, // Query the aspects table
+        [uri],
         async (_, resultSet) => {
           //console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
-          const formData = new FormData();
-
+		  const formData = new FormData();
+            
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
+            console.log(row)
             data.push(row);
-            formData.append('_URI', row._URI);
-            formData.append('_CREATOR_URI_USER', row._CREATOR_URI_USER);
-            formData.append('_CREATION_DATE', row._CREATION_DATE);
-            formData.append('_LAST_UPDATE_URI_USER', row._LAST_UPDATE_URI_USER);
-            formData.append('_LAST_UPDATE_DATE', row._LAST_UPDATE_DATE);
-            formData.append('_PARENT_AURI', row._PARENT_AURI);
-            formData.append('_ORDINAL_NUMBER', row._ORDINAL_NUMBER);
-            formData.append('_TOP_LEVEL_AURI', row._TOP_LEVEL_AURI);
-            formData.append('MOUZA1', row.MOUZA1);
-            formData.append('SURVEY_TYPES', row.SURVEY_TYPES);
-            formData.append('OTHERS_S_TYPES', row.OTHERS_S_TYPES);
-            formData.append('SHEET1', row.SHEET1);
-            formData.append(
-              'GENERATED_NOTE_NAME_40',
-              row.GENERATED_NOTE_NAME_40,
-            );
+                  (row._URI != '' ) ? formData.append('_URI[]', row._URI) : '';
+            (row._CREATOR_URI_USER != '' ) ? formData.append('_CREATOR_URI_USER[]', row._CREATOR_URI_USER) : '';
+            (row._CREATION_DATE != '' ) ? formData.append('_CREATION_DATE[]', row._CREATION_DATE) : '';
+            (row._LAST_UPDATE_URI_USER != '' ) ? formData.append('_LAST_UPDATE_URI_USER[]', row._LAST_UPDATE_URI_USER) : '';
+            (row._LAST_UPDATE_DATE != '' ) ? formData.append('_LAST_UPDATE_DATE[]', row._LAST_UPDATE_DATE) : '';
+            (row._PARENT_AURI != '' ) ? formData.append('_PARENT_AURI[]', row._PARENT_AURI) : '';
+            (row._ORDINAL_NUMBER != '' ) ? formData.append('_ORDINAL_NUMBER[]', row._ORDINAL_NUMBER) : '';
+            (row._TOP_LEVEL_AURI != '' ) ? formData.append('_TOP_LEVEL_AURI[]', row._TOP_LEVEL_AURI) : '';
+            (row.MOUZA1 != '' ) ? formData.append('MOUZA1[]', row.MOUZA1) : '';
+            (row.SURVEY_TYPES != '' ) ? formData.append('SURVEY_TYPES[]', row.SURVEY_TYPES) : '';
+            (row.OTHERS_S_TYPES != '' ) ? formData.append('OTHERS_S_TYPES[]', row.OTHERS_S_TYPES) : '';
+            (row.SHEET1 != '' ) ? formData.append('SHEET1[]', row.SHEET1) : '';
+            (row.GENERATED_NOTE_NAME_40 != '' ) ? formData.append('GENERATED_NOTE_NAME_40[]', row.GENERATED_NOTE_NAME_40) : '';
+
           }
-          const response = await fetch(
-            `${baseApi}/gener43_2021_fbli_m_sh1?token=${token}`,
-            {
-              method: 'POST',
-              headers: {
-                Accept: 'application/json',
-                // Note: 'Content-Type' should NOT be set when using FormData
-              },
-              body: formData,
-            },
-          );
+		  const response = await fetch(
+			`${baseApi}/gener43_2021_fbli_m_sh1_create?token=${token}`,
+			{
+			  method: 'POST',
+			  headers: {
+				Accept: 'application/json',
+				// Note: 'Content-Type' should NOT be set when using FormData
+			  },
+			  body: formData,
+			},
+		  );
           resolve(data);
+          console.log(response)
+          console.log(response.status)
         },
         (_, error) => {
           console.error(`Error querying aspects`, error);
@@ -73672,12 +73671,12 @@ export const gener43_2021_ghumissues_sync = async uri => {
 
       // Execute SQL query to fetch data
       tx.executeSql(
-        `SELECT * FROM GENER43_2021_GHUMISSUES WHERE _URI = ?`,
+        `SELECT * FROM GENER43_2021_GHUMISSUES WHERE _PARENT_AURI =? OR _TOP_LEVEL_AURI = ?`,
         [uri],
         async (_, resultSet) => {
           if (resultSet.rows.length > 0) {
             const row = resultSet.rows.item(0);
-            console.log('Data to be sent:', row._URI);
+            console.log('Data to be sent:in human', row);
 
             // Create FormData instance and append data
             const formData = new FormData();
@@ -73689,10 +73688,10 @@ export const gener43_2021_ghumissues_sync = async uri => {
             formData.append('_PARENT_AURI', row._PARENT_AURI);
             formData.append('_ORDINAL_NUMBER', row._ORDINAL_NUMBER);
             formData.append('_TOP_LEVEL_AURI', row._TOP_LEVEL_AURI);
-            formData.append(
-              'GENERATED_NOTE_NAME_89',
-              row.GENERATED_NOTE_NAME_89,
-            );
+            // formData.append(
+            //   'GENERATED_NOTE_NAME_89',
+            //   row.GENERATED_NOTE_NAME_89,
+            // );
             formData.append('HUMISSUES', row.HUMISSUES);
             formData.append('HUM_LEVEL', row.HUM_LEVEL);
             formData.append('HUM_OTHER', row.HUM_OTHER);
@@ -73701,7 +73700,7 @@ export const gener43_2021_ghumissues_sync = async uri => {
             // Send data to the API using FormData
             try {
               const response = await fetch(
-                `${baseApi}/gener43_2021_ghumissues?token=${token}`,
+                `${baseApi}/gener43_2021_ghumissues_create?token=${token}`,
                 {
                   method: 'POST',
                   headers: {
@@ -73745,47 +73744,48 @@ export const gener43_2021_ghumissues_sync = async uri => {
 //---------------------------------------------------------//
 //sync2 Start
 export const gener43_2021_ghumissues_sync2 = async uri => {
+  console.log("ghuman")
   return new Promise((resolve, reject) => {
     database.transaction(tx => {
       tx.executeSql(
-        `SELECT * FROM GENER43_2021_GHUMISSUES`, // Query the aspects table
-        [],
+        `SELECT * FROM GENER43_2021_GHUMISSUES WHERE _PARENT_AURI =? OR _TOP_LEVEL_AURI = ?`, // Query the aspects table
+        [uri],
         async (_, resultSet) => {
-          //console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
-          const formData = new FormData();
-
+		  const formData = new FormData();
+            
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
             data.push(row);
-            formData.append('_URI', row._URI);
-            formData.append('_CREATOR_URI_USER', row._CREATOR_URI_USER);
-            formData.append('_CREATION_DATE', row._CREATION_DATE);
-            formData.append('_LAST_UPDATE_URI_USER', row._LAST_UPDATE_URI_USER);
-            formData.append('_LAST_UPDATE_DATE', row._LAST_UPDATE_DATE);
-            formData.append('_PARENT_AURI', row._PARENT_AURI);
-            formData.append('_ORDINAL_NUMBER', row._ORDINAL_NUMBER);
-            formData.append('_TOP_LEVEL_AURI', row._TOP_LEVEL_AURI);
-            formData.append(
-              'GENERATED_NOTE_NAME_89',
-              row.GENERATED_NOTE_NAME_89,
-            );
-            formData.append('HUMISSUES', row.HUMISSUES);
-            formData.append('HUM_LEVEL', row.HUM_LEVEL);
-            formData.append('HUM_OTHER', row.HUM_OTHER);
+			(row._URI != '' ) ? formData.append('_URI[]', row._URI) : '';
+(row._CREATOR_URI_USER != '' ) ? formData.append('_CREATOR_URI_USER[]', row._CREATOR_URI_USER) : '';
+(row._CREATION_DATE != '' ) ? formData.append('_CREATION_DATE[]', row._CREATION_DATE) : '';
+(row._LAST_UPDATE_URI_USER != '' ) ? formData.append('_LAST_UPDATE_URI_USER[]', row._LAST_UPDATE_URI_USER) : '';
+(row._LAST_UPDATE_DATE != '' ) ? formData.append('_LAST_UPDATE_DATE[]', row._LAST_UPDATE_DATE) : '';
+(row._PARENT_AURI != '' ) ? formData.append('_PARENT_AURI[]', row._PARENT_AURI) : '';
+(row._ORDINAL_NUMBER != '' ) ? formData.append('_ORDINAL_NUMBER[]', row._ORDINAL_NUMBER) : '';
+(row._TOP_LEVEL_AURI != '' ) ? formData.append('_TOP_LEVEL_AURI[]', row._TOP_LEVEL_AURI) : '';
+(row.GENERATED_NOTE_NAME_89 != '' ) ? formData.append('GENERATED_NOTE_NAME_89[]', row.GENERATED_NOTE_NAME_89) : '';
+(row.HUMISSUES != '' ) ? formData.append('HUMISSUES[]', row.HUMISSUES) : '';
+(row.HUM_LEVEL != '' ) ? formData.append('HUM_LEVEL[]', row.HUM_LEVEL) : '';
+(row.HUM_OTHER != '' ) ? formData.append('HUM_OTHER[]', row.HUM_OTHER) : '';
+
           }
-          const response = await fetch(
-            `${baseApi}/gener43_2021_ghumissues?token=${token}`,
-            {
-              method: 'POST',
-              headers: {
-                Accept: 'application/json',
-                // Note: 'Content-Type' should NOT be set when using FormData
-              },
-              body: formData,
-            },
-          );
+		  const response = await fetch(
+			`${baseApi}/gener43_2021_ghumissues_create?token=${token}`,
+			{
+			  method: 'POST',
+			  headers: {
+				Accept: 'application/json',
+				// Note: 'Content-Type' should NOT be set when using FormData
+			  },
+			  body: formData,
+			},
+		  );
           resolve(data);
+          console.log(response)
+          console.log(response.status)
         },
         (_, error) => {
           console.error(`Error querying aspects`, error);
@@ -73883,46 +73883,48 @@ export const gener43_2021_gnatissues_sync = async uri => {
 //sync2 Start
 export const gener43_2021_gnatissues_sync2 = async uri => {
   return new Promise((resolve, reject) => {
+    console.log("hwllo gnat")
     database.transaction(tx => {
       tx.executeSql(
-        `SELECT * FROM GENER43_2021_GNATISSUES`, // Query the aspects table
-        [],
+        `SELECT * FROM GENER43_2021_GNATISSUES WHERE _PARENT_AURI =? OR _TOP_LEVEL_AURI = ?`, // Query the aspects table
+        [uri],
         async (_, resultSet) => {
-          //console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
-          const formData = new FormData();
-
+		  const formData = new FormData();
+            
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
+            console.log(row)
             data.push(row);
-            formData.append('_URI', row._URI);
-            formData.append('_CREATOR_URI_USER', row._CREATOR_URI_USER);
-            formData.append('_CREATION_DATE', row._CREATION_DATE);
-            formData.append('_LAST_UPDATE_URI_USER', row._LAST_UPDATE_URI_USER);
-            formData.append('_LAST_UPDATE_DATE', row._LAST_UPDATE_DATE);
-            formData.append('_PARENT_AURI', row._PARENT_AURI);
-            formData.append('_ORDINAL_NUMBER', row._ORDINAL_NUMBER);
-            formData.append('_TOP_LEVEL_AURI', row._TOP_LEVEL_AURI);
-            formData.append('NATISSUES', row.NATISSUES);
-            formData.append('NAT_LEVEL', row.NAT_LEVEL);
-            formData.append(
-              'GENERATED_NOTE_NAME_83',
-              row.GENERATED_NOTE_NAME_83,
-            );
-            formData.append('NAT_OTHER', row.NAT_OTHER);
+			  (row._URI != '' ) ? formData.append('_URI[]', row._URI) : '';
+        (row._CREATOR_URI_USER != '' ) ? formData.append('_CREATOR_URI_USER[]', row._CREATOR_URI_USER) : '';
+        (row._CREATION_DATE != '' ) ? formData.append('_CREATION_DATE[]', row._CREATION_DATE) : '';
+        (row._LAST_UPDATE_URI_USER != '' ) ? formData.append('_LAST_UPDATE_URI_USER[]', row._LAST_UPDATE_URI_USER) : '';
+        (row._LAST_UPDATE_DATE != '' ) ? formData.append('_LAST_UPDATE_DATE[]', row._LAST_UPDATE_DATE) : '';
+        (row._PARENT_AURI != '' ) ? formData.append('_PARENT_AURI[]', row._PARENT_AURI) : '';
+        (row._ORDINAL_NUMBER != '' ) ? formData.append('_ORDINAL_NUMBER[]', row._ORDINAL_NUMBER) : '';
+        (row._TOP_LEVEL_AURI != '' ) ? formData.append('_TOP_LEVEL_AURI[]', row._TOP_LEVEL_AURI) : '';
+        (row.NATISSUES != '' ) ? formData.append('NATISSUES[]', row.NATISSUES) : '';
+        (row.NAT_LEVEL != '' ) ? formData.append('NAT_LEVEL[]', row.NAT_LEVEL) : '';
+        (row.GENERATED_NOTE_NAME_83 != '' ) ? formData.append('GENERATED_NOTE_NAME_83[]', row.GENERATED_NOTE_NAME_83) : '';
+        (row.NAT_OTHER != '' ) ? formData.append('NAT_OTHER[]', row.NAT_OTHER) : '';
+
           }
-          const response = await fetch(
-            `${baseApi}/gener43_2021_gnatissues?token=${token}`,
-            {
-              method: 'POST',
-              headers: {
-                Accept: 'application/json',
-                // Note: 'Content-Type' should NOT be set when using FormData
-              },
-              body: formData,
-            },
-          );
+		  const response = await fetch(
+			`${baseApi}/gener43_2021_gnatissues_create?token=${token}`,
+			{
+			  method: 'POST',
+			  headers: {
+				Accept: 'application/json',
+				// Note: 'Content-Type' should NOT be set when using FormData
+			  },
+			  body: formData,
+			},
+		  );
           resolve(data);
+          console.log(response)
+          console.log(response.status)
         },
         (_, error) => {
           console.error(`Error querying aspects`, error);
@@ -74031,59 +74033,60 @@ export const gener43_2021_gvillages_sync = async uri => {
 //---------------------------------------------------------//
 //sync2 Start
 export const gener43_2021_gvillages_sync2 = async uri => {
+  console.log("gvillage..")
   return new Promise((resolve, reject) => {
     database.transaction(tx => {
       tx.executeSql(
-        `SELECT * FROM GENER43_2021_GVILLAGES`, // Query the aspects table
-        [],
+        `SELECT * FROM GENER43_2021_GVILLAGES WHERE _PARENT_AURI =? OR _TOP_LEVEL_AURI = ?`, // Query the aspects table
+        [uri],
         async (_, resultSet) => {
-          //console.log('ResultSet:', resultSet); // Log the resultSet to debug
+          console.log('ResultSet:', resultSet); // Log the resultSet to debug
           const data = [];
-          const formData = new FormData();
-
+		  const formData = new FormData();
+            
           for (let i = 0; i < resultSet.rows.length; i++) {
             const row = resultSet.rows.item(i);
             data.push(row);
-            formData.append('_URI', row._URI);
-            formData.append('_CREATOR_URI_USER', row._CREATOR_URI_USER);
-            formData.append('_CREATION_DATE', row._CREATION_DATE);
-            formData.append('_LAST_UPDATE_URI_USER', row._LAST_UPDATE_URI_USER);
-            formData.append('_LAST_UPDATE_DATE', row._LAST_UPDATE_DATE);
-            formData.append('_PARENT_AURI', row._PARENT_AURI);
-            formData.append('_ORDINAL_NUMBER', row._ORDINAL_NUMBER);
-            formData.append('_TOP_LEVEL_AURI', row._TOP_LEVEL_AURI);
-            formData.append('SOCFOR_PARTIC', row.SOCFOR_PARTIC);
-            formData.append('VRECORD_HOW', row.VRECORD_HOW);
-            formData.append('VILLA_AD_UNION', row.VILLA_AD_UNION);
-            formData.append('FOREST_VILGRS', row.FOREST_VILGRS);
-            formData.append('TOT_HH', row.TOT_HH);
-            formData.append('VSITEPOINT_ACC', row.VSITEPOINT_ACC);
-            formData.append('VSITEPOINT_LAT', row.VSITEPOINT_LAT);
-            formData.append('FCV_PARTC', row.FCV_PARTC);
-            formData.append('TVILLAGE_NAME', row.TVILLAGE_NAME);
-            formData.append('VSITEPOINT_ALT', row.VSITEPOINT_ALT);
-            formData.append('GRCOORDS_VSITE_EAST', row.GRCOORDS_VSITE_EAST);
-            formData.append('VILLA_AD_UPZILLA', row.VILLA_AD_UPZILLA);
-            formData.append(
-              'GENERATED_NOTE_NAME_170',
-              row.GENERATED_NOTE_NAME_170,
-            );
-            formData.append('GRCOORDS_VSITE_NORTH', row.GRCOORDS_VSITE_NORTH);
-            formData.append('VSITEPOINT_LNG', row.VSITEPOINT_LNG);
-            formData.append('VILLA_DIST', row.VILLA_DIST);
+          (row._URI != '' ) ? formData.append('_URI[]', row._URI) : '';
+          (row._CREATOR_URI_USER != '' ) ? formData.append('_CREATOR_URI_USER[]', row._CREATOR_URI_USER) : '';
+          (row._CREATION_DATE != '' ) ? formData.append('_CREATION_DATE[]', row._CREATION_DATE) : '';
+          (row._LAST_UPDATE_URI_USER != '' ) ? formData.append('_LAST_UPDATE_URI_USER[]', row._LAST_UPDATE_URI_USER) : '';
+          (row._LAST_UPDATE_DATE != '' ) ? formData.append('_LAST_UPDATE_DATE[]', row._LAST_UPDATE_DATE) : '';
+          (row._PARENT_AURI != '' ) ? formData.append('_PARENT_AURI[]', row._PARENT_AURI) : '';
+          (row._ORDINAL_NUMBER != '' ) ? formData.append('_ORDINAL_NUMBER[]', row._ORDINAL_NUMBER) : '';
+          (row._TOP_LEVEL_AURI != '' ) ? formData.append('_TOP_LEVEL_AURI[]', row._TOP_LEVEL_AURI) : '';
+          (row.SOCFOR_PARTIC != '' ) ? formData.append('SOCFOR_PARTIC[]', row.SOCFOR_PARTIC) : '';
+          (row.VRECORD_HOW != '' ) ? formData.append('VRECORD_HOW[]', row.VRECORD_HOW) : '';
+          (row.VILLA_AD_UNION != '' ) ? formData.append('VILLA_AD_UNION[]', row.VILLA_AD_UNION) : '';
+          (row.FOREST_VILGRS != '' ) ? formData.append('FOREST_VILGRS[]', row.FOREST_VILGRS) : '';
+          (row.TOT_HH != '' ) ? formData.append('TOT_HH[]', row.TOT_HH) : '';
+          (row.VSITEPOINT_ACC != '' ) ? formData.append('VSITEPOINT_ACC[]', row.VSITEPOINT_ACC) : '';
+          (row.VSITEPOINT_LAT != '' ) ? formData.append('VSITEPOINT_LAT[]', row.VSITEPOINT_LAT) : '';
+          (row.FCV_PARTC != '' ) ? formData.append('FCV_PARTC[]', row.FCV_PARTC) : '';
+          (row.TVILLAGE_NAME != '' ) ? formData.append('TVILLAGE_NAME[]', row.TVILLAGE_NAME) : '';
+          (row.VSITEPOINT_ALT != '' ) ? formData.append('VSITEPOINT_ALT[]', row.VSITEPOINT_ALT) : '';
+          (row.GRCOORDS_VSITE_EAST != '' ) ? formData.append('GRCOORDS_VSITE_EAST[]', row.GRCOORDS_VSITE_EAST) : '';
+          (row.VILLA_AD_UPZILLA != '' ) ? formData.append('VILLA_AD_UPZILLA[]', row.VILLA_AD_UPZILLA) : '';
+          (row.GENERATED_NOTE_NAME_170 != '' ) ? formData.append('GENERATED_NOTE_NAME_170[]', row.GENERATED_NOTE_NAME_170) : '';
+          (row.GRCOORDS_VSITE_NORTH != '' ) ? formData.append('GRCOORDS_VSITE_NORTH[]', row.GRCOORDS_VSITE_NORTH) : '';
+          (row.VSITEPOINT_LNG != '' ) ? formData.append('VSITEPOINT_LNG[]', row.VSITEPOINT_LNG) : '';
+          (row.VILLA_DIST != '' ) ? formData.append('VILLA_DIST[]', row.VILLA_DIST) : '';
+
           }
-          const response = await fetch(
-            `${baseApi}/gener43_2021_gvillages?token=${token}`,
-            {
-              method: 'POST',
-              headers: {
-                Accept: 'application/json',
-                // Note: 'Content-Type' should NOT be set when using FormData
-              },
-              body: formData,
-            },
-          );
+		  const response = await fetch(
+			`${baseApi}/gener43_2021_gvillages_create?token=${token}`,
+			{
+			  method: 'POST',
+			  headers: {
+				Accept: 'application/json',
+				// Note: 'Content-Type' should NOT be set when using FormData
+			  },
+			  body: formData,
+			},
+		  );
           resolve(data);
+          console.log(response)
+          console.log(response.status)
         },
         (_, error) => {
           console.error(`Error querying aspects`, error);

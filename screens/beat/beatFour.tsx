@@ -25,9 +25,16 @@ import {
   gener43_2021_core_to_live,
   gener43_2021_fbli_m_sh1_list,
   gener43_2021_fbli_m_sh1_sync,
+  gener43_2021_fbli_m_sh1_sync2,
+  gener43_2021_ghumissues_sync,
+  gener43_2021_ghumissues_sync2,
   gener43_2021_gnatissues_sync,
+  gener43_2021_gnatissues_sync2,
   gener43_2021_gvillages_create,
   gener43_2021_gvillages_list,
+  gener43_2021_gvillages_sync2,
+  gener43_2021_others_info1_sync,
+  gener43_2021_others_info1_sync2,
   gener43_2021_overallnotes_ima_blb_create,
   gener43_2021_overallnotes_ima_ref_create,
 } from '../../database/sqlDatabase';
@@ -140,7 +147,7 @@ const beatFour = () => {
     const updatedOrdinalNumber = oridianl + 1; // Increment the value directly here
     setoridianl(updatedOrdinalNumber);
 
-    const currentDate = getCurrentDateandTime();
+    const currentDate = getCurrentDateandTimeMain();
 
     const dataToInsertadd = {
       _URI: newGeneratedUUID, // Use the freshly generated UUID
@@ -149,6 +156,7 @@ const beatFour = () => {
       _TOP_LEVEL_AURI: uId,
       _CREATION_DATE: currentDate,
       _LAST_UPDATE_DATE: currentDate,
+      _LAST_UPDATE_URI_USER:uri,
       VILLA_AD_UPZILLA: inputValue1,
       VILLA_AD_UNION: inputValue2,
       TVILLAGE_NAME: inputValue3,
@@ -166,6 +174,7 @@ const beatFour = () => {
     try {
       await gener43_2021_gvillages_create(dataToInsertadd);
       console.log('All data inserted successfully');
+      setModalVisible(false)
     } catch (error) {
       console.error('Failed to insert data:', error.message || error);
     }
@@ -582,17 +591,52 @@ const beatFour = () => {
       console.error('Error in gener43_2021_core_sync:', error);
     }
 
+
     try {
-      await gener43_2021_fbli_m_sh1_sync(uId);
+      await gener43_2021_fbli_m_sh1_sync2(uId);
     } catch (error) {
       console.error('Error in gener43_2021_fbli_m_sh1_sync:', error);
     }
 
+     try {
+      await gener43_2021_gvillages_sync2(uId);
+    } catch (error) {
+      console.error('Error in gener43_2021_others_info1_sync:', error);
+    }
+
     try {
-      await gener43_2021_gnatissues_sync(uId);
+      await gener43_2021_ghumissues_sync2(uId);
+    } catch (error) {
+      console.error('Error in gener43_2021_ghumissues_sync:', error);
+    }
+
+    try {
+      await gener43_2021_gnatissues_sync2(uId);
     } catch (error) {
       console.error('Error in gener43_2021_gnatissues_sync:', error);
     }
+
+    
+
+    
+
+    try {
+      await gener43_2021_ghumissues_sync2(uId);
+    } catch (error) {
+      console.error('Error in gener43_2021_ghumissues_sync:', error);
+    }
+
+    try {
+      await gener43_2021_others_info1_sync2(uId);
+    } catch (error) {
+      console.error('Error in gener43_2021_others_info1_sync:', error);
+    }
+
+    // try {
+    //   await gener43_2021_gvillages_sync2(uId);
+    // } catch (error) {
+    //   console.error('Error in gener43_2021_others_info1_sync:', error);
+    // }
   };
 
   const beatFour = async () => {
@@ -672,7 +716,7 @@ const beatFour = () => {
 
   useEffect(() => {
     const gnaissu = async () => {
-      const data = await gener43_2021_gvillages_list();
+      const data = await gener43_2021_gvillages_list(uId);
       setVillageList(data);
     };
     gnaissu();
@@ -1027,7 +1071,7 @@ const beatFour = () => {
                         justifyContent: 'center',
                         margin: 5,
                         padding: 10,
-                        backgroundColor: '#007AFF', // Same default color as above
+                        backgroundColor: 'red', // Same default color as above
                         borderRadius: 5,
                       }}
                       onPress={() => setModalVisible(false)}>

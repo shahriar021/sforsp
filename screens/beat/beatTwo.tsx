@@ -277,7 +277,7 @@ const beatTwo = () => {
 
     try {
       await gener43_2021_gnatissues_create(dataToInsertadd);
-
+      setModalVisible(false)
       console.log('All data inserted successfully');
     } catch (error) {
       console.error('Failed to insert data:', error.message || error);
@@ -295,8 +295,9 @@ const beatTwo = () => {
       _CREATOR_URI_USER: uri,
       _PARENT_AURI: uId,
       _TOP_LEVEL_AURI: uId,
-      _CREATION_DATE: getCurrentDateandTime(),
-      _LAST_UPDATE_DATE: getCurrentDateandTime(),
+      _CREATION_DATE: getCurrentDateandTimeMain(),
+      _LAST_UPDATE_DATE: getCurrentDateandTimeMain(),
+      _LAST_UPDATE_URI_USER:uri,
       HUMISSUES: selectedHumanIssue,
       HUM_LEVEL: selectedRank,
       _ORDINAL_NUMBER: updatedOrdinalNumber,
@@ -306,7 +307,7 @@ const beatTwo = () => {
 
     try {
       await gener43_2021_ghumissues_create(dataToInsertadd);
-
+      setModalVisible2(false)
       console.log('All data inserted successfully');
     } catch (error) {
       console.error('Failed to insert data:', error.message || error);
@@ -434,7 +435,7 @@ const beatTwo = () => {
 
   useEffect(() => {
     const gnaissu = async () => {
-      const data = await gener43_2021_gnatissues_list();
+      const data = await gener43_2021_gnatissues_list(uId);
       setGnatissues(data);
     };
     gnaissu();
@@ -442,7 +443,7 @@ const beatTwo = () => {
 
   useEffect(() => {
     const gnaissu = async () => {
-      const data = await gener43_2021_ghumissues_list();
+      const data = await gener43_2021_ghumissues_list(uId);
       setHumissues(data);
     };
     gnaissu();
@@ -960,7 +961,7 @@ const beatTwo = () => {
                         justifyContent: 'center',
                         margin: 5,
                         padding: 10,
-                        backgroundColor: '#007AFF', // Same default color as above
+                        backgroundColor: 'red', // Same default color as above
                         borderRadius: 5,
                       }}
                       onPress={() => setModalVisible(false)}>
@@ -1196,7 +1197,7 @@ const beatTwo = () => {
                         justifyContent: 'center',
                         margin: 5,
                         padding: 10,
-                        backgroundColor: '#007AFF', // Same default color as above
+                        backgroundColor: 'red', // Same default color as above
                         borderRadius: 5,
                       }}
                       onPress={() => setModalVisible2(false)}>

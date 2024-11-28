@@ -146,7 +146,7 @@ const beatOne = () => {
 
   useEffect(() => {
     const fbli = async () => {
-      const data = await gener43_2021_fbli_m_sh1_list();
+      const data = await gener43_2021_fbli_m_sh1_list(initialUUID);
       setFbliData(data);
     };
     fbli();
@@ -235,7 +235,7 @@ const beatOne = () => {
 
     try {
       await gener43_2021_fbli_m_sh1_create(dataToInsertadd);
-      
+      setModalVisible(false)
       console.log('All data inserted successfully');
     } catch (error) {
       console.error('Failed to insert data:', error.message || error);
@@ -1105,7 +1105,7 @@ const beatOne = () => {
                         justifyContent: 'center',
                         margin: 5,
                         padding: 10,
-                        backgroundColor: '#007AFF', // Same default color as above
+                        backgroundColor: 'red', // Same default color as above
                         borderRadius: 5,
                       }}
                       onPress={() => setModalVisible(false)}>
